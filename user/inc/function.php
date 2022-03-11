@@ -1,5 +1,6 @@
 <?php
     session_start();
+    global $cart;
     function signUp()
     {
         include("inc/db.php");
@@ -69,8 +70,8 @@
                 echo "<script>alert('Username or Password is incorrect!');</script>";
             }
         }
-
     }
+
     
     function myProfile()
     {
@@ -110,6 +111,7 @@
                             <input type = 'file' name = 'user_profilephoto' />
                             <img src = '../uploads/user_profile/".$row['user_profilephoto']."'  />
                         </td>
+                        
                     </tr>
                 </table>
                 <button name = 'update_user'>Update Profile</button>
@@ -209,8 +211,7 @@
                              </tr>";
 
             while($row_pro = $display_cart->fetch()):
-                echo "<form method = '' enctype = 'multipart/form-data'>
-                        <tr>
+                echo "<tr>
                             <td>
                             <img src = '../uploads/products/".$row_pro['pro_img']."'  />
                             </td>
@@ -218,15 +219,12 @@
                                 ".$row_pro['pro_name']."
                             </td>
                             <td>
-                                <input type = 'number' class = 'iquantity' onchange='subTotal()' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]." min = '1' max = '1
-                                '/>
-                            </td>
-                            <td>
+                                <input type = 'text' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."'/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <a href = 'update_cart_qty.php?update_cart_qty=".$row_pro['pro_id']."'><button id = 'pro_btn'>Update</button></a>
-                            </td>
-                            <td>
-                                class = 'iprice' value = '".$row_pro['pro_price']."'
+                                <a href = 'update_cart_qty.php?update_cart_qty=".(implode(',',$_SESSION['cart']))."'><button id = 'pro_btn' name = 'update_cart_qty'>Update</button></a>
+                            </td>   
+                            <td class = 'iprice'>
+                                 ".$row_pro['pro_price']."
                             </td>
                             <td class = 'itotal'>";
                                 $qty = $row_pro['pro_quantity'];
@@ -238,10 +236,9 @@
                             echo "</td>
                             <td>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <a href = 'delete_cart.php?delete_cart=".$row_pro['pro_id']."'><button id = 'pro_btn'>X</button></a>
+                                <a href = 'delete_cart.php?delete_cart=".$row_pro['pro_id']."'><button id = 'pro_btn' name = 'delete_cart'>X</button></a>
                             </td>
-                        </tr>
-                    </form>";
+                        </tr>";
             endwhile;
         }
         else
@@ -259,40 +256,32 @@
     {
         if(isset($_POST['delete_cart']))
         {
-            // $itemID = $_POST['delete_cart'];
-
-            // foreach ($_SESSION['cart'] as $key => $items)
-            // {
-            //     if($itemID == $items['pro_id'])
-            //     {
-            //         unset($_SESSION['cart'][$key]);
-            //     }
-            // }
-            // header("location: cart.php");
-        }
+            foreach($_SESSION['cart'] as $key => $row_pro)
+            {
+                if($row_pro['pro_id'] === $_POST['pro_id'])
+                {
+                    unset($_SESSION['cart'][$key]);
+                    $_SESSION['cart'] = array_values($_SESSION['cart']);
+                    header('cart.php');
+                }
+            }
+        } 
     }
 
-    function update_cart_quantity()
+    function update_cart_quantity($cart)
     {
         if(isset($_POST['update_cart_qty']))
         {
-            // $new_cart = array();
-            // foreach ($_SESSION['cart'] as $item) 
-            // {
-            //     if ($item != $_POST['pro_id']) 
-            //     {
-            //         array_push($new_cart);
-            //     }
-            // }
-            // // fill new cart with the n number of product id
-            // array_push($new_cart, array_fill(0, $_POST['pro_quantity'], $_POST['pro_id']));
-            // // update session cart
-            // $_SESSION['cart'] = $new_cart;
-            // header("location: cart.php");
-            $id = isset($_POST['pro_id']) ? $_POST['pro_id'] : "";
-            $qty = $_POST['pro_quantity'];
-            echo $qty;
-            echo "<script>window.open('cart.php', '_self;);</script>";
+            $_SESSION['cart'] = $cart;
+            $myCart = $_SESSION['cart'];
+            $pro_id = $_POST['pro_id'];
+
+            if($myCart[$pro_id])
+            {
+                $myCart[$pro_id]['pro_quantity']++;
+                $_SESSION['cart'] = $myCart;
+                header('location:cart.php');
+            }
         }
     }
 
