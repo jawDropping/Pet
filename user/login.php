@@ -5,6 +5,7 @@
 <html>
     <head>
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,6 +133,26 @@
            margin-left: 10px;
            color: #444;
        }
+       @media (max-width: 800px){
+           .container{
+               margin-left: 0%;
+               margin-right: 0%;
+               width: 100%;
+           }
+       }
+       @media(max-height: 750px){
+           .container{
+               height: 500px;
+           }
+
+       }
+       @media(max-width: 500px){
+            .inside{
+                width: 90%;
+
+            }
+       }
+
     </style>
     <script>
             let input = document.querySelector(".input");
