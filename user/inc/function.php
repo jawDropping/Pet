@@ -164,9 +164,7 @@
     {
         if(isset($_POST['cart_btn']))
         {
-            $cart = $_SESSION['cart'];
-            array_push($cart, $_POST['pro_id']);
-            $_SESSION['cart'] = $cart;
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
             echo "<script>window.open('/Pet/user/index.php?' ,'_self');</script>";  
         }
        
@@ -252,37 +250,94 @@
         }
     }
 
-    function delete_cart_items()
-    {
-        if(isset($_POST['delete_cart']))
-        {
-            foreach($_SESSION['cart'] as $key => $row_pro)
-            {
-                if($row_pro['pro_id'] === $_POST['pro_id'])
-                {
-                    unset($_SESSION['cart'][$key]);
-                    $_SESSION['cart'] = array_values($_SESSION['cart']);
-                    header('cart.php');
-                }
+    function delete_cart_items() {
+
+        if(isset($_GET['delete_cart']) && !empty($_GET['delete_cart'])) {
+
+
+            //Get Product Id
+            $itemID = trim($_GET['delete_cart']);
+
+
+            //Remove $itemID from session cart
+            if(in_array($itemID, $_SESSION['cart'])) {
+
+
+                //Whats happening here?
+                //array_diff would compute the difference between
+                //$_SESSION['cart'] and the needle array which has the 
+                //value of $itemID. Doing so would return unique values into $_SESSION['cart']
+                $_SESSION['cart'] = array_diff($_SESSION['cart'], array($itemID));
+
+
+                header("location: cart.php");
+
+            } else {
+
+                //When the specified product Id doesnt exist
+                //You could still redirect to previous page
+                //Maybe append some error query
+                header("location: cart.php?error=" . $itemID . " key not found");
             }
-        } 
+        } else {
+
+
+            //Something isn't Right
+            //The product Key is not set or empty
+            header("location: cart.php?error=" . $itemID . " key not found");
+        }
     }
 
-    function update_cart_quantity($cart)
-    {
-        if(isset($_POST['update_cart_qty']))
-        {
-            $_SESSION['cart'] = $cart;
-            $myCart = $_SESSION['cart'];
-            $pro_id = $_POST['pro_id'];
+    function update_cart_quantity() {
 
-            if($myCart[$pro_id])
-            {
-                $myCart[$pro_id]['pro_quantity']++;
-                $_SESSION['cart'] = $myCart;
-                header('location:cart.php');
+        try {
+
+            //From the Update Button
+            //A link with a querystring "update_cart_qty"
+            //was seen holding the product Id from database Result
+            //Therefore, Request type must be _GET or _REQUEST
+            if(isset($_GET['update_cart_qty']) && !empty($_GET['update_cart_qty'])) {
+
+
+                //This holds Your Product Id
+                $pro_id = trim($_GET['update_cart_qty']);
+
+
+                //Validate $pro_id
+                //Remove this line if $pro_id contains letters
+                if(!is_numeric($pro_id)) {
+                    throw new Exception("Invalid Product Key");
+
+                }
+
+
+                //Add product Id to session cart
+                //Ensure it doesn't exists there already
+                if(in_array($pro_id, $_SESSION['cart'])) {
+                    throw new Exception("Item already addded");
+
+                }
+
+
+                //Push $pro_id into cart
+                array_push($_SESSION['cart'], $pro_id);
+
+
+                //Redirect to cart.php
+                header("location: cart.php");
+            } else {
+
+                //Throw exception
+                //Since we can't work with empty Id
+                throw new Exception("Product Key Not Found");
+
             }
+
+
+        } catch (\Exception $th) {
+            header("location: cart.php?error=" . $th->getMessage() . " key not found");
         }
+
     }
 
     function checkOut()
@@ -509,7 +564,7 @@
     function search() {
         include("inc/db.php");
 
-        if(isset($_GET['search']))
+        if(isset($_GET['search']) && isset($_GET['user_query']))
         {
             $user_query = $_GET['user_query'];
             $search = $con->prepare("SELECT * from product_tbl WHERE pro_name LIKE '%$user_query%' or pro_keyword LIKE '%$user_query%'");
