@@ -1,4 +1,4 @@
 <?php
     include("inc/function.php");
-    echo update_cart_quantity();
+    call_user_func('update_cart_quantity');
 ?>
