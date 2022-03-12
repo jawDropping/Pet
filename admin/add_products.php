@@ -1,6 +1,13 @@
 <div id ="bodyright">
+    <div class = "addProduct">
     <h3>Add Products</h3>
     <form method = "POST" enctype = "multipart/form-data">
+        <div class="formleft">
+
+        </div>
+        <div class="formright">
+
+        </div>
         <table>
             <tr>
                 <td>Enter Product Name: </td>
@@ -61,8 +68,19 @@
         </table>
         <button name = "add_prod">Add Product</button>
     </form>
+    </div>
+    
 </div>
+<style>
+    .addProduct {
+  background: white;
+  margin-top: 7vh;
+  border: 1px solid black;
+  padding: 5px;
+  height: 90vh;
+}
 
+</style>
 <?php
     echo add_product();
 ?>
