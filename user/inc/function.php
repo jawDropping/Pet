@@ -1,6 +1,5 @@
 <?php
     session_start();
-
     function signUp()
     {
         include("inc/db.php");
@@ -316,6 +315,7 @@
     {
         
     }
+
 
 
     function checkOut()
