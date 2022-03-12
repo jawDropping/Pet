@@ -1,6 +1,6 @@
 <html>
     <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
     <div id ="signUpForm">
@@ -65,10 +65,17 @@
             box-shadow:4px 6px 16px 0px rgba(0, 0, 0, 0.2);
            
         }
+        form{
+            background: red;
+            width: 70%;
+            margin-top: 8vh;
+        }
 
         @media(max-width: 680px) {
             .container{
                 width: 100%;
+                margin-left: 0%;
+            margin-right: 0%;
             }
         }
     </style>
