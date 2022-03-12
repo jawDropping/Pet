@@ -1,14 +1,12 @@
 <?php
-    if(isset($_POST['delete_cart']))
+    session_start();
+    if(isset($_GET['delete']))
     {
-        foreach($_SESSION['cart'] as $key => $row_pro)
-        {
-            if($row_pro['pro_id'] === $_POST['pro_id'])
-            {
-                unset($_SESSION['cart'][$key]);
-                $_SESSION['cart'] = array_values($_SESSION['cart']);
-                header('cart.php');
-            }
-        }
+        $new_cart = array_filter($_SESSION['cart'], function($item){
+            return $item != $_GET['delete'];
+        });
+
+        $_SESSION['cart'] = $new_cart;
+        header("location: cart.php");
     }
 ?>
