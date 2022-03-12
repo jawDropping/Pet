@@ -1,6 +1,6 @@
 <?php
     session_start();
-    global $cart;
+
     function signUp()
     {
         include("inc/db.php");
@@ -207,9 +207,9 @@
                                  <th>Sub Total</th>
                                  <th>Remove</th>
                              </tr>";
-
             while($row_pro = $display_cart->fetch()):
-                echo "<tr>
+                echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
+                        <tr>
                             <td>
                             <img src = '../uploads/products/".$row_pro['pro_img']."'  />
                             </td>
@@ -217,26 +217,37 @@
                                 ".$row_pro['pro_name']."
                             </td>
                             <td>
-                                <input type = 'text' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."'/>
+                                <input type = 'number' class = 'iquantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
+                                '/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <a href = 'update_cart_qty.php?update_cart_qty=".(implode(',',$_SESSION['cart']))."'><button id = 'pro_btn' name = 'update_cart_qty'>Update</button></a>
-                            </td>   
-                            <td class = 'iprice'>
-                                 ".$row_pro['pro_price']."
+                                <button id = 'pro_btn'>Update</button></a>
                             </td>
-                            <td class = 'itotal'>";
+                            
+                            <td>
+                                ".$row_pro['pro_price']."
+                            </td>
+                            <td>";
                                 $qty = $row_pro['pro_quantity'];
                                 $pro_price = $row_pro['pro_price'];
                                 $sub_total = $qty * $pro_price;
                                 echo $sub_total;
-
                                 $net_total = $net_total + $sub_total;
                             echo "</td>
+                        </tr>
+                    </form>";
+                    echo "<form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>
-                                <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <a href = 'delete_cart.php?delete_cart=".$row_pro['pro_id']."'><button id = 'pro_btn' name = 'delete_cart'>X</button></a>
+                                <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'delete' />
+                                <button id = 'pro_btn'>Delete</button></a>
                             </td>
-                        </tr>";
+                        </tr>
+                    </form>";
             endwhile;
         }
         else
@@ -249,96 +260,12 @@
                  </td>";
         }
     }
-
-    function delete_cart_items() {
-
-        if(isset($_GET['delete_cart']) && !empty($_GET['delete_cart'])) {
-
-
-            //Get Product Id
-            $itemID = trim($_GET['delete_cart']);
-
-
-            //Remove $itemID from session cart
-            if(in_array($itemID, $_SESSION['cart'])) {
-
-
-                //Whats happening here?
-                //array_diff would compute the difference between
-                //$_SESSION['cart'] and the needle array which has the 
-                //value of $itemID. Doing so would return unique values into $_SESSION['cart']
-                $_SESSION['cart'] = array_diff($_SESSION['cart'], array($itemID));
-
-
-                header("location: cart.php");
-
-            } else {
-
-                //When the specified product Id doesnt exist
-                //You could still redirect to previous page
-                //Maybe append some error query
-                header("location: cart.php?error=" . $itemID . " key not found");
-            }
-        } else {
-
-
-            //Something isn't Right
-            //The product Key is not set or empty
-            header("location: cart.php?error=" . $itemID . " key not found");
-        }
+    
+    function delete_cart()
+    {
+        
     }
 
-    function update_cart_quantity() {
-
-        try {
-
-            //From the Update Button
-            //A link with a querystring "update_cart_qty"
-            //was seen holding the product Id from database Result
-            //Therefore, Request type must be _GET or _REQUEST
-            if(isset($_GET['update_cart_qty']) && !empty($_GET['update_cart_qty'])) {
-
-
-                //This holds Your Product Id
-                $pro_id = trim($_GET['update_cart_qty']);
-
-
-                //Validate $pro_id
-                //Remove this line if $pro_id contains letters
-                if(!is_numeric($pro_id)) {
-                    throw new Exception("Invalid Product Key");
-
-                }
-
-
-                //Add product Id to session cart
-                //Ensure it doesn't exists there already
-                if(in_array($pro_id, $_SESSION['cart'])) {
-                    throw new Exception("Item already addded");
-
-                }
-
-
-                //Push $pro_id into cart
-                array_push($_SESSION['cart'], $pro_id);
-
-
-                //Redirect to cart.php
-                header("location: cart.php");
-            } else {
-
-                //Throw exception
-                //Since we can't work with empty Id
-                throw new Exception("Product Key Not Found");
-
-            }
-
-
-        } catch (\Exception $th) {
-            header("location: cart.php?error=" . $th->getMessage() . " key not found");
-        }
-
-    }
 
     function checkOut()
     {
@@ -603,20 +530,3 @@
         }
     }
 ?>
-
-<script>
-
-    var iprice = document.getElementByClassName('iprice');
-    var iquantity = document.getElementByClassName('iquantity');
-    var itotal = document.getElementByClassName('itotal');
-
-    function subTotal()
-    {
-        for(i=0;i<iprice.length;i++)
-        {
-            itotal[i].innerText=(iprice[i].value)*(iquantity[i].value);
-        }
-    }
-    subTotal();
-
-</script>
