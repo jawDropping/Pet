@@ -184,11 +184,12 @@
   height: 50px;
 }
 
-.cart form table tr td input[type="text"] {
+.cart form table tr td input[type="number"] {
   padding-left: 1%;
   width: 10%;
   height: 30px;
 }
+
 
 .cart form table tr td input[type="submit"] {
   background: #fff;
