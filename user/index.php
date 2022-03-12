@@ -1,3 +1,4 @@
+
 <html>
     <head>
         <title>Pet Society</title>
@@ -9,14 +10,16 @@
         <?php 
 
             include ("inc/db.php");
-            include ("inc/function.php");
+            include ("inc/function.php"); 
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
             include ("inc/bodyleft.php"); 
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 
-            echo add_cart();
-            echo signUp();
+            // include ("inc/login.php");
+            // include ("inc/signup.php");
+            
+            echo add_cart();   
             
         ?>
 

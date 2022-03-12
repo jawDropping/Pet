@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <!-- Created with Vectornator for iOS (http://vectornator.io/) --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="100%" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 16 20">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="1"/>
+<vectornator:setting key="PencilOnly" value="0"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="OutlineMode" value="0"/>
+<vectornator:setting key="CMYKEnabledKey" value="0"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="SnapToEdges" value="0"/>
+<vectornator:setting key="DisplayWhiteBackground" value="0"/>
+<vectornator:setting key="doHistoryDisabled" value="0"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="TimeLapseWatermarkDisabled" value="0"/>
+<vectornator:setting key="Units" value="Points"/>
+<vectornator:setting key="IsolateActiveLayer" value="0"/>
+<vectornator:setting key="SnapToGrid" value="0"/>
+<vectornator:setting key="DynamicGuides" value="0"/>
+</metadata>
+<defs/>
+<g id="Icons" vectornator:layerName="Icons">
+<g opacity="1">
+<path d="M-4-2L20-2L20+22L-4+22L-4-2Z" fill-opacity="0" fill="#000000" opacity="1"/>
+<path d="M8+20C9.1+20+10+19.1+10+18L6+18C6+19.1+6.89+20+8+20ZM14+14L14+9C14+5.93+12.36+3.36+9.5+2.68L9.5+2C9.5+1.17+8.83+0.5+8+0.5C7.17+0.5+6.5+1.17+6.5+2L6.5+2.68C3.63+3.36+2+5.92+2+9L2+14L0.71+15.29C0.0799999+15.92+0.52+17+1.41+17L14.58+17C15.47+17+15.92+15.92+15.29+15.29L14+14Z" opacity="1" fill="#ffffff"/>
+</g>
+</g>
+</svg>

@@ -10,15 +10,13 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
-            
         ?>
         <div class = "cart">
-            <form method = "post" enctype = "multipart/form-data">
+            
                 <?php 
-                    echo cart_display();
+                    call_user_func('cart_display');
                 ?>
-                </table>
-            </form>
+            
             
         </div>
         <?php include("inc/footer.php"); ?>

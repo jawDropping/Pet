@@ -11,7 +11,6 @@
                 <td>
                     <select name = "cat_name">
                         <?php 
-                            include("inc/function.php");
                             echo viewall_cat(); 
                         ?>
                     </select>

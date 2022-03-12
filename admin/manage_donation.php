@@ -1,6 +1,6 @@
 <div id ="bodyright">
 <div class="addCat">
-    <h3 id = "add_cat">Add Category</h3>
+    <h3 id = "add_cat">Record Donations</h3>
     <form method = "POST">
         <table>
             <tr>
