@@ -87,33 +87,84 @@
     
             echo 
             "<form method = 'POST' enctype='multipart/form-data'>
-                <table>
-                    <tr>
-                        <td>Username: </td>
-                        <td><input type = 'text' name =  'user_username' value = '".$row['user_username']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Password: </td>
-                        <td><input type = 'password' name = 'user_password' value = '".$row['user_password']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Email: </td>
-                        <td><input type = 'email' name = 'user_email' value = '".$row['user_email']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Contact Number: </td>
-                        <td><input type = 'text' name = 'user_contactnumber' value = '".$row['user_contactnumber']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Profile Photo: </td>
-                        <td>
-                            <input type = 'file' name = 'user_profilephoto' />
-                            <img src = '../uploads/user_profile/".$row['user_profilephoto']."'  />
-                        </td>
-                    </tr>
-                </table>
-                <button name = 'update_user'>Update Profile</button>
-            </form>";
+                <div class='profileTable'>
+                <div class = 'username'>
+                <p class = 'us'>Profile Photo: </p>
+            
+                    <input type = 'file' name = 'user_profilephoto' />
+                    <img src = '../uploads/user_profile/".$row['user_profilephoto']."'  />
+        
+                </div>
+                    <div class='username'>
+                        <p class='us'>username </p>
+                        <input class='user_name'type = 'text' name =  'user_username' value = '".$row['user_username']."' />
+                    </div>
+                    <div class='username'>
+                        <p class = 'us'>password </p>
+                        <input class='user_name' type = 'password' name = 'user_password' value = '".$row['user_password']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class='us'>email </p>
+                        <input class='user_name' type = 'email' name = 'user_email' value = '".$row['user_email']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class = 'us'>Contact Number: </p>
+                        <input  class = 'user_name 'type = 'text' name = 'user_contactnumber' value = '".$row['user_contactnumber']."' />
+                    </div>
+                    <div class = 'username'>
+                        <button name = 'update_user'>Update Profile</button>
+                    </div>
+                </div>
+                
+            </form>
+            <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+                form{
+                    display: flex;
+                    justify-content: center;
+                    background: red;
+                    width: 90%;
+                    margin-left: 5%;
+                    height: 100vh;
+                }
+                .profileTable{
+                    border: 1px solid black;
+                    width: 60%;
+                    font-family: 'Open Sans', sans-serif;
+                }
+                .username{
+                    display: block;
+                    padding: 5px;
+                    background: #eee;
+                    width: 80%;
+                    border-radius: 3px;
+                    margin-top: 10px;
+                }
+                .user_name{
+                    border-radius: 5px;
+                    outline: none;
+                    border: none;
+                    width: 100%;
+                    height: 46px;
+                    padding-left: 5px;
+                }
+                .us{
+                    font-size: 10px;
+                }
+                img{
+                    height: 50px;
+                }
+                button{
+                    
+                    height: 42px;
+                    width: 100%;
+                    border: none;
+                }
+            </style>
+            ";
     
             if(isset($_POST['update_user']))
             {
