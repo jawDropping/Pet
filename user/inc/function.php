@@ -1,6 +1,5 @@
 <?php
     session_start();
-
     function signUp()
     {
         include("inc/db.php");
@@ -88,34 +87,45 @@
     
             echo 
             "<form method = 'POST' enctype='multipart/form-data'>
-                <table>
-                    <tr>
-                        <td>Username: </td>
-                        <td><input type = 'text' name =  'user_username' value = '".$row['user_username']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Password: </td>
-                        <td><input type = 'password' name = 'user_password' value = '".$row['user_password']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Email: </td>
-                        <td><input type = 'email' name = 'user_email' value = '".$row['user_email']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Contact Number: </td>
-                        <td><input type = 'text' name = 'user_contactnumber' value = '".$row['user_contactnumber']."' /></td>
-                    </tr>
-                    <tr>
-                        <td>Profile Photo: </td>
-                        <td>
-                            <input type = 'file' name = 'user_profilephoto' />
-                            <img src = '../uploads/user_profile/".$row['user_profilephoto']."'  />
-                        </td>
+                <div class='profileTable'>
+                <div class = 'photo'>
+                    <img src = '../uploads/userIcon.svg'  />
+                    <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' />
+                </div>
+                <p class='name'>User's Name</p>
+                <div class = 'contf'>
+                <div class='formt'>
+                    <div class='username'>
+                        <p class='us'>username </p>
+                        <input class='user_name'type = 'text' name =  'user_username' value = '".$row['user_username']."' />
+                    </div>
+                    <div class='username'>
+                        <p class = 'us'>password </p>
+                        <input class='user_name' type = 'password' name = 'user_password' value = '".$row['user_password']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class='us'>email </p>
+                        <input class='user_name' type = 'email' name = 'user_email' value = '".$row['user_email']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class = 'us'>Contact Number: </p>
+                        <input  class = 'user_name 'type = 'text' name = 'user_contactnumber' value = '".$row['user_contactnumber']."' />
+                    </div>
+                    <div class = 'usernameb'>
+                        <button name = 'update_user'>Update Profile</button>
+                    </div>
+                    <div class = 'usernameh'>
+                        <button class = 'back' onclick='window.location.href='/Pet/user/index.php'>Back to Home</button>
+                    </div>
+                    </div>
+                    <div class='rightSide'>
                         
-                    </tr>
-                </table>
-                <button name = 'update_user'>Update Profile</button>
-            </form>";
+                    </div>
+                    </div>
+                </div>
+                
+            </form>
+            ";
     
             if(isset($_POST['update_user']))
             {
@@ -248,6 +258,7 @@
                             </td>
                         </tr>
                     </form>";
+                    
             endwhile;
         }
         else
@@ -265,6 +276,7 @@
     {
         
     }
+
 
 
     function checkOut()

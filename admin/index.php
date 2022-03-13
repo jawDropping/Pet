@@ -18,8 +18,15 @@
             include ("inc/function.php"); 
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
-            include ("inc/bodyleft.php"); 
-            include ("inc/bodyright.php"); 
+            ?>
+            <div class="mainContainer">
+            <?php
+             include ("inc/bodyleft.php"); 
+             include ("inc/bodyright.php"); 
+            ?>
+            </div>
+            
+           <?php
             include ("inc/footer.php"); 
         ?>
     </body> 
