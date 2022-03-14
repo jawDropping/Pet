@@ -34,9 +34,10 @@
               <div>Your Information ⬇</div>
               <div>Name: ".$row_user['user_username']."</div>
               <div>Contact Number: ".$row_user['user_contactnumber']."</div>
+              <div>Location: ".$row_user['user_address']."</div>
               <div>Email Address: ".$row_user['user_email']."</div>";
         
         echo "<input type = 'hidden' value = '".$row_user['user_id']."' name = 'user_id' />
-              <button>Pay</button>";
+              <button>Place Order</button>";
     }
 ?>
