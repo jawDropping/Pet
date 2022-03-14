@@ -278,8 +278,8 @@
 #navbar li:hover ul {
   margin-left: -15px;
   color: #aaa;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   background: #5a5bf3;
   margin-top: 5px;
   display: block !important;

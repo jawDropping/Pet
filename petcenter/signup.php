@@ -22,15 +22,7 @@
                 <td>Contact Number: </td>
                 <td><input type="text" name = "PCcontact_number" /></td>
             </tr>
-            <tr>
-                <td>Sign up as: </td>
-                <td>
-                    <select name = "user_type">
-                        <option name = "">Customer</option>
-                        <option name = "">Pet Center</option>
-                    </select>
-                </td>
-            </tr>
+          
         </table>
         <button name = "sign_up" id = "sign_up">Sign Up</button>
     </form>
