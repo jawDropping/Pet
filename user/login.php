@@ -149,7 +149,7 @@
        @media(max-width: 500px){
             .inside{
                 width: 90%;
-
+                height: 100%;
             }
        }
 

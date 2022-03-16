@@ -238,9 +238,9 @@
             $display_cart->execute();
             
             echo "<table cellpadding='0' cellspacing = '0'>
-                             <tr>
-                                 <th>Image</th>
-                                 <th>Product Name</th>
+                             <tr class='headerTitle'>
+                                 <th style='width:10%'>Image</th>
+                                 <th style='width:30%'>Product Name</th>
                                  <th>Quantity</th>
                                  <th>Price</th>
                                  <th>Sub Total</th>
@@ -248,12 +248,12 @@
                              </tr>";
             while($row_pro = $display_cart->fetch()):
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
-                        <tr>
+                        <tr class ='data'>
                             <td>
-                            <img src = '../uploads/products/".$row_pro['pro_img']."'  />
+                            <img src = '../uploads/products/".$row_pro['pro_img']."' />
                             </td>
-                            <td>
-                                ".$row_pro['pro_name']."
+                            <td class = 'productNem'>
+                               <p> ".$row_pro['pro_name']."</p>
                             </td>
                             <td>
                                 <input type = 'number'  class = 'quantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
@@ -271,30 +271,27 @@
                                 $sub_total = $qty * $pro_price;
                                 echo $sub_total;
                                 $net_total = $net_total + $sub_total;
-                            echo "</td>
-                        </tr>
-                    </form>";
-                    echo "<form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+
+                            echo "</td></form>
+                           
+                            <form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
                             <td>
-                                <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'delete' />
-                                <button id = 'pro_btn'>Delete</button>
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'delete' />
+                            <button id = 'pro_btndelete'><img src = '../uploads/delete 1.svg' class='delete'></button></a>
                             </td>
+                            </form>    
                         </tr>
                     </form>";
+
             endwhile;
 
             echo "<form method= 'GET' action = 'checkout.php'>
                     <tr>
+                        <td colspan = '4'></td>
                         <td>
                             Total Amount: ".$net_total."
                             <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                            <button id = 'pro_btn'>Check Out</button>
+                            <button id = 'pro_btn'>Place Order</button>
                         </td>
                     </tr>
                  </form>";
