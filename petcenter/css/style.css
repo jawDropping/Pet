@@ -1,0 +1,575 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  
+  #header {
+    background: white;
+    /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);*/
+    height: 60px;
+    width: 100vw;
+    position: fixed;
+    display: inline-flex;
+  }
+  
+  #logo {
+    width: 10%;
+    height: 70px;
+    float: left;
+    color: #444;
+  }
+  
+  #logo img {
+    width: 35px;
+    height: 35px;
+    margin-right: 20px;
+    margin-top: 10px;
+    float: right;
+  }
+  
+  #link {
+    width: 4%;
+    height: 80%;
+    margin-left: 30px;
+  }
+  .dropcontent {
+    list-style-type: none;
+    display: none;
+    margin-top: 40px;
+    margin-left: -5%;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  }
+  #link:hover .dropcontent {
+    display: inline;
+  }
+  
+  .dropcontent li a {
+    padding: 10px;
+    width: 100%;
+    text-decoration: none;
+    color: #444;
+  }
+  .dropcontent li {
+    width: 100%;
+    display: inline-flex;
+  }
+  .dropcontent li:hover {
+    background: #ddd;
+    transition: 0.5s;
+  }
+  .profileImg {
+    border-radius: 30px;
+    width: 40px;
+    height: 40px;
+    color: #333;
+    float: center;
+    margin-top: 10px;
+  }
+  #search {
+    width: 100%;
+    height: 70px;
+    display: flex;
+  }
+  #search form {
+    height: 100%;
+    width: 100%;
+    display: inline-flex;
+  }
+  
+  #search form input {
+    border: 0.8px solid #555;
+    border-radius: 5px;
+    width: 70%;
+    height: 35px;
+    padding-left: 2%;
+    outline: none;
+    margin-top: 10px;
+    padding-top: 6px;
+    margin-left: 15px;
+  }
+  
+  #search_btn {
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 0.8px solid #444;
+    margin-left: -10px;
+    width: 50px;
+    height: 35px;
+    font-weight: bold;
+    color: #444;
+    margin-top: 10px;
+  }
+  .searchIcon {
+    height: 16px;
+    width: 25px;
+  }
+  
+  #cart_btn {
+    border-radius: 3px;
+    border-width: 0px;
+    width: 10%;
+    height: 36px;
+    background: #5a5bf3;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  #cart_btn a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+  }
+  #login_btn {
+    border-radius: 3px;
+    border: 1px solid #5a5bf3;
+    width: 90%;
+    height: 36px;
+    background: white;
+    color: #333;
+    float: right;
+    margin-top: 10px;
+  }
+  
+  #login_btn a {
+    text-decoration: none;
+    color: #5a5bf3;
+    display: block;
+  }
+  #login_btn:hover {
+    background: #5a5bf3;
+    color: white;
+    transition: 0.5s;
+  }
+  #login_btn:hover a {
+    color: white;
+    transition: 0.5s;
+  }
+  .cart {
+    width: 100%;
+    padding: 1%;
+    box-sizing: border-box;
+    background: #fff;
+    min-height: 480px;
+  }
+  
+  .cart form table {
+    width: 100%;
+  }
+  
+  .cart form table tr th {
+    font-size: 14px;
+    background: #666;
+    height: 40px;
+    line-height: 40px;
+    padding-left: -10px;
+  }
+  
+  .cart form table tr td {
+    font-size: 14px;
+    height: 60px;
+    padding-left: 40px;
+    text-decoration: none;
+  }
+  
+  .cart form table tr td img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .cart form table tr td input[type="number"] {
+    padding-left: 1%;
+    width: 10%;
+    height: 30px;
+  }
+  
+  
+  .cart form table tr td input[type="submit"] {
+    background: #fff;
+    color: #000;
+    width: 20%;
+    height: 30px;
+    border: 1px solid #400040;
+  }
+  
+  .cart form table tr td input[type="submit"]:hover {
+    background: #400040;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .coupon h2 {
+    font-size: 14px;
+    margin-left: 892px;
+    display: block;
+    position: absolute;
+    margin-top: 286px;
+  }
+  
+  .coupon input[type="text"] {
+    position: absolute;
+    width: 12%;
+    height: 35px;
+    border: 1px solid #400040;
+    background: #fff;
+    margin-top: 276px;
+    margin-left: 1090px;
+    border-radius: 3px;
+  }
+  
+  .coupon input[type="text"]:focus {
+    border: 1px solid #400040;
+    text-align: center;
+  }
+  
+  .coupon input[type="submit"] {
+    position: absolute;
+    cursor: pointer;
+    width: 8%;
+    height: 30px;
+    margin-top: 320px;
+    margin-left: 1113px;
+    border: 1px solid #400040;
+    border-radius: 3px;
+  }
+  
+  .coupon input[type="submit"]:hover {
+    background: #400040;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #navbar {
+    width: 100%;
+    height: 40px;
+    background: #ddd;
+    overflow: hidden;
+    padding-top: 60px;
+  }
+  
+  #navbar ul {
+    list-style-type: none;
+    padding-left: 2%;
+  }
+  
+  #navbar ul li {
+    padding: 10px;
+    height: 25px;
+    float: left;
+  }
+  
+  #navbar ul li a {
+    text-decoration: none;
+  }
+  #navbar ul li a:hover {
+    background: white;
+    transition: 0.5s ease-in-out;
+  }
+  
+  #navbar li ul {
+    display: none !important;
+  }
+  
+  #navbar li:hover ul {
+    box-shadow: 5px 5px 5px #2e2e2e;
+    margin-left: -15px;
+    color: white;
+    background: #ddd;
+    margin-top: 5px;
+    display: block !important;
+    width: 150px;
+    z-index: 999;
+    position: absolute;
+  }
+  
+  #navbar li ul li {
+    height: 25px;
+    line-height: 35px;
+    width: 100%;
+  }
+  
+  #navbar li ul li a {
+    display: block;
+    width: 100%;
+    margin-left: -32px;
+    padding-left: 20px;
+  }
+  #navbar a {
+    color: #444;
+    font-family: "Varela Round", sans-serif;
+    font-size: 14px;
+  }
+  
+  #bodyleft {
+    border-radius: 3px;
+    width: 72%;
+    background: #fff;
+    float: left;
+  }
+  
+  #bodyleft h2 {
+    background: #5a5bf3;
+    height: 40px;
+    text-align: left;
+    color: #fff;
+    line-height: 40px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  
+  #bodyleft ul {
+    list-style-type: none;
+    padding-bottom: 1%;
+  }
+  
+  #bodyleft ul li {
+    margin-top: 5px;
+    border-radius: 3px;
+    margin-left: 1%;
+    float: left;
+    width: 31%;
+    min-height: 350px;
+    border: 3px solid #e6e6e6;
+  }
+  
+  #bodyleft ul li a {
+    text-decoration: none;
+    color: #2e2e2e;
+    display: block;
+  }
+  
+  #bodyleft ul li a h4 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  #bodyleft ul li a img {
+    width: 100%;
+    height: 280px;
+  }
+  
+  #pro_btn {
+    width: 30%;
+    height: 30px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #400040;
+    margin-bottom: 25px;
+  }
+  
+  #pro_btn:hover {
+    background: #400040;
+  }
+  
+  #pro_btn:hover a {
+    color: #fff;
+  }
+  
+  #bodyleft h3 {
+    box-shadow: 3px 3px 3px #000;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 3px;
+    height: 35px;
+    background: #400040;
+    color: #fff;
+    padding-left: 5%;
+  }
+  
+  #pro_img {
+    width: 40%;
+    padding: 1%;
+    background: #fff;
+    float: left;
+    box-sizing: border-box;
+  }
+  
+  #pro_img img {
+    height: 450px;
+    width: 100%;
+  }
+  
+  #pro_img ul {
+    list-style-type: none;
+  }
+  
+  #pro_img ul li {
+    float: left;
+    margin-left: 30px;
+  }
+  
+  #pro_img ul li img {
+    width: 80px;
+    height: 80px;
+    margin-left: 10px;
+  }
+  
+  #pro_brand {
+    padding: 1%;
+    box-sizing: border-box;
+    width: 60%;
+    height: 550px;
+    background: #fff;
+    float: left;
+  }
+  
+  #pro_brand ul li {
+    list-style-type: none;
+  }
+  
+  #pro_brand h3 {
+    margin-top: 23px;
+    text-align: center;
+    height: 35px;
+    border-bottom: 2px solid #e6e6e6;
+  }
+  
+  #pro_brand h4 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  #pro_brand center form button {
+    width: 180px;
+    height: 35px;
+    background: #fff;
+    border: 1px solid #400040;
+    border-radius: 3px;
+  }
+  
+  #pro_brand center form button:hover {
+    background: #400040;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #buy_now {
+    border-radius: 3px;
+    width: 180px;
+    height: 35px;
+    background: #fff;
+    border: 1px solid #400040;
+  }
+  
+  #buy_now:hover {
+    background: #400040;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #buy_now a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  #sim_pro {
+    margin-top: 20px;
+    background: #fff;
+    width: 100%;
+    height: 350px;
+    padding-bottom: 10px;
+  }
+  
+  #sim_pro ul {
+    list-style-type: none;
+  }
+  
+  #sim_pro ul li:hover {
+    border: 1px solid #400040;
+    border-radius: 3px;
+  }
+  
+  #sim_pro ul li {
+    padding: 0.5%;
+    border: 1px solid #fff;
+    margin-top: 10px;
+    float: left;
+    margin-left: 20px;
+    width: 250px;
+    height: 320px;
+  }
+  
+  #sim_pro ul li a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  #sim_pro ul li a img {
+    width: 250px;
+    height: 250px;
+  }
+  
+  #sim_pro ul li a p {
+    text-align: center;
+  }
+  
+  #sim_pro h3 {
+    background: #400040;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 2%;
+  }
+  
+  #slider {
+    width: 100%;
+  }
+  
+  #slider img {
+    width: 100%;
+    height: 300px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+  
+  #bodyright {
+    border-radius: 3px;
+    width: 28%;
+    float: left;
+    height: 100vh;
+  }
+  
+  #bodyright h2 {
+    background: #800080;
+    height: 40px;
+    text-align: left;
+    color: #fff;
+    line-height: 40px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  
+  #footer {
+    margin-top: 350px;
+    width: 100%;
+    height: 35px;
+    background: #800080;
+  }
+  
+  #footer h2 {
+    text-align: center;
+    color: #fff;
+    line-height: 35px;
+  }
+  
+  #login form table tr td input[type="text"] {
+    border-radius: 5px !important;
+    width: 40px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .profileTable {
+    background: black;
+  }
+  
