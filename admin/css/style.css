@@ -172,10 +172,11 @@ body {
   padding-left: 10px;
   overflow-x: scroll;
   width: 85%;
-  height: 100vh;
+  height: 93vh;
   background: white;
   border-radius: 3px;
   float: left;
+  padding-top: 7vh;
 }
 
 #bodyright h3 {
