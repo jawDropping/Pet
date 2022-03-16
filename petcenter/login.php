@@ -1,7 +1,4 @@
-<?php 
-    include("includes/function.php");
-    echo LogIn();
-?>
+
 <html>
     <head>
     <title>Login</title>
@@ -28,18 +25,21 @@
                 <form method = "POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"; enctype = "multipart/form-data">
                  
                        
-                        <input class = "input" type="text" name = "Username" placeholder = "Username"/>               
-                        <input class = "input"type="password" name = "Password"  placeholder = "Password"/></br>
-                        <p>Or <a href = "/Pet/admin/login.php">Log in as User?</a></p>
+                        <input class = "input" type="text" name = "pet_center_name" placeholder = "Username"/>               
+                        <input class = "input"type="password" name = "pet_center_password"  placeholder = "Password"/></br>
+                        <p>Or <a href = "/Pet/user/login.php">Log in as Customer?</a></p>
                             <button  class = "button" name = "login_user" id = "login_user" >LOGIN</button>
-                            <button  class = "signup" name = "signup" id = "signup"><a href = "/Pet/user/signup.php">SIGNUP</a></button>
+                            <button  class = "signup" name = "signup" id = "signup"><a href = "/Pet/petcenter/signup.php">SIGNUP</a></button>
                         </br>
                      
                     </form>
                 </div>
            
             </div>
-           
+        <?php
+            include ("inc/function.php");
+            call_user_func('LogIn');
+        ?>
     </div>
     </body>
 
@@ -149,9 +149,10 @@
        @media(max-width: 500px){
             .inside{
                 width: 90%;
-                height: 100%;
+
             }
        }
+
     </style>
     <script>
             let input = document.querySelector(".input");
@@ -175,3 +176,6 @@
             }
         </script>
 </html>
+
+
+
