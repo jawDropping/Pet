@@ -258,10 +258,11 @@
 
             echo "<form method= 'GET' action = 'checkout.php'>
                     <tr>
+                        <td colspan = '4'></td>
                         <td>
                             Total Amount: ".$net_total."
                             <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                            <button id = 'pro_btn'>Check Out</button>
+                            <button id = 'pro_btn'>Place Order</button>
                         </td>
                     </tr>
                  </form>";

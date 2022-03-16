@@ -10,6 +10,7 @@
                 
                 <li> <a href = "services.php?services">SERVICES</a></li>
                 <li> <a href = "#">DONATE</a></li>
+                <li> <a href = "#">ORDERS</a></li>
             </ul>
         </div>
         <?php

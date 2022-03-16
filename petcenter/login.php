@@ -76,7 +76,7 @@
         }
         .inside{
             height: 100%;
-            width: 100%;
+            width: 50%;
             padding-top: 20px; 
         }
         .input{
@@ -135,35 +135,23 @@
        }
        @media (max-width: 800px){
            .container{
-               flex-direction: column;
-               margin-top: 0%;
-               height: 100vh;
-               width: 100vw;
-           }
-           .right{
-            background-image: linear-gradient(to bottom left, #5a5bf3, #91e7d9);
-               width:95%;
-               margin-left: 2.5%;
-               transform: translate(0, -180px);
-               border-radius: 10px;
-               height: 100vh;
-           }
-           .left{
-              height: 100vh;
+               margin-left: 0%;
+               margin-right: 0%;
                width: 100%;
            }
-            form{
-               margin-left: 30px;
+       }
+       @media(max-height: 750px){
+           .container{
+               height: 500px;
            }
-        }
-        @media (max-height: 700px){
-            .container{
-                height: 100vh;
+
+       }
+       @media(max-width: 500px){
+            .inside{
+                width: 90%;
+                height: 100%;
             }
-            .right{
-                height: 500px;
-            }
-        }
+       }
     </style>
     <script>
             let input = document.querySelector(".input");
