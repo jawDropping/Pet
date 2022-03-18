@@ -9,7 +9,7 @@
                 <li> 
                     <a href = "#">SERVICES</a>
                     <ul>
-                        <?php echo all_services(); ?>
+                        <?php echo viewall_cat(); ?>
                     </ul>
                 </li>
                 <li> <a href = "#">DONATE</a></li>

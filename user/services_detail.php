@@ -10,7 +10,7 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php");  
-            echo services_detail();
+            echo service_detail();
             include ("inc/footer.php");
         ?>
 

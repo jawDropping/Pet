@@ -462,6 +462,45 @@
             ;            
         }
     }
+    function service_detail()
+    {
+        include("inc/db.php");
+
+        if(isset($_GET['cat_id']))
+        {
+            $pro_id = $_GET['cat_id'];
+            $pro_fetch=$con->prepare("SELECT * FROM services WHERE service_id = '$pro_id'");
+            $pro_fetch->setFetchMode(PDO:: FETCH_ASSOC);
+            $pro_fetch->execute();
+
+            $row_pro = $pro_fetch->fetch();
+            $cat_id = $row_pro['service_id'];
+            echo 
+                "<div id = 'pro_img'>
+                    <img src ='../uploads/user_profile/".$row_pro['service_photo']."'/>
+                </div>
+                <div id = 'services_name'>
+                    <label>Service Name: </label>
+                    <h3>".$row_pro['services_name']."</h3>
+                </div>
+                <div id = 'services_name'>
+                    <label>Location: </label>
+                    <h3>".$row_pro['service_loc']."</h3>
+                </div>
+                <div id = 'services_email'>
+                    <label>Email: </label>
+                    <h3>".$row_pro['service_email']."</h3>
+                </div>
+                <div id = 'services_name'>
+                    <label>Contact Number: </label>
+                    <h3>".$row_pro['service_contact_number']."</h3>
+                </div>
+                <div id = 'date_open'>
+                    <label>Date Open: </label>
+                    <h3>".$row_pro['service_date_open']."</h3>
+                </div>";
+        }
+    }
 
     function all_cat() 
     {
@@ -473,6 +512,22 @@
         while($row=$all_cat->fetch()):
             echo "<li>
                     <a href = 'cat_detail.php?cat_id=".$row['prod_id']."'>
+                        ".$row['cat_name']."
+                    </a>
+                  </li>";
+        endwhile;
+    }
+
+    function viewall_cat() 
+    {
+        include("inc/db.php");
+        $all_cat = $con->prepare("SELECT * FROM service_cat");
+        $all_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $all_cat->execute();
+
+        while($row=$all_cat->fetch()):
+            echo "<li>
+                    <a href = 'service_cat_detail.php?cat_id=".$row['cat_id']."'>
                         ".$row['cat_name']."
                     </a>
                   </li>";
@@ -495,42 +550,7 @@
         endwhile;
     }
 
-    function services_detail()
-    {
-        include("inc/db.php");
-        if(isset($_GET['service_id']))
-        {
-            $service_id = $_GET['service_id'];
-            $service = $con->prepare("SELECT * FROM services where service_id = '$service_id'");
-            $service->setFetchMode(PDO:: FETCH_ASSOC);
-            $service->execute();
-
-            while($row_service = $service->fetch())
-            {
-                echo 
-                "<div id = 'pro_img'>
-                    <img src ='../uploads/user_profile/".$row_service['service_photo']."'/>
-                 </div>
-                 <div id = 'pro_brand'>
-                    <h3>".$row_service['services_name']."</h3>
-                    <ul>
-                        <li>
-                            <h4>Services Location: ".$row_service['service_loc']."</h4>
-                            <h4>Services Email: ".$row_service['service_email']."</h4> 
-                            <h4>Services Contact Number: ".$row_service['service_contact_number']."</h4> 
-                            <h4>Services Date Open: ".$row_service['service_date_open']."</h4> 
-                        </li>
-                    </ul>
-                    <ul>
-
-                    </ul><br clear = 'all'>
-                    <center>
-                        
-                    </center>
-                </div><br clear = 'all'>";
-            }
-        }
-    }
+    
 
     function cat_detail()
     {
@@ -574,6 +594,45 @@
             endwhile;
         }
     }
+    function service_cat_detail()
+    {
+        include("inc/db.php");
+
+        if(isset($_GET['cat_id']))
+        {
+            //service_cat
+            $cat_id = $_GET['cat_id'];
+            $cat_pro = $con->prepare("SELECT * FROM services where service_id = '$cat_id'");
+            $cat_pro->setFetchMode(PDO:: FETCH_ASSOC);
+            $cat_pro->execute();
+            
+            //services
+            $fetch_cat_name = $con->prepare("SELECT * FROM service_cat WHERE cat_id='$cat_id'");
+            $fetch_cat_name->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_cat_name->execute();
+    
+            $row_cat=$fetch_cat_name->fetch();
+            $cat_id = $row_cat['cat_id'];
+            echo"<h3>".$row_cat['cat_name']."</h3>";
+
+            while($row_cat = $cat_pro->fetch()):
+                echo"
+                    <li>
+                        <a href='service_detail.php?cat_id=".$row_cat['service_id']."'>
+                            <h4>".$row_cat['services_name']."</h4>
+                            <img src ='../uploads/user_profile/".$row_cat['service_photo']."' />
+                            <center>
+                                <button id = 'pro_btn'>
+                                    <a href = 'services_detail.php?cat_id=".$row_cat['service_id']."'>View</a>
+                                </button>
+                            </center>
+                        </a>
+                    </li>
+                    ";
+            endwhile;
+        }
+    }
+
 
     function search() {
         include("inc/db.php");

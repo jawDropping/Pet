@@ -27,6 +27,40 @@
             }
         }
     }
+
+    function add_service_cat()
+    {
+        include("inc/db.php");
+        if(isset($_POST['add_service_cat']))
+        {
+            $cat_name = $_POST['cat_name'];
+            $add_cat = $con->prepare("insert into service_cat(cat_name) values('$cat_name')");
+            
+            if($add_cat->execute())
+            {
+                echo "<script>alert('Category Added Successfully!');</script>"; 
+                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
+            }
+            else
+            {
+                echo "<script>alert('Category Not Added Successfully!');</script>";
+            }
+        }
+    }
+
+    
+
+    function viewall_cat()
+    {   
+        include("inc/db.php");
+        $fetch_cat=$con->prepare("SELECT * from service_cat");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+                            
+        while($row=$fetch_cat->fetch()):
+            echo "<option value = '".$row['cat_id']."'>".$row['cat_name']."</option>";
+        endwhile;
+    }
     
     function add_pet_center_user()
     {
@@ -117,7 +151,11 @@
                     <td><a href = 'edit_service.php?edit_service=".$row['service_id']."'>Edit</a></td>
                     <td><a href = 'delete_service.php?delete_service=".$row['service_id']."'>Delete</a></td>
                  </tr>";
-        endwhile;  
+        endwhile;
+        echo 
+        "<tr>
+        <td><a href = 'addService.php?add_service=".$row['pet_center_id']."'>Add</a></td>
+        </tr>";
     }
 
     function edit_service()

@@ -27,12 +27,22 @@
                         <td>Photo: </td>
                         <td><input type='file' name =  'service_photo' /></td>
                     </tr>
+                    <tr>
+                    <td>Select Category Name: </td>
+                    <td>
+                        <select name = "cat_name">
+                            <?php 
+                                include("inc/function.php");
+                                call_user_func('viewall_cat'); 
+                            ?>
+                        </select>
+                     </td>
+                    </tr>
                 </table>
                 <button name = 'add_service'>Add Service</button>
             </form>
         </div>
     </div>
 <?php
-    include("inc/function.php");
     call_user_func('add_service');
 ?>
