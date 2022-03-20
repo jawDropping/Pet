@@ -325,26 +325,26 @@
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
+            
                 <li>
                     <form method = 'post' enctype='multipart/form-data'>
                     <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
                         <h4>".$row_pro['pro_name']."</h4>
                         <img src ='../uploads/products/".$row_pro['pro_img']."' />
                         <center>
-                            <button id = 'pro_btn'>
+                            <button id = 'pro_btnView'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                             <button id = 'pro_btn' name = 'cart_btn'>
                             Cart
                             </button>
-                            <button id = 'pro_btn'>
-                                <a href = '#'>Wishlist</a>
-                            </button>
+                           
                         </center>
                     </a>
                     </form>
                 </li>
+            
                 ";
         endwhile;
     }
@@ -379,9 +379,7 @@
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                             <button id = 'pro_btn' name = 'cart_btn'>Cart
                             </button>
-                            <button id = 'pro_btn'>
-                                <a href = '#'>Wishlist</a>
-                            </button>
+                            
                         </center>
                     </a>
                     </form>
@@ -578,15 +576,14 @@
                             <h4>".$row_cat['pro_name']."</h4>
                             <img src ='../uploads/products/".$row_cat['pro_img']."' />
                             <center>
-                                <button id = 'pro_btn'>
+                                <button id = 'pro_btnView'>
                                     <a href = 'pro_detail.php?pro_id=".$row_cat['pro_id']."'>View</a>
                                 </button>
+                                <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                                 <button id = 'pro_btn'>
                                     <a href = '#'>Cart</a>
                                 </button>
-                                <button id = 'pro_btn'>
-                                    <a href = '#'>Wishlist</a>
-                                </button>
+                                
                             </center>
                         </a>
                     </li>
@@ -657,15 +654,15 @@
                                 <h4>".$row['pro_name']."</h4>
                                 <img src ='./uploads/products/".$row['pro_img']."' />
                                 <center>
-                                    <button id = 'pro_btn'>
-                                        <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
-                                    </button>
+                                <button id = 'pro_btn'>
+                                <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
+                            </button>
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                                     <button id = 'pro_btn' name = 'cart_btn'>
                                     Cart
                                     </button>
-                                    <button id = 'pro_btn'>
-                                        <a href = '#'>Wishlist</a>
-                                    </button>
+                                   
+                                    
                                 </center>
                             </a>
                         </li>

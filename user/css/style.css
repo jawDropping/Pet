@@ -337,12 +337,12 @@
   float: left;
   width: 31%;
   min-height: 350px;
-  border: 3px solid #e6e6e6;
+
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 #bodyleft ul li a {
   text-decoration: none;
-  color: #2e2e2e;
   display: block;
 }
 
@@ -354,27 +354,45 @@
   text-align: center;
   font-size: 14px;
 }
+h4 {
+  color: #444;
+}
 
 #bodyleft ul li a img {
   width: 100%;
   height: 280px;
 }
-
 #pro_btn {
   width: 30%;
   height: 30px;
-  background: #fff;
+  background: #5a5bf3;
   border-radius: 3px;
-  border: 1px solid #400040;
+  border: 1px solid #5a5bf3;
   margin-bottom: 25px;
+  margin-top: 10px;
+  color: white;
 }
 
 #pro_btn:hover {
-  background: #400040;
+  background: #4343ba;
 }
 
 #pro_btn:hover a {
   color: #fff;
+}
+
+#pro_btnView {
+  width: 30%;
+  height: 30px;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid #5a5bf3;
+  color: #5a5bf3;
+  margin-bottom: 25px;
+  margin-top: 10px;
+}
+#pro_btnView a {
+  color: #5a5bf3;
 }
 
 #bodyleft h3 {
@@ -394,6 +412,7 @@
   background: #fff;
   float: left;
   box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 #pro_img img {
@@ -439,6 +458,7 @@
 #pro_brand h4 {
   margin-top: 40px;
   margin-bottom: 20px;
+  color: #888;
 }
 
 #pro_brand center form button {
@@ -524,7 +544,7 @@
 }
 
 #slider {
-  width: 100%;
+  width: 90%;
   margin-top: 10px;
 }
 
@@ -576,6 +596,6 @@
 }
 .bottomDiv {
   padding: 5px;
-  background: #eee;
+  background: white;
   border-radius: 5px;
 }
