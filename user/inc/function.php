@@ -285,16 +285,27 @@
 
             endwhile;
 
-            echo "<form method= 'GET' action = 'checkout.php'>
-                    <tr>
-                        <td colspan = '4'></td>
-                        <td>
-                            Total Amount: ".$net_total."
-                            <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                            <button id = 'pro_btn'>Place Order</button>
-                        </td>
-                    </tr>
-                 </form>";
+            echo 
+            "<tr>
+                <td colspan = '4'></td>
+                <td>
+                    <form method = 'GET' action = 'checkout.php' enctype = 'multipart/form-data'>
+                        <tr>
+                            <td>
+                                <input type = 'hidden' name = 'net_total' value = ".$net_total." />
+                            </td>
+                            <td>
+                                $net_total
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button name = 'place_order'>Place Order</button></td>
+                        </tr>
+                    </form>
+                </td>
+            </tr>";
+            //<a href = 'checkout.php?check_out=".implode(',',$_SESSION['cart'])."'><button id = 'pro_btn'>Place Order</button></a>
+            //Total Amount: ".$net_total."
         }
         else
         {
@@ -305,6 +316,60 @@
                      <center><a href='/Pet/user/index.php'>Click Here to Buy a Product from our Store!</a></center>
                  </td>";
         }
+    }
+
+    function view_orders()
+    {
+        include("inc/db.php");
+
+        $display_order = $con->prepare("SELECT * FROM order_tbl");
+        $display_order->setFetchMode(PDO:: FETCH_ASSOC);
+        $display_order->execute();
+
+        $row_order = $display_order->fetch();
+        $user_id = $row_order['user_id'];
+        $pro_id = $row_order['pro_id'];
+
+        $display_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+        $display_user->setFetchMode(PDO:: FETCH_ASSOC);
+        $display_user->execute();
+
+        $display_prod = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+        $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
+        $display_prod->execute();
+
+        $row_prod = $display_prod->fetch();
+
+        
+           echo 
+           "<tr>
+                <td>".$row_prod['pro_name']."</td>
+                <td>".$row_order['qty']."</td>
+                <td>".$row_order['total_amount']."</td>
+                <td>Cancel</td>
+            </tr>";
+    
+
+        // include("inc/db.php");
+        // $fetch_pro = $con->prepare("SELECT * from services");
+        // $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        // $fetch_pro->execute();
+
+        // while($row=$fetch_pro->fetch()):
+        //     echo "<tr>
+        //             <td>".$row['services_name']."</td>
+        //             <td>".$row['service_loc']."</td>
+        //             <td>".$row['service_email']."</td>
+        //             <td>".$row['service_contact_number']."</td>
+        //             <td>".$row['service_date_open']."</td>
+        //             <td><a href = 'edit_service.php?edit_service=".$row['service_id']."'>Edit</a></td>
+        //             <td><a href = 'delete_service.php?delete_service=".$row['service_id']."'>Delete</a></td>
+        //          </tr>";
+        // endwhile;
+        // echo 
+        // "<tr>
+        // <td><a href = 'addService.php?add_service=".$row['pet_center_id']."'>Add</a></td>
+        // </tr>";
     }
     
     function dog_food_products()

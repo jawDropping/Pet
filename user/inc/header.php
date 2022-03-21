@@ -41,6 +41,7 @@
                     echo "<img class='profileImg' src = '../uploads/user_profile/".$row['user_profilephoto']."'>
                             <ul class = 'dropcontent'>
                                 <li><a href = 'myProfile.php'>My Profile</a></li>
+                                <li><a href = 'view_order.php'>My Orders</a></li>
                                 <li><a href = 'logout.php'>Log Out</a></li>
                             </ul>";
                     
