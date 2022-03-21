@@ -6,7 +6,7 @@
             <th>Product:</th>
             <th>Quantity</th>
             <th>Total Amount</th>
-            <th>Cancel</th>
+            <th>Action</th>
         </tr>
         <tr>
             <?php
