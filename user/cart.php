@@ -45,7 +45,7 @@
         }
         table{
             background: white;
-            padding: 5px;
+            
             width: 100vw;
         }
         .data{
@@ -68,7 +68,7 @@
         }
         
         .delete{
-            height: 30px;
+            height: 20px;
         }
         #pro_btndelete{
             width: 50%;

@@ -35,6 +35,7 @@
                 </form>
             </div>
         </div>";
+        
         if(isset($_POST['add_user']))
         {
             $user_username = $_POST['user_username'];
@@ -286,24 +287,31 @@
             endwhile;
 
             echo "<form method= 'GET' action = 'checkout.php'>
-                    <tr>
-                        <td colspan = '4'></td>
-                        <td>
+                    <tr style='box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
+                        <td colspan = '4' style='border: none;'></td>
+                        <td style='color:#444; border: none;'>
                             Total Amount: ".$net_total."
                             <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                            <button id = 'pro_btn'>Place Order</button>
+                            </td>
+                            <td style='border: none;'>
+                            <button id = 'pro_btn' style='width: 90%;margin-top: 15px;'>Place Order</button>
                         </td>
                     </tr>
                  </form>";
         }
         else
         {
-            echo "<td>
-                    <h2><center>Your cart is empty!</center</h2
+            echo "
+            <div class='emptyCart'>
+            <img src = '../uploads/empty.svg' class = 'emptyImage'>
+                <td>
+                    <p id = 'cartText'><center>Your cart is empty!</p>
                  </td>
+                 </br>
                  <td>
-                     <center><a href='/Pet/user/index.php'>Click Here to Buy a Product from our Store!</a></center>
-                 </td>";
+                    <a id = 'linkEmpty'href='/Pet/user/index.php'>Click Here to Buy a Product from our Store!</a>
+                 </td>
+            </div>";
         }
     }
     
@@ -580,8 +588,7 @@
                                     <a href = 'pro_detail.php?pro_id=".$row_cat['pro_id']."'>View</a>
                                 </button>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                                <button id = 'pro_btn'>
-                                    <a href = '#'>Cart</a>
+                                <button id = 'pro_btn' name = 'cart_btn'>Cart
                                 </button>
                                 
                             </center>
@@ -649,21 +656,16 @@
             {
                 while($row=$search->fetch()):
                     echo"
+                    </br>
                         <li>
                             <a href='pro_detail.php?pro_id=".$row['pro_id']."'>
                                 <h4>".$row['pro_name']."</h4>
                                 <img src ='./uploads/products/".$row['pro_img']."' />
                                 <center>
-                                <button id = 'pro_btn'>
+                                <button id = 'pro_btnView'>
                                 <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
                             </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                                    <button id = 'pro_btn' name = 'cart_btn'>
-                                    Cart
-                                    </button>
-                                   
-                                    
-                                </center>
+                             </center>
                             </a>
                         </li>
                         ";

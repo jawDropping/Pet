@@ -265,6 +265,8 @@
 }
 
 #navbar ul li a {
+  font-size: 14px;
+  font-family: "Fredoka", sans-serif;
   text-decoration: none;
 }
 #navbar ul li a:hover {
@@ -403,6 +405,7 @@ h4 {
   background: #fff;
   color: #444;
   padding-left: 5%;
+  margin-top: 30px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -598,4 +601,22 @@ h4 {
   padding: 5px;
   background: white;
   border-radius: 5px;
+}
+.emptyCart {
+  height: 70vh;
+  width: 100vw;
+  text-align: center;
+  margin-top: 10vh;
+}
+.emptyImage {
+  height: 25vh;
+  width: 150px;
+}
+#cartText {
+  font-size: 34px;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#linkEmpty {
+  font-size: 12px;
 }
