@@ -10,6 +10,7 @@
         <li><a href = "/Pet/admin/index.php?sales_inventory"><img src="../uploads/sales4.svg" class="navicons">Sales Inventory</a></li>
         <li><a href = "/Pet/admin/index.php?add_products"><img src="../uploads/box.svg" class="navicons">Product Management</a></li>
         <li><a href = "/Pet/admin/index.php?viewall_products"><img src="../uploads/deliver.svg" class="navicons">Deliveries</a></li>
+        <li><a href = "/Pet/admin/index.php?viewall_orders"><img src="../uploads/deliver.svg" class="navicons">Orders</a></li>
         <li><a href= "/Pet/admin/index.php?viewall_users"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
         <li><a href= "/Pet/admin/index.php?viewall_users"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
 
@@ -46,6 +47,10 @@
     if(isset($_GET['viewall_products']))
     {
         include("viewall_products.php");
+    }
+    if(isset($_GET['viewall_orders']))
+    {
+        include("viewall_orders.php");
     }
     if(isset($_GET['add_products']))
     {
