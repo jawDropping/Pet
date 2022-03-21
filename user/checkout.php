@@ -91,6 +91,9 @@
                 <tr>
                     <td><button name = 'place_order'>Place Order</button></td>
                 </tr>
+                <tr>
+                    <td><a href = 'index.php'>Go Home</a></td>
+                </tr>
             </div>
         </form>";
         
