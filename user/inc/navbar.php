@@ -17,6 +17,7 @@
                 </li>
                 <li> <a href = "/Pet/user/index.php?donation">DONATE</a></li>
                 <li> <a href = "/Pet/user/index.php?myPet">MY PET</a></li>
+                <li> <a href = "/Pet/user/index.php?orders">ORDERS</a></li>
             </ul>
         </div>
         <?php
@@ -25,5 +26,8 @@
         }
         if(isset($_GET['donation'])){
             include("donate.php");
+        }
+        if(isset($_GET['orders'])){
+            include("orders.php");
         }
     ?>

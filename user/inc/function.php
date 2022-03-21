@@ -48,7 +48,7 @@
         
             move_uploaded_file($user_profilephoto_tmp,"../uploads/user_profile/$user_profilephoto");
 
-            $add_user = $con->prepare("INSERT INTO users_table (
+            $add_user = $con->prepare("INSERT INTO users_table(
                 user_username,
                 user_password,
                 user_email,
@@ -286,7 +286,7 @@
 
             endwhile;
 
-            echo "<form method= 'GET' action = 'checkout.php'>
+            echo "<form method= 'GET' action = '/Pet/user/index.php?orders'>
                     <tr style='box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
                         <td colspan = '4' style='border: none;'></td>
                         <td style='color:#444; border: none;'>
@@ -298,6 +298,11 @@
                         </td>
                     </tr>
                  </form>";
+
+                 if(isset($_GET['orders']))
+                 {
+                     include("checkout.php");
+                 }
         }
         else
         {

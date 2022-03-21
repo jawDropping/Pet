@@ -1,6 +1,7 @@
 <?php
     if(!isset($_GET['myPet'])){
     if(!isset($_GET['donation'])){
+    if(!isset($_GET['orders'])){
 ?>
 <div id = "bodyleft">
 
@@ -16,6 +17,9 @@
     if(isset($_GET['donation'])){
         include("donate.php");
     }
+    if(isset($_GET['orders'])){
+        include("orders.php");
+    }
     ?>
     <div class="bottomDiv">
     <ul><?php echo dog_food_products(); ?></ul><br clear='all' />
@@ -23,4 +27,4 @@
     </div>
    
 </div><!-- <End of Bodyleft> -->
-<?php }}?>
+<?php }}}?>
