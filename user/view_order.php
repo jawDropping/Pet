@@ -1,6 +1,5 @@
 <div class = "scroll" id ="bodyright">
     <h3>My Order</h3>
-    <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
             <th>Product:</th>
@@ -16,7 +15,6 @@
         </tr>
         <a href = 'index.php'>Go Home</a>
         </table>
-    </form>
 </div>
 
 

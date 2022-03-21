@@ -325,24 +325,18 @@
         if(isset($_GET['user_id']))
         {
             $uID = $_GET['user_id'];
-            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$uID'");
-            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetch_user_username->execute();
-
             $display_order = $con->prepare("SELECT * FROM order_tbl WHERE user_id = '$uID'");
             $display_order->setFetchMode(PDO:: FETCH_ASSOC);
             $display_order->execute(); 
 
-            $row_order = $display_order->fetch();
-            $user_id = $row_order['user_id'];
+            while($row_order = $display_order->fetch()):
+
             $pro_id = $row_order['pro_id'];
-            
             $display_prod = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
             $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
             $display_prod->execute();
 
             $row_prod = $display_prod->fetch();
-
             echo 
             "<tr>
                 <td>".$row_prod['pro_name']."</td>
@@ -350,6 +344,7 @@
                 <td>".$row_order['total_amount']."</td>
                 <td>Cancel</td>
             </tr>";
+           endwhile;
         }    
     }
     
@@ -723,26 +718,5 @@
     }
 ?>
 
-<script>
-
-    var tp = 0;
-    var price = document.getElementsByClassName('price');
-    var quantity = document.getElementsByClassName('quantity');
-    var subtotal = document.getElementsByClassName('subtotal');
-    var total_price = document.getElementsByClassName('total_price');
-
-    function subTotal()
-    {
-        tp=0;
-        for(i=0;i<price.length;i++)
-        {
-            subtotal[i].innerText=(price[i].value)*(quantity[i].value);
-            tp=tp+(price[i].value)*(quantity[i].value);
-        }
-        total_price.innerText=tp;
-    }
-
-    subTotal();
-</script>
 
 
