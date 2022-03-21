@@ -286,6 +286,7 @@
 
             endwhile;
 
+
             echo "<form method= 'GET' action = '/Pet/user/index.php?orders'>
                     <tr style='box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
                         <td colspan = '4' style='border: none;'></td>
@@ -318,6 +319,36 @@
                  </td>
             </div>";
         }
+    }
+
+    function view_orders()
+    {
+        include("inc/db.php");
+        
+        if(isset($_GET['user_id']))
+        {
+            $uID = $_GET['user_id'];
+            $display_order = $con->prepare("SELECT * FROM order_tbl WHERE user_id = '$uID'");
+            $display_order->setFetchMode(PDO:: FETCH_ASSOC);
+            $display_order->execute(); 
+
+            while($row_order = $display_order->fetch()):
+
+            $pro_id = $row_order['pro_id'];
+            $display_prod = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+            $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
+            $display_prod->execute();
+
+            $row_prod = $display_prod->fetch();
+            echo 
+            "<tr>
+                <td>".$row_prod['pro_name']."</td>
+                <td>".$row_order['qty']."</td>
+                <td>".$row_order['total_amount']."</td>
+                <td>Cancel</td>
+            </tr>";
+           endwhile;
+        }    
     }
     
     function dog_food_products()
@@ -681,26 +712,5 @@
     }
 ?>
 
-<script>
-
-    var tp = 0;
-    var price = document.getElementsByClassName('price');
-    var quantity = document.getElementsByClassName('quantity');
-    var subtotal = document.getElementsByClassName('subtotal');
-    var total_price = document.getElementsByClassName('total_price');
-
-    function subTotal()
-    {
-        tp=0;
-        for(i=0;i<price.length;i++)
-        {
-            subtotal[i].innerText=(price[i].value)*(quantity[i].value);
-            tp=tp+(price[i].value)*(quantity[i].value);
-        }
-        total_price.innerText=tp;
-    }
-
-    subTotal();
-</script>
 
 
