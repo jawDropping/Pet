@@ -1,6 +1,6 @@
-<div class="manage_donation">
+<div class="partnerBody">
     <div class="body">
-        <p>Donation for approval</p>
+        <p>Donation Partnered Organizations</p>
        <table>
         <tr>
             <td></td>
@@ -15,7 +15,7 @@
 
 </div>
 <style>
-    .manage_donation{
+    .partnerBody{
         height: 100vh;
         width: 100%;
   
