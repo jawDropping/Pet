@@ -35,6 +35,7 @@
                 </form>
             </div>
         </div>";
+        
         if(isset($_POST['add_user']))
         {
             $user_username = $_POST['user_username'];
@@ -47,7 +48,7 @@
         
             move_uploaded_file($user_profilephoto_tmp,"../uploads/user_profile/$user_profilephoto");
 
-            $add_user = $con->prepare("INSERT INTO users_table (
+            $add_user = $con->prepare("INSERT INTO users_table(
                 user_username,
                 user_password,
                 user_email,
@@ -285,36 +286,38 @@
 
             endwhile;
 
-            echo 
-            "<tr>
-                <td colspan = '4'></td>
-                <td>
-                    <form method = 'GET' action = 'checkout.php' enctype = 'multipart/form-data'>
-                        <tr>
-                            <td>
-                                <input type = 'hidden' name = 'net_total' value = ".$net_total." />
+
+            echo "<form method= 'GET' action = '/Pet/user/index.php?orders'>
+                    <tr style='box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
+                        <td colspan = '4' style='border: none;'></td>
+                        <td style='color:#444; border: none;'>
+                            Total Amount: ".$net_total."
+                            <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
                             </td>
-                            <td>
-                                $net_total
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><button name = 'place_order'>Place Order</button></td>
-                        </tr>
-                    </form>
-                </td>
-            </tr>";
-            //<a href = 'checkout.php?check_out=".implode(',',$_SESSION['cart'])."'><button id = 'pro_btn'>Place Order</button></a>
-            //Total Amount: ".$net_total."
+                            <td style='border: none;'>
+                            <button id = 'pro_btn' style='width: 90%;margin-top: 15px;'>Place Order</button>
+                        </td>
+                    </tr>
+                 </form>";
+
+                 if(isset($_GET['orders']))
+                 {
+                     include("checkout.php");
+                 }
         }
         else
         {
-            echo "<td>
-                    <h2><center>Your cart is empty!</center</h2
+            echo "
+            <div class='emptyCart'>
+            <img src = '../uploads/empty.svg' class = 'emptyImage'>
+                <td>
+                    <p id = 'cartText'><center>Your cart is empty!</p>
                  </td>
+                 </br>
                  <td>
-                     <center><a href='/Pet/user/index.php'>Click Here to Buy a Product from our Store!</a></center>
-                 </td>";
+                    <a id = 'linkEmpty'href='/Pet/user/index.php'>Click Here to Buy a Product from our Store!</a>
+                 </td>
+            </div>";
         }
     }
 
@@ -366,26 +369,26 @@
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
+            
                 <li>
                     <form method = 'post' enctype='multipart/form-data'>
                     <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
                         <h4>".$row_pro['pro_name']."</h4>
                         <img src ='../uploads/products/".$row_pro['pro_img']."' />
                         <center>
-                            <button id = 'pro_btn'>
+                            <button id = 'pro_btnView'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                             <button id = 'pro_btn' name = 'cart_btn'>
                             Cart
                             </button>
-                            <button id = 'pro_btn'>
-                                <a href = '#'>Wishlist</a>
-                            </button>
+                           
                         </center>
                     </a>
                     </form>
                 </li>
+            
                 ";
         endwhile;
     }
@@ -420,9 +423,7 @@
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                             <button id = 'pro_btn' name = 'cart_btn'>Cart
                             </button>
-                            <button id = 'pro_btn'>
-                                <a href = '#'>Wishlist</a>
-                            </button>
+                            
                         </center>
                     </a>
                     </form>
@@ -619,15 +620,13 @@
                             <h4>".$row_cat['pro_name']."</h4>
                             <img src ='../uploads/products/".$row_cat['pro_img']."' />
                             <center>
-                                <button id = 'pro_btn'>
+                                <button id = 'pro_btnView'>
                                     <a href = 'pro_detail.php?pro_id=".$row_cat['pro_id']."'>View</a>
                                 </button>
-                                <button id = 'pro_btn'>
-                                    <a href = '#'>Cart</a>
+                                <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                                <button id = 'pro_btn' name = 'cart_btn'>Cart
                                 </button>
-                                <button id = 'pro_btn'>
-                                    <a href = '#'>Wishlist</a>
-                                </button>
+                                
                             </center>
                         </a>
                     </li>
@@ -693,21 +692,16 @@
             {
                 while($row=$search->fetch()):
                     echo"
+                    </br>
                         <li>
                             <a href='pro_detail.php?pro_id=".$row['pro_id']."'>
                                 <h4>".$row['pro_name']."</h4>
                                 <img src ='./uploads/products/".$row['pro_img']."' />
                                 <center>
-                                    <button id = 'pro_btn'>
-                                        <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
-                                    </button>
-                                    <button id = 'pro_btn' name = 'cart_btn'>
-                                    Cart
-                                    </button>
-                                    <button id = 'pro_btn'>
-                                        <a href = '#'>Wishlist</a>
-                                    </button>
-                                </center>
+                                <button id = 'pro_btnView'>
+                                <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
+                            </button>
+                             </center>
                             </a>
                         </li>
                         ";
