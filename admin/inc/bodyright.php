@@ -5,9 +5,12 @@
     if(!isset($_GET['add_products'])){
     if(!isset($_GET['viewall_products'])){
     if(!isset($_GET['viewall_users'])){
+    if(!isset($_GET['viewall_orders'])){
     if(!isset($_GET['ledger'])){
     if(!isset($_GET['manage_donation'])){
     if(!isset($_GET['manage_partner'])){
+
+
 ?>
 
 <div id = "bodyright">
@@ -25,13 +28,19 @@
         {
             include("edit_sub_cat.php");
         }
-        if(isset($_GET['manage_partner'])){
+        if(isset($_GET['manage_partner']))
+        {
             include("manage_partner.php");
         }
-        if(isset($_GET['ledger'])){
+        if(isset($_GET['ledger']))
+        {
             include("Ledger.php");
+        }
+        if(isset($_GET['viewall_orders']))
+        {
+            include("viewall_orders.php");
         }
     ?>
 </div>
 
-<?php }}}}}}}} ?>
+<?php }}}}}}}}} ?>

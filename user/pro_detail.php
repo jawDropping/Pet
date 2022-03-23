@@ -12,6 +12,7 @@
             include ("inc/navbar.php");  
             echo pro_details();
             include ("inc/footer.php");
+            
         ?>
 
     </body>

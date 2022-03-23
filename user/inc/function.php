@@ -12,23 +12,23 @@
                     <table>
                         <tr>
                             <td>Name: </td>
-                            <td><input type='text' name = 'user_username' /></td>
+                            <td><input type='text' name = 'user_username' required/></td>
                         </tr>
                         <tr>
                             <td>Password: </td>
-                            <td><input type='text' name =  'user_password' /></td>
+                            <td><input type='text' name =  'user_password' required/></td>
                         </tr>
                         <tr>
                             <td>Email: </td>
-                            <td><input type='text' name =  'user_email' /></td>
+                            <td><input type='text' name =  'user_email' required/></td>
                         </tr>
                         <tr>
                             <td>Contact Number: </td>
-                            <td><input type='text' name =  'user_contactnumber' /></td>
+                            <td><input type='text' name =  'user_contactnumber' required/></td>
                         </tr>
                         <tr>
                             <td>Photo: </td>
-                            <td><input type='file' name =  'user_profilephoto' /></td>
+                            <td><input type='file' name =  'user_profilephoto' required/></td>
                         </tr>
                     </table>
                     <button name = 'add_user'>Register</button>
@@ -345,6 +345,7 @@
                 <td>".$row_prod['pro_name']."</td>
                 <td>".$row_order['qty']."</td>
                 <td>".$row_order['total_amount']."</td>
+                <td>".$row_order['order_status']."</td>
                 <td>Cancel</td>
             </tr>";
            endwhile;
@@ -541,6 +542,7 @@
                     <label>Date Open: </label>
                     <h3>".$row_pro['service_date_open']."</h3>
                 </div>";
+            echo "<a href = 'avail_service.php?avail_service=".$row_pro['service_id']."'><button>Reserve Service</button></a>";
         }
     }
 
@@ -623,7 +625,7 @@
                                 <button id = 'pro_btnView'>
                                     <a href = 'pro_detail.php?pro_id=".$row_cat['pro_id']."'>View</a>
                                 </button>
-                                <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                                <input type = 'hidden' value = '".$row_cat['pro_id']."' name = 'pro_id' />
                                 <button id = 'pro_btn' name = 'cart_btn'>Cart
                                 </button>
                                 

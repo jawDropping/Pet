@@ -266,7 +266,7 @@
         $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
         $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_username->execute();
-        
+
         $row_username = $fetch_username->fetch();
 
         $fetch_pro_name=$con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
@@ -280,9 +280,43 @@
                 <td>".$row_pro_name['pro_name']."</td>
                 <td>".$row['qty']."</td>
                 <td>".$row['total_amount']."</td>
-                <td>Remove</td>
+                <td><a href = 'confirm_order.php?confirm_order='".$row['order_id']."'>Confirm</a></td>
             </tr>";
         endwhile;
+    }
+
+    function confirm_user_order()
+    {
+        include("inc/db.php");
+        if(isset($_GET['confirm_order']))
+        {
+            $order_id = $_GET['confirm_order'];
+            $query = $con->prepare("SELECT * FROM order_tbl WHERE order_id = '$order_id'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row = $query->fetch();
+
+            if($row['order_status'] == "FOR DELIVERY")
+            {
+                echo "<script>alert('Delivery Already Confirmed!');</script>";
+                echo "<script>window.open('/Pet/admin/index.php?viewall_orders', '_self');</script>";
+            }
+            else
+            {
+                $update_del_status = $con->prepare("UPDATE order_tbl SET order_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
+                $update_del_status->setFetchMode(PDO:: FETCH_ASSOC);
+                $update_del_status->execute();
+
+                if($update_del_status->execute())
+                {
+                    echo "<script>alert('Delivery Confirmed!');</script>";
+                    echo "<script>window.open('/Pet/admin/index.php?viewall_orders', '_self');</script>";
+                }
+            }
+        }
+
+        
     }
 
     function viewall_sub_category()

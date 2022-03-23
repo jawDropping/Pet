@@ -5,6 +5,7 @@
             <th>Product:</th>
             <th>Quantity</th>
             <th>Total Amount</th>
+            <th>Order Status</th>
             <th>Action</th>
         </tr>
         <tr>
