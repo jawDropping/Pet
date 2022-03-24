@@ -17,39 +17,36 @@
         $display_cart->execute();
     
         $row_user = $fetch_user_username->fetch();
-
+        $net_total = 0;
        echo "Product Details:";
         while($row = $display_cart->fetch()):
+            $qty = array_count_values($_SESSION['cart'])[$row['pro_id']];
+            $pro_price = $row['pro_price'];
+            $sub_total = $qty * $pro_price; 
         echo 
-        "<form method = 'POST' enctype = 'multipart/form-data'>
+        "<form method = 'POST'  enctype = 'multipart/form-data'>
             <div>
                 <tr>";
                 echo "Product Name: ";
                 echo"
                     <td><input type = 'hidden' name = 'pro_id' value = ".$row['pro_id']." /></td>
-                    <td>".$row['pro_name']."</td><br>
+                    <td>".$row['pro_name']."</td>
+                    <td>Qty: </td>
+                    <td><input type = 'hidden' name = 'qty' value = ".array_count_values($_SESSION['cart'])[$row['pro_id']]." /></td>
+                    <td>(x".array_count_values($_SESSION['cart'])[$row['pro_id']].")</td><br>
                 </tr>";
+                $net_total = $net_total + $sub_total;
         endwhile;
             echo"
                 <tr>
-                    <td>Total Cart Items: </td>
-                    <td><input type = 'hidden' name = 'qty' value = ".count($_SESSION['cart'])." /></td>
-                    <td>".count($_SESSION['cart'])."</td><br>
-                </tr>";
-            echo"
-                <tr>
-                    <td>Total Amount to be Paid: </td>
-                    <td><input type = 'hidden' name = 'total_value' value = ".$_GET['net_total']." /></td>
-                    <td>".$_GET['net_total']."</td><br><br>
-                </tr>";
-            
-            echo "
+                <td>Total:".$net_total."</td><br>";
+                echo"</tr>
                 <tr>
                     <td>Your Information ⬇ </td><br>
                 </tr>
                 <tr>
                     <td>Your Name: </td>
-                    <td><input type = 'hidden' name = 'user_username' value = ".$row_user['user_id']." /></td>
+                    <td><input type = 'hidden' name = 'user_id' value = ".$row_user['user_id']." /></td>
                     <td>".$row_user['user_username']."</td><br>
                 </tr>
                 <tr>
@@ -68,7 +65,7 @@
                     <td>".$row_user['user_email']."</td><br>
                 </tr>
                 <tr>
-                    <td><button name = 'place_order'>Place Order</button></td>
+                    <td><a href = 'payorder.php'>Place Order</a></td>
                 </tr>
                 <tr>
                     <td><a href = 'index.php'>Go Home</a></td>
@@ -77,37 +74,7 @@
         </form>";
         
         
-        if(isset($_POST['place_order']))
-        {
-            $userID = $_POST['user_username']; 
-            $cart_items = $_POST['pro_id']; 
-            $qty = $_POST['qty'];
-            $total_amount = $_POST['total_value'];
-
-            $query = $con->prepare("INSERT INTO order_tbl (
-                user_id,
-                pro_id,
-                qty,
-                total_amount
-            )
-            VALUES (
-                '$userID',
-                '$cart_items',
-                '$qty',
-                '$total_amount'
-            )");
-
-            if($query->execute())
-            {
-                echo "<script>alert('Ordered Successfully!');</script>";
-                unset($_SESSION['cart']);
-                echo "<script>window.open('index.php', '_self');</script>";
-            }
-            else
-            {
-                echo "<script>alert('Unsuccessful!');</script>";
-            }
-        }
+       
     }
 ?>
 <style>

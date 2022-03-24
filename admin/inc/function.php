@@ -255,13 +255,13 @@
     function viewall_orders()
     {
         include("inc/db.php");
-        $fetch_order=$con->prepare("SELECT * FROM order_tbl ORDER BY order_id");
+        $fetch_order=$con->prepare("SELECT * FROM orders_tbl ORDER BY order_id");
         $fetch_order->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_order->execute();
 
         while($row=$fetch_order->fetch()):
-        $user_id = $row['user_id'];
-        $pro_id = $row['pro_id'];
+        $user_id = $row['user_username'];
+        $pro_id = $row['pro_name'];
 
         $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
         $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
@@ -291,7 +291,7 @@
         if(isset($_GET['confirm_order']))
         {
             $order_id = $_GET['confirm_order'];
-            $query = $con->prepare("SELECT * FROM order_tbl WHERE order_id = '$order_id'");
+            $query = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
             $query->setFetchMode(PDO:: FETCH_ASSOC);
             $query->execute();
 
@@ -304,7 +304,7 @@
             }
             else
             {
-                $update_del_status = $con->prepare("UPDATE order_tbl SET order_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
+                $update_del_status = $con->prepare("UPDATE orders_tbl SET order_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
                 $update_del_status->setFetchMode(PDO:: FETCH_ASSOC);
                 $update_del_status->execute();
 
@@ -315,8 +315,6 @@
                 }
             }
         }
-
-        
     }
 
     function viewall_sub_category()

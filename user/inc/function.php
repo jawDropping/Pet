@@ -209,20 +209,6 @@
         }
        
     }
-
-    function cart_count()
-    {
-        // include("inc/db.php");
-
-        // $ip = getIp();
-        // $get_cart_item = $con->prepare("SELECT * FROM cart WHERE ip_add='$ip'");
-        // $get_cart_item->execute();
-
-        // $count_cart = $get_cart_item->rowCount();
-
-        // echo $count_cart;
-        //HEHE
-    }
     
     function cart_display()
     {   
@@ -287,18 +273,17 @@
             endwhile;
 
 
-            echo "<form method= 'GET' action = '/Pet/user/index.php?orders'>
-                    <tr style='box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
-                        <td colspan = '4' style='border: none;'></td>
-                        <td style='color:#444; border: none;'>
-                            Total Amount: ".$net_total."
-                            <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                            </td>
-                            <td style='border: none;'>
-                            <button id = 'pro_btn' style='width: 90%;margin-top: 15px;'>Place Order</button>
-                        </td>
-                    </tr>
-                 </form>";
+            echo 
+            "<tr style='box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
+                <td colspan = '4' style='border: none;'></td>
+                <td style='color:#444; border: none;'>
+                    Total Amount: ".$net_total."
+                        <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
+                    </td>
+                    <td style='border: none;'>
+                    <a href = 'checkout.php' id = 'pro_btn' style='width: 90%;margin-top: 15px;' name = 'place_order'>Place Order</a>
+                </td>
+            </tr>";
 
                  if(isset($_GET['orders']))
                  {
@@ -328,28 +313,72 @@
         if(isset($_GET['user_id']))
         {
             $uID = $_GET['user_id'];
-            $display_order = $con->prepare("SELECT * FROM order_tbl WHERE user_id = '$uID'");
+
+            $get_name = $con->prepare("SELECT * FROM users_table WHERE user_id = '$uID'");
+            $get_name->setFetchMode(PDO:: FETCH_ASSOC);
+            $get_name->execute();
+            $row_get_user_id = $get_name->fetch();
+
+            $userID = $row_get_user_id['user_id'];
+            $display_order = $con->prepare("SELECT * FROM orders_tbl WHERE user_id = '$userID'");
             $display_order->setFetchMode(PDO:: FETCH_ASSOC);
-            $display_order->execute(); 
+            $display_order->execute();
+            
 
-            while($row_order = $display_order->fetch()):
+            $net_total = 0;
+           
+            while($row = $display_order->fetch()):
+                $pro_id = $row['pro_id'];
+                $display_prod = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+                $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
+                $display_prod->execute();
+                $row_get_prod_id = $display_prod->fetch();
 
-            $pro_id = $row_order['pro_id'];
-            $display_prod = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-            $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
-            $display_prod->execute();
+                $qty = $row['qty'];
+                $pro_price = $row_get_prod_id['pro_price'];
+                $sub_total = $qty * $pro_price;
 
-            $row_prod = $display_prod->fetch();
+                echo 
+                "<tr>
+                    <td>".$row_get_prod_id['pro_name']."</td>
+                    <td>".$row['qty']."</td>
+                    <td>".$row['delivery_status']."</td>
+                    <td><a href = 'cancel_order.php?cancel_order=".$row['order_id']."'>CANCEL</a></td>
+                </tr>";
+                $net_total = $net_total + $sub_total;
+            endwhile;
             echo 
             "<tr>
-                <td>".$row_prod['pro_name']."</td>
-                <td>".$row_order['qty']."</td>
-                <td>".$row_order['total_amount']."</td>
-                <td>".$row_order['order_status']."</td>
-                <td>Cancel</td>
+                <td>TOTAL AMOUNT: ".$net_total."</td>
             </tr>";
-           endwhile;
         }    
+    }
+
+    function cancel_order()
+    {
+        include("inc/db.php");
+        if(isset($_GET['cancel_order']))
+        {
+            $ordID = $_GET['cancel_order'];
+            $query = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$ordID'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row = $query->fetch();
+            if($row['delivery_status'] == "FOR DELIVERY")
+            {
+                echo "<script>alert('YOUR ORDER IS FOR DELIVERY, UNABLE TO CANCEL');</script>";
+            }
+            else
+            {
+                $del_query = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$ordID'");
+                if($del_query->execute())
+                {
+                    echo "<script>alert('Item Removed Successfully!');</script>";
+                    echo "<script>window.open('view_order.php?user_id=".$row['user_id']."','_self');</script>";
+                }
+            }
+        }
     }
     
     function dog_food_products()
