@@ -1,23 +1,19 @@
 <div id = "navbar">
             <ul>
                 <li>
-                    <a href="/Pet/user/index.php">HOME</a>
+                    <a href="/Pet/user/index.php">Pet Store</a>
                 </li>
                 <li>
-                    <a href = "#">CATEGORIES</a>
-                    <ul>
-                        <?php echo all_cat(); ?>
-                    </ul>
+                    <a href="/Pet/user/index.php">Discover</a>
                 </li>
+                
                 <li> 
-                    <a href = "#">SERVICES</a>
-                    <ul>
-                        <?php echo viewall_cat(); ?>
-                    </ul>
+                    <a href = "#">Services</a>
                 </li>
-                <li> <a href = "/Pet/user/index.php?donation">DONATE</a></li>
-                <li> <a href = "/Pet/user/index.php?myPet">MY PET</a></li>
-                <li> <a href = "/Pet/user/index.php?orders">ORDERS</a></li>
+                
+                <li> <a href = "/Pet/user/index.php?donation">Donate</a></li>
+                <li> <a href = "/Pet/user/index.php?myPet">My Pet</a></li>
+           
             </ul>
         </div>
         <?php
