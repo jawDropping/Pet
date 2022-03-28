@@ -10,7 +10,8 @@
 
 <div id = "header">
     <div id = "logo">
-        <a href = "index.php"><img src = "../uploads/logo2.png" class="logo"/></a>
+        <img src = "../uploads/logo4.svg" class="logo"/>
+        <a href = "index.php">PetSociety</a>
     </div><!-- <End of Logo> -->
    
    
@@ -49,7 +50,7 @@
                 }
                 else
                 {
-                    echo "<button id = 'login_btn'><a href = 'login.php'>LOGIN</a></button>";
+                    echo "<button id = 'login_btn'><a href = 'login.php'>Login</a></button>";
                     echo "<script type='text/javascript'> 
                     document.getElementById('link').style.width = '11%';
                     </script>"; 

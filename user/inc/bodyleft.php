@@ -4,10 +4,37 @@
     if(!isset($_GET['orders'])){
 ?>
 <div id = "bodyleft">
-
-    <div id = "slider">
+<div id = "insideDiv">
+            <div class="contDiv">
+            <img class = "image" src="../uploads/dog.svg" alt="">
+            <a>Dog</a>
+            </div>
+            <div class="contDiv">
+            <img class = "image2" src="../uploads/cat.svg" alt="">
+            <a>Cat</a>
+            </div>
+            <div class="contDiv">
+            <img class = "image" src="../uploads/fish.png" alt="">
+            <a>Fish</a>
+            </div>
+            <div class="contDiv">
+            <img class = "image" src="../uploads/bird.jpg" alt="">
+            <a>Bird</a>
+            </div>
+            <div class="contDiv">
+            <img class = "image" src="../uploads/spider.svg" alt="">
+            <a>others</a>
+            </div>
+        </div>
+        <div id = "slider">
+        <div class="slideHead">
+        <img class = "image" src="../uploads/featureProd.gif" alt="">
         <p>FEATURED PRODUCTS</p>
-        <img src = "/Pet/uploads/slider/pet-food-1.png">
+        </div>
+       
+        <iframe width="100%" height="400px"
+        src="https://www.youtube.com/embed/tgbNymZ7vqY">
+    </iframe>
     </div>
 
     <?php
