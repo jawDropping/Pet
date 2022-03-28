@@ -56,6 +56,15 @@
                         <td>Photo: </td>
                         <td><input type='file' name =  'service_photo' /></td>
                     </tr>
+                    <!-- <tr>
+                        <td>Accept Coupons: </td>
+                        <td>
+                            <input type="checkbox" id="chkCoupon" onclick="ShowHideDiv(this)" /> Yes
+                        </td>  
+                        <td id = "coupon_code" style = "display:none; margin-left: -200px">
+                            Coupon Code: <input type ='text' name = 'coupon_code' value = <?php echo generateRandomString(); ?> readonly/><button>Generate Another Code</button>
+                        </td>
+                    </tr> -->
                     <tr>
                     <td>Select Category Name: </td>
                     <td>
@@ -75,3 +84,22 @@
 <?php
     call_user_func('add_service');
 ?>
+
+<!-- <?php
+    function generateRandomString($length = 8) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    ?>
+
+<script type="text/javascript">
+    function ShowHideDiv(chkCoupon) {
+        var coupon_code = document.getElementById("coupon_code");
+        coupon_code.style.display = chkCoupon.checked ? "block" : "none";
+    }
+</script> -->

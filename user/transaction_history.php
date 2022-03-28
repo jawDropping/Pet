@@ -1,5 +1,4 @@
 
-
 <div class = "scroll" id ="bodyright">
     <h3>Transaction History</h3>
     <table>

@@ -237,7 +237,7 @@
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
                         <tr class ='data'>
                             <td>
-                            <img src = '../uploads/products/".$row_pro['pro_img']."' />
+                            <img class = 'cartDisplayImage' src = '../uploads/products/".$row_pro['pro_img']."' />
                             </td>
                             <td class = 'productNem'>
                                <p> ".$row_pro['pro_name']."</p>
@@ -274,7 +274,7 @@
 
 
             echo 
-            "<tr style='box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
+            "<tr style='height: 70px; box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
                 <td colspan = '4' style='border: none;'></td>
                 <td style='color:#444; border: none;'>
                     Total Amount: ".$net_total."

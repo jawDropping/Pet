@@ -5,7 +5,7 @@
 }
 
 #header {
-  background: white;
+  background: #0080fe;
   /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);*/
   height: 60px;
   width: 100vw;
@@ -18,14 +18,25 @@
   height: 70px;
   float: left;
   color: #444;
+  display: flex;
+  padding-left: 80px;
+  justify-content: center;
 }
 
 #logo img {
   width: 35px;
   height: 35px;
-  margin-right: 20px;
+  margin-right: 10px;
   margin-top: 10px;
   float: right;
+}
+#logo a {
+  text-decoration: none;
+  margin-top: 15px;
+  font-family: "Fredoka One", cursive;
+  color: #ffb830;
+  font-size: 20px;
+  margin-right: 10px;
 }
 
 #link {
@@ -83,13 +94,13 @@
 #search form input {
   border: 0.8px solid #555;
   border-radius: 5px;
-  width: 70%;
+  width: 60%;
   height: 35px;
   padding-left: 2%;
   outline: none;
   margin-top: 10px;
   padding-top: 6px;
-  margin-left: 15px;
+  margin-left: 35px;
 }
 
 #search_btn {
@@ -111,11 +122,11 @@
 #cart_btn {
   border-radius: 3px;
   border-width: 0px;
-  width: 10%;
+  width: 8%;
   height: 36px;
-  background: #5a5bf3;
+  background: white;
   font-weight: bold;
-  color: #fff;
+  color: #444;
   float: right;
   margin-top: 10px;
   margin-right: 10px;
@@ -124,27 +135,29 @@
 
 #cart_btn a {
   text-decoration: none;
-  color: #fff;
+  color: #777;
   display: block;
 }
 #login_btn {
   border-radius: 3px;
-  border: 1px solid #5a5bf3;
-  width: 90%;
+  border: 1px solid #ffb830;
+  width: 80%;
   height: 36px;
-  background: white;
-  color: #333;
+  background: #ffb830;
+  color: #fff;
   float: right;
   margin-top: 10px;
 }
 
 #login_btn a {
   text-decoration: none;
-  color: #5a5bf3;
+  color: #fff;
   display: block;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
 }
 #login_btn:hover {
-  background: #5a5bf3;
+  background: #ffb830;
   color: white;
   transition: 0.5s;
 }
@@ -227,7 +240,47 @@
   border: 1px solid #400040;
   text-align: center;
 }
-
+#insideDiv {
+  display: flex;
+  width: 100%;
+}
+#insideDiv p {
+  padding-right: 10px;
+}
+.image {
+  height: 20px;
+  margin-right: 5px;
+}
+.image2 {
+  height: 15px;
+  margin-right: 5px;
+  margin-top: 2px;
+}
+.contDiv {
+  display: flex;
+  background: #eee;
+  width: 80px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 3px;
+  justify-content: center;
+  border-radius: 5px;
+}
+.contDiv:hover {
+  background: #ffb830;
+  transition: 0.9s;
+  cursor: default;
+}
+.slideHead {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+}
+#gif {
+  width: 120px;
+  height: auto;
+}
 .coupon input[type="submit"] {
   position: absolute;
   cursor: pointer;
@@ -248,7 +301,7 @@
 #navbar {
   width: 100%;
   height: 40px;
-  background: #5a5bf3;
+  background: #0080fe;
   overflow: hidden;
   padding-top: 60px;
 }
@@ -265,8 +318,8 @@
 }
 
 #navbar ul li a {
-  font-size: 14px;
-  font-family: "Fredoka", sans-serif;
+  font-size: 13px;
+  font-weight: bold;
   text-decoration: none;
 }
 #navbar ul li a:active {
@@ -313,9 +366,8 @@
 
 #bodyleft {
   border-radius: 3px;
-  width: 90vw;
-  background: #fff;
-  float: left;
+  width: 85vw;
+  background: white;
   margin-left: 5vw;
   margin-right: 5vw;
 }
@@ -550,11 +602,13 @@ h4 {
 }
 
 #slider {
-  width: 90%;
+  width: 100%;
   margin-top: 10px;
+  font-weight: bold;
+  color: #777;
 }
 
-#slider img {
+#slideImage {
   width: 100%;
   height: 50vh;
   border-bottom-left-radius: 3px;

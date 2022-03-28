@@ -342,6 +342,7 @@
             $row = $fetch_name->fetch();
 
             $pet_center_id = $row['pet_center_id'];
+
             $services_name = $_POST['services_name'];
             $services_loc = $_POST['services_loc'];
             $services_email = $_POST['services_email'];
@@ -372,7 +373,7 @@
             ) 
             VALUES
             (
-                '$pet_center_id',
+                '$petId',
                 '$services_name',
                 '$services_loc',
                 '$services_email',
@@ -393,6 +394,7 @@
             {
                 echo "Unsuccessful!";
             }
+           
         }
     }
 
