@@ -35,11 +35,37 @@
                     <td><input type = 'hidden' name = 'qty' value = ".array_count_values($_SESSION['cart'])[$row['pro_id']]." /></td>
                     <td>(x".array_count_values($_SESSION['cart'])[$row['pro_id']].")</td><br>
                 </tr>";
-                $net_total = $net_total + $sub_total;
+                if($row_user['municipality'] == "mandaue")
+                {  
+                    $net_total = $net_total + 10 + $sub_total;
+                }
+                elseif($row_user['municipality'] == "cebu")
+                {
+                    $net_total = $net_total + 2 + $sub_total;
+                }
+               
         endwhile;
-            echo"
+                if($row_user['municipality'] == "mandaue")
+                {  
+                    echo 
+                    "<tr>
+                    <td>Delivery Fee: P10</td>";
+                }
+                elseif($row_user['municipality'] == "cebu")
+                {
+                    echo
+                    "<tr>
+                    <td>Delivery Fee: P2</td>";
+                }
+                else
+                {
+                    echo
+                    "<tr>
+                    <td>Delivery Fee: P0</td>";
+                }
+                echo "</tr><br>
                 <tr>
-                <td>Total:".$net_total."</td><br>";
+                <td>Total Amount Paid: P".$net_total."</td><br>";
                 echo"</tr>
                 <tr>
                     <td>Your Information ⬇ </td><br>

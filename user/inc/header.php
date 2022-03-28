@@ -42,6 +42,7 @@
                             <ul class = 'dropcontent'>
                                 <li><a href = 'myProfile.php'>My Profile</a></li>
                                 <li><a href = 'view_order.php?user_id=".$row['user_id']."'>My Orders</a></li>
+                                <li><a href = 'transaction_history.php?user_id=".$row['user_id']."'>Transaction History</a></li>
                                 <li><a href = 'logout.php'>Log Out</a></li>
                             </ul>";
                     

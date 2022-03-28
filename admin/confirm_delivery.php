@@ -1,4 +1,4 @@
 <?php
     include("inc/function.php");
-    echo confirm_order();
+    echo confirm_delivery();
 ?>

@@ -154,7 +154,7 @@
         endwhile;
         echo 
         "<tr>
-        <td><a href = 'addService.php?add_service=".$row['pet_center_id']."'>Add</a></td>
+        <td><a href = 'addService.php?add_service=".$_SESSION['pet_center_name']."'>Add</a></td>
         </tr>";
     }
 
@@ -321,7 +321,14 @@
         include ("inc/db.php");
         if(isset($_POST['add_service']))
         {
-            $pet_center_id = $_GET['pet_center_id'];
+            $pet_center_name = $_SESSION['pet_center_name'];
+            $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row = $sql->fetch();
+            $petId = $row['pet_center_id'];
+
             $services_name = $_POST['services_name'];
             $service_loc = $_POST['service_loc'];
             $service_email = $_POST['service_email'];
@@ -344,7 +351,7 @@
             ) 
             VALUES
             (
-                '$pet_center_id',
+                '$petId',
                 '$services_name',
                 '$service_loc',
                 '$service_email',
@@ -361,6 +368,7 @@
             {
                 echo "Unsuccessful!";
             }
+           
         }
     }
 
