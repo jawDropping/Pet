@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <?php
-                echo view_all_products(); 
+                echo viewall_deliveries(); 
             ?>
         </tr>
         </table>

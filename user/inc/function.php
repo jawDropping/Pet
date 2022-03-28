@@ -368,6 +368,12 @@
             if($row['delivery_status'] == "FOR DELIVERY")
             {
                 echo "<script>alert('YOUR ORDER IS FOR DELIVERY, UNABLE TO CANCEL');</script>";
+                echo "<script>window.open('view_order.php?user_id=".$row['user_id']."','_self');</script>";
+            }
+            elseif($row['delivery_status'] == "CONFIRMED")
+            {
+                echo "<script>alert('YOUR ORDER IS ALREADY CONFIRMED!');</script>";
+                echo "<script>window.open('view_order.php?user_id=".$row['user_id']."','_self');</script>";
             }
             else
             {
@@ -379,6 +385,52 @@
                 }
             }
         }
+    }
+
+    function viewall_transactions()
+    {
+        include("inc/db.php");
+        
+        if(isset($_GET['user_id']))
+        {
+            $uID = $_GET['user_id'];
+
+            $get_name = $con->prepare("SELECT * FROM users_table WHERE user_id = '$uID'");
+            $get_name->setFetchMode(PDO:: FETCH_ASSOC);
+            $get_name->execute();
+            $row_get_user_id = $get_name->fetch();
+
+            $userID = $row_get_user_id['user_id'];
+            $display_order = $con->prepare("SELECT * FROM delivery_tbl WHERE user_id = '$userID'");
+            $display_order->setFetchMode(PDO:: FETCH_ASSOC);
+            $display_order->execute();
+            
+            while($row = $display_order->fetch()):
+                $order_id = $row['order_id'];
+
+                $my_orders = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+                $my_orders->setFetchMode(PDO:: FETCH_ASSOC);
+                $my_orders->execute();
+    
+                $row2 = $my_orders->fetch();
+                $pro_id = $row2['pro_id'];
+    
+                $product_order = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+                $product_order->setFetchMode(PDO:: FETCH_ASSOC);
+                $product_order->execute();
+    
+                $row3 = $product_order->fetch();
+                $pro_name = $row3['pro_name'];
+
+                echo 
+                "<tr>
+                    <td>".$pro_name."</td>
+                    <td>".$row2['qty']."</td>
+                    <td>".$row['total_amount']."</td>
+                </tr>";
+            endwhile;
+        
+        }    
     }
     
     function dog_food_products()

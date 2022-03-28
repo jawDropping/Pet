@@ -9,19 +9,48 @@
                     </tr>
                     <tr>
                         <td>Location: </td>
-                        <td><input type='text' name =  'service_loc' /></td>
+                        <td><input type='text' name =  'services_loc' /></td>
                     </tr>
                     <tr>
                         <td>Email: </td>
-                        <td><input type='text' name =  'service_email' /></td>
+                        <td><input type='text' name =  'services_email' /></td>
                     </tr>
                     <tr>
                         <td>Contact Number: </td>
-                        <td><input type='text' name =  'service_contact_number' /></td>
+                        <td><input type='text' name =  'services_contact_number' /></td>
+                    </tr>
+                    <tr>
+                        <td>Service Day From: </td>
+                        <td>
+                            <select name = "day_open">
+                                <?php
+                                     include("inc/function.php");
+                                    call_user_func('days');
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Service Day To: </td>
+                        <td>
+                            <select name = "day_close">
+                                <?php
+                                    call_user_func('days');
+                                ?>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Time Open: </td>
-                        <td><input type='text' name =  'service_date_open' /></td>
+                        <td><input type="time" name =  'time_open' /></td>
+                    </tr>
+                    <tr>
+                        <td>Time Close: </td>
+                        <td><input type="time" name =  'time_close' /></td>
+                    </tr>
+                    <tr>
+                        <td>Service Cost: </td>
+                        <td><input type="text" name =  'service_cost' /></td>
                     </tr>
                     <tr>
                         <td>Photo: </td>
@@ -32,7 +61,7 @@
                     <td>
                         <select name = "cat_name">
                             <?php 
-                                include("inc/function.php");
+                           
                                 call_user_func('viewall_cat'); 
                             ?>
                         </select>

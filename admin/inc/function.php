@@ -260,59 +260,147 @@
         $fetch_order->execute();
 
         while($row=$fetch_order->fetch()):
-        $user_id = $row['user_username'];
-        $pro_id = $row['pro_name'];
+            $user_id = $row['user_id'];
+            $pro_id = $row['pro_id'];
 
-        $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-        $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
-        $fetch_username->execute();
+            $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+            $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_username->execute();
 
-        $row_username = $fetch_username->fetch();
+            $row_username = $fetch_username->fetch();
 
-        $fetch_pro_name=$con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-        $fetch_pro_name->setFetchMode(PDO:: FETCH_ASSOC);
-        $fetch_pro_name->execute();
+            $fetch_pro_name=$con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+            $fetch_pro_name->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_pro_name->execute();
 
-        $row_pro_name = $fetch_pro_name->fetch();
+            $row_pro_name = $fetch_pro_name->fetch();
+                echo 
+                "<tr>
+                    <td>".$row_username['user_username']."</td>
+                    <td>".$row_pro_name['pro_name']."</td>
+                    <td>".$row['qty']."</td>
+                    <td><a href = 'confirm_order.php?order_id=".$row['order_id']."'>Confirm</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total: ".$row_pro_name['pro_price']*$row['qty']."</td>
+                </tr>";
+        endwhile;
+              
+    }
+
+    function viewall_deliveries()
+    {
+        include("inc/db.php");
+        $sql = $con->prepare("SELECT * FROM delivery_tbl");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        while($row = $sql->fetch()):
+            $order_id = $row['order_id'];
+            $user_id = $row['user_id'];
+
+            $sql2 = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql2->execute();
+
+            $sql3 = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+            $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql3->execute();
+
+            $row2 = $sql2->fetch();
+            $row3 = $sql3->fetch();
+
             echo 
             "<tr>
-                <td>".$row_username['user_username']."</td>
-                <td>".$row_pro_name['pro_name']."</td>
-                <td>".$row['qty']."</td>
+                <td>".$row3['user_username']."</td>
+                <td>".$row2['qty']."</td>
                 <td>".$row['total_amount']."</td>
-                <td><a href = 'confirm_order.php?confirm_order='".$row['order_id']."'>Confirm</a></td>
+                <td><a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</td>
             </tr>";
+            
         endwhile;
     }
 
-    function confirm_user_order()
+    function confirm_delivery()
     {
         include("inc/db.php");
-        if(isset($_GET['confirm_order']))
+        if(isset($_GET['confirm_delivery']))
         {
-            $order_id = $_GET['confirm_order'];
-            $query = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+            $delivery_id = $_GET['confirm_delivery'];
+
+            $query = $con->prepare("SELECT * FROM delivery_tbl WHERE delivery_id = '$delivery_id'");
             $query->setFetchMode(PDO:: FETCH_ASSOC);
             $query->execute();
 
             $row = $query->fetch();
-
-            if($row['order_status'] == "FOR DELIVERY")
+            if($row['delivery_status'] == 'CONFIRMED')
             {
-                echo "<script>alert('Delivery Already Confirmed!');</script>";
-                echo "<script>window.open('/Pet/admin/index.php?viewall_orders', '_self');</script>";
+                echo "<script>alert('DELIVERY ALREADY CONFIRMED!');</script>";
+                echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
             }
             else
             {
-                $update_del_status = $con->prepare("UPDATE orders_tbl SET order_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
-                $update_del_status->setFetchMode(PDO:: FETCH_ASSOC);
-                $update_del_status->execute();
+                $order_id = $row['order_id'];
 
-                if($update_del_status->execute())
+                $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED' WHERE delivery_id = '$delivery_id'");
+                $sql2 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'CONFIRMED' WHERE order_id = '$order_id'");
+                $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                if($sql->execute() && $sql2->execute())
                 {
-                    echo "<script>alert('Delivery Confirmed!');</script>";
-                    echo "<script>window.open('/Pet/admin/index.php?viewall_orders', '_self');</script>";
+                    echo "<script>alert('DELIVERY CONFIRMED!');</script>";
+                    echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
                 }
+            }
+        }
+    }
+
+    function confirm_order()
+    {
+        include("inc/db.php");
+        if(isset($_GET['order_id']))
+        {
+            $order_id = $_GET['order_id'];
+    
+            $sql = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+    
+            $row = $sql->fetch();
+    
+            if($row['delivery_status'] == 'FOR DELIVERY')
+            {
+                echo "<script>alert('ITEM ON DELIVERY!');</script>";
+                echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
+            }
+            else
+            {
+                $user_id = $row['user_id'];
+                $qty = $row['qty'];
+                $pro_id = $row['pro_id'];
+        
+                $sql2 = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+        
+                $row2 = $sql2->fetch();
+        
+                $pro_price = $row2['pro_price'];
+        
+                $total_amount = $qty * $pro_price;
+        
+                // $sql3 = $con->prepare("INSERT INTO delivery_tbl(order_id, user_id, total_amount) VALUES($order_id, $user_id, $total_amount)");
+                
+                $sql3 = $con->prepare("INSERT INTO delivery_tbl SET order_id = $order_id, user_id = $user_id, total_amount = $total_amount, delivery_status = 'FOR DELIVERY'");
+                $sql4 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
+                
+                if($sql3->execute() && $sql4->execute())
+                {
+                    echo "<script>alert('DELIVERY ON PROCESS');</script>";
+                    echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
+                }   
             }
         }
     }
@@ -451,7 +539,7 @@
     function viewall_users()
     {
         include("inc/db.php");
-        $fetch_pro = $con->prepare("SELECT * from usercustomer");
+        $fetch_pro = $con->prepare("SELECT * from users_table");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_pro->execute();
 
@@ -460,12 +548,12 @@
         while($row=$fetch_pro->fetch()):
             echo "<tr>
                 <td>".$i++."</td>
-                <td style = 'min-width:200px'>".$row['custUsername']."</td>
-                <td>".$row['custPassword']."</td>
-                <td>".$row['custName']."</td>
-                <td>".$row['custContactInfo']."</td>
+                <td style = 'min-width:200px'>".$row['user_username']."</td>
+                <td>".$row['user_email']."</td>
+                <td>".$row['user_contactnumber']."</td>
+                <td>".$row['user_address']."</td>
                 <td style = 'min-width:200px'>
-                    <img src = '../uploads/user_profile/".$row['profilePic']."'/>
+                    <img src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
                 </td>
                 <td><a href='#'>Edit</a></td>
                 <td><a href='#'>Delete</a></td>
