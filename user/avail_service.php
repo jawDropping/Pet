@@ -2,6 +2,16 @@
     include("inc/db.php");
     if(isset($_GET['avail_service']))
     {
+        $user_username = $_SESSION['user_username'];
+
+        $getUser = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+        $getUser->setFetchMode(PDO:: FETCH_ASSOC);
+        $getUser->execute();
+
+        $row = $getUser->fetch();
+        $user_id = $row['user_id'];
+
+
         $service_id = $_GET['avail_service'];
         $sql = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -10,6 +20,9 @@
 
         echo 
         "<form method = 'POST' enctype = 'multipart/form-data'>
+        <tr>
+            <td><input type = 'hidden' name = 'pet_center_id' value = ".$user_id."</td>
+        </tr>
         <tr>
             <td>Service Cost: </td>
             <td><input type = 'hidden' name = 'service_cost' value = ".$row_service['service_cost']."</td>
@@ -29,6 +42,7 @@
                 </td>
         </tr> -->
         <tr>
+            <input type = 'hidden' name = 'reserve' value = ".$row_service['service_id']." />
             <a href = 'reserve_service.php'>Reserve</a>
         </tr>
         </form>";

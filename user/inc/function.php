@@ -599,29 +599,40 @@
 
             $row_pro = $pro_fetch->fetch();
             $cat_id = $row_pro['service_id'];
+            $day_open = $row_pro['day_open'];
+            $day_close = $row_pro['day_close'];
+
+            $query = $con->prepare("SELECT * FROM daysweek WHERE id = '$day_open'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row = $query->fetch();
+
+            $query = $con->prepare("SELECT * FROM daysweek WHERE id = '$day_close'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row2 = $query->fetch();
+            
+
             echo 
                 "<div id = 'pro_img'>
                     <img src ='../uploads/user_profile/".$row_pro['service_photo']."'/>
+                </div><br><br><br><br>
+                <div>
+                    Service Name: ".$row_pro['services_name']."
                 </div>
-                <div id = 'services_name'>
-                    <label>Service Name: </label>
-                    <h3>".$row_pro['services_name']."</h3>
+                <div>
+                    Time Open: ".$row_pro['time_open']."
                 </div>
-                <div id = 'services_name'>
-                    <label>Location: </label>
-                    <h3>".$row_pro['service_loc']."</h3>
+                <div>
+                    Time Close: ".$row_pro['time_close']."
                 </div>
-                <div id = 'services_email'>
-                    <label>Email: </label>
-                    <h3>".$row_pro['service_email']."</h3>
+                <div>
+                    Day Open From: ".$row['days']." To: ".$row2['days']."
                 </div>
-                <div id = 'services_name'>
-                    <label>Contact Number: </label>
-                    <h3>".$row_pro['service_contact_number']."</h3>
-                </div>
-                <div id = 'date_open'>
-                    <label>Date Open: </label>
-                    <h3>".$row_pro['service_date_open']."</h3>
+                <div>
+                    Service Cost: P".$row_pro['service_cost']."
                 </div>";
             echo "<a href = 'avail_service.php?avail_service=".$row_pro['service_id']."'><button>Reserve Service</button></a>";
         }
