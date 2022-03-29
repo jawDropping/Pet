@@ -20,6 +20,10 @@
                         <td><input type='text' name =  'contact_number' required/></td>
                     </tr>
                     <tr>
+                        <td>Proof of Payment: </td>
+                        <td><input type = 'file' name = 'proof_photo' required /></td>
+                    </tr>
+                    <tr>
                         <td>Suffix: </td>
                         <td>
                             <select name = 'suffix'>
@@ -32,7 +36,7 @@
                         
                     </tr>
                     <tr>
-                        <td>Select Org: </td>
+                        <td>Select Organization: </td>
                         <td>
                             <select name = 'org_name' required>
                                 <?php
