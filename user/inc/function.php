@@ -485,12 +485,20 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>Email Address: </td>
+                            <td><input type = 'email' name = 'email_address' required/></td>
+                        </tr>
+                        <tr>
                             <td>Contact Number: </td>
                             <td><input type='text' name =  'contact_number' required/></td>
                         </tr>
                          <tr>
                             <td>Proof of Payment: </td>
                             <td><input type='file' name =  'proof_photo' required/></td>
+                        </tr>
+                        <tr>
+                            <td><input type = 'hidden' name = 'coupon_code' value = "; echo generateRandomString(); echo ">";
+                            echo "</td>
                         </tr>
                     </table>
                     <button name = 'donate'>Donate!</button>
@@ -505,40 +513,63 @@
             $suffix = $_POST['suffix'];
             $contact_number = $_POST['contact_number'];
             $org_name = $_POST['org_name'];
+            $coupon_code = $_POST['coupon_code'];
+
+            $reciever = $_POST['email_address'];
+            $subject = "Coupon Code";
+            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            $sender = "ianjohn0101@gmail.com";
 
             $proof_photo = $_FILES['proof_photo']['name'];
             $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
         
             move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
 
-            $add_donation = $con->prepare("INSERT INTO donations(
-                transaction_number,
-                first_name,
-                last_name,
-                suffix,
-                contact_number,
-                org_name,
-                proof_photo
-            ) 
-            VALUES (
-                '$transaction_number',
-                '$first_name',
-                '$last_name',
-                '$suffix',
-                '$contact_number',
-                '$org_name',
-                '$proof_photo'
-            )");
-
-            if($add_donation->execute())
+            if(mail($reciever, $subject, $body, $sender))
             {
-                echo "SUCCESSFUL"; 
-            }
-            else
-            {
-                echo "UNSUCCESSFUL";
+                $add_donation = $con->prepare("INSERT INTO donations(
+                    transaction_number,
+                    first_name,
+                    last_name,
+                    suffix,
+                    contact_number,
+                    org_name,
+                    email_address,
+                    coupon_code,
+                    proof_photo
+                ) 
+                VALUES (
+                    '$transaction_number',
+                    '$first_name',
+                    '$last_name',
+                    '$suffix',
+                    '$contact_number',
+                    '$org_name',
+                    '$reciever',
+                    '$coupon_code',
+                    '$proof_photo'
+                )");
+    
+                if($add_donation->execute())
+                {
+                    echo "SUCCESSFUL"; 
+                }
+                else
+                {
+                    echo "UNSUCCESSFUL";
+                }
             }
         }
+    }
+
+    function generateRandomString($length = 8) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
     
     function dog_food_products()
