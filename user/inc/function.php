@@ -448,40 +448,95 @@
     function donate()
     {
         include("inc/db.php");
+        
+        echo "<div id ='signUpForm'>
+        <div class='signUpForm'>
+            <h3>Donate</h3>
+                <form method = 'POST' enctype = 'multipart/form-data'>
+                    <table>
+                        <tr>
+                            <td>Transaction Number: </td>
+                            <td><input type='text' name = 'transaction_number' required/></td>
+                        </tr>
+                        <tr>
+                            <td>Select Organization Name </td>
+                            <td>
+                                <select name = 'org_name'>";
+                                    echo viewall_org();
+                                echo "<select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>First Name: </td>
+                            <td><input type='text' name =  'first_name' required/></td>
+                        </tr>
+                        <tr>
+                            <td>Last Name: </td>
+                            <td><input type='text' name =  'last_name' required/></td>
+                        </tr>
+                        <tr>
+                            <td>Suffix: </td>
+                            <td>
+                                <select name = 'suffix'>
+                                    <option name = 'jr'>jr</option>
+                                    <option name = 'sr'>sr</option>
+                                    <option name = 'N/A'>N/A</option>
+                                </select><label style = 'color:red'>*SELECT N/A IF YOU DON'T HAVE ANY SUFFIX<label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number: </td>
+                            <td><input type='text' name =  'contact_number' required/></td>
+                        </tr>
+                         <tr>
+                            <td>Proof of Payment: </td>
+                            <td><input type='file' name =  'proof_photo' required/></td>
+                        </tr>
+                    </table>
+                    <button name = 'donate'>Donate!</button>
+                </form>
+            </div>
+        </div>";
         if(isset($_POST['donate']))
         {
             $transaction_number = $_POST['transaction_number'];
             $first_name = $_POST['first_name'];
             $last_name = $_POST['last_name'];
-            $contact_number = $_POST['contact_number'];
             $suffix = $_POST['suffix'];
+            $contact_number = $_POST['contact_number'];
+            $org_name = $_POST['org_name'];
 
             $proof_photo = $_FILES['proof_photo']['name'];
             $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
-
+        
             move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
 
-            $add_donation = $con->prepare("INSERT INTO donations
-            (
-                'transaction_number', 
-                'first_name', 
-                'last_name', 
-                'contact_number', 
-                'suffix', 
-                'proof_photo'
-            ) VALUES
-            (
+            $add_donation = $con->prepare("INSERT INTO donations(
+                transaction_number,
+                first_name,
+                last_name,
+                suffix,
+                contact_number,
+                org_name,
+                proof_photo
+            ) 
+            VALUES (
                 '$transaction_number',
                 '$first_name',
                 '$last_name',
-                '$contact_number',
                 '$suffix',
+                '$contact_number',
+                '$org_name',
                 '$proof_photo'
             )");
+
             if($add_donation->execute())
             {
-                echo "<script>alert('Please wait for the confirmation!');</script>";
-                echo "<script>window.open('index.php', '_self');</script>";
+                echo "SUCCESSFUL"; 
+            }
+            else
+            {
+                echo "UNSUCCESSFUL";
             }
         }
     }
