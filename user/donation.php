@@ -36,7 +36,7 @@
                         
                     </tr>
                     <tr>
-                        <td>Select Org: </td>
+                        <td>Select Organization: </td>
                         <td>
                             <select name = 'org_name' required>
                                 <?php

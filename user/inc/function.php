@@ -436,18 +436,13 @@
     function viewall_org()
     {
         include("inc/db.php");
-        $all_org = $con->prepare("SELECT * FROM organizations");
-        $all_org->setFetchMode(PDO:: FETCH_ASSOC);
-        $all_org->execute();
-
-        while($row=$all_org->fetch()):
-            echo "<li>
-                    <a href = 'services_detail.php?service_id=".$row['id']."'>
-                        ".$row['org_name']."
-                    </a>
-                  </li>";
+        $fetch_orgs=$con->prepare("SELECT * from organizations");
+        $fetch_orgs->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_orgs->execute();
+                            
+        while($row=$fetch_orgs->fetch()):
+            echo "<option value = '".$row['id']."'>".$row['org_name']."</option>";
         endwhile;
-
     }
 
     function donate()
