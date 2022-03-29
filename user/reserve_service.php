@@ -1,7 +1,7 @@
 <?php
 
     include("inc/db.php");
-    if(isset($_POST['reserve']))
+    if(isset($_POST['reserve_service']))
     {
         $service_cost = $_POST['service_cost'];
         $reserve_date = $_POST['reserve_date'];

@@ -432,6 +432,64 @@
         
         }    
     }
+
+    function viewall_org()
+    {
+        include("inc/db.php");
+        $all_org = $con->prepare("SELECT * FROM organizations");
+        $all_org->setFetchMode(PDO:: FETCH_ASSOC);
+        $all_org->execute();
+
+        while($row=$all_org->fetch()):
+            echo "<li>
+                    <a href = 'services_detail.php?service_id=".$row['id']."'>
+                        ".$row['org_name']."
+                    </a>
+                  </li>";
+        endwhile;
+
+    }
+
+    function donate()
+    {
+        include("inc/db.php");
+        if(isset($_POST['donate']))
+        {
+            $transaction_number = $_POST['transaction_number'];
+            $first_name = $_POST['first_name'];
+            $last_name = $_POST['last_name'];
+            $contact_number = $_POST['contact_number'];
+            $suffix = $_POST['suffix'];
+
+            $proof_photo = $_FILES['proof_photo']['name'];
+            $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
+
+            move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
+
+            $add_donation = $con->prepare("INSERT INTO donations
+            (
+                'transaction_number', 
+                'first_name', 
+                'last_name', 
+                'contact_number', 
+                'suffix', 
+                'proof_photo'
+            ) VALUES
+            (
+                '$transaction_number',
+                '$first_name',
+                '$last_name',
+                '$contact_number',
+                '$suffix',
+                '$proof_photo'
+            )");
+            if($add_donation->execute())
+            {
+                echo "<script>alert('Please wait for the confirmation!');</script>";
+                echo "<script>window.open('index.php', '_self');</script>";
+            }
+        }
+    }
     
     function dog_food_products()
     {
