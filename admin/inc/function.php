@@ -180,7 +180,11 @@
                        echo" </select>
                     </td>
                 </tr>
-                
+                <tr>
+                    <td>Other Category: </td>
+                    <td><input type='text' name = 'pro_brand' placeholder = 'Other category you prefer..'/></td>
+                    
+                </tr>
                 <tr>
                     <td>Enter Product Brand: </td>
                     <td><input type='text' name = 'pro_brand' required /></td>
@@ -220,17 +224,16 @@
         
     </div>";
 
-    include("inc/db.php");
+       include("inc/db.php");
        if(isset($_POST['add_prod']))
        {
            $pro_name = $_POST['pro_name'];
            $cat_id = $_POST['cat_name'];
            $pro_brand = $_POST['pro_brand'];
            $pro_keyword = $_POST['pro_keyword'];
-           
+
            $pro_img = $_FILES['pro_img']['name'];
            $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
-
            $pro_img2 = $_FILES['pro_img2']['name'];
            $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
            
@@ -247,11 +250,10 @@
            
            $pro_price = $_POST['pro_price'];
            $pro_quantity = $_POST['pro_quantity'];
-
            $add_pro = $con->prepare("insert into product_tbl
            (
                pro_name, 
-               cat_id,  
+               cat_id, 
                pro_brand, 
                pro_img, 
                pro_img2, 
@@ -282,8 +284,7 @@
            {
                 echo "<script>alert('Product Not Added Successfully!');</script>";
            }
-       }
-       
+        }    
     }
 
     function viewall_cat()

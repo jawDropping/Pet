@@ -9,7 +9,7 @@
             <th>Contact Info</th>
             <th>Name</th>
             <th>Image</th>
-            <th>Delete</th>
+            <th>Action</th>
         </tr>
         <tr>
             <?php
