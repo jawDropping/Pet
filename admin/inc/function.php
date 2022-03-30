@@ -154,12 +154,77 @@
 
     function add_product() 
     {
-       include("inc/db.php");
+        echo
+        "<div id ='bodyright'>
+        <div class = 'addProduct'>
+        <h3>Add Products</h3>
+        <form method = 'POST' enctype = 'multipart/form-data'>
+            <div class='formleft'>
+    
+            </div>
+            <div class='formright'>
+    
+            </div>
+            <table>
+                <tr>
+                    <td>Enter Product Name: </td>
+                    <td><input type='text' name = 'pro_name' required/></td>
+                </tr>
+                <tr>
+                    <td>Select Category Name: </td>
+                    <td>
+                        <select name = 'cat_name'>";
+             
+                                echo viewall_cat(); 
+                            
+                       echo" </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Enter Product Brand: </td>
+                    <td><input type='text' name = 'pro_brand' required /></td>
+                </tr>
+                <tr>
+                    <td>Select 1st Product Image: </td>
+                    <td><input type='file' name = 'pro_img' required/></td>
+                </tr>
+                <tr>
+                    <td>Select 2nd Product Image: </td>
+                    <td><input type='file' name = 'pro_img2' required/></td>
+                </tr>
+                <tr>
+                    <td>Select 3rd Product Image: </td>
+                    <td><input type='file' name = 'pro_img3' required/></td>
+                </tr>
+                <tr>
+                    <td>Select 4th Product Image: </td>
+                    <td><input type='file' name = 'pro_img4' required/></td>
+                </tr>
+                <tr>
+                    <td>Enter Price: </td>
+                    <td><input type= 'text' name = 'pro_price' required/></td>
+                </tr>
+                <tr>
+                    <td>Enter Quantity: </td>
+                    <td><input type='text' name = 'pro_quantity' required/></td>
+                </tr>
+                <tr>
+                    <td>Enter KeyWord: </td>
+                    <td><input type= 'text' name = 'pro_keyword' required/></td>
+                </tr>
+            </table>
+            <button name = 'add_prod'>Add Product</button>
+        </form>
+        </div>
+        
+    </div>";
+
+    include("inc/db.php");
        if(isset($_POST['add_prod']))
        {
            $pro_name = $_POST['pro_name'];
            $cat_id = $_POST['cat_name'];
-           $sub_cat_id = $_POST['sub_cat_name'];
            $pro_brand = $_POST['pro_brand'];
            $pro_keyword = $_POST['pro_keyword'];
            
@@ -186,8 +251,7 @@
            $add_pro = $con->prepare("insert into product_tbl
            (
                pro_name, 
-               cat_id, 
-               sub_cat_id, 
+               cat_id,  
                pro_brand, 
                pro_img, 
                pro_img2, 
@@ -200,7 +264,6 @@
             (
                 '$pro_name',
                 '$cat_id',
-                '$sub_cat_id',
                 '$pro_brand',
                 '$pro_img',
                 '$pro_img2',
@@ -220,6 +283,7 @@
                 echo "<script>alert('Product Not Added Successfully!');</script>";
            }
        }
+       
     }
 
     function viewall_cat()
@@ -345,13 +409,34 @@
             {
                 $order_id = $row['order_id'];
 
-                $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED' WHERE delivery_id = '$delivery_id'");
-                $sql2 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'CONFIRMED' WHERE order_id = '$order_id'");
-                $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                if($sql->execute() && $sql2->execute())
+                $fetch_user = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+                $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetch_user->execute();
+
+                $row_user = $fetch_user->fetch();
+                $user_id = $row_user['user_id'];
+
+                $fetch_user_email = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                $fetch_user_email->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetch_user_email->execute();
+
+                $row_user_email = $fetch_user_email->fetch();
+
+                $reciever = $row_user_email['user_email'];
+                $subject = "Coupon Code";
+                $body = "Your Order has been delivered. Thank you for choosing our store!.";
+                $sender = "ianjohn0101@gmail.com";
+
+                if(mail($reciever, $subject, $body, $sender))
                 {
-                    echo "<script>alert('DELIVERY CONFIRMED!');</script>";
-                    echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
+                    $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED' WHERE delivery_id = '$delivery_id'");
+                    $sql2 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'CONFIRMED' WHERE order_id = '$order_id'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    if($sql->execute() && $sql2->execute())
+                    {
+                        echo "<script>alert('DELIVERY CONFIRMED!');</script>";
+                        echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
+                    }
                 }
             }
         }
@@ -380,12 +465,22 @@
                 $user_id = $row['user_id'];
                 $qty = $row['qty'];
                 $pro_id = $row['pro_id'];
+
         
                 $sql2 = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
                 $sql2->setFetchMode(PDO:: FETCH_ASSOC);
                 $sql2->execute();
-        
                 $row2 = $sql2->fetch();
+
+                $sql3 = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql3->execute();
+                $row3 = $sql3->fetch();
+
+                $reciever = $row3['user_email'];
+                $subject = "Coupon Code";
+                $body = "Your Order has been confirmed. Please wait for the delivery to come at your area as soon as possible.";
+                $sender = "ianjohn0101@gmail.com";
         
                 $pro_price = $row2['pro_price'];
         
@@ -393,14 +488,17 @@
         
                 // $sql3 = $con->prepare("INSERT INTO delivery_tbl(order_id, user_id, total_amount) VALUES($order_id, $user_id, $total_amount)");
                 
-                $sql3 = $con->prepare("INSERT INTO delivery_tbl SET order_id = $order_id, user_id = $user_id, total_amount = $total_amount, delivery_status = 'FOR DELIVERY'");
-                $sql4 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
-                
-                if($sql3->execute() && $sql4->execute())
+                if(mail($reciever, $subject, $body, $sender))
                 {
-                    echo "<script>alert('DELIVERY ON PROCESS');</script>";
-                    echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
-                }   
+                    $sql3 = $con->prepare("INSERT INTO delivery_tbl SET order_id = $order_id, user_id = $user_id, total_amount = $total_amount, delivery_status = 'FOR DELIVERY'");
+                    $sql4 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
+                    
+                    if($sql3->execute() && $sql4->execute())
+                    {
+                        echo "<script>alert('DELIVERY ON PROCESS');</script>";
+                        echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
+                    } 
+                }  
             }
         }
     }
