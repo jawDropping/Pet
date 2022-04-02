@@ -340,21 +340,68 @@
 
             $row_pro_name = $fetch_pro_name->fetch();
                 echo 
-                "<tr>
-                    <td>".$row_username['user_username']."</td>
-                    <td>".$row_pro_name['pro_name']."</td>
-                    <td>".$row['qty']."</td>
-                    <td><input type = 'date' name = 'order_id' value = ".$row['order_id']." /></td>
-                    <td><a href = 'confirm_order.php?order_id=".$row['order_id']."'>Confirm</a></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Total: ".$row_pro_name['pro_price']*$row['qty']."</td>
-                </tr>";
+                "<form method = 'POST' enctype = 'multipart/form-data'>
+                   <tr>
+                        <input type = 'hidden' name = 'user_username' value = ".$row_username['user_username']." />
+                        <td>".$row_username['user_username']."</td>
+                  
+                        <input type = 'hidden' name = 'pro_name' value = ".$row_pro_name['pro_name']." />
+                        <td>".$row_pro_name['pro_name']."</td>
+                      
+                        <input type = 'hidden' name = 'qty' value = ".$row['qty']." />
+                        <td>".$row['qty']."</td>
+                  
+                        <td><input type = 'date' name = 'delivery_date' /></td>
+                  
+                        <input type = 'hidden' name = 'confirm_order'/>
+                        <td><button name = 'confirm_order' value = ".$row['order_id'].">Confirm</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>     
+                        <td><input type = 'hidden' name = 'total_amount' value = ".$row_pro_name['pro_price']*$row['qty']." /></td>
+                        <td>Total: ".$row_pro_name['pro_price']*$row['qty']."</td>
+                    </tr>
+                </form>";
         endwhile;
-              
+        if(isset($_POST['confirm_order']))
+        {
+            $order_id = $_POST['confirm_order'];
+            $user_username = $_POST['user_username'];
+            $pro_name = $_POST['pro_name'];
+            $qty = $_POST['qty'];
+            $delivery_date = date('Y-m-d', strtotime($_POST['delivery_date']));
+            $total_amount = $_POST['total_amount'];
+
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row_user = $sql->fetch();
+            $user_id = $row_user['user_id'];
+
+            $receiver = $row_user['user_email'];
+            $subject = "Order Confirmation Mail";
+            $body = "Your Order has been confirmed and it will be delivered on $delivery_date ,please keep your lines open!.";
+            $sender = "ianjohn0101@gmail.com";
+
+            if(mail($receiver, $subject, $body, $sender))
+            {
+                $to_deliver = $con->prepare("INSERT INTO delivery_tbl SET 
+                                order_id = $order_id,
+                                user_id = $user_id,
+                                qty = $qty,
+                                delivery_date = '$delivery_date',
+                                total_amount = $total_amount,
+                                delivery_status = 'FOR DELIVERY'
+                                ");
+                if($to_deliver->execute())
+                {
+                    echo "Item For Delivery";
+                }
+            }
+        }
     }
 
     function viewall_deliveries()
@@ -384,6 +431,7 @@
                 <td>".$row3['user_username']."</td>
                 <td>".$row2['qty']."</td>
                 <td>".$row['total_amount']."</td>
+                <td>".$row['delivery_date']."</td>
                 <td><a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</td>
             </tr>";
             
@@ -410,6 +458,9 @@
             else
             {
                 $order_id = $row['order_id'];
+                $datenow = getdate();
+
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
                 $fetch_user = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                 $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -431,8 +482,8 @@
 
                 if(mail($reciever, $subject, $body, $sender))
                 {
-                    $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED' WHERE delivery_id = '$delivery_id'");
-                    $sql2 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'CONFIRMED' WHERE order_id = '$order_id'");
+                    $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
+                    $sql2 = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
                     $sql->setFetchMode(PDO:: FETCH_ASSOC);
                     if($sql->execute() && $sql2->execute())
                     {

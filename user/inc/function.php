@@ -425,8 +425,9 @@
                 echo 
                 "<tr>
                     <td>".$pro_name."</td>
-                    <td>".$row2['qty']."</td>
+                    <td>".$row['qty']."</td>
                     <td>".$row['total_amount']."</td>
+                    <td>".$row['date_delivered']."</td>
                 </tr>";
             endwhile;
         
