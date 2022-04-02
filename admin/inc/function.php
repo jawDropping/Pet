@@ -344,6 +344,7 @@
                     <td>".$row_username['user_username']."</td>
                     <td>".$row_pro_name['pro_name']."</td>
                     <td>".$row['qty']."</td>
+                    <td><input type = 'date' name = 'order_id' value = ".$row['order_id']." /></td>
                     <td><a href = 'confirm_order.php?order_id=".$row['order_id']."'>Confirm</a></td>
                 </tr>
                 <tr>
@@ -449,58 +450,61 @@
         if(isset($_GET['order_id']))
         {
             $order_id = $_GET['order_id'];
+            $delivery_date = date('Y-m-d', strtotime($_GET['order_id']));
+
+            var_dump($delivery_date);
     
-            $sql = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
-            $sql->setFetchMode(PDO:: FETCH_ASSOC);
-            $sql->execute();
+            // $sql = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+            // $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            // $sql->execute();
     
-            $row = $sql->fetch();
+            // $row = $sql->fetch();
     
-            if($row['delivery_status'] == 'FOR DELIVERY')
-            {
-                echo "<script>alert('ITEM ON DELIVERY!');</script>";
-                echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
-            }
-            else
-            {
-                $user_id = $row['user_id'];
-                $qty = $row['qty'];
-                $pro_id = $row['pro_id'];
+            // if($row['delivery_status'] == 'FOR DELIVERY')
+            // {
+            //     echo "<script>alert('ITEM ON DELIVERY!');</script>";
+            //     echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
+            // }
+            // else
+            // {
+            //     $user_id = $row['user_id'];
+            //     $qty = $row['qty'];
+            //     $pro_id = $row['pro_id'];
 
         
-                $sql2 = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql2->execute();
-                $row2 = $sql2->fetch();
+            //     $sql2 = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+            //     $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+            //     $sql2->execute();
+            //     $row2 = $sql2->fetch();
 
-                $sql3 = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-                $sql3->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql3->execute();
-                $row3 = $sql3->fetch();
+            //     $sql3 = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+            //     $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+            //     $sql3->execute();
+            //     $row3 = $sql3->fetch();
 
-                $reciever = $row3['user_email'];
-                $subject = "Coupon Code";
-                $body = "Your Order has been confirmed. Please wait for the delivery to come at your area as soon as possible.";
-                $sender = "ianjohn0101@gmail.com";
+            //     $reciever = $row3['user_email'];
+            //     $subject = "Coupon Code";
+            //     $body = "Your Order has been confirmed. Please wait for the delivery to come at your area as soon as possible.";
+            //     $sender = "ianjohn0101@gmail.com";
         
-                $pro_price = $row2['pro_price'];
+            //     $pro_price = $row2['pro_price'];
         
-                $total_amount = $qty * $pro_price;
+            //     $total_amount = $qty * $pro_price;
         
-                // $sql3 = $con->prepare("INSERT INTO delivery_tbl(order_id, user_id, total_amount) VALUES($order_id, $user_id, $total_amount)");
+            //     // $sql3 = $con->prepare("INSERT INTO delivery_tbl(order_id, user_id, total_amount) VALUES($order_id, $user_id, $total_amount)");
                 
-                if(mail($reciever, $subject, $body, $sender))
-                {
-                    $sql3 = $con->prepare("INSERT INTO delivery_tbl SET order_id = $order_id, user_id = $user_id, total_amount = $total_amount, delivery_status = 'FOR DELIVERY'");
-                    $sql4 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
+            //     if(mail($reciever, $subject, $body, $sender))
+            //     {
+            //         $sql3 = $con->prepare("INSERT INTO delivery_tbl SET order_id = $order_id, user_id = $user_id, total_amount = $total_amount, delivery_status = 'FOR DELIVERY'");
+            //         $sql4 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
                     
-                    if($sql3->execute() && $sql4->execute())
-                    {
-                        echo "<script>alert('DELIVERY ON PROCESS');</script>";
-                        echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
-                    } 
-                }  
-            }
+            //         if($sql3->execute() && $sql4->execute())
+            //         {
+            //             echo "<script>alert('DELIVERY ON PROCESS');</script>";
+            //             echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
+            //         } 
+            //     }  
+            // }
         }
     }
 
