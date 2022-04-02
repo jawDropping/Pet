@@ -483,9 +483,8 @@
                 if(mail($reciever, $subject, $body, $sender))
                 {
                     $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
-                    $sql2 = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
                     $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                    if($sql->execute() && $sql2->execute())
+                    if($sql->execute())
                     {
                         echo "<script>alert('DELIVERY CONFIRMED!');</script>";
                         echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
