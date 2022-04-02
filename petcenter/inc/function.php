@@ -373,7 +373,7 @@
             ) 
             VALUES
             (
-                '$petId',
+                '$pet_center_id',
                 '$services_name',
                 '$services_loc',
                 '$services_email',
