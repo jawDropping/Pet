@@ -615,6 +615,62 @@
         endwhile;
     }
 
+    function view_all_pets()
+    {
+        include("inc/db.php");
+
+        echo "<a href = 'add_pet.php'>Add Your Own Pet</a>";
+        $viewall_pets = $con->prepare("SELECT * FROM pets");
+        $viewall_pets->setFetchMode(PDO:: FETCH_ASSOC);
+        $viewall_pets->execute();
+
+
+        while($row = $viewall_pets->fetch()):
+        $pet_id = $row['id'];
+        $user_id = $row['user_id'];
+
+        $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                $user->setFetchMode(PDO:: FETCH_ASSOC);
+                $user->execute();
+        
+        $row_user = $user->fetch();
+        $user_username = $row_user['user_username'];
+
+            echo
+            "<li>
+                <form method = 'post' action = 'submit_entries.php' enctype='multipart/form-data'>
+                <a>
+                    <img src ='../uploads/pets/".$row['pet_photo']."' />
+                    <center>
+                    <p>".$user_username.":".$row['pet_details']."</p>
+                        <button id = 'pro_btn' name = 'like'>
+                        Like 👍
+                        </button>
+                    </center>
+                    <div>
+                        Comment: <input type = 'text' name = 'comment' placeholder = 'Write A Comment' required />
+                        <button name = 'submit'>Submit</button>
+                    </div>
+                </a>";
+                $comment = $con->prepare("SELECT * FROM comment_tbl WHERE pet_id = '$pet_id'");
+                $comment->setFetchMode(PDO:: FETCH_ASSOC);
+                $comment->execute();
+                while($row_comment = $comment->fetch()):
+                    $user_id = $row_comment['user_id'];
+            
+                    $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                    $user->setFetchMode(PDO:: FETCH_ASSOC);
+                    $user->execute();
+    
+                    $row_user = $user->fetch();
+                    echo "<img class='profileImg' src = '../uploads/user_profile/".$row_user['user_profilephoto']."'>:".$row_comment['comment']."";
+                    
+                endwhile;
+                echo"</form>
+            </li>";
+        endwhile;
+    }
+
     function fish_food_products()
     {
         include("inc/db.php");
