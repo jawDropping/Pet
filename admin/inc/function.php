@@ -553,6 +553,66 @@
         endwhile;
     }
 
+    function viewall_donations()
+    {
+        include("inc/db.php");
+
+        $get_donations = $con->prepare("SELECT * FROM donations");
+        $get_donations->setFetchMode(PDO:: FETCH_ASSOC);
+        $get_donations->execute();
+
+        while($row = $get_donations->fetch()):
+            echo
+            "<form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>".$row['transaction_number']."</td>
+                    <td>".$row['last_name'].", ".$row['first_name']."</td>
+                    <td>".$row['contact_number']."</td>
+                    <td>".$row['proof_photo']."</td>
+                    <td><button name = 'confirm_donation' value = ".$row['id'].">Confirm</button></td>
+                </tr>
+            </form>";
+        endwhile;
+        if(isset($_POST['confirm_donation']))
+        {
+            $id = $_POST['confirm_donation'];
+            $view_email = $con->prepare("SELECT * FROM donations WHERE id = '$id'");
+            $view_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_email->execute();
+
+            $row = $view_email->fetch();
+            $coupon_code = generateRandomString();
+            
+            $receiver = $row['email_address'];
+            $subject = "Coupon Code";
+            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            $sender = "ianjohn0101@gmail.com";
+
+            if(mail($reciever, $subject, $body, $sender))
+            {
+                $update_tbl = $con->prepare("UPDATE donations SET coupon_code = '$coupon_code' WHERE id = '$id'");
+                $update_tbl->setFetchMode(PDO:: FETCH_ASSOC);
+                $update_tbl->execute();
+
+                if($update_tbl->fetch())
+                {
+                    echo "<script>alert('Donation Confirmed!');</script>";
+                    echo "<script>window.open('index.php?manage_donation','_self');</script>";
+                }
+            }
+        }
+    }
+
+    function generateRandomString($length = 8) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     function edit_cat() 
     {
         include("inc/db.php");

@@ -23,6 +23,18 @@
                             <td><input type='text' name =  'user_email' required/></td>
                         </tr>
                         <tr>
+                            <td>Municipality: </td>
+                            <td><input type='text' name =  'municipality' required/></td>
+                        </tr>
+                        <tr>
+                            <td>Barangay: </td>
+                            <td><input type='text' name =  'barangay' required/></td>
+                        </tr>
+                        <tr>
+                            <td>Full Address: </td>
+                            <td><input type='text' name =  'address' required/></td>
+                        </tr>
+                        <tr>
                             <td>Contact Number: </td>
                             <td><input type='text' name =  'user_contactnumber' required/></td>
                         </tr>
@@ -42,6 +54,9 @@
             $user_password = $_POST['user_password'];
             $user_email = $_POST['user_email'];
             $user_contactnumber = $_POST['user_contactnumber'];
+            $municipality = $_POST['municipality'];
+            $barangay = $_POST['barangay'];
+            $full_address = $_POST['full_address'];
 
             $user_profilephoto = $_FILES['user_profilephoto']['name'];
             $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
@@ -53,6 +68,9 @@
                 user_password,
                 user_email,
                 user_contactnumber,
+                municipality,
+                barangay,
+                full_address,
                 user_profilephoto
             ) 
             VALUES (
@@ -60,6 +78,9 @@
                 '$user_password',
                 '$user_email',
                 '$user_contactnumber',
+                '$municipality',
+                '$barangay',
+                '$full_address',
                 '$user_profilephoto'
             )");
 
@@ -497,10 +518,6 @@
                             <td>Proof of Payment: </td>
                             <td><input type='file' name =  'proof_photo' required/></td>
                         </tr>
-                        <tr>
-                            <td><input type = 'hidden' name = 'coupon_code' value = "; echo generateRandomString(); echo ">";
-                            echo "</td>
-                        </tr>
                     </table>
                     <button name = 'donate'>Donate!</button>
                 </form>
@@ -514,51 +531,48 @@
             $suffix = $_POST['suffix'];
             $contact_number = $_POST['contact_number'];
             $org_name = $_POST['org_name'];
-            $coupon_code = $_POST['coupon_code'];
+            $email_address = $_POST['email_address'];
+            // $coupon_code = $_POST['coupon_code'];
 
-            $reciever = $_POST['email_address'];
-            $subject = "Coupon Code";
-            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
-            $sender = "ianjohn0101@gmail.com";
+            // <tr>
+            //                 <td><input type = 'hidden' name = 'coupon_code' value = "; echo generateRandomString(); echo ">";
+            //                 echo "</td>
+            //             </tr>
+
+            // $reciever = $_POST['email_address'];
+            // $subject = "Coupon Code";
+            // $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            // $sender = "ianjohn0101@gmail.com";
 
             $proof_photo = $_FILES['proof_photo']['name'];
             $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
         
             move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
 
-            if(mail($reciever, $subject, $body, $sender))
+            // if(mail($reciever, $subject, $body, $sender))
+            // {
+                
+            // }
+            $add_donation = $con->prepare("INSERT INTO donations SET
+                            'transaction_number' = $transaction_number,
+                            'first_name' = $first_name,
+                            'last_name' = $last_name,
+                            'suffix' = $suffix,
+                            'contact_number' = $contact_number,
+                            'org_name' = $org_name,
+                            'coupon_code' = '',
+                            'email_address' = $email_address,
+                            'proof_photo' = $proof_photo
+
+            )");
+
+            if($add_donation->execute())
             {
-                $add_donation = $con->prepare("INSERT INTO donations(
-                    transaction_number,
-                    first_name,
-                    last_name,
-                    suffix,
-                    contact_number,
-                    org_name,
-                    email_address,
-                    coupon_code,
-                    proof_photo
-                ) 
-                VALUES (
-                    '$transaction_number',
-                    '$first_name',
-                    '$last_name',
-                    '$suffix',
-                    '$contact_number',
-                    '$org_name',
-                    '$reciever',
-                    '$coupon_code',
-                    '$proof_photo'
-                )");
-    
-                if($add_donation->execute())
-                {
-                    echo "SUCCESSFUL"; 
-                }
-                else
-                {
-                    echo "UNSUCCESSFUL";
-                }
+                echo "SUCCESSFUL"; 
+            }
+            else
+            {
+                echo "UNSUCCESSFUL";
             }
         }
     }
