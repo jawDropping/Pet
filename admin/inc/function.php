@@ -494,70 +494,6 @@
         }
     }
 
-    function confirm_order()
-    {
-        include("inc/db.php");
-        if(isset($_GET['order_id']))
-        {
-            $order_id = $_GET['order_id'];
-            $delivery_date = date('Y-m-d', strtotime($_GET['order_id']));
-
-            var_dump($delivery_date);
-    
-            // $sql = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
-            // $sql->setFetchMode(PDO:: FETCH_ASSOC);
-            // $sql->execute();
-    
-            // $row = $sql->fetch();
-    
-            // if($row['delivery_status'] == 'FOR DELIVERY')
-            // {
-            //     echo "<script>alert('ITEM ON DELIVERY!');</script>";
-            //     echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
-            // }
-            // else
-            // {
-            //     $user_id = $row['user_id'];
-            //     $qty = $row['qty'];
-            //     $pro_id = $row['pro_id'];
-
-        
-            //     $sql2 = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-            //     $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-            //     $sql2->execute();
-            //     $row2 = $sql2->fetch();
-
-            //     $sql3 = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-            //     $sql3->setFetchMode(PDO:: FETCH_ASSOC);
-            //     $sql3->execute();
-            //     $row3 = $sql3->fetch();
-
-            //     $reciever = $row3['user_email'];
-            //     $subject = "Coupon Code";
-            //     $body = "Your Order has been confirmed. Please wait for the delivery to come at your area as soon as possible.";
-            //     $sender = "ianjohn0101@gmail.com";
-        
-            //     $pro_price = $row2['pro_price'];
-        
-            //     $total_amount = $qty * $pro_price;
-        
-            //     // $sql3 = $con->prepare("INSERT INTO delivery_tbl(order_id, user_id, total_amount) VALUES($order_id, $user_id, $total_amount)");
-                
-            //     if(mail($reciever, $subject, $body, $sender))
-            //     {
-            //         $sql3 = $con->prepare("INSERT INTO delivery_tbl SET order_id = $order_id, user_id = $user_id, total_amount = $total_amount, delivery_status = 'FOR DELIVERY'");
-            //         $sql4 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
-                    
-            //         if($sql3->execute() && $sql4->execute())
-            //         {
-            //             echo "<script>alert('DELIVERY ON PROCESS');</script>";
-            //             echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
-            //         } 
-            //     }  
-            // }
-        }
-    }
-
     function viewall_sub_category()
     {
         include("inc/db.php");
@@ -652,42 +588,6 @@
             }
         }
     }
-
-    // function edit_sub_cat()
-    // {
-    //     include("inc/db.php");
-    //     if(isset($_GET['edit_sub_cat']))
-    //     {
-    //         $sub_cat_id = $_GET['edit_sub_cat'];
-    //         $fetch_sub_cat_name = $con->prepare("SELECT * from sub_cat WHERE sub_cat_id='$sub_cat_id'");
-    //         $fetch_sub_cat_name->setFetchMode(PDO:: FETCH_ASSOC);
-    //         $fetch_sub_cat_name->execute();
-    //         $row = $fetch_sub_cat_name->fetch();
-
-    //         echo "<h3>Edit Sub-Category</h3>
-    //         <form method = 'POST'>
-    //             <table>
-    //                 <tr>
-    //                     <td>Sub-Category Name: </td>
-    //                     <td><input type='text' name = 'sub_cat_name' value = '".$row['sub_cat_name']."'/></td>
-    //                 </tr>
-    //             </table>
-    //             <button name = 'update_sub_cat'>Update Sub Category</button>
-    //         </form>";
-
-    //         if(isset($_POST['update_sub_cat']))
-    //         {
-    //             $sub_cat_name = $_POST['sub_cat_name'];
-    //             $update_sub_cat = $con->prepare("UPDATE sub_cat SET sub_cat_name='$sub_cat_name' WHERE sub_cat_id = '$sub_cat_id'");
-                
-    //             if($update_sub_cat->execute())
-    //             {
-    //                 echo "<script>alert('Category Updated Successfully!');</script>";
-    //                 echo "<script>window.open('index.php?viewall_sub_cat','_self');</script>";
-    //             }
-    //         }
-    //     }
-    //}
 
     function viewall_users()
     {
