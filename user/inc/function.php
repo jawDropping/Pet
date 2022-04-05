@@ -680,16 +680,7 @@
     
                     $row_users = $user->fetch();
                     echo "<img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
-                    // if($user_id != $users_id)
-                    // {
-                    //     echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
-                    // }
-                    // else
-                    // {
-                    //     echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
-                    //     echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
-                    //     echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
-                    // }
+             
                     //check kinsay naka login
                     $current_user = $_SESSION['user_username'];
                     $check_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$current_user'");
