@@ -532,27 +532,12 @@
             $contact_number = $_POST['contact_number'];
             $org_name = $_POST['org_name'];
             $email_address = $_POST['email_address'];
-            // $coupon_code = $_POST['coupon_code'];
-
-            // <tr>
-            //                 <td><input type = 'hidden' name = 'coupon_code' value = "; echo generateRandomString(); echo ">";
-            //                 echo "</td>
-            //             </tr>
-
-            // $reciever = $_POST['email_address'];
-            // $subject = "Coupon Code";
-            // $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
-            // $sender = "ianjohn0101@gmail.com";
 
             $proof_photo = $_FILES['proof_photo']['name'];
             $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
         
             move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
 
-            // if(mail($reciever, $subject, $body, $sender))
-            // {
-                
-            // }
             $add_donation = $con->prepare("INSERT INTO donations SET
                             'transaction_number' = $transaction_number,
                             'first_name' = $first_name,
