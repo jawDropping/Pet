@@ -671,15 +671,44 @@
                 $comment->setFetchMode(PDO:: FETCH_ASSOC);
                 $comment->execute();
                 while($row_comment = $comment->fetch()):
-                    $user_id = $row_comment['user_id'];
+                    $users_id = $row_comment['user_id'];
+                    $likes = $row_comment['likes'];
             
-                    $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                    $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
                     $user->setFetchMode(PDO:: FETCH_ASSOC);
                     $user->execute();
     
-                    $row_user = $user->fetch();
-                    echo "<img class='profileImg' src = '../uploads/user_profile/".$row_user['user_profilephoto']."'>:".$row_comment['comment']."";
-                    
+                    $row_users = $user->fetch();
+                    echo "<img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
+                    // if($user_id != $users_id)
+                    // {
+                    //     echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                    // }
+                    // else
+                    // {
+                    //     echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                    //     echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
+                    //     echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
+                    // }
+                    //check kinsay naka login
+                    $current_user = $_SESSION['user_username'];
+                    $check_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$current_user'");
+                    $check_user->setFetchMode(PDO:: FETCH_ASSOC);
+                    $check_user->execute();
+
+                    $row_check_user = $check_user->fetch();
+                    $current_user_id = $row_check_user['user_id'];
+
+                    if($current_user_id == $users_id)
+                    {
+                        echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                        echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
+                        echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
+                    }
+                    else
+                    {
+                        echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                    }
                 endwhile;
                 echo"</form>
             </li>";
