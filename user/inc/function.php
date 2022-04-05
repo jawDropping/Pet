@@ -281,7 +281,7 @@
                         <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
                     </td>
                     <td style='border: none;'>
-                    <a href = 'checkout.php' id = 'pro_btn' style='width: 90%;margin-top: 15px;' name = 'place_order'>Place Order</a>
+                    <a href = 'checkout.php' id = 'pro_btn' style='text-decoration:none; padding: 5px; width: 90%;margin-top: 15px;' name = 'place_order'>Place Order</a>
                 </td>
             </tr>";
 
