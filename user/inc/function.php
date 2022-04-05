@@ -532,27 +532,12 @@
             $contact_number = $_POST['contact_number'];
             $org_name = $_POST['org_name'];
             $email_address = $_POST['email_address'];
-            // $coupon_code = $_POST['coupon_code'];
-
-            // <tr>
-            //                 <td><input type = 'hidden' name = 'coupon_code' value = "; echo generateRandomString(); echo ">";
-            //                 echo "</td>
-            //             </tr>
-
-            // $reciever = $_POST['email_address'];
-            // $subject = "Coupon Code";
-            // $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
-            // $sender = "ianjohn0101@gmail.com";
 
             $proof_photo = $_FILES['proof_photo']['name'];
             $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
         
             move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
 
-            // if(mail($reciever, $subject, $body, $sender))
-            // {
-                
-            // }
             $add_donation = $con->prepare("INSERT INTO donations SET
                             'transaction_number' = $transaction_number,
                             'first_name' = $first_name,
@@ -671,15 +656,40 @@
                 $comment->setFetchMode(PDO:: FETCH_ASSOC);
                 $comment->execute();
                 while($row_comment = $comment->fetch()):
-                    $user_id = $row_comment['user_id'];
+                    $users_id = $row_comment['user_id'];
+                    $likes = $row_comment['likes'];
             
-                    $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                    $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
                     $user->setFetchMode(PDO:: FETCH_ASSOC);
                     $user->execute();
     
-                    $row_user = $user->fetch();
-                    echo "<img class='profileImg' src = '../uploads/user_profile/".$row_user['user_profilephoto']."'>:".$row_comment['comment']."";
-                    
+                    $row_users = $user->fetch();
+                    echo "<img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
+             
+                    //check kinsay naka login
+                    $current_user = $_SESSION['user_username'];
+                    $check_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$current_user'");
+                    $check_user->setFetchMode(PDO:: FETCH_ASSOC);
+                    $check_user->execute();
+
+                    $row_check_user = $check_user->fetch();
+                    $current_user_id = $row_check_user['user_id'];
+
+                    //compare ang id sa user og ang nag comment
+                    //if ang current user naka log in
+                    //maka like edit og comment siya
+                    if($current_user_id == $users_id)
+                    {
+                        echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                        echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
+                        echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
+                    }
+                    //if dili gani siya
+                    //maka like ra siya sa comment sa uban
+                    else
+                    {
+                        echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                    }
                 endwhile;
                 echo"</form>
             </li>";
