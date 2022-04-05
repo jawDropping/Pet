@@ -108,8 +108,7 @@
             $fetchuser->execute();
             $countUser = $fetchuser->rowCount();
 
-            $row = $fetchuser->fetch();
-            $user_role = $row['user_type'];
+            // $row = $fetchuser->fetch();
             if($countUser>0)
             {
                 $_SESSION['user_username'] = $_POST['user_username'];
@@ -483,7 +482,7 @@
                         <tr>
                             <td>Select Organization Name </td>
                             <td>
-                                <select name = 'org_name'>";
+                                <select name = 'org_name' required>";
                                     echo viewall_org();
                                 echo "<select>
                             </td>
@@ -499,7 +498,7 @@
                         <tr>
                             <td>Suffix: </td>
                             <td>
-                                <select name = 'suffix'>
+                                <select name = 'suffix' required>
                                     <option name = 'jr'>jr</option>
                                     <option name = 'sr'>sr</option>
                                     <option name = 'N/A'>N/A</option>
@@ -666,29 +665,32 @@
                     $row_users = $user->fetch();
                     echo "<img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
              
-                    //check kinsay naka login
-                    $current_user = $_SESSION['user_username'];
-                    $check_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$current_user'");
-                    $check_user->setFetchMode(PDO:: FETCH_ASSOC);
-                    $check_user->execute();
-
-                    $row_check_user = $check_user->fetch();
-                    $current_user_id = $row_check_user['user_id'];
-
-                    //compare ang id sa user og ang nag comment
-                    //if ang current user naka log in
-                    //maka like edit og comment siya
-                    if($current_user_id == $users_id)
+                    if(isset($_SESSION['user_username']))
                     {
-                        echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
-                        echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
-                        echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
-                    }
-                    //if dili gani siya
-                    //maka like ra siya sa comment sa uban
-                    else
-                    {
-                        echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                        //check kinsay naka login
+                        $current_user = $_SESSION['user_username'];
+                        $check_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$current_user'");
+                        $check_user->setFetchMode(PDO:: FETCH_ASSOC);
+                        $check_user->execute();
+
+                        $row_check_user = $check_user->fetch();
+                        $current_user_id = $row_check_user['user_id'];
+
+                        //compare ang id sa user og ang nag comment
+                        //if ang current user naka log in
+                        //maka like edit og comment siya
+                        if($current_user_id == $users_id)
+                        {
+                            echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                            echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
+                            echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
+                        }
+                        //if dili gani siya
+                        //maka like ra siya sa comment sa uban
+                        else
+                        {
+                            echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                        }
                     }
                 endwhile;
                 echo"</form>
