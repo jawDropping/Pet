@@ -24,7 +24,7 @@
             include("myPet.php");
         }
         if(isset($_GET['donation'])){
-            include("donate.php");
+            include("donation.php");
         }
         if(isset($_GET['orders'])){
             include("orders.php");
