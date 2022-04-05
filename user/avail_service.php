@@ -1,55 +1,98 @@
-<?php  
+<?php
+    session_start();
     include("inc/db.php");
-    if(isset($_GET['avail_service']))
+
+    if(!isset($_SESSION['user_username']))
     {
-        $service_id = $_GET['avail_service'];
-        $sql = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
-        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        echo "<script>window.open('login.php', '_self');</script>";
+    }
+    else
+    {
+        if(isset($_GET['avail_service']))
+        {
+            $service_id = $_GET['avail_service'];
+            $query = $con->prepare("SELECT * FROM services WHERE service_id = '".$service_id."'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
 
-        $row_service = $sql->fetch();
+            $row = $query->fetch();
 
-        echo 
-        "<form method = 'POST' enctype = 'multipart/form-data'>
-        <tr>
-            <td>Service Cost: </td>
-            <td><input type = 'hidden' name = 'service_cost' value = ".$row_service['service_cost']."</td>
-            <td>".$row_service['service_cost']."</td>
-        </tr>
-        <tr>
-            <td>Date and Time Reservation: </td>
-            <td><input type ='datetime-local' name = 'reservation_date' /></td>
-        </tr>
-        <tr>
-               <td>Accept Coupons: </td>
-               <td>
-                    <input type='checkbox' id='chkCoupon' onclick='ShowHideDiv(this)' /> Yes
-                </td>  
-                <td id = 'coupon_code' style = 'display:none; margin-left: -200px'>
-                    Coupon Code: <input type ='text' name = 'coupon_code' value = ".generateRandomString()." readonly/><button>Generate Another Code</button>
-                </td>
-        </tr> -->
-        <tr>
-            <a href = 'reserve_service.php'>Reserve</a>
-        </tr>
-        </form>";
+            $user_username = $_SESSION['user_username'];
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row2 = $sql->fetch();
+
+            $user_id = $row2['user_id'];
+
+
+            echo 
+            "<form method = 'POST'>
+                <tr>
+                    <td>Service Cost: </td>
+                    <td><input type = 'hidden' name = 'service_cost' value = ".$row['service_cost']." </td>
+                    <td>".$row['service_cost']."</td>
+                </tr><br>
+                <tr>
+                    <td>Reserve Date: </td>
+                    <td><input type = 'date' name = 'reserve_date' /></td>
+                </tr><br>
+                <tr>
+                    <td>
+                        <label>Coupon Code:</label>
+                        <input type = 'text' name = 'coupon_code' placeholder='N/A' />
+                        <label style = color:red>*TYPE N/A IF YOU DON'T HAVE ANY COUPON CODE!</label>
+                    </td>
+                </tr><br>
+                <tr>
+                    <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
+                    <td><button name = 'reserve_service'>RESERVE</button></td>
+                </tr>
+            </form>";
+            if(isset($_POST['reserve_service']))
+            {
+                $service_cost = $_POST['service_cost'];
+                $reserve_date = date('Y-m-d', strtotime($_POST['reserve_date']));
+                $coupon_code = $_POST['coupon_code'];
+        
+                $check_coupon = $con->prepare("SELECT * FROM reserve_services");
+                $check_coupon->setFetchMode(PDO:: FETCH_ASSOC);
+                $check_coupon->execute();
+        
+                $rowCount = $check_coupon->rowCount();
+        
+                if($rowCount > 0)
+                {
+                    echo "Coupon Code already used!";
+                }
+                else
+                {
+                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                        user_id,
+                        service_cost,
+                        reserve_date,
+                        coupon_code
+                    ) 
+                    VALUES (
+                        '$user_id',
+                        '$service_cost',
+                        '$reserve_date',
+                        '$coupon_code'
+                    )");
+        
+                    if($reserve_service->execute())
+                    {
+                        echo "SUCCESSFUL"; 
+                    }
+                    else
+                    {
+                        echo "UNSUCCESSFUL";
+                    }
+                }
+            }
+        }
     }
 ?>
 
-<?php
-    function generateRandomString($length = 8) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-    ?>
-
-<script type="text/javascript">
-    function ShowHideDiv(chkCoupon) {
-        var coupon_code = document.getElementById("coupon_code");
-        coupon_code.style.display = chkCoupon.checked ? "block" : "none";
-    }
-</script>
+       

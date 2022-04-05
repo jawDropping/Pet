@@ -10,6 +10,9 @@
                 <li> 
                     <a href = "#">Services</a>
                 </li>
+                <li>
+                    <a href = '/Pet/user/viewall_pets.php'>View Pets</a>
+                </li>
                 
                 <li> <a href = "/Pet/user/index.php?donation">Donate</a></li>
                 <li> <a href = "/Pet/user/index.php?myPet">My Pet</a></li>
@@ -21,7 +24,7 @@
             include("myPet.php");
         }
         if(isset($_GET['donation'])){
-            include("donate.php");
+            include("donation.php");
         }
         if(isset($_GET['orders'])){
             include("orders.php");

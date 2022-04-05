@@ -3,12 +3,22 @@
         <p>Donation for approval</p>
        <table>
         <tr>
-            <td></td>
-            <td></td>
+            <th>Transaction Number</th>
+
+            <th>Full Name</th>
+
+            <th>Contact Number</th>
+
+            <th>Email Address</th>
+
+            <th>Proof of Payment</th>
+
+            <th>Action</th>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <?php
+                echo viewall_donations();
+            ?>
         </tr>
        </table>
     </div>

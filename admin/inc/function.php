@@ -154,18 +154,86 @@
 
     function add_product() 
     {
+        echo
+        "<div id ='bodyright'>
+        <div class = 'addProduct'>
+        <h3>Add Products</h3>
+        <form method = 'POST' enctype = 'multipart/form-data'>
+            <div class='formleft'>
+    
+            </div>
+            <div class='formright'>
+    
+            </div>
+            <table>
+                <tr>
+                    <td>Enter Product Name: </td>
+                    <td><input type='text' name = 'pro_name' required/></td>
+                </tr>
+                <tr>
+                    <td>Select Category Name: </td>
+                    <td>
+                        <select name = 'cat_name'>";
+             
+                                echo viewall_cat(); 
+                            
+                       echo" </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Other Category: </td>
+                    <td><input type='text' name = 'pro_brand' placeholder = 'Other category you prefer..'/></td>
+                    
+                </tr>
+                <tr>
+                    <td>Enter Product Brand: </td>
+                    <td><input type='text' name = 'pro_brand' required /></td>
+                </tr>
+                <tr>
+                    <td>Select 1st Product Image: </td>
+                    <td><input type='file' name = 'pro_img' required/></td>
+                </tr>
+                <tr>
+                    <td>Select 2nd Product Image: </td>
+                    <td><input type='file' name = 'pro_img2' required/></td>
+                </tr>
+                <tr>
+                    <td>Select 3rd Product Image: </td>
+                    <td><input type='file' name = 'pro_img3' required/></td>
+                </tr>
+                <tr>
+                    <td>Select 4th Product Image: </td>
+                    <td><input type='file' name = 'pro_img4' required/></td>
+                </tr>
+                <tr>
+                    <td>Enter Price: </td>
+                    <td><input type= 'text' name = 'pro_price' required/></td>
+                </tr>
+                <tr>
+                    <td>Enter Quantity: </td>
+                    <td><input type='text' name = 'pro_quantity' required/></td>
+                </tr>
+                <tr>
+                    <td>Enter KeyWord: </td>
+                    <td><input type= 'text' name = 'pro_keyword' required/></td>
+                </tr>
+            </table>
+            <button name = 'add_prod'>Add Product</button>
+        </form>
+        </div>
+        
+    </div>";
+
        include("inc/db.php");
        if(isset($_POST['add_prod']))
        {
            $pro_name = $_POST['pro_name'];
            $cat_id = $_POST['cat_name'];
-           $sub_cat_id = $_POST['sub_cat_name'];
            $pro_brand = $_POST['pro_brand'];
            $pro_keyword = $_POST['pro_keyword'];
-           
+
            $pro_img = $_FILES['pro_img']['name'];
            $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
-
            $pro_img2 = $_FILES['pro_img2']['name'];
            $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
            
@@ -182,12 +250,10 @@
            
            $pro_price = $_POST['pro_price'];
            $pro_quantity = $_POST['pro_quantity'];
-
            $add_pro = $con->prepare("insert into product_tbl
            (
                pro_name, 
                cat_id, 
-               sub_cat_id, 
                pro_brand, 
                pro_img, 
                pro_img2, 
@@ -200,7 +266,6 @@
             (
                 '$pro_name',
                 '$cat_id',
-                '$sub_cat_id',
                 '$pro_brand',
                 '$pro_img',
                 '$pro_img2',
@@ -219,7 +284,7 @@
            {
                 echo "<script>alert('Product Not Added Successfully!');</script>";
            }
-       }
+        }    
     }
 
     function viewall_cat()
@@ -275,20 +340,68 @@
 
             $row_pro_name = $fetch_pro_name->fetch();
                 echo 
-                "<tr>
-                    <td>".$row_username['user_username']."</td>
-                    <td>".$row_pro_name['pro_name']."</td>
-                    <td>".$row['qty']."</td>
-                    <td><a href = 'confirm_order.php?order_id=".$row['order_id']."'>Confirm</a></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Total: ".$row_pro_name['pro_price']*$row['qty']."</td>
-                </tr>";
+                "<form method = 'POST' enctype = 'multipart/form-data'>
+                   <tr>
+                        <input type = 'hidden' name = 'user_username' value = ".$row_username['user_username']." />
+                        <td>".$row_username['user_username']."</td>
+                  
+                        <input type = 'hidden' name = 'pro_name' value = ".$row_pro_name['pro_name']." />
+                        <td>".$row_pro_name['pro_name']."</td>
+                      
+                        <input type = 'hidden' name = 'qty' value = ".$row['qty']." />
+                        <td>".$row['qty']."</td>
+                  
+                        <td><input type = 'date' name = 'delivery_date' /></td>
+                  
+                        <input type = 'hidden' name = 'confirm_order'/>
+                        <td><button name = 'confirm_order' value = ".$row['order_id'].">Confirm</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>     
+                        <td><input type = 'hidden' name = 'total_amount' value = ".$row_pro_name['pro_price']*$row['qty']." /></td>
+                        <td>Total: ".$row_pro_name['pro_price']*$row['qty']."</td>
+                    </tr>
+                </form>";
         endwhile;
-              
+        if(isset($_POST['confirm_order']))
+        {
+            $order_id = $_POST['confirm_order'];
+            $user_username = $_POST['user_username'];
+            $pro_name = $_POST['pro_name'];
+            $qty = $_POST['qty'];
+            $delivery_date = date('Y-m-d', strtotime($_POST['delivery_date']));
+            $total_amount = $_POST['total_amount'];
+
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row_user = $sql->fetch();
+            $user_id = $row_user['user_id'];
+
+            $receiver = $row_user['user_email'];
+            $subject = "Order Confirmation Mail";
+            $body = "Your Order has been confirmed and it will be delivered on $delivery_date ,please keep your lines open!.";
+            $sender = "ianjohn0101@gmail.com";
+
+            if(mail($receiver, $subject, $body, $sender))
+            {
+                $to_deliver = $con->prepare("INSERT INTO delivery_tbl SET 
+                                order_id = $order_id,
+                                user_id = $user_id,
+                                qty = $qty,
+                                delivery_date = '$delivery_date',
+                                total_amount = $total_amount,
+                                delivery_status = 'FOR DELIVERY'
+                                ");
+                if($to_deliver->execute())
+                {
+                    echo "Item For Delivery";
+                }
+            }
+        }
     }
 
     function viewall_deliveries()
@@ -318,6 +431,7 @@
                 <td>".$row3['user_username']."</td>
                 <td>".$row2['qty']."</td>
                 <td>".$row['total_amount']."</td>
+                <td>".$row['delivery_date']."</td>
                 <td><a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</td>
             </tr>";
             
@@ -344,63 +458,38 @@
             else
             {
                 $order_id = $row['order_id'];
+                $datenow = getdate();
 
-                $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED' WHERE delivery_id = '$delivery_id'");
-                $sql2 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'CONFIRMED' WHERE order_id = '$order_id'");
-                $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                if($sql->execute() && $sql2->execute())
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
+                $fetch_user = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+                $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetch_user->execute();
+
+                $row_user = $fetch_user->fetch();
+                $user_id = $row_user['user_id'];
+
+                $fetch_user_email = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                $fetch_user_email->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetch_user_email->execute();
+
+                $row_user_email = $fetch_user_email->fetch();
+
+                $reciever = $row_user_email['user_email'];
+                $subject = "Coupon Code";
+                $body = "Your Order has been delivered. Thank you for choosing our store!.";
+                $sender = "ianjohn0101@gmail.com";
+
+                if(mail($reciever, $subject, $body, $sender))
                 {
-                    echo "<script>alert('DELIVERY CONFIRMED!');</script>";
-                    echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
+                    $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    if($sql->execute())
+                    {
+                        echo "<script>alert('DELIVERY CONFIRMED!');</script>";
+                        echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
+                    }
                 }
-            }
-        }
-    }
-
-    function confirm_order()
-    {
-        include("inc/db.php");
-        if(isset($_GET['order_id']))
-        {
-            $order_id = $_GET['order_id'];
-    
-            $sql = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
-            $sql->setFetchMode(PDO:: FETCH_ASSOC);
-            $sql->execute();
-    
-            $row = $sql->fetch();
-    
-            if($row['delivery_status'] == 'FOR DELIVERY')
-            {
-                echo "<script>alert('ITEM ON DELIVERY!');</script>";
-                echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
-            }
-            else
-            {
-                $user_id = $row['user_id'];
-                $qty = $row['qty'];
-                $pro_id = $row['pro_id'];
-        
-                $sql2 = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql2->execute();
-        
-                $row2 = $sql2->fetch();
-        
-                $pro_price = $row2['pro_price'];
-        
-                $total_amount = $qty * $pro_price;
-        
-                // $sql3 = $con->prepare("INSERT INTO delivery_tbl(order_id, user_id, total_amount) VALUES($order_id, $user_id, $total_amount)");
-                
-                $sql3 = $con->prepare("INSERT INTO delivery_tbl SET order_id = $order_id, user_id = $user_id, total_amount = $total_amount, delivery_status = 'FOR DELIVERY'");
-                $sql4 = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
-                
-                if($sql3->execute() && $sql4->execute())
-                {
-                    echo "<script>alert('DELIVERY ON PROCESS');</script>";
-                    echo "<script>window.open('index.php?viewall_orders', '_self');</script>";
-                }   
             }
         }
     }
@@ -464,6 +553,66 @@
         endwhile;
     }
 
+    function viewall_donations()
+    {
+        include("inc/db.php");
+
+        $get_donations = $con->prepare("SELECT * FROM donations");
+        $get_donations->setFetchMode(PDO:: FETCH_ASSOC);
+        $get_donations->execute();
+
+        while($row = $get_donations->fetch()):
+            echo
+            "<form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>".$row['transaction_number']."</td>
+                    <td>".$row['last_name'].", ".$row['first_name']."</td>
+                    <td>".$row['contact_number']."</td>
+                    <td>".$row['proof_photo']."</td>
+                    <td><button name = 'confirm_donation' value = ".$row['id'].">Confirm</button></td>
+                </tr>
+            </form>";
+        endwhile;
+        if(isset($_POST['confirm_donation']))
+        {
+            $id = $_POST['confirm_donation'];
+            $view_email = $con->prepare("SELECT * FROM donations WHERE id = '$id'");
+            $view_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_email->execute();
+
+            $row = $view_email->fetch();
+            $coupon_code = generateRandomString();
+            
+            $receiver = $row['email_address'];
+            $subject = "Coupon Code";
+            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            $sender = "ianjohn0101@gmail.com";
+
+            if(mail($reciever, $subject, $body, $sender))
+            {
+                $update_tbl = $con->prepare("UPDATE donations SET coupon_code = '$coupon_code' WHERE id = '$id'");
+                $update_tbl->setFetchMode(PDO:: FETCH_ASSOC);
+                $update_tbl->execute();
+
+                if($update_tbl->fetch())
+                {
+                    echo "<script>alert('Donation Confirmed!');</script>";
+                    echo "<script>window.open('index.php?manage_donation','_self');</script>";
+                }
+            }
+        }
+    }
+
+    function generateRandomString($length = 8) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     function edit_cat() 
     {
         include("inc/db.php");
@@ -499,42 +648,6 @@
             }
         }
     }
-
-    // function edit_sub_cat()
-    // {
-    //     include("inc/db.php");
-    //     if(isset($_GET['edit_sub_cat']))
-    //     {
-    //         $sub_cat_id = $_GET['edit_sub_cat'];
-    //         $fetch_sub_cat_name = $con->prepare("SELECT * from sub_cat WHERE sub_cat_id='$sub_cat_id'");
-    //         $fetch_sub_cat_name->setFetchMode(PDO:: FETCH_ASSOC);
-    //         $fetch_sub_cat_name->execute();
-    //         $row = $fetch_sub_cat_name->fetch();
-
-    //         echo "<h3>Edit Sub-Category</h3>
-    //         <form method = 'POST'>
-    //             <table>
-    //                 <tr>
-    //                     <td>Sub-Category Name: </td>
-    //                     <td><input type='text' name = 'sub_cat_name' value = '".$row['sub_cat_name']."'/></td>
-    //                 </tr>
-    //             </table>
-    //             <button name = 'update_sub_cat'>Update Sub Category</button>
-    //         </form>";
-
-    //         if(isset($_POST['update_sub_cat']))
-    //         {
-    //             $sub_cat_name = $_POST['sub_cat_name'];
-    //             $update_sub_cat = $con->prepare("UPDATE sub_cat SET sub_cat_name='$sub_cat_name' WHERE sub_cat_id = '$sub_cat_id'");
-                
-    //             if($update_sub_cat->execute())
-    //             {
-    //                 echo "<script>alert('Category Updated Successfully!');</script>";
-    //                 echo "<script>window.open('index.php?viewall_sub_cat','_self');</script>";
-    //             }
-    //         }
-    //     }
-    //}
 
     function viewall_users()
     {

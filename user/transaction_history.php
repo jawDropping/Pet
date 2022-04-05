@@ -1,3 +1,4 @@
+
 <div class = "scroll" id ="bodyright">
     <h3>Transaction History</h3>
     <table>
@@ -5,6 +6,7 @@
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Total Amount</th>
+            <th>Date Delivered</th>
         </tr>
         <tr>
             <?php

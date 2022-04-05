@@ -9,6 +9,8 @@
             <th>Product Name</th>
         
             <th>Product Quantity</th>
+
+            <th>Delivery Date</th>
            
             <th>Action</th>
         </tr>

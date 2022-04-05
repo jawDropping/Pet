@@ -154,7 +154,7 @@
         endwhile;
         echo 
         "<tr>
-        <td><a href = 'addService.php?add_service=".$_SESSION['pet_center_name']."'>Add</a></td>
+        <td><a href = 'addService.php'>Add</a></td>
         </tr>";
     }
 
@@ -316,24 +316,42 @@
         }
     }
 
+    function days()
+    {
+        include("inc/db.php");
+        $viewdays = $con->prepare("SELECT * FROM daysweek");
+        $viewdays->setFetchMode(PDO:: FETCH_ASSOC);
+        $viewdays->execute();
+
+        while($row=$viewdays->fetch()):
+            echo "<option value = '".$row['id']."'>".$row['days']."</option>";
+        endwhile;
+    }
+
     function add_service()
     {
         include ("inc/db.php");
         if(isset($_POST['add_service']))
         {
             $pet_center_name = $_SESSION['pet_center_name'];
-            $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name'");
-            $sql->setFetchMode(PDO:: FETCH_ASSOC);
-            $sql->execute();
 
-            $row = $sql->fetch();
-            $petId = $row['pet_center_id'];
+            $fetch_name = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name'");
+            $fetch_name->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_name->execute();
+
+            $row = $fetch_name->fetch();
+
+            $pet_center_id = $row['pet_center_id'];
 
             $services_name = $_POST['services_name'];
-            $service_loc = $_POST['service_loc'];
-            $service_email = $_POST['service_email'];
-            $service_contact_number = $_POST['service_contact_number'];
-            $service_date_open = $_POST['service_date_open'];
+            $services_loc = $_POST['services_loc'];
+            $services_email = $_POST['services_email'];
+            $services_contact_number = $_POST['services_contact_number'];
+            $day_open = $_POST['day_open'];
+            $day_close = $_POST['day_close'];
+            $time_open = $_POST['time_open'];
+            $time_close = $_POST['time_close'];
+            $service_cost = $_POST['service_cost'];
 
             $service_photo = $_FILES['service_photo']['name'];
             $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
@@ -343,20 +361,28 @@
             (
                 pet_center_id,
                 services_name,
-                service_loc,
-                service_email,
-                service_contact_number,
-                service_date_open,
+                services_loc,
+                services_email,
+                services_contact_number,
+                day_open,
+                day_close,
+                time_open,
+                time_close,
+                service_cost,
                 service_photo
             ) 
             VALUES
             (
-                '$petId',
+                '$pet_center_id',
                 '$services_name',
-                '$service_loc',
-                '$service_email',
-                '$service_contact_number',
-                '$service_date_open',
+                '$services_loc',
+                '$services_email',
+                '$services_contact_number',
+                '$day_open',
+                '$day_close',
+                '$time_open',
+                '$time_close',
+                '$service_cost',
                 '$service_photo'
             )");
 
