@@ -642,6 +642,7 @@
         while($row = $viewall_pets->fetch()):
         $pet_id = $row['id'];
         $user_id = $row['user_id'];
+        $likes = $row['likes'];
 
         $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                 $user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -657,13 +658,13 @@
                     <img src ='../uploads/pets/".$row['pet_photo']."' />
                     <center>
                     <p>".$user_username.":".$row['pet_details']."</p>
-                        <button id = 'pro_btn' name = 'like'>
-                        Like 👍
-                        </button>
+                        <button id = 'pro_btn' name = 'like' value = ".$row['id'].">
+                        Like 👍 (".$likes.")";
+                        echo "</button>
                     </center>
                     <div>
-                        Comment: <input type = 'text' name = 'comment' placeholder = 'Write A Comment' required />
-                        <button name = 'submit'>Submit</button>
+                        Comment: <input type = 'text' name = 'comment' placeholder = 'Write A Comment' />
+                        <button name = 'submit' value = ".$row['id'].">Submit</button>
                     </div>
                 </a>";
                 $comment = $con->prepare("SELECT * FROM comment_tbl WHERE pet_id = '$pet_id'");
@@ -683,6 +684,7 @@
                 echo"</form>
             </li>";
         endwhile;
+        
     }
 
     function fish_food_products()
