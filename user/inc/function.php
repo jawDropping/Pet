@@ -699,12 +699,17 @@
                     $row_check_user = $check_user->fetch();
                     $current_user_id = $row_check_user['user_id'];
 
+                    //compare ang id sa user og ang nag comment
+                    //if ang current user naka log in
+                    //maka like edit og comment siya
                     if($current_user_id == $users_id)
                     {
                         echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
                         echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
                         echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
                     }
+                    //if dili gani siya
+                    //maka like ra siya sa comment sa uban
                     else
                     {
                         echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
