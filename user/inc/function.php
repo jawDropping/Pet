@@ -5,48 +5,6 @@
     {
         include("inc/db.php");
         
-        echo "<div id ='signUpForm'>
-        <div class='signUpForm'>
-            <h3>Registration</h3>
-                <form method = 'POST' enctype = 'multipart/form-data'>
-                    <table>
-                        <tr>
-                            <td>Name: </td>
-                            <td><input type='text' name = 'user_username' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Password: </td>
-                            <td><input type='text' name =  'user_password' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Email: </td>
-                            <td><input type='text' name =  'user_email' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Municipality: </td>
-                            <td><input type='text' name =  'municipality' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Barangay: </td>
-                            <td><input type='text' name =  'barangay' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Full Address: </td>
-                            <td><input type='text' name =  'address' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Contact Number: </td>
-                            <td><input type='text' name =  'user_contactnumber' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Photo: </td>
-                            <td><input type='file' name =  'user_profilephoto' required/></td>
-                        </tr>
-                    </table>
-                    <button name = 'add_user'>Register</button>
-                </form>
-            </div>
-        </div>";
         
         if(isset($_POST['add_user']))
         {
@@ -56,37 +14,38 @@
             $user_contactnumber = $_POST['user_contactnumber'];
             $municipality = $_POST['municipality'];
             $barangay = $_POST['barangay'];
-            $full_address = $_POST['full_address'];
+            $user_address = $_POST['user_address'];
 
-            $user_profilephoto = $_FILES['user_profilephoto']['name'];
-            $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
         
-            move_uploaded_file($user_profilephoto_tmp,"../uploads/user_profile/$user_profilephoto");
-
             $add_user = $con->prepare("INSERT INTO users_table(
                 user_username,
-                user_password,
                 user_email,
                 user_contactnumber,
+                user_password,
                 municipality,
                 barangay,
-                full_address,
+                user_address,
                 user_profilephoto
             ) 
             VALUES (
                 '$user_username',
-                '$user_password',
                 '$user_email',
                 '$user_contactnumber',
+                '$user_password',
                 '$municipality',
                 '$barangay',
-                '$full_address',
-                '$user_profilephoto'
+                '$user_address',
+                'userIcon.svg'
             )");
 
             if($add_user->execute())
             {
                 echo "<script>alert('Registration Successfull!');</script>"; 
+                echo "<script>
+                if ( window.history.replaceState ) {
+                   window.history.replaceState( null, null, window.location.href );
+               }            
+                </script>";
             }
             else
             {
@@ -301,7 +260,7 @@
                         <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
                     </td>
                     <td style='border: none;'>
-                    <a href = 'checkout.php' id = 'pro_btn' style='width: 90%;margin-top: 15px;' name = 'place_order'>Place Order</a>
+                    <a href = 'checkout.php' id = 'pro_btn' style='text-decoration:none; padding: 5px; width: 90%;margin-top: 15px;' name = 'place_order'>Place Order</a>
                 </td>
             </tr>";
 
