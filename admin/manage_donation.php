@@ -7,9 +7,13 @@
 
             <th>Full Name</th>
 
+            <th>Selected Organization</th>
+
             <th>Contact Number</th>
 
             <th>Email Address</th>
+
+            <th>Amount</th>
 
             <th>Proof of Payment</th>
 

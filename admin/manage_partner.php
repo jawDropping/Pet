@@ -3,12 +3,17 @@
         <p>Donation Partnered Organizations</p>
        <table>
         <tr>
-            <td></td>
-            <td></td>
+            <td>Name</td>
+            <td>Location</td>
+            <td>Contact Number</td>
+            <td>Email Address</td>
+            <td>Edit</td>
+            <td>Delete</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <?php
+                echo viewall_partners();
+            ?>
         </tr>
        </table>
     </div>

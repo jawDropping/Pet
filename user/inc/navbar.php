@@ -14,7 +14,7 @@
                     <a href = '/Pet/user/viewall_pets.php'>View Pets</a>
                 </li>
                 
-                <li> <a href = "/Pet/user/index.php?donation">Donate</a></li>
+                <li> <a href = "/Pet/user/donation.php">Donate</a></li>
                 <li> <a href = "/Pet/user/index.php?myPet">My Pet</a></li>
            
             </ul>
