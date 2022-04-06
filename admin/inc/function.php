@@ -665,11 +665,12 @@
         if(isset($_POST['confirm_donation']))
         {
             $id = $_POST['confirm_donation'];
+
             $transaction_number = $_POST['transaction_number'];
             $first_name = $_POST['first_name'];
             $last_name = $_POST['last_name'];
-            $contact_number = $_POST['contact_number'];
-            $email_address = $_POST['email_address'];
+            $amount = $_POST['amount'];
+            $org_name = $_POST['org_name'];
 
             $proof_photo = $_FILES['proof_photo']['name'];
 
