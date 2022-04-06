@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,20 +15,22 @@
 
     <body>
     <?php 
-            include ("inc/db.php");
-            include ("inc/function.php"); 
-            include ("inc/header.php"); 
-            include ("inc/navbar.php"); 
-            ?>
-            <div class="mainContainer">
+           
+                include ("inc/db.php");
+                include ("inc/function.php"); 
+                include ("inc/header.php"); 
+                include ("inc/navbar.php"); 
+                ?>
+                <div class="mainContainer">
+                <?php
+                include ("inc/bodyleft.php"); 
+                include ("inc/bodyright.php"); 
+                ?>
+                </div>
+                
             <?php
-             include ("inc/bodyleft.php"); 
-             include ("inc/bodyright.php"); 
-            ?>
-            </div>
+                include ("inc/footer.php"); 
             
-           <?php
-            include ("inc/footer.php"); 
         ?>
     </body> 
     <script>
@@ -38,3 +41,4 @@
         document.getElementById("currentDate").innerHTML = date2;
     </script>
 </html>
+

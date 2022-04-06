@@ -10,15 +10,13 @@
     <body>
        
         <?php 
-            include ("inc/db.php");
             include ("inc/function.php");
             include ("inc/header.php"); 
-            include ("inc/navbar.php"); 
-            echo "<div id='bodyleft'><ul>";
-                   donate(); echo"</ul>
-                  </div>";
-            include ("inc/bodyright.php"); 
-            include ("inc/footer.php"); 
+            include ("inc/navbar.php");  
+            echo org_detail();
+            include ("inc/footer.php");
+            
         ?>
+
     </body>
 </html>
