@@ -89,7 +89,14 @@
 
         if(isset($_POST['edit_comment']))
         {
-            // $id = $_POST['like_comment'];
+            $id = $_POST['edit_comment'];
+            $updt_comment = $con->prepare("SELECT * FROM comment_tbl WHERE id = $id");
+            $updt_comment->setFetchMode(PDO:: FETCH_ASSOC);
+            $updt_comment->execute();
+
+            while($row = $updt_comment->fetch()):
+                var_dump($row['comment']);
+            endwhile;
         }
 
         if(isset($_POST['delete_comment']))

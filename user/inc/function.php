@@ -469,96 +469,117 @@
     function donate()
     {
         include("inc/db.php");
+        $sql = $con->prepare("SELECT * FROM organizations");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        while($row = $sql->fetch()):
+            echo
+            "<li>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a href='org_detail.php?id=".$row['id']."'>
+                <h4>".$row['org_name']."</h4>
+                <img src ='../uploads/orgs/".$row['org_photo']."' />
+                <center>
+                    <button id = 'pro_btnView'>
+                        <a href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
+                    </button>
+                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+                </center>
+            </a>
+            </form>
+        </li>";
+        endwhile;
+        // echo "<div id ='signUpForm'>
+        // <div class='signUpForm'>
+        //     <h3>Donate</h3>
+        //         <form method = 'POST' enctype = 'multipart/form-data'>
+        //             <table>
+        //                 <tr>
+        //                     <td>Transaction Number: </td>
+        //                     <td><input type='text' name = 'transaction_number' required/></td>
+        //                 </tr>
+        //                 <tr>
+        //                     <td>Select Organization Name </td>
+        //                     <td>
+        //                         <select name = 'org_name' required>";
+        //                             echo viewall_org();
+        //                         echo "<select>
+        //                     </td>
+        //                 </tr>
+        //                 <tr>
+        //                     <td>First Name: </td>
+        //                     <td><input type='text' name =  'first_name' required/></td>
+        //                 </tr>
+        //                 <tr>
+        //                     <td>Last Name: </td>
+        //                     <td><input type='text' name =  'last_name' required/></td>
+        //                 </tr>
+        //                 <tr>
+        //                     <td>Suffix: </td>
+        //                     <td>
+        //                         <select name = 'suffix' required>
+        //                             <option name = 'jr'>jr</option>
+        //                             <option name = 'sr'>sr</option>
+        //                             <option name = 'N/A'>N/A</option>
+        //                         </select><label style = 'color:red'>*SELECT N/A IF YOU DON'T HAVE ANY SUFFIX<label>
+        //                     </td>
+        //                 </tr>
+        //                 <tr>
+        //                     <td>Email Address: </td>
+        //                     <td><input type = 'email' name = 'email_address' required/></td>
+        //                 </tr>
+        //                 <tr>
+        //                     <td>Contact Number: </td>
+        //                     <td><input type='text' name =  'contact_number' required/></td>
+        //                 </tr>
+        //                  <tr>
+        //                     <td>Proof of Payment: </td>
+        //                     <td><input type='file' name =  'proof_photo' required/></td>
+        //                 </tr>
+        //             </table>
+        //             <button name = 'donate'>Donate!</button>
+        //         </form>
+        //     </div>
+        // </div>";
+        // if(isset($_POST['donate']))
+        // {
+        //     $transaction_number = $_POST['transaction_number'];
+        //     $first_name = $_POST['first_name'];
+        //     $last_name = $_POST['last_name'];
+        //     $suffix = $_POST['suffix'];
+        //     $contact_number = $_POST['contact_number'];
+        //     $org_name = $_POST['org_name'];
+        //     $email_address = $_POST['email_address'];
+
+        //     $proof_photo = $_FILES['proof_photo']['name'];
+        //     $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
         
-        echo "<div id ='signUpForm'>
-        <div class='signUpForm'>
-            <h3>Donate</h3>
-                <form method = 'POST' enctype = 'multipart/form-data'>
-                    <table>
-                        <tr>
-                            <td>Transaction Number: </td>
-                            <td><input type='text' name = 'transaction_number' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Select Organization Name </td>
-                            <td>
-                                <select name = 'org_name' required>";
-                                    echo viewall_org();
-                                echo "<select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>First Name: </td>
-                            <td><input type='text' name =  'first_name' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Last Name: </td>
-                            <td><input type='text' name =  'last_name' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Suffix: </td>
-                            <td>
-                                <select name = 'suffix' required>
-                                    <option name = 'jr'>jr</option>
-                                    <option name = 'sr'>sr</option>
-                                    <option name = 'N/A'>N/A</option>
-                                </select><label style = 'color:red'>*SELECT N/A IF YOU DON'T HAVE ANY SUFFIX<label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Email Address: </td>
-                            <td><input type = 'email' name = 'email_address' required/></td>
-                        </tr>
-                        <tr>
-                            <td>Contact Number: </td>
-                            <td><input type='text' name =  'contact_number' required/></td>
-                        </tr>
-                         <tr>
-                            <td>Proof of Payment: </td>
-                            <td><input type='file' name =  'proof_photo' required/></td>
-                        </tr>
-                    </table>
-                    <button name = 'donate'>Donate!</button>
-                </form>
-            </div>
-        </div>";
-        if(isset($_POST['donate']))
-        {
-            $transaction_number = $_POST['transaction_number'];
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
-            $suffix = $_POST['suffix'];
-            $contact_number = $_POST['contact_number'];
-            $org_name = $_POST['org_name'];
-            $email_address = $_POST['email_address'];
+        //     move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
 
-            $proof_photo = $_FILES['proof_photo']['name'];
-            $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
-        
-            move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
+        //     $add_donation = $con->prepare("INSERT INTO donations SET
+        //                     'transaction_number' = $transaction_number,
+        //                     'first_name' = $first_name,
+        //                     'last_name' = $last_name,
+        //                     'suffix' = $suffix,
+        //                     'contact_number' = $contact_number,
+        //                     'org_name' = $org_name,
+        //                     'coupon_code' = '',
+        //                     'email_address' = $email_address,
+        //                     'proof_photo' = $proof_photo
 
-            $add_donation = $con->prepare("INSERT INTO donations SET
-                            'transaction_number' = $transaction_number,
-                            'first_name' = $first_name,
-                            'last_name' = $last_name,
-                            'suffix' = $suffix,
-                            'contact_number' = $contact_number,
-                            'org_name' = $org_name,
-                            'coupon_code' = '',
-                            'email_address' = $email_address,
-                            'proof_photo' = $proof_photo
+        //     )");
 
-            )");
+        //     if($add_donation->execute())
+        //     {
+        //         echo "SUCCESSFUL"; 
+        //     }
+        //     else
+        //     {
+        //         echo "UNSUCCESSFUL";
+        //     }
+        // }
 
-            if($add_donation->execute())
-            {
-                echo "SUCCESSFUL"; 
-            }
-            else
-            {
-                echo "UNSUCCESSFUL";
-            }
-        }
     }
 
     function generateRandomString($length = 8) {
@@ -569,6 +590,42 @@
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    function org_detail()
+    {
+        include("inc/db.php");
+
+        if(isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+            $fetch_org=$con->prepare("SELECT * FROM organizations WHERE id = '$id'");
+            $fetch_org->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_org->execute();
+
+            $row_org = $fetch_org->fetch();
+            echo 
+                "<div id = 'pro_img'>
+                    <img src ='../uploads/orgs/".$row_org['org_photo']."'/>
+                    
+                  </div>
+                  <div id = 'pro_brand'>
+                    <h3>".$row_org['org_name']."</h3>
+                    <ul>
+                        <li>
+                            Org Location: ".$row_org['org_location']."
+                        </li>
+                        <li>
+                        Org Contact Number: ".$row_org['org_contact_number']."
+                       
+                        </li>
+                        <li>
+                        Org Email Address: ".$row_org['org_email_address']."
+                        </li>
+                    </ul>
+                    <a href = 'donate.php?donate=".$row_org['id']."'>Donate</a>
+                </div>";          
+        }
     }
     
     function dog_food_products()
@@ -635,6 +692,12 @@
         $row_user = $user->fetch();
         $user_username = $row_user['user_username'];
 
+        $comment = $con->prepare("SELECT * FROM comment_tbl WHERE pet_id = '$pet_id'");
+        $comment->setFetchMode(PDO:: FETCH_ASSOC);
+        $comment->execute();
+
+        $count_comments = $comment->rowCount();
+
             echo
             "<li>
                 <form method = 'post' action = 'submit_entries.php' enctype='multipart/form-data'>
@@ -646,25 +709,27 @@
                         Like 👍 (".$likes.")";
                         echo "</button>
                     </center>
+                    <div style = 'margin-left: 14.5rem; margin-top: -.5rem'>
+                        ".$count_comments." Comment/s
+                    </div>
                     <div>
                         Comment: <input type = 'text' name = 'comment' placeholder = 'Write A Comment' />
                         <button name = 'submit' value = ".$row['id'].">Submit</button>
                     </div>
                 </a>";
-                $comment = $con->prepare("SELECT * FROM comment_tbl WHERE pet_id = '$pet_id'");
-                $comment->setFetchMode(PDO:: FETCH_ASSOC);
-                $comment->execute();
+                
                 while($row_comment = $comment->fetch()):
                     $users_id = $row_comment['user_id'];
                     $likes = $row_comment['likes'];
-            
+                    
                     $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
                     $user->setFetchMode(PDO:: FETCH_ASSOC);
                     $user->execute();
     
                     $row_users = $user->fetch();
+                    
                     echo "<img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
-             
+                    
                     if(isset($_SESSION['user_username']))
                     {
                         //check kinsay naka login
@@ -677,7 +742,7 @@
                         $current_user_id = $row_check_user['user_id'];
 
                         //compare ang id sa user og ang nag comment
-                        //if ang current user naka log in
+                        //if ang current user naka login
                         //maka like edit og comment siya
                         if($current_user_id == $users_id)
                         {
@@ -686,7 +751,7 @@
                             echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
                         }
                         //if dili gani siya
-                        //maka like ra siya sa comment sa uban
+                        //maka like ra sia sa comment sa uban
                         else
                         {
                             echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
@@ -1029,6 +1094,4 @@
         }
     }
 ?>
-
-
 

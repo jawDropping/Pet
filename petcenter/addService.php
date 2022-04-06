@@ -85,21 +85,9 @@
     call_user_func('add_service');
 ?>
 
-<!-- <?php
-    function generateRandomString($length = 8) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-    ?>
-
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function ShowHideDiv(chkCoupon) {
         var coupon_code = document.getElementById("coupon_code");
         coupon_code.style.display = chkCoupon.checked ? "block" : "none";
     }
-</script> -->
+</script>  -->
