@@ -14,37 +14,38 @@
             $user_contactnumber = $_POST['user_contactnumber'];
             $municipality = $_POST['municipality'];
             $barangay = $_POST['barangay'];
-            $full_address = $_POST['full_address'];
+            $user_address = $_POST['user_address'];
 
-            $user_profilephoto = $_FILES['user_profilephoto']['name'];
-            $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
         
-            move_uploaded_file($user_profilephoto_tmp,"../uploads/user_profile/$user_profilephoto");
-
-            $add_user = $con->prepare("INSERT INTO users_table (
+            $add_user = $con->prepare("INSERT INTO users_table(
                 user_username,
-                user_password,
                 user_email,
                 user_contactnumber,
+                user_password,
                 municipality,
                 barangay,
-                full_address,
+                user_address,
                 user_profilephoto
             ) 
             VALUES (
                 '$user_username',
-                '$user_password',
                 '$user_email',
                 '$user_contactnumber',
+                '$user_password',
                 '$municipality',
                 '$barangay',
-                '$full_address',
-                '$user_profilephoto'
+                '$user_address',
+                'userIcon.svg'
             )");
 
             if($add_user->execute())
             {
                 echo "<script>alert('Registration Successfull!');</script>"; 
+                echo "<script>
+                if ( window.history.replaceState ) {
+                   window.history.replaceState( null, null, window.location.href );
+               }            
+                </script>";
             }
             else
             {
