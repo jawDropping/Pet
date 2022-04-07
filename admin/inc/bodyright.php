@@ -10,6 +10,7 @@
     if(!isset($_GET['ledger'])){
     if(!isset($_GET['manage_donation'])){
     if(!isset($_GET['manage_partner'])){
+    if(!isset($_GET['search_transaction_number'])){
 
 
 ?>
@@ -41,7 +42,11 @@
         {
             include("viewall_orders.php");
         }
+        if(isset($_GET['search_transaction_number']))
+        {
+            include("search_transaction_number.php");
+        }
     ?>
 </div>
 
-<?php }}}}}}}}}} ?>
+<?php }}}}}}}}}}} ?>
