@@ -453,7 +453,7 @@
                                     ");
                     if($to_deliver->execute())
                     {
-                        $update_status = $con->prepare("UPDATE order_tbl SET delivery_status = 'FOR CONFIRMATION' WHERE order_id = '$order_id'");
+                        $update_status = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR CONFIRMATION' WHERE order_id = '$order_id'");
                         $update_status->setFetchMode(PDO:: FETCH_ASSOC);
                         $update_status->execute();
 
@@ -521,6 +521,7 @@
             else
             {
                 $order_id = $row['order_id'];
+
                 $datenow = getdate();
 
                 $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
@@ -531,7 +532,15 @@
 
                 $row_user = $fetch_user->fetch();
                 $user_id = $row_user['user_id'];
+                $pro_id = $row_user['pro_id'];
+                
+                $product_tbl = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+                $product_tbl->setFetchMode(PDO:: FETCH_ASSOC);
+                $product_tbl->execute();
 
+                $row_prod = $product_tbl->fetch();
+                $quantity = $row_prod['pro_quantity'];
+                 
                 $fetch_user_email = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                 $fetch_user_email->setFetchMode(PDO:: FETCH_ASSOC);
                 $fetch_user_email->execute();
@@ -549,8 +558,14 @@
                     $sql->setFetchMode(PDO:: FETCH_ASSOC);
                     if($sql->execute())
                     {
-                        echo "<script>alert('DELIVERY CONFIRMED!');</script>";
-                        echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
+                        $update_quantity = $con->prepare("UPDATE product_tbl SET pro_quantity=$quantity-1 WHERE pro_id = $pro_id");
+                        $update_quantity->setFetchMode(PDO:: FETCH_ASSOC);
+                        $update_quantity->execute();
+                        if($update_quantity->execute())
+                        {
+                            echo "<script>alert('DELIVERY CONFIRMED!');</script>";
+                            echo "<script>window.open('index.php?confirm_delivery', '_self');</script>"; 
+                        }
                     }
                 }
             }
@@ -665,13 +680,16 @@
         if(isset($_POST['confirm_donation']))
         {
             $id = $_POST['confirm_donation'];
+
             $transaction_number = $_POST['transaction_number'];
             $first_name = $_POST['first_name'];
             $last_name = $_POST['last_name'];
+            $amount = $_POST['amount'];
+            $org_name = $_POST['org_name'];
             $contact_number = $_POST['contact_number'];
-            $email_address = $_POST['email_address'];
 
-            $proof_photo = $_FILES['proof_photo']['name'];
+            $datenow = getdate();
+            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
             // $view_email = $con->prepare("SELECT * FROM donations WHERE id = '$id'");
             // $view_email->setFetchMode(PDO:: FETCH_ASSOC);

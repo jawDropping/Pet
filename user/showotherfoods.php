@@ -15,7 +15,7 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
             echo "<div id='bodyleft'><ul>";
-                   viewall_services(); echo"</ul>
+                   other_food_products(); echo"</ul>
                   </div>";
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 
