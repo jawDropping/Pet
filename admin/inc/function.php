@@ -648,7 +648,7 @@
 
             $row_org = $sql->fetch();
             $org_name = $row_org['org_name'];
-            echo
+            echo 
             "<form method = 'POST' enctype = 'multipart/form-data'>
                 <tr>
                     <td><input type = 'hidden' name = 'transaction_number' value =".$row['transaction_number']."/></td>
@@ -788,22 +788,64 @@
 
     function showledger()
     {
+        echo
+        "<form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
+           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
+           <button id = 'search_btn' name = 'search'>Search</button><br>
+        </form>";
+
         include("inc/db.php");
         $show_ledger = $con->prepare("SELECT * FROM ledger_tbl");
         $show_ledger->setFetchMode(PDO:: FETCH_ASSOC);
         $show_ledger->execute();
 
         while($row = $show_ledger->fetch()):
+          
             echo
-            "<tr>
+            "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data'>
+            <tr>
                 <td>".$row['transaction_number']."</td>
                 <td>".$row['org_name']."</td>
                 <td>".$row['last_name'].", ".$row['first_name']."</td>
                 <td>".$row['contact_number']."</td>
                 <td>".$row['date_confirmed']."</td>
-            </tr>";
+            </tr>
+            <button name = 'sort_asc'>Sort Asc by Org</button>
+            <button name = 'sort_desc'>Desc Asc by Org</button>
+        </form>";
         endwhile;
+    }
 
+    function search_transaction_number() 
+    {
+        include("inc/db.php");
+        if(isset($_GET['search']) && isset($_GET['transaction_number']))
+        {
+            $transaction_number = $_GET['transaction_number'];
+            $search_transaction_number = $con->prepare("SELECT * FROM ledger_tbl WHERE transaction_number LIKE '%$transaction_number%'");
+            $search_transaction_number->setFetchMode(PDO:: FETCH_ASSOC);
+            $search_transaction_number->execute();
+
+            if($search_transaction_number->rowCount() > 0)
+            {
+               while($row = $search_transaction_number->fetch())
+               {
+                    echo 
+                    "<tr>
+                        <td>".$row['transaction_number']."</td>
+                        <td>".$row['org_name']."</td>
+                        <td>".$row['last_name'].", ".$row['first_name']."</td>
+                        <td>".$row['contact_number']."</td>
+                        <td>".$row['date_confirmed']."</td>
+                    </tr>";
+               }
+            }
+            else
+            {
+                echo
+                "<h2>Transaction Number not Found!</h2>";
+            }
+        }
     }
 
     function viewall_coupons()
