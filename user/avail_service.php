@@ -36,12 +36,12 @@
                 </tr><br>
                 <tr>
                     <td>Reserve Date: </td>
-                    <td><input type = 'date' name = 'reserve_date' /></td>
+                    <td><input type = 'date' name = 'reserve_date' required /></td>
                 </tr><br>
                 <tr>
                     <td>
                         <label>Coupon Code:</label>
-                        <input type = 'text' name = 'coupon_code' placeholder='N/A' />
+                        <input type = 'text' name = 'coupon_code' placeholder='N/A' required/>
                         <label style = color:red>*TYPE N/A IF YOU DON'T HAVE ANY COUPON CODE!</label>
                     </td>
                 </tr><br>

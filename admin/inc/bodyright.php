@@ -6,6 +6,7 @@
     if(!isset($_GET['viewall_products'])){
     if(!isset($_GET['viewall_users'])){
     if(!isset($_GET['viewall_orders'])){
+    if(!isset($_GET['viewall_coupons'])){
     if(!isset($_GET['ledger'])){
     if(!isset($_GET['manage_donation'])){
     if(!isset($_GET['manage_partner'])){
@@ -43,4 +44,4 @@
     ?>
 </div>
 
-<?php }}}}}}}}} ?>
+<?php }}}}}}}}}} ?>
