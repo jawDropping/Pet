@@ -654,8 +654,8 @@
                     <td><input type = 'hidden' name = 'transaction_number' value =".$row['transaction_number']."/></td>
                     <td>".$row['transaction_number']."</td>
                     
-                    <td><input type = 'hidden' name = 'first_name' value = ".$row['first_name']."/></td>
-                    <td><input type = 'hidden' name = 'last_name' value = ".$row['last_name']."/></td>
+                    <td><input type = 'hidden' name = 'first_name' value = ".$row['first_name']." /></td>
+                    <td><input type = 'hidden' name = 'last_name' value = ".$row['last_name']." /></td>
                     <td>".$row['last_name'].", ".$row['first_name']."</td>
 
                     <td><input type = 'hidden' name = 'org_name' value =".$org_name." /></td>
@@ -681,15 +681,66 @@
         {
             $id = $_POST['confirm_donation'];
 
-            $transaction_number = $_POST['transaction_number'];
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
-            $amount = $_POST['amount'];
-            $org_name = $_POST['org_name'];
-            $contact_number = $_POST['contact_number'];
+            $view_donation = $con->prepare("SELECT * FROM donations WHERE id = $id");
+            $view_donation->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_donation->execute();
 
-            $datenow = getdate();
-            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+            $row = $view_donation->fetch();
+            $receiver = $row['email_address'];
+            $subject = "Coupon Code";
+            $coupon_code = generateRandomString();
+            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            $sender = "ianjohn0101@gmail.com";
+
+            if($row['donation_status'] == 'CONFIRMED')
+            {
+                echo "<script>alert('Donation Already Confirmed!');</script>";
+                echo "<script>window.open('index.php?manage_donation','_self');</script>";
+            }
+            else
+            {
+                if(mail($receiver, $subject, $body, $sender))
+                {
+                    $transaction_number = $_POST['transaction_number'];
+                    $first_name = $_POST['first_name'];
+                    $last_name = $_POST['last_name'];
+                    $amount = $_POST['amount'];
+                    $org_name = $_POST['org_name'];
+                    $contact_number = $_POST['contact_number'];
+        
+                    $datenow = getdate();
+                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+        
+                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl
+                    (
+                        transaction_number,
+                        org_name,
+                        first_name,
+                        last_name,
+                        contact_number,
+                        date_confirmed
+                    ) 
+                    VALUES(
+                        '$transaction_number',
+                        '$org_name',
+                        '$first_name',
+                        '$last_name',
+                        '$contact_number',
+                        '$today'
+                    )");
+                    if($add_ledger->execute())
+                    {
+                        $update_status = $con->prepare("UPDATE donations SET donation_status = 'CONFIRMED', coupon_code = '$coupon_code' WHERE id = $id");
+                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
+                        $update_status->execute();
+                        if($update_status->execute())
+                        {
+                            echo "<script>alert('Donation Confirmed!');</script>";
+                            echo "<script>window.open('index.php?manage_donation','_self');</script>";
+                        }
+                    }
+                }
+            }
 
             // $view_email = $con->prepare("SELECT * FROM donations WHERE id = '$id'");
             // $view_email->setFetchMode(PDO:: FETCH_ASSOC);
@@ -733,6 +784,43 @@
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    function showledger()
+    {
+        include("inc/db.php");
+        $show_ledger = $con->prepare("SELECT * FROM ledger_tbl");
+        $show_ledger->setFetchMode(PDO:: FETCH_ASSOC);
+        $show_ledger->execute();
+
+        while($row = $show_ledger->fetch()):
+            echo
+            "<tr>
+                <td>".$row['transaction_number']."</td>
+                <td>".$row['org_name']."</td>
+                <td>".$row['last_name'].", ".$row['first_name']."</td>
+                <td>".$row['contact_number']."</td>
+                <td>".$row['date_confirmed']."</td>
+            </tr>";
+        endwhile;
+
+    }
+
+    function viewall_coupons()
+    {
+        include("inc/db.php");
+        $view_coupons = $con->prepare("SELECT * FROM donations");
+        $view_coupons->setFetchMode(PDO:: FETCH_ASSOC);
+        $view_coupons->execute();
+
+        while($row = $view_coupons->fetch()):
+            echo 
+            "<tr>
+                <td>".$row['last_name'].", ".$row['first_name']."</td>
+                <td>".$row['email_address']."</td>
+                <td>".$row['coupon_code']."</td>
+            </tr>"; 
+        endwhile;
     }
 
     function edit_cat() 
