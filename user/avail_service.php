@@ -50,11 +50,11 @@
                     {
                         echo 
                         "<td>Coupon Code: </td>
-                        <td><input type = 'text' name = 'copon_code' required /></td>";
+                        <td><input type = 'text' name = 'coupon_code' required /></td>";
                     }
                     else
                     {
-                        echo "<td><input type = 'hidden' name = 'copon_code' value = 'N/A' /></td>";
+                        echo "<td><input type = 'hidden' name = 'coupon_code' value = 'N/A' /></td>";
                     }
                 echo "</tr><br>
                 <tr>
