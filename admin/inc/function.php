@@ -360,6 +360,28 @@
         endwhile;
     }
 
+    function count_orders()
+    {
+        include("inc/db.php");
+        $count_orders = $con->prepare("SELECT * FROM orders_tbl");
+        $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
+        $count_orders->execute();
+
+        $count = $count_orders->rowCount();
+        echo $count;
+    }
+
+    function count_deliveries()
+    {
+        include("inc/db.php");
+        $count_orders = $con->prepare("SELECT * FROM delivery_tbl");
+        $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
+        $count_orders->execute();
+
+        $count = $count_orders->rowCount();
+        echo $count;
+    }
+
     function viewall_orders()
     {
         include("inc/db.php");
@@ -815,6 +837,7 @@
         </form>";
         endwhile;
     }
+    
 
     function search_transaction_number() 
     {
