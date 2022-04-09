@@ -616,9 +616,12 @@
                             <button id = 'pro_btnView'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />";
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button name = 'cart_btn'>
+                            Add to Cart
+                            </button>";
                             
-                           echo add_cart();
+                        //    echo add_cart();
                         echo"</center>
                     </a>
                     </form>
@@ -749,8 +752,11 @@
                             <button id = 'pro_btn'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />";
-                            echo add_cart();
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button name = 'cart_btn'>
+                            Add to Cart
+                            </button>";
+                            
                             
                         echo"</center>
                     </a>
@@ -787,8 +793,10 @@
                             <button id = 'pro_btn'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />";
-                            echo add_cart();
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button name = 'cart_btn'>
+                            Add to Cart
+                            </button>";
                             
                         echo "</center>
                     </a>
@@ -826,8 +834,10 @@
                             <button id = 'pro_btn'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />";
-                           echo add_cart();
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button name = 'cart_btn'>
+                            Add to Cart
+                            </button>";
                         echo "</center>
                     </a>
                     </form>
@@ -864,8 +874,11 @@
                             <button id = 'pro_btn'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />";
-                            echo add_cart();
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button name = 'cart_btn'>
+                            Add to Cart
+                            </button>";
+                          
                         echo"</center>
                     </a>
                     </form>
