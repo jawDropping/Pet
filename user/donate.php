@@ -33,6 +33,10 @@
                 <td><input type = "text" name = "email_address" required/></td>
             </tr><br>
             <tr>
+                <label>Amount</label>
+                <td><input type = "text" name = "amount" required/></td>
+            </tr><br>
+            <tr>
                 <label>Photo</label>
                 <td><input type = "file" name = "proof_photo" required/></td>
             </tr><br>
@@ -52,6 +56,7 @@
         $suffix = $_POST['suffix'];
         $contact_number = $_POST['contact_number'];
         $email_address = $_POST['email_address'];
+        $amount = $_POST['amount'];
         $donation_status = "FOR CONFIRMATION";
 
         $proof_photo = $_FILES['proof_photo']['name'];
@@ -70,7 +75,8 @@
             email_address,
             proof_photo,
             donation_status,
-            coupon_code
+            coupon_code,
+            amount
         ) 
         VALUES
         (
@@ -83,7 +89,8 @@
             '$email_address',
             '$proof_photo',
             '$donation_status',
-            'N/A'
+            'N/A',
+            '$amount'
         )
          ");
 

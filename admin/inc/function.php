@@ -360,6 +360,28 @@
         endwhile;
     }
 
+    function count_orders()
+    {
+        include("inc/db.php");
+        $count_orders = $con->prepare("SELECT * FROM orders_tbl");
+        $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
+        $count_orders->execute();
+
+        $count = $count_orders->rowCount();
+        echo $count;
+    }
+
+    function count_deliveries()
+    {
+        include("inc/db.php");
+        $count_orders = $con->prepare("SELECT * FROM delivery_tbl");
+        $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
+        $count_orders->execute();
+
+        $count = $count_orders->rowCount();
+        echo $count;
+    }
+
     function viewall_orders()
     {
         include("inc/db.php");
@@ -453,7 +475,7 @@
                                     ");
                     if($to_deliver->execute())
                     {
-                        $update_status = $con->prepare("UPDATE order_tbl SET delivery_status = 'FOR CONFIRMATION' WHERE order_id = '$order_id'");
+                        $update_status = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR CONFIRMATION' WHERE order_id = '$order_id'");
                         $update_status->setFetchMode(PDO:: FETCH_ASSOC);
                         $update_status->execute();
 
@@ -521,6 +543,7 @@
             else
             {
                 $order_id = $row['order_id'];
+
                 $datenow = getdate();
 
                 $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
@@ -531,7 +554,15 @@
 
                 $row_user = $fetch_user->fetch();
                 $user_id = $row_user['user_id'];
+                $pro_id = $row_user['pro_id'];
+                
+                $product_tbl = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+                $product_tbl->setFetchMode(PDO:: FETCH_ASSOC);
+                $product_tbl->execute();
 
+                $row_prod = $product_tbl->fetch();
+                $quantity = $row_prod['pro_quantity'];
+                 
                 $fetch_user_email = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                 $fetch_user_email->setFetchMode(PDO:: FETCH_ASSOC);
                 $fetch_user_email->execute();
@@ -549,8 +580,14 @@
                     $sql->setFetchMode(PDO:: FETCH_ASSOC);
                     if($sql->execute())
                     {
-                        echo "<script>alert('DELIVERY CONFIRMED!');</script>";
-                        echo "<script>window.open('index.php?confirm_delivery', '_self');</script>";
+                        $update_quantity = $con->prepare("UPDATE product_tbl SET pro_quantity=$quantity-1 WHERE pro_id = $pro_id");
+                        $update_quantity->setFetchMode(PDO:: FETCH_ASSOC);
+                        $update_quantity->execute();
+                        if($update_quantity->execute())
+                        {
+                            echo "<script>alert('DELIVERY CONFIRMED!');</script>";
+                            echo "<script>window.open('index.php?confirm_delivery', '_self');</script>"; 
+                        }
                     }
                 }
             }
@@ -633,14 +670,14 @@
 
             $row_org = $sql->fetch();
             $org_name = $row_org['org_name'];
-            echo
+            echo 
             "<form method = 'POST' enctype = 'multipart/form-data'>
                 <tr>
                     <td><input type = 'hidden' name = 'transaction_number' value =".$row['transaction_number']."/></td>
                     <td>".$row['transaction_number']."</td>
                     
-                    <td><input type = 'hidden' name = 'first_name' value = ".$row['first_name']."/></td>
-                    <td><input type = 'hidden' name = 'last_name' value = ".$row['last_name']."/></td>
+                    <td><input type = 'hidden' name = 'first_name' value = ".$row['first_name']." /></td>
+                    <td><input type = 'hidden' name = 'last_name' value = ".$row['last_name']." /></td>
                     <td>".$row['last_name'].", ".$row['first_name']."</td>
 
                     <td><input type = 'hidden' name = 'org_name' value =".$org_name." /></td>
@@ -665,13 +702,67 @@
         if(isset($_POST['confirm_donation']))
         {
             $id = $_POST['confirm_donation'];
-            $transaction_number = $_POST['transaction_number'];
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
-            $contact_number = $_POST['contact_number'];
-            $email_address = $_POST['email_address'];
 
-            $proof_photo = $_FILES['proof_photo']['name'];
+            $view_donation = $con->prepare("SELECT * FROM donations WHERE id = $id");
+            $view_donation->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_donation->execute();
+
+            $row = $view_donation->fetch();
+            $receiver = $row['email_address'];
+            $subject = "Coupon Code";
+            $coupon_code = generateRandomString();
+            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            $sender = "ianjohn0101@gmail.com";
+
+            if($row['donation_status'] == 'CONFIRMED')
+            {
+                echo "<script>alert('Donation Already Confirmed!');</script>";
+                echo "<script>window.open('index.php?manage_donation','_self');</script>";
+            }
+            else
+            {
+                if(mail($receiver, $subject, $body, $sender))
+                {
+                    $transaction_number = $_POST['transaction_number'];
+                    $first_name = $_POST['first_name'];
+                    $last_name = $_POST['last_name'];
+                    $amount = $_POST['amount'];
+                    $org_name = $_POST['org_name'];
+                    $contact_number = $_POST['contact_number'];
+        
+                    $datenow = getdate();
+                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+        
+                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl
+                    (
+                        transaction_number,
+                        org_name,
+                        first_name,
+                        last_name,
+                        contact_number,
+                        date_confirmed
+                    ) 
+                    VALUES(
+                        '$transaction_number',
+                        '$org_name',
+                        '$first_name',
+                        '$last_name',
+                        '$contact_number',
+                        '$today'
+                    )");
+                    if($add_ledger->execute())
+                    {
+                        $update_status = $con->prepare("UPDATE donations SET donation_status = 'CONFIRMED', coupon_code = '$coupon_code' WHERE id = $id");
+                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
+                        $update_status->execute();
+                        if($update_status->execute())
+                        {
+                            echo "<script>alert('Donation Confirmed!');</script>";
+                            echo "<script>window.open('index.php?manage_donation','_self');</script>";
+                        }
+                    }
+                }
+            }
 
             // $view_email = $con->prepare("SELECT * FROM donations WHERE id = '$id'");
             // $view_email->setFetchMode(PDO:: FETCH_ASSOC);
@@ -715,6 +806,86 @@
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    function showledger()
+    {
+        echo
+        "<form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
+           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
+           <button id = 'search_btn' name = 'search'>Search</button><br>
+        </form>";
+
+        include("inc/db.php");
+        $show_ledger = $con->prepare("SELECT * FROM ledger_tbl");
+        $show_ledger->setFetchMode(PDO:: FETCH_ASSOC);
+        $show_ledger->execute();
+
+        while($row = $show_ledger->fetch()):
+          
+            echo
+            "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data'>
+            <tr>
+                <td>".$row['transaction_number']."</td>
+                <td>".$row['org_name']."</td>
+                <td>".$row['last_name'].", ".$row['first_name']."</td>
+                <td>".$row['contact_number']."</td>
+                <td>".$row['date_confirmed']."</td>
+            </tr>
+            <button name = 'sort_asc'>Sort Asc by Org</button>
+            <button name = 'sort_desc'>Desc Asc by Org</button>
+        </form>";
+        endwhile;
+    }
+    
+
+    function search_transaction_number() 
+    {
+        include("inc/db.php");
+        if(isset($_GET['search']) && isset($_GET['transaction_number']))
+        {
+            $transaction_number = $_GET['transaction_number'];
+            $search_transaction_number = $con->prepare("SELECT * FROM ledger_tbl WHERE transaction_number LIKE '%$transaction_number%'");
+            $search_transaction_number->setFetchMode(PDO:: FETCH_ASSOC);
+            $search_transaction_number->execute();
+
+            if($search_transaction_number->rowCount() > 0)
+            {
+               while($row = $search_transaction_number->fetch())
+               {
+                    echo 
+                    "<tr>
+                        <td>".$row['transaction_number']."</td>
+                        <td>".$row['org_name']."</td>
+                        <td>".$row['last_name'].", ".$row['first_name']."</td>
+                        <td>".$row['contact_number']."</td>
+                        <td>".$row['date_confirmed']."</td>
+                    </tr>";
+               }
+            }
+            else
+            {
+                echo
+                "<h2>Transaction Number not Found!</h2>";
+            }
+        }
+    }
+
+    function viewall_coupons()
+    {
+        include("inc/db.php");
+        $view_coupons = $con->prepare("SELECT * FROM donations");
+        $view_coupons->setFetchMode(PDO:: FETCH_ASSOC);
+        $view_coupons->execute();
+
+        while($row = $view_coupons->fetch()):
+            echo 
+            "<tr>
+                <td>".$row['last_name'].", ".$row['first_name']."</td>
+                <td>".$row['email_address']."</td>
+                <td>".$row['coupon_code']."</td>
+            </tr>"; 
+        endwhile;
     }
 
     function edit_cat() 

@@ -88,8 +88,8 @@
                             <td><input type='text' name =  'contact_number' /></td>
                         </tr>
                         <tr>
-                            <td>Photo: </td>
-                            <td><input type='file' name =  'pet_center_photo' /></td>
+                            <td>Will you accept coupons? </td>
+                            <td>Yes<input type = 'checkbox' name = 'accept_coupons' value = 'yes' /> No<input type = 'checkbox' name = 'accept_coupons' value = 'no'/></td>
                         </tr>
                     </table>
                     <button name = 'add_user'>Add Service</button>
@@ -102,25 +102,23 @@
             $pet_center_password = $_POST['pet_center_password'];
             $email = $_POST['email'];
             $contact_number = $_POST['contact_number'];
-
-            $pet_center_photo = $_FILES['pet_center_photo']['name'];
-            $pet_center_photo_tmp = $_FILES['pet_center_photo']['tmp_name'];
-        
-            move_uploaded_file($pet_center_photo_tmp,"../uploads/user_profile/$pet_center_photo");
+            $accept_coupons = $_POST['accept_coupons'];
 
             $add_service = $con->prepare("INSERT INTO pet_center_tbl (
                 pet_center_name,
                 pet_center_password,
                 email,
                 contact_number,
-                pet_center_photo
+                pet_center_photo,
+                active_coupon
             ) 
             VALUES (
                 '$pet_center_name',
                 '$pet_center_password',
                 '$email',
                 '$contact_number',
-                '$pet_center_photo'
+                'userIcon.svg',
+                '$accept_coupons'
             )");
 
             if($add_service->execute())

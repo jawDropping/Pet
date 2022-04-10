@@ -15,8 +15,15 @@
             $query->setFetchMode(PDO:: FETCH_ASSOC);
             $query->execute();
 
-            $row = $query->fetch();
+            $row = $query->fetch(); 
+            $pet_center_id = $row['pet_center_id'];
 
+            $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
+            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql2->execute();
+
+            $row3 = $sql2->fetch();
+            
             $user_username = $_SESSION['user_username'];
             $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -36,15 +43,20 @@
                 </tr><br>
                 <tr>
                     <td>Reserve Date: </td>
-                    <td><input type = 'date' name = 'reserve_date' /></td>
+                    <td><input type = 'date' name = 'reserve_date' required /></td>
                 </tr><br>
-                <tr>
-                    <td>
-                        <label>Coupon Code:</label>
-                        <input type = 'text' name = 'coupon_code' placeholder='N/A' />
-                        <label style = color:red>*TYPE N/A IF YOU DON'T HAVE ANY COUPON CODE!</label>
-                    </td>
-                </tr><br>
+                <tr>";
+                    if($row3['active_coupon'] == 'yes')
+                    {
+                        echo 
+                        "<td>Coupon Code: </td>
+                        <td><input type = 'text' name = 'coupon_code' required /></td>";
+                    }
+                    else
+                    {
+                        echo "<td><input type = 'hidden' name = 'coupon_code' value = 'N/A' /></td>";
+                    }
+                echo "</tr><br>
                 <tr>
                     <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
                     <td><button name = 'reserve_service'>RESERVE</button></td>
