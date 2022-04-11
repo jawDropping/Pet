@@ -3,11 +3,15 @@
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
+            <th>Services Applied</th>
             <th>Service Name</th>
             <th>Service Location</th>
             <th>Service Email</th>
             <th>Service Contact Number</th>
-            <th>Service Date Open</th>
+            <th>Service Day Open and Close</th>
+            <th>Service Time Open and Close</th>
+            <th>Service Cost</th>
+            <th>Service Photo</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>

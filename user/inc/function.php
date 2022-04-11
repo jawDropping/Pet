@@ -979,14 +979,14 @@
             echo
             "<li>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?service_id=".$row['service_id']."'>
+            <a href='show_service_info.php?id=".$row['id']."'>
                 <h4>".$row['services_name']."</h4>
                 <img src ='../uploads/user_profile/".$row['service_photo']."' />
                 <center>
                     <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?service_id=".$row['service_id']."'>Show Info</a>
+                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     </button>
-                    <input type = 'hidden' value = '".$row['service_id']."' name = 'pro_id' />
+                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                 </center>
             </a>
             </form>
@@ -998,14 +998,23 @@
     function service_info()
     {
         include("inc/db.php");
-        if(isset($_GET['service_id']))
+        if(isset($_GET['id']))
         {
-            $id = $_GET['service_id'];
-            $fetch_services=$con->prepare("SELECT * FROM services WHERE service_id = '$id'");
+            $id = $_GET['id'];
+            $fetch_services=$con->prepare("SELECT * FROM services WHERE id = '$id'");
             $fetch_services->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_services->execute();
 
             $row_services = $fetch_services->fetch();
+
+            $service_cat = $row_services['service_id'];
+
+            $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '$service_cat'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row = $sql->fetch();
+            $cat_name = $row['cat_name'];
 
             $time_open = $row_services['time_open'];
             $time_close = $row_services['time_close'];
@@ -1019,6 +1028,9 @@
                   <div id = 'pro_brand'>
                     <h3>".$row_services['services_name']."</h3>
                     <ul>
+                        <li>
+                            Service Category: ".$cat_name."
+                        </li>
                         <li>
                             Location: ".$row_services['services_loc']."
                         </li>
@@ -1038,7 +1050,7 @@
                         <li>
                             Service Cost: ".$row_services['service_cost']."
                         </li>
-                        <a href = 'avail_service.php?avail_service=".$row_services['service_id']."'>avail_services</a>
+                        <a href = 'avail_service.php?avail_service=".$row_services['id']."'>avail_services</a>
                     </ul>
                 </div>";          
         }
@@ -1085,7 +1097,7 @@
 
         while($row=$all_services->fetch()):
             echo "<li>
-                    <a href = 'services_detail.php?service_id=".$row['service_id']."'>
+                    <a href = 'services_detail.php?id=".$row['id']."'>
                         ".$row['services_name']."
                     </a>
                   </li>";
