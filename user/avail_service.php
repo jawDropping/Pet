@@ -32,7 +32,7 @@
             $row2 = $sql->fetch();
 
             $user_id = $row2['user_id'];
-
+            
 
             echo 
             "<form method = 'POST'>
@@ -42,8 +42,12 @@
                     <td>".$row['service_cost']."</td>
                 </tr><br>
                 <tr>
-                    <td>Reserve Date: </td>
+                    <td>Book Appointment: </td>
                     <td><input type = 'date' name = 'reserve_date' required /></td>
+                </tr><br>
+                <tr>
+                    <td>Time: </td>
+                    <td><input type = 'time' name = 'reserve_time' required /></td>
                 </tr><br>
                 <tr>";
                     if($row3['active_coupon'] == 'yes')
@@ -62,11 +66,15 @@
                     <td><button name = 'reserve_service'>RESERVE</button></td>
                 </tr>
             </form>";
+
+            
             if(isset($_POST['reserve_service']))
             {
                 $service_cost = $_POST['service_cost'];
                 $reserve_date = date('Y-m-d', strtotime($_POST['reserve_date']));
                 $coupon_code = $_POST['coupon_code'];
+                $reserve_time = $_POST['reserve_time'];
+                $transaction_code = generateRandomString();
         
                 $check_coupon = $con->prepare("SELECT * FROM reserve_services");
                 $check_coupon->setFetchMode(PDO:: FETCH_ASSOC);
@@ -80,30 +88,58 @@
                 }
                 else
                 {
-                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                        user_id,
-                        service_cost,
-                        reserve_date,
-                        coupon_code
-                    ) 
-                    VALUES (
-                        '$user_id',
-                        '$service_cost',
-                        '$reserve_date',
-                        '$coupon_code'
-                    )");
-        
-                    if($reserve_service->execute())
+                    $receiver = $row2['user_email'];
+                    $subject = "Transaction Code";
+                    $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                    $sender = "ianjohn0101@gmail.com";
+
+                    if(mail($receiver, $subject, $body, $sender))
                     {
-                        echo "SUCCESSFUL"; 
-                    }
-                    else
-                    {
-                        echo "UNSUCCESSFUL";
+                        $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                            pet_center_id,
+                            service_id,
+                            user_id,
+                            service_cost,
+                            reserve_date,
+                            reserve_time,
+                            coupon_code,
+                            transaction_code,
+                            service_status
+                        ) 
+                        VALUES (
+                            '$pet_center_id',
+                            '$service_id',
+                            '$user_id',
+                            '$service_cost',
+                            '$reserve_date',
+                            '$reserve_time',
+                            '$coupon_code',
+                            '$transaction_code',
+                            'For Confirmation'
+                        )");
+            
+                        if($reserve_service->execute())
+                        {
+                            echo "SUCCESSFUL"; 
+                        }
+                        else
+                        {
+                            echo "UNSUCCESSFUL";
+                        }
                     }
                 }
             }
         }
+    }
+
+    function generateRandomString($length = 8) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 ?>
 
