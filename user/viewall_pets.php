@@ -68,7 +68,9 @@
                             <img src ='../uploads/like.png' class = 'likeBtnImg'>
                             </button>
                             <p>".$likes." likes</p>
-                            <p>".$user_username.":".$row['pet_details']."</p>
+                            <div class = 'captionArea'>
+                            <p class = 'nameok'>".$user_username."</p><p id = 'caption'>  ".$row['pet_details']."</p>
+                            </div>
                             ";
                             echo "
                        
@@ -155,6 +157,7 @@
         #userHead{
             display: flex;
             margin-bottom: 10px;
+            text-decoration: none;
         }
         .innerCont{
             width: 100%;
@@ -195,6 +198,19 @@
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             margin-bottom: 10px;
             margin-top: 10px;
+        }
+        #caption{
+            color: gray;
+        }
+        .captionArea{
+            display: flex;
+            margin-top: 10px;
+        }
+        .nameok{
+            margin-right: 10px;
+        }
+        a{
+            text-decoration: none;
         }
     </style>
     <script>
