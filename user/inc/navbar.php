@@ -3,18 +3,14 @@
                 <li>
                     <a href="/Pet/user/index.php">Pet Store</a>
                 </li>
-                <li>
-                    <a href="/Pet/user/index.php">Discover</a>
-                </li>
                 
                 <li> 
                     <a href = "/Pet/user/services_detail.php">Services</a>
                 </li>
-                <li>
-                    <a href = '/Pet/user/viewall_pets.php'>View Pets</a>
-                </li>
-                
                 <li> <a href = "/Pet/user/donation.php">Donate</a></li>
+                <li>
+                    <a href="/Pet/user/viewall_pets.php">Discover</a>
+                </li>
                 <?php
                     if(isset($_SESSION['user_username']))
                     {
