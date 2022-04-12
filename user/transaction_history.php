@@ -18,7 +18,6 @@
         <tr>
             <th>Product Name</th>
             <th>Quantity</th>
-            <th>Total Amount</th>
             <th>Date Delivered</th>
         </tr>
         <tr>
