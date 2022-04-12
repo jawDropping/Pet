@@ -5,7 +5,7 @@
         <tr>
   
             <th>User Name</th>
-            <th>Order Id</th>
+            <th>Qty</th>
             <th>Total Amount</th>
             <th>Delivery Date: </th>
             <th>Action</th>

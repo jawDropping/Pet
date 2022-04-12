@@ -380,21 +380,14 @@
             $row_get_user_id = $get_name->fetch();
 
             $userID = $row_get_user_id['user_id'];
-            $display_order = $con->prepare("SELECT * FROM delivery_tbl WHERE user_id = '$userID'");
+            $display_order = $con->prepare("SELECT * FROM delivered_items WHERE user_id = '$userID'");
             $display_order->setFetchMode(PDO:: FETCH_ASSOC);
             $display_order->execute();
             
             while($row = $display_order->fetch()):
-                $order_id = $row['order_id'];
-
-                $my_orders = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
-                $my_orders->setFetchMode(PDO:: FETCH_ASSOC);
-                $my_orders->execute();
+                $pro_name = $row['pro_name'];
     
-                $row2 = $my_orders->fetch();
-                $pro_id = $row2['pro_id'];
-    
-                $product_order = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+                $product_order = $con->prepare("SELECT * FROM product_tbl WHERE pro_name = '$pro_name'");
                 $product_order->setFetchMode(PDO:: FETCH_ASSOC);
                 $product_order->execute();
     
@@ -405,7 +398,6 @@
                 "<tr>
                     <td>".$pro_name."</td>
                     <td>".$row['qty']."</td>
-                    <td>".$row['total_amount']."</td>
                     <td>".$row['date_delivered']."</td>
                 </tr>";
             endwhile;
