@@ -65,21 +65,27 @@
                        
                         
                             <button id = 'likeBtn' name = 'like' value = ".$row['id'].">
-                            <img src ='../uploads/like.png' class = 'likeBtnImg'>
+                            <img src ='../uploads/like.png' id = 'likeBtnImg'>
                             </button>
-                            <p>".$likes." likes</p>
+                            <button type = 'button' id = 'commentBtn'>
+                            <img src ='../uploads/comment.png' id = 'commentBtnImg'>
+                            </button>
+                            <div id = 'infoPost'>
+                            <p id = 'likeCount'>".$likes." likes</p>
+                            <p id = 'commentIhap'>
+                            ".$count_comments." Comments
+                            </p>
+                            </div>
                             <div class = 'captionArea'>
                             <p class = 'nameok'>".$user_username."</p><p id = 'caption'>  ".$row['pet_details']."</p>
                             </div>
                             ";
                             echo "
                        
-                        <div style = 'margin-left: 14.5rem; margin-top: -.5rem'>
-                            ".$count_comments." Comment/s
-                        </div>
-                        <div>
-                            Comment: <input type = 'text' name = 'comment' placeholder = 'Write A Comment' />
-                            <button name = 'submit' value = ".$row['id'].">Submit</button>
+                       
+                        <div id = 'commites'>
+                            <input type = 'text' name = 'comment' placeholder = 'Add a comment' class = 'coms'/>
+                            <button name = 'submit' value = ".$row['id']." id = 'cmtbnt'>Post</button>
                         </div>";
 ////////////////                    
                     while($row_comment = $comment->fetch()):
@@ -93,7 +99,9 @@
                     $row_users = $user->fetch();
 //////////////
                         
-                        echo "<img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
+                        echo "
+                        <div id = 'commentors'>
+                        <img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
                         
                         if(isset($_SESSION['user_username']))
                         {
@@ -113,17 +121,21 @@
                             {
                                 echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
                                 echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
-                                echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>";
+                                echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>
+                                </div>";
                             }
                             //if dili gani siya
                             //maka like ra sia sa comment sa uban
                             else
                             {
-                                echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
+                                echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>
+                                </div>";
                             }
                         }
                     endwhile;
-                    echo"</form>
+                    echo"
+                    
+                    </form>
                     </div>
                     </div>
                 ";
@@ -133,6 +145,7 @@
 
                   ///////////////////////////////
             include ("inc/footer.php"); 
+
         ?>
         </div>
         
@@ -185,12 +198,25 @@
             float: center;
             margin-top: 10px;
         }
+        #infoPost{
+            display: flex;
+            margin-bottom: 10px;
+        }
         #likeBtn{
             margin-top: 10px;
             border: none;
             background: white;
         }
-        .likeBtnImg{
+        #commentBtn{
+            margin-top: 10px;
+            margin-left: 10px;
+            border: none;
+            background: white;
+        }
+        #likeBtnImg{
+            height: 30px;
+        }
+        #commentBtnImg{
             height: 30px;
         }
         .firstCont{
@@ -205,6 +231,7 @@
         .captionArea{
             display: flex;
             margin-top: 10px;
+            margin-bottom: 20px;
         }
         .nameok{
             margin-right: 10px;
@@ -212,8 +239,39 @@
         a{
             text-decoration: none;
         }
+        #likeCount{
+            margin-top: 10px;
+            margin-right: 20px;
+            color: gray;
+            font-size: 12px;
+            
+        }
+        #commentIhap{
+            margin-top: 10px;
+            color: gray;
+            font-size: 12px;
+        }
+        #commentors{
+            display: none;
+        }
+        .coms{
+            height: 42px;
+            padding: 10px;
+            width: 90%;
+            border: none;
+        }
+       #commites{
+          border: 1px solid gray;
+       }
+       #cmtbnt{
+           height: 42px;
+           width: 9%;
+           border: none;
+           outline: none;
+           background: white;
+       }
     </style>
     <script>
-
+      
     </script>
 </html>
