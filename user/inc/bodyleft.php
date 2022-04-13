@@ -47,8 +47,8 @@
     }
     ?>
     <div class="bottomDiv">
-    <ul><?php echo dog_food_products(); ?></ul><br clear='all' />
-    <ul><?php echo fish_food_products(); ?></ul><br clear='all' />
+    <ul><?php echo featured_dog_food_products(); ?></ul><br clear='all' />
+    <ul><?php echo featured_fish_food_products(); ?></ul><br clear='all' />
     </div>
    
 </div><!-- <End of Bodyleft> -->
