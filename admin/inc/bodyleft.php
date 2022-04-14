@@ -13,7 +13,7 @@
         <li><a href = "/Pet/admin/index.php?viewall_orders"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/index.php?viewall_coupons"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
         <li><a href= "/Pet/admin/index.php?viewall_users"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
-
+        <li><a href= "/Pet/admin/index.php?viewalldelivered_items"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
     </ul>
 </div>
     <div class="leftFooter">
@@ -63,6 +63,10 @@
     if(isset($_GET['viewall_users']))
     {
         include("viewall_users.php");
+    }
+    if(isset($_GET['viewalldelivered_items']))
+    {
+        include("viewalldelivered_items.php");
     }
 
 ?>
