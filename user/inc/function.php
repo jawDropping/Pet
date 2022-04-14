@@ -981,6 +981,8 @@
           
         </li>";
         endwhile;
+
+    
     }
 
     function service_info()
@@ -1040,7 +1042,27 @@
                     </ul>
                         <a href = 'avail_service.php?avail_service=".$row_services['id']."'>Avail Service</a>
                         <td><a href = 'review_service.php?review_service=".$row_services['id']."'>Give Feedback</a></td>
-                </div>";          
+                </div>";     
+            echo 
+            "Services Feedbacks: ";
+            $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");
+            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql2->execute();
+            
+            while($row_feedbacks = $sql2->fetch()):
+                $user_id = $row_feedbacks['user_id'];
+
+                $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+                $view_user->execute();
+
+                while($row_user = $view_user->fetch()):
+                    echo 
+                    "<br><tr>
+                        <td>".$row_user['user_username'].": ".$row_feedbacks['comment']."</td>
+                    </tr>"; 
+                endwhile;
+            endwhile;
         }
     }
 
