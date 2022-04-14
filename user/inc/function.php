@@ -996,6 +996,15 @@
             $fetch_services->execute();
 
             $row_services = $fetch_services->fetch();
+            $pet_center_id = $row_services['pet_center_id'];
+
+            $query = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row_pet_center = $query->fetch();
+            $pet_center_location = $row_pet_center['location'];
+            $location = str_replace(" ", "+", $pet_center_location);
 
             $service_cat = $row_services['service_id'];
 
@@ -1039,10 +1048,15 @@
                         <li>
                             Service Cost: ".$row_services['service_cost']."
                         </li>
+                        <li>
+                            <a href = 'avail_service.php?avail_service=".$row_services['id']."'>Avail Service</a>
+                            <td><a href = 'review_service.php?review_service=".$row_services['id']."'>Give Feedback</a></td>
+                        </li>
+                        Location:
+                        <iframe width='500px' height='500px' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
                     </ul>
-                        <a href = 'avail_service.php?avail_service=".$row_services['id']."'>Avail Service</a>
-                        <td><a href = 'review_service.php?review_service=".$row_services['id']."'>Give Feedback</a></td>
-                </div>";     
+                </div>";   
+                
             echo 
             "Services Feedbacks: ";
             $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");

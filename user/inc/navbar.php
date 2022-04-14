@@ -17,7 +17,6 @@
                         echo "<li> <a href = '/Pet/user/index.php?myPet'>My Pet</a></li>";
                     }
                 ?>
-           
             </ul>
         </div>
         <?php
