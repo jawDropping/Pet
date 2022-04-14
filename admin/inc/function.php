@@ -419,7 +419,8 @@
                         <td><input type = 'date' name = 'delivery_date' /></td>
                   
                         <input type = 'hidden' name = 'confirm_order'/>
-                        <td><button name = 'confirm_order' value = ".$row['order_id'].">Confirm</button></td>
+                        <td><button name = 'confirm_order' value = ".$row['order_id'].">Confirm</button>
+                        <a href='cancel_order.php?order_id=".$row['order_id']."'>Cancel</a></td>
                     </tr>
                     <tr>
                         <td></td>
