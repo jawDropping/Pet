@@ -98,6 +98,7 @@
                 <tr>
                     <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
                     <td><button name = 'reserve_service'>RESERVE</button></td>
+                    
                 </tr>
                 <tr>
                     <td><a href = 'index.php'>Go Home</a></td>

@@ -98,8 +98,8 @@
             "<form method = 'POST' enctype='multipart/form-data'>
                 <div class='profileTable'>
                 <div class = 'photo'>
-                    <img src = '../uploads/userIcon.svg'  />
-                    <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' />
+                    <img src = '../uploads/user_profile/".$row['user_profilephoto']."' />
+                    <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' value = '".$row['user_profilephoto']."' required />
                 </div>
                 <p class='name'>User's Name</p>
                 <div class = 'contf'>
@@ -124,7 +124,7 @@
                         <button name = 'update_user'>Update Profile</button>
                     </div>
                     <div class = 'usernameh'>
-                        <button class = 'back' onclick='window.location.href='/Pet/user/index.php'>Back to Home</button>
+                        <button class = 'back'><a href = 'index.php'>Back to Home</a></button>
                     </div>
                     </div>
                     <div class='rightSide'>
@@ -142,7 +142,11 @@
                 $user_password =  $_POST['user_password'];
                 $user_contactnumber = $_POST['user_contactnumber'];
                 $user_email = $_POST['user_email'];
-                $user_profilephoto = $_POST['user_profilephoto'];
+
+                $user_profilephoto = $_FILES['user_profilephoto']['name'];
+                $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
+
+                move_uploaded_file($user_profilephoto_tmp,"..uploads/user_profile/$user_profilephoto");
     
                 $update_user = $con->prepare("UPDATE users_table 
                 SET 
@@ -1020,7 +1024,6 @@
                         </li>
                         <li>
                             Contact Number: ".$row_services['services_contact_number']."
-                       
                         </li>
                         <li>
                          Email Address: ".$row_services['services_email']."
@@ -1034,8 +1037,9 @@
                         <li>
                             Service Cost: ".$row_services['service_cost']."
                         </li>
-                        <a href = 'avail_service.php?avail_service=".$row_services['id']."'>avail_services</a>
                     </ul>
+                        <a href = 'avail_service.php?avail_service=".$row_services['id']."'>Avail Service</a>
+                        <td><a href = 'review_service.php?review_service=".$row_services['id']."'>Give Feedback</a></td>
                 </div>";          
         }
     }
