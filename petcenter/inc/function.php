@@ -100,37 +100,6 @@
     function add_pet_center_user()
     {
         include("inc/db.php");
-        
-        echo "<div id ='signUpForm'>
-        <div class='signUpForm'>
-            <h3>Add Pet Center</h3>
-                <form method = 'POST' enctype = 'multipart/form-data'>
-                    <table>
-                        <tr>
-                            <td>Name: </td>
-                            <td><input type='text' name = 'pet_center_name' /></td>
-                        </tr>
-                        <tr>
-                            <td>Password: </td>
-                            <td><input type='text' name =  'pet_center_password' /></td>
-                        </tr>
-                        <tr>
-                            <td>Email: </td>
-                            <td><input type='text' name =  'email' /></td>
-                        </tr>
-                        <tr>
-                            <td>Contact Number: </td>
-                            <td><input type='text' name =  'contact_number' /></td>
-                        </tr>
-                        <tr>
-                            <td>Will you accept coupons? </td>
-                            <td>Yes<input type = 'checkbox' name = 'accept_coupons' value = 'yes' /> No<input type = 'checkbox' name = 'accept_coupons' value = 'no'/></td>
-                        </tr>
-                    </table>
-                    <button name = 'add_user'>Add Service</button>
-                </form>
-            </div>
-        </div>";
         if(isset($_POST['add_user']))
         {
             $pet_center_name = $_POST['pet_center_name'];
@@ -158,7 +127,13 @@
 
             if($add_service->execute())
             {
-                echo "<script>alert('Registered Successful!');</script>"; 
+                echo "
+                <script>
+                alert('Registered Successful!');
+                if ( window.history.replaceState ) {
+                   window.history.replaceState( null, null, window.location.href );
+               }            
+                </script>"; 
             }
             else
             {
