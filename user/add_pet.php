@@ -59,15 +59,27 @@
     
             move_uploaded_file($pet_photo_tmp,"../uploads/pets/$pet_photo");
     
-            $add_pet = $con->prepare("INSERT INTO pets SET
-                        user_id = $user_id,
-                        pet_name = $pet_name,
-                        pet_breed = $pet_breed,
-                        pet_gender = $pet_gender,
-                        pet_details = $pet_details,
-                        pet_photo = $pet_photo,
-                        likes = 0
-            ");
+            $add_pet = $con->prepare("INSERT INTO pets(
+                        user_id,
+                        pet_name,
+                        pet_age,
+                        pet_breed,
+                        pet_gender,
+                        pet_details,
+                        pet_photo,
+                        likes
+            )
+            VALUES (
+                '$user_id',
+                '$pet_name',
+                '$pet_age',
+                '$pet_breed',
+                '$pet_gender',
+                '$pet_details',
+                '$pet_photo',
+                '0'
+
+            )");
             if($add_pet->execute())
             {
                 echo "Pet Successfully Added";

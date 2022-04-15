@@ -1,7 +1,10 @@
 <div id = "navbar">
     <ul>
         <li>
-            Add Service
+            <a href = 'addService.php'>Add Service</a>
+        </li>
+        <li>
+            <a href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
         </li>
     </ul>
 </div>

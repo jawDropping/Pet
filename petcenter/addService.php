@@ -1,4 +1,30 @@
-<div id ='signUpForm'>
+<html>
+    <head>
+        <title>Pet Society</title>
+        <link rel = "stylesheet" href="css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+       
+        <?php 
+            include ("inc/db.php");
+            include ("inc/function.php");
+            include ("inc/header.php"); 
+            include ("inc/navbar.php"); 
+            echo "<div id='bodyleft'>";
+            add_service();
+                  echo"</div>";
+           
+        ?>
+    </body>
+</html>
+
+
+
+<!-- <div id ='signUpForm'>
     <div class='signUpForm'>
         <h3>Add Service</h3>
             <form method = 'POST' enctype = 'multipart/form-data'>
@@ -55,7 +81,7 @@
                     <tr>
                         <td>Photo: </td>
                         <td><input type='file' name =  'service_photo' /></td>
-                    </tr>
+                    </tr> -->
                     <!-- <tr>
                         <td>Accept Coupons: </td>
                         <td>
@@ -65,17 +91,15 @@
                             Coupon Code: <input type ='text' name = 'coupon_code' value = <?php echo generateRandomString(); ?> readonly/><button>Generate Another Code</button>
                         </td>
                     </tr> -->
-                    <tr>
-                    <td>Select Category Name: </td>
-                    <td>
-                        <select name = "cat_name">
-                            <?php 
-                           
-                                call_user_func('viewall_cat'); 
-                            ?>
-                        </select>
-                     </td>
+                    <!-- <tr>
+                        <td>Select Category:</td>
+                        <td>
+                            <select>
+                                
+                            </select>
+                        </td>
                     </tr>
+                
                 </table>
                 <button name = 'add_service'>Add Service</button>
             </form>
@@ -83,23 +107,11 @@
     </div>
 <?php
     call_user_func('add_service');
-?>
+?> -->
 
-<!-- <?php
-    function generateRandomString($length = 8) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-    ?>
-
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function ShowHideDiv(chkCoupon) {
         var coupon_code = document.getElementById("coupon_code");
         coupon_code.style.display = chkCoupon.checked ? "block" : "none";
     }
-</script> -->
+</script>  -->

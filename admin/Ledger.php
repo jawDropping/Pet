@@ -3,12 +3,22 @@
         <p>Donation Records</p>
        <table>
         <tr>
-            <td></td>
-            <td></td>
+           <th>Transaction Number</th>
+
+            <th>Full Name</th>
+
+            <th>Selected Organization</th>
+
+            <th>Contact Number</th>
+
+            <th>Contact Number</th>
+
+            <th>Date Confirmed</th>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <?php
+                echo showledger();
+            ?>
         </tr>
        </table>
     </div>
