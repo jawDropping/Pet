@@ -645,9 +645,10 @@
                 <li>
                     <form method = 'post' enctype='multipart/form-data'>
                     <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
                         <img src ='../uploads/products/".$row_pro['pro_img']."' />
+                        
                         <center>
+                        <h4>".$row_pro['pro_name']."</h4>
                             <button id = 'pro_btnView'>
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>

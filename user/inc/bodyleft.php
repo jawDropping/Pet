@@ -7,23 +7,23 @@
 <div id = "insideDiv">
             <div class="contDiv">
             <img class = "image" src="../uploads/dog.svg" alt="">
-            <a href = "showdogfood.php">Dog</a>
+            <a class = "linkes" href = "showdogfood.php">Dog</a>
             </div>
             <div class="contDiv">
             <img class = "image2" src="../uploads/cat.svg" alt="">
-            <a href = "showcatfood.php">Cat</a>
+            <a class = "linkes" href = "showcatfood.php">Cat</a>
             </div>
             <div class="contDiv">
             <img class = "image" src="../uploads/fish.png" alt="">
-            <a href = "showfishfood.php">Fish</a>
+            <a class = "linkes" href = "showfishfood.php">Fish</a>
             </div>
             <div class="contDiv">
             <img class = "image" src="../uploads/bird.jpg" alt="">
-            <a href = "showbirdfood.php">Bird</a>
+            <a class = "linkes" href = "showbirdfood.php">Bird</a>
             </div>
             <div class="contDiv">
             <img class = "image" src="../uploads/spider.svg" alt="">
-            <a href = "showotherfoods.php">others</a>
+            <a class = "linkes" href = "showotherfoods.php">others</a>
             </div>
         </div>
         <div id = "slider">
