@@ -1032,9 +1032,6 @@
                             Service Category: ".$cat_name."
                         </li>
                         <li>
-                            Location: ".$row_services['services_loc']."
-                        </li>
-                        <li>
                             Contact Number: ".$row_services['services_contact_number']."
                         </li>
                         <li>
@@ -1050,11 +1047,11 @@
                             Service Cost: ".$row_services['service_cost']."
                         </li>
                         <li>
-                            <a href = 'avail_service.php?avail_service=".$row_services['id']."'>Avail Service</a>
-                            <td><a href = 'review_service.php?review_service=".$row_services['id']."'>Give Feedback</a></td>
+                            <a href = 'avail_service.php?avail_service=".$row_services['id']."' style='margin: 20% 0% 0% 50%;text-decoration:none;color:#fff;background-color:#0000ff;padding:13px;border-radius:4px;font-size:14px;'>Avail Service</a>
+                            <td><a href = 'review_service.php?review_service=".$row_services['id']."' style='text-decoration:none;color:#fff;background-color:#0000ff;padding:13px;border-radius:4px;font-size:14px;'>Give Feedback</a></td>
                         </li>
                         Location:
-                        <iframe width='500px' height='500px' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
+                        <iframe style = 'width:640px;height:500px;margin: 20px 20% 0% 0%;' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
                     </ul>
                 </div>";   
                 
