@@ -22,8 +22,8 @@
     else
     {
         include("inc/db.php");
-        $user_id = $_SESSION['user_username'];
-        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+        $user_username = $_SESSION['user_username'];
+        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
         $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_user_username->execute();
 
@@ -142,20 +142,17 @@
             </div>
             </div>
             </div>
+            <div class='btnSection'>
+                <button class = 'place' name = 'confirm'><a href = 'payorder.php'> Confirm Order</a></button>
+                <button class = 'cancelBtn'><a href = 'cart.php'> Cancel </a></button>
+            </div>
+            <br>
         </form>";
-        
-        
-       
     }
     
 ?>
 
-<div class="btnSection">
-   
-    <button class = "place" onclick="window.location.href = 'payorder.php';">Confirm Order</button>
-    <button class = "cancelBtn" onclick="window.location.href = 'cart.php';"><a href = 'cart.php'> Cancel </a></button>
-    </div>
-<br>
+
 </div>
    
 </body>

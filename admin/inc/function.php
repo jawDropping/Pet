@@ -419,7 +419,8 @@
                         <td><input type = 'date' name = 'delivery_date' /></td>
                   
                         <input type = 'hidden' name = 'confirm_order'/>
-                        <td><button name = 'confirm_order' value = ".$row['order_id'].">Confirm</button></td>
+                        <td><button name = 'confirm_order' value = ".$row['order_id'].">Confirm</button>
+                        <a href='cancel_order.php?order_id=".$row['order_id']."'>Cancel</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -488,6 +489,30 @@
                 }
             }
         }
+    }
+
+    function viewalldelivered_items()
+    {
+        include("inc/db.php");
+        $sql = $con->prepare("SELECT * FROM delivered_items");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        while($row = $sql->fetch()):
+            $user_id = $row['user_id'];
+            $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+            $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_user->execute();
+
+            $row_user = $view_user->fetch();
+
+            echo
+            "<tr>
+                <td>".$row['pro_name']."</td>
+                <td>".$row_user['user_username']."</td>
+                <td>".$row['date_delivered']."</td>
+            </tr>";
+        endwhile;
     }
 
     function viewall_deliveries()

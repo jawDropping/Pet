@@ -11,7 +11,7 @@
     if(!isset($_GET['manage_donation'])){
     if(!isset($_GET['manage_partner'])){
     if(!isset($_GET['search_transaction_number'])){
-
+    if(!isset($_GET['viewalldelivered_items'])){
 
 ?>
 
@@ -49,4 +49,4 @@
     ?>
 </div>
 
-<?php }}}}}}}}}}} ?>
+<?php }}}}}}}}}}}} ?>
