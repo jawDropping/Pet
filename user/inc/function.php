@@ -957,6 +957,10 @@
     }
     function viewall_services()
     {
+        echo 
+        "<form method = 'get' action = 'search_service.php' enctype='multipart/form-data'>
+        <input type='text' name = 'user_query' placeholder = 'Search services here..'>
+        <button id = 'search_btn' name = 'search'><img src = '../uploads/search.svg' class = 'searchIcon'></button></form>";
         include("inc/db.php");
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1170,7 +1174,7 @@
     function service_cat_detail()
     {
         include("inc/db.php");
-
+   
         if(isset($_GET['cat_id']))
         {
             //service_cat
@@ -1229,7 +1233,7 @@
                         <li>
                             <a href='pro_detail.php?pro_id=".$row['pro_id']."'>
                                 <h4>".$row['pro_name']."</h4>
-                                <img src ='./uploads/products/".$row['pro_img']."' />
+                                <img src ='../uploads/products/".$row['pro_img']."' />
                                 <center>
                                 <button id = 'pro_btnView'>
                                 <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
@@ -1238,6 +1242,46 @@
                             </a>
                         </li>
                         ";
+                endwhile;
+            }
+            echo "</ul></div>";
+        }
+    }
+
+    function search_service() {
+        include("inc/db.php");
+
+        if(isset($_GET['search']) && isset($_GET['user_query']))
+        {
+            $user_query = $_GET['user_query'];
+            $search = $con->prepare("SELECT * from services WHERE services_name LIKE '%$user_query%'");
+            $search->setFetchMode(PDO:: FETCH_ASSOC);
+            $search->execute();
+
+            echo "<div id = 'bodyleft'><ul>";
+            if($search->rowCount() == 0){
+                echo "<h2>Service Not Found</h2>";
+            }
+            else
+            {
+                while($row=$search->fetch()):
+                    echo"
+                    </br>
+                    <li>
+                    <form method = 'post' enctype='multipart/form-data'>
+                    <a href='show_service_info.php?id=".$row['id']."'>
+                        <h4>".$row['services_name']."</h4>
+                        <img src ='../uploads/user_profile/".$row['service_photo']."' />
+                        <center>
+                            <button id = 'pro_btnView'>
+                                <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
+                            </button>
+                            <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+                        </center>
+                    </a>
+                    </form>
+                  
+                </li>";
                 endwhile;
             }
             echo "</ul></div>";
