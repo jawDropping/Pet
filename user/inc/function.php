@@ -326,7 +326,7 @@
                 $display_prods->execute();
                 $row_get_prod_id = $display_prods->fetch();
 
-                $qty = $row_prod['qty'];
+                $qty = $row['SUM(o.qty)'];
                 $pro_price = $row_get_prod_id['pro_price'];
                 $sub_total = $qty * $pro_price;
                 echo
