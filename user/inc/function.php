@@ -302,33 +302,43 @@
             $get_name->execute();
             $row_get_user_id = $get_name->fetch();
 
-            $userID = $row_get_user_id['user_id'];
-            $display_order = $con->prepare("SELECT * FROM orders_tbl WHERE user_id = '$userID'");
-            $display_order->setFetchMode(PDO:: FETCH_ASSOC);
-            $display_order->execute();
-            
+            $user_id = $row_get_user_id['user_id'];
 
             $net_total = 0;
-           
-            while($row = $display_order->fetch()):
-                $pro_id = $row['pro_id'];
-                $display_prod = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-                $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
-                $display_prod->execute();
-                $row_get_prod_id = $display_prod->fetch();
+            $display_prod = $con->prepare("SELECT p.pro_id, p.pro_name, SUM(o.qty), o.delivery_status, o.user_id from orders_tbl o join product_tbl p on o.pro_id = p.pro_id where o.user_id = '$user_id' group by p.pro_id, p.pro_name, o.delivery_status");
+            $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
+            $display_prod->execute();
+            while($row = $display_prod->fetch()):
+              
+                $prod_id = $row['pro_id'];
 
-                $qty = $row['qty'];
+                $prod_name = $con->prepare("SELECT * FROM orders_tbl WHERE pro_id = '$prod_id'");
+                $prod_name->setFetchMode(PDO:: FETCH_ASSOC);
+                $prod_name->execute();
+                $row_prod = $prod_name->fetch();
+
+                $order_id = $row_prod['order_id'];
+                $pro_id = $row_prod['pro_id'];
+                
+
+                $display_prods = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
+                $display_prods->setFetchMode(PDO:: FETCH_ASSOC);
+                $display_prods->execute();
+                $row_get_prod_id = $display_prods->fetch();
+
+                $qty = $row_prod['qty'];
                 $pro_price = $row_get_prod_id['pro_price'];
                 $sub_total = $qty * $pro_price;
-
-                echo 
+                echo
                 "<tr>
                     <td>".$row_get_prod_id['pro_name']."</td>
-                    <td>".$row['qty']."</td>
-                    <td>".$row['delivery_status']."</td>
-                    <td><a href = 'cancel_order.php?cancel_order=".$row['order_id']."'>CANCEL</a></td>
+                    <td>".$row['SUM(o.qty)']."</td>
+                    <td>".$row_prod['delivery_status']."</td>
+                    <td><a href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>CANCEL</a></td>
                 </tr>";
                 $net_total = $net_total + $sub_total;
+              
+               
             endwhile;
             echo 
             "<tr>
@@ -336,6 +346,7 @@
             </tr>";
         }    
     }
+
 
     function cancel_order()
     {
@@ -446,96 +457,6 @@
             </form>
         </li>";
         endwhile;
-        // echo "<div id ='signUpForm'>
-        // <div class='signUpForm'>
-        //     <h3>Donate</h3>
-        //         <form method = 'POST' enctype = 'multipart/form-data'>
-        //             <table>
-        //                 <tr>
-        //                     <td>Transaction Number: </td>
-        //                     <td><input type='text' name = 'transaction_number' required/></td>
-        //                 </tr>
-        //                 <tr>
-        //                     <td>Select Organization Name </td>
-        //                     <td>
-        //                         <select name = 'org_name' required>";
-        //                             echo viewall_org();
-        //                         echo "<select>
-        //                     </td>
-        //                 </tr>
-        //                 <tr>
-        //                     <td>First Name: </td>
-        //                     <td><input type='text' name =  'first_name' required/></td>
-        //                 </tr>
-        //                 <tr>
-        //                     <td>Last Name: </td>
-        //                     <td><input type='text' name =  'last_name' required/></td>
-        //                 </tr>
-        //                 <tr>
-        //                     <td>Suffix: </td>
-        //                     <td>
-        //                         <select name = 'suffix' required>
-        //                             <option name = 'jr'>jr</option>
-        //                             <option name = 'sr'>sr</option>
-        //                             <option name = 'N/A'>N/A</option>
-        //                         </select><label style = 'color:red'>*SELECT N/A IF YOU DON'T HAVE ANY SUFFIX<label>
-        //                     </td>
-        //                 </tr>
-        //                 <tr>
-        //                     <td>Email Address: </td>
-        //                     <td><input type = 'email' name = 'email_address' required/></td>
-        //                 </tr>
-        //                 <tr>
-        //                     <td>Contact Number: </td>
-        //                     <td><input type='text' name =  'contact_number' required/></td>
-        //                 </tr>
-        //                  <tr>
-        //                     <td>Proof of Payment: </td>
-        //                     <td><input type='file' name =  'proof_photo' required/></td>
-        //                 </tr>
-        //             </table>
-        //             <button name = 'donate'>Donate!</button>
-        //         </form>
-        //     </div>
-        // </div>";
-        // if(isset($_POST['donate']))
-        // {
-        //     $transaction_number = $_POST['transaction_number'];
-        //     $first_name = $_POST['first_name'];
-        //     $last_name = $_POST['last_name'];
-        //     $suffix = $_POST['suffix'];
-        //     $contact_number = $_POST['contact_number'];
-        //     $org_name = $_POST['org_name'];
-        //     $email_address = $_POST['email_address'];
-
-        //     $proof_photo = $_FILES['proof_photo']['name'];
-        //     $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
-        
-        //     move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
-
-        //     $add_donation = $con->prepare("INSERT INTO donations SET
-        //                     'transaction_number' = $transaction_number,
-        //                     'first_name' = $first_name,
-        //                     'last_name' = $last_name,
-        //                     'suffix' = $suffix,
-        //                     'contact_number' = $contact_number,
-        //                     'org_name' = $org_name,
-        //                     'coupon_code' = '',
-        //                     'email_address' = $email_address,
-        //                     'proof_photo' = $proof_photo
-
-        //     )");
-
-        //     if($add_donation->execute())
-        //     {
-        //         echo "SUCCESSFUL"; 
-        //     }
-        //     else
-        //     {
-        //         echo "UNSUCCESSFUL";
-        //     }
-        // }
-
     }
 
     function generateRandomString($length = 8) {
