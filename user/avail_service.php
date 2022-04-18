@@ -39,20 +39,27 @@
             "<form method = 'POST'>
                 
                 <tr>
-                    <td>Book Appointment: </td>
-                    <td><input type = 'date' name = 'reserve_date'  required /></td>
+                    <td><label>Book Appointment: </label></td>
+                    <td><input type = 'date' name = 'reserve_date'  required style = 'width:108px;height:28px;border-radius:5px'/></td>
                 </tr><br>
                 <tr>
                     <td>Time: </td>
-                    <td><input type = 'time' name = 'reserve_time'  required/></td>
+                    <td><input type = 'time' name = 'reserve_time'  required style = 'width:108px;height:28px;border-radius:5px'/></td><br>
                 </tr><br>
                 <tr>";
                     if($row3['active_coupon'] == 'yes')
                     {
                         echo 
                         "<td>Coupon Code: </td>
-                        <td><input type = 'text' name = 'coupon_code' required/></td>
-                        <td><button name = 'verify'>Verify</button></td>
+                        <td><input type = 'text' name = 'coupon_code' required style = 'width:115px;height:28px;border-radius:5px'/></td>
+                        <td><button name = 'verify' style = 
+                        'border: 0;
+                        padding: 7.5px 17px;
+                        background: #86b0b6;
+                        font-size: 12px;
+                        border-radius: 5px;
+                        color: #fff;
+                        cursor:pointer;'>VERIFY</button></td>
                         <label style = 'color:red'>*Verify your coupon to have a discount on this service. Leave it blank if you don't have!</label><br>";
                         if(isset($_POST['verify']))
                         {
@@ -97,11 +104,28 @@
                 echo "</tr><br>
                 <tr>
                     <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
-                    <td><button name = 'reserve_service'>RESERVE</button></td>
+                    <td><button name = 'reserve_service' style = 
+                    'border: 0;
+                    padding: 7.5px 17px;
+                    background: #86b0b6;
+                    font-size: 12px;
+                    border-radius: 5px;
+                    color: #fff;
+                    cursor:pointer;'>RESERVE</button></td>
                     
                 </tr>
                 <tr>
-                    <td><a href = 'index.php'>Go Home</a></td>
+                    <td><a href = 'services_detail.php' style =
+                    '
+                    position:absolute;
+                    text-decoration:none;
+                    background-color:#86b0b6;
+                    font-size:12px;
+                    color:#fff;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    padding: 7.5px 17px;
+                    border-radius: 5px;
+                    margin: 0% 2% 10% 1%;'>GO BACK</a></td>
                 </tr>
             </form>";
 
