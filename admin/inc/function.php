@@ -385,13 +385,20 @@
     function viewall_orders()
     {
         include("inc/db.php");
-        $fetch_order=$con->prepare("SELECT * FROM orders_tbl ORDER BY order_id");
+        $fetch_order = $con->prepare("SELECT p.pro_id, p.pro_name, SUM(o.qty), o.delivery_status, o.user_id from orders_tbl o join product_tbl p on o.pro_id = p.pro_id group by p.pro_id, p.pro_name, o.delivery_status");
         $fetch_order->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_order->execute();
 
         while($row=$fetch_order->fetch()):
             $user_id = $row['user_id'];
             $pro_id = $row['pro_id'];
+
+            $prod_name = $con->prepare("SELECT * FROM orders_tbl WHERE pro_id = '$pro_id'");
+            $prod_name->setFetchMode(PDO:: FETCH_ASSOC);
+            $prod_name->execute();
+            $row_prod = $prod_name->fetch();
+
+            $order_id = $row_prod['order_id'];
 
             $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
             $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
@@ -413,21 +420,21 @@
                         <input type = 'hidden' name = 'pro_name' value = ".$row_pro_name['pro_name']." />
                         <td>".$row_pro_name['pro_name']."</td>
                       
-                        <input type = 'hidden' name = 'qty' value = ".$row['qty']." />
-                        <td>".$row['qty']."</td>
+                        <input type = 'hidden' name = 'qty' value = ".$row['SUM(o.qty)']." />
+                        <td>".$row['SUM(o.qty)']."</td>
                   
                         <td><input type = 'date' name = 'delivery_date' /></td>
                   
                         <input type = 'hidden' name = 'confirm_order'/>
-                        <td><button name = 'confirm_order' value = ".$row['order_id'].">Confirm</button>
-                        <a href='cancel_order.php?order_id=".$row['order_id']."'>Cancel</a></td>
+                        <td><button name = 'confirm_order' value = ".$row_prod['order_id'].">Confirm</button>
+                        <a href='cancel_order.php?order_id=".$row_prod['order_id']."'>Cancel</a></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>     
-                        <td><input type = 'hidden' name = 'total_amount' value = ".$row_pro_name['pro_price']*$row['qty']." /></td>
-                        <td>Total: ".$row_pro_name['pro_price']*$row['qty']."</td>
+                        <td><input type = 'hidden' name = 'total_amount' value = ".$row_pro_name['pro_price']*$row['SUM(o.qty)']." /></td>
+                        <td>Total: ".$row_pro_name['pro_price']*$row['SUM(o.qty)']."</td>
                     </tr>
                 </form>";
         endwhile;
