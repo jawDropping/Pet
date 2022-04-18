@@ -13,7 +13,7 @@
             include ("inc/navbar.php"); 
         ?>
         <div class = "scroll" id ="bodyright">
-    <h3>My Order</h3>
+    <h3>Order</h3>
     <table>
         <tr>
             <th>Product:</th>
@@ -26,10 +26,13 @@
                  call_user_func('view_orders');
             ?>
         </tr>
-        <a href = 'index.php'>Go Home</a>
+    
         </table>
 </div>
     </body>
+    <style>
+
+    </style>
 </html>
 
 

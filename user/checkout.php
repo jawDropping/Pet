@@ -143,7 +143,7 @@
             </div>
             </div>
             <div class='btnSection'>
-                <button class = 'place' name = 'confirm'><a href = 'payorder.php'> Confirm Order</a></button>
+                <button class = 'place' name = 'confirm'><a id = 'placelink'href = 'payorder.php'> Confirm Order</a></button>
                 <button class = 'cancelBtn'><a href = 'cart.php'> Cancel </a></button>
             </div>
             <br>
@@ -228,6 +228,11 @@
         color: white;
         font-weight: bold;
         
+        
+    }
+    #placelink{
+        text-decoration: none;
+        color: white;
     }
     .cancelBtn{
         background: white;
