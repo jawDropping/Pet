@@ -357,13 +357,21 @@
 
             $row_user = $view_user->fetch();
             $user_username = $row_user['user_username'];
+            $empty_coupon = "N/A";
             echo
             "<form method = 'POST'>
                 <tr>
                     <td>".$user_username."</td>
-                    <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>
-                    <td>".$row2['coupon_code']."</td>
-                    <td>".$row2['transaction_code']."</td> 
+                    <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>";
+                    if($row2['coupon_code'] == '')
+                    {
+                        echo "<td>".$empty_coupon."</td>";
+                    }
+                    else
+                    {
+                        echo "<td>".$row2['coupon_code']."</td>";
+                    }
+                    echo "<td>".$row2['transaction_code']."</td> 
                     <td><button name = 'confirm_request' value = ".$row2['reserve_id'].">Confirm</button></td>
                 </tr>
             </form>";

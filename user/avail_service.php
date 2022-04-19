@@ -60,7 +60,7 @@
                         border-radius: 5px;
                         color: #fff;
                         cursor:pointer;'>VERIFY</button></td>
-                        <label style = 'color:red'>*Verify your coupon to have a discount on this service. Leave it blank if you don't have!</label><br>";
+                        <label style = 'color:red'>*PUT  "."N/A"." if you don't have any coupon code!</label><br>";
                         if(isset($_POST['verify']))
                         {
                             $coupon_code = $_POST['coupon_code'];
@@ -99,6 +99,9 @@
                     }
                     else
                     {
+                        echo "<td>Service Cost: </td>
+                        <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost." </td>
+                        <td>".$service_cost."</td>";
                         echo "<td><input type = 'hidden' name = 'coupon_code' value = 'N/A' /></td>";
                     }
                 echo "</tr><br>
@@ -142,13 +145,14 @@
                 $check_coupon->setFetchMode(PDO:: FETCH_ASSOC);
                 $check_coupon->execute();
         
-                $rowCount = $check_coupon->rowCount();
+                $get_coupon = $check_coupon->fetch();
+                $coup = $get_coupon['coupon_code'];
 
-                if($rowCount > 0)
+                if($coup != $coupon_code)
                 {
-                    echo "Coupon Code already used!";
+                    echo "Try Again Another Code!";
                 }
-                else
+                elseif($coup == 'N/A')
                 {
                     $receiver = $row2['user_email'];
                     $subject = "Transaction Code";
