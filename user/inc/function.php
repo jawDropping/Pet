@@ -58,7 +58,7 @@
             }
             else
             {
-                echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
+                echo "<script>alert('Password must have 8 characters long, an uppercase and at least 1 special character!');</script>";
             }
         }
     }
