@@ -543,7 +543,7 @@
                                 <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             </button>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
+                            <button id = 'pro_btn' name = 'cart_btn'>
                             Add to Cart
                             </button>";
                             
