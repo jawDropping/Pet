@@ -76,10 +76,7 @@
             $fetchuser->execute();
 
             $row = $fetchuser->fetch();
-          
             $countUser = $fetchuser->rowCount();
-
-            // $row = $fetchuser->fetch();
             if($countUser>0)
             {
                 $_SESSION['user_username'] = $row['user_username'];
