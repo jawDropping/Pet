@@ -19,11 +19,11 @@
                 <form method = "POST" enctype = 'multipart/form-data'>
                     <div class="fieldMain">
                     <div class="fieldCont">
-                        <p class = "label">Email/Username:</p>
+                        <p class = "label">Name:</p>
                         <input type="text" name = "user_username" class = "inputs" required>
                     </div>
                     <div class="fieldCont">
-                        <p class = "label">Name:</p>
+                        <p class = "label">Email:</p>
                         <input type="text" name = "user_email" class = "inputs" required>
                     </div>
 
