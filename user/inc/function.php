@@ -17,39 +17,48 @@
             $user_address = $_POST['user_address'];
 
         
-            $add_user = $con->prepare("INSERT INTO users_table(
-                user_username,
-                user_email,
-                user_contactnumber,
-                user_password,
-                municipality,
-                barangay,
-                user_address,
-                user_profilephoto
-            ) 
-            VALUES (
-                '$user_username',
-                '$user_email',
-                '$user_contactnumber',
-                '$user_password',
-                '$municipality',
-                '$barangay',
-                '$user_address',
-                'userIcon.svg'
-            )");
-
-            if($add_user->execute())
+            if(strlen($user_password) >= 8 &&
+            preg_match('/[A-Z]/', $user_password) > 0 &&
+            preg_match('/[a-z]/', $user_password) > 0)
             {
-                echo "<script>alert('Registration Successfull!');</script>"; 
-                echo "<script>
-                if ( window.history.replaceState ) {
-                   window.history.replaceState( null, null, window.location.href );
-               }            
-                </script>";
+                $add_user = $con->prepare("INSERT INTO users_table(
+                    user_username,
+                    user_email,
+                    user_contactnumber,
+                    user_password,
+                    municipality,
+                    barangay,
+                    user_address,
+                    user_profilephoto
+                ) 
+                VALUES (
+                    '$user_username',
+                    '$user_email',
+                    '$user_contactnumber',
+                    '$user_password',
+                    '$municipality',
+                    '$barangay',
+                    '$user_address',
+                    'userIcon.svg'
+                )");
+    
+                if($add_user->execute())
+                {
+                    echo "<script>alert('Registration Successfull!');</script>"; 
+                    echo "<script>
+                    if ( window.history.replaceState ) {
+                       window.history.replaceState( null, null, window.location.href );
+                   }            
+                    </script>";
+                }
+                else
+                {
+                    echo "<script>alert('Registration Unsuccessfull!');</script>";
+                }
             }
             else
             {
-                echo "<script>alert('Registration Unsuccessfull!');</script>";
+                echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
             }
         }
     }
@@ -59,23 +68,23 @@
         include("inc/db.php");
         if(isset($_POST['login_user']))
         {
-            $user_username = $_POST['user_username'];
+            $user_email = $_POST['user_email'];
             $user_password = $_POST['user_password'];
 
-            $fetchuser = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username' AND user_password = '$user_password'");
+            $fetchuser = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
             $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
             $fetchuser->execute();
-            $countUser = $fetchuser->rowCount();
 
-            // $row = $fetchuser->fetch();
+            $row = $fetchuser->fetch();
+            $countUser = $fetchuser->rowCount();
             if($countUser>0)
             {
-                $_SESSION['user_username'] = $_POST['user_username'];
+                $_SESSION['user_username'] = $row['user_username'];
                 echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."','_self');</script>";
             }
             else
             {
-                echo "<script>alert('Username or Password is incorrect!');</script>";
+                echo "<script>alert('Email or Password is incorrect!');</script>";
             }
         }
     }
