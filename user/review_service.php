@@ -44,8 +44,8 @@
                     <input type = 'hidden' name = 'service_id' value = ".$service_id." />
                     <input type = 'text' name = 'service_name' value = '".$row_service['services_name']."' disabled />
                     <textarea name = 'comment' placeholder = 'Write a comment..' required></textarea>
-                    <button name = 'submit'>Submit</button>
-                    <button><a href = 'index.php'>Go Home</a></button>
+                    <button name = 'submit'  >Submit</button>
+                    <a href = 'services_detail.php' style = 'position:absolute;text-decoration:none;background: #86b0b6;margin: 0 20 0 5;padding: 10.5px 14px 9.7px 20px;border-radius:5px;color: #fff;font-family: Arial, Helvetica, sans-serif;font-size: 18px;'>Go Back</a>
                 </form>
             </div>";
     
@@ -142,6 +142,7 @@
 
     .comment-box button:hover {
         background-color: #718a8e;
+      
     }
 
 

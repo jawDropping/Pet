@@ -17,6 +17,7 @@
                 <div class="innerRight">
                 <h3>REGISTER</h3>
                 <form method = 'POST' enctype = 'multipart/form-data'>
+
                     <div id = 'contInn'>
                         <div>
                             <input class = 'inputer' type='text' name = 'pet_center_name' placeholder = 'Pet Centers Name' size = '50' required/>

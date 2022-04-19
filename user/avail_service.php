@@ -37,23 +37,30 @@
 
             echo 
             "<form method = 'POST'>
-                
+                <label style = 'color:#fff;position:absolute;margin:10% 0% 0% 40.7%;background-color:#000;padding: 10px 10px;border-radius:5px;'>Please verify your coupon to get the exact amount!</label><br>
                 <tr>
-                    <td>Book Appointment: </td>
-                    <td><input type = 'date' name = 'reserve_date'  required /></td>
+                    <td><label style = 'position:absolute;margin:15% 0% 0% 30%;'>Book Appointment: </label></td>
+                    <td><input type = 'date' name = 'reserve_date'  required style = 'position:absolute;align-items:center;margin:14.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
                 </tr><br>
                 <tr>
-                    <td>Time: </td>
-                    <td><input type = 'time' name = 'reserve_time'  required/></td>
+                    <td><label style = 'position:absolute;margin:18% 0% 0% 30%;'>Time: </label></td>
+                    <td><input type = 'time' name = 'reserve_time'  required style = 'position:absolute;align-items:center;margin:17.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td><br>
                 </tr><br>
                 <tr>";
                     if($row3['active_coupon'] == 'yes')
                     {
                         echo 
-                        "<td>Coupon Code: </td>
-                        <td><input type = 'text' name = 'coupon_code' required/></td>
-                        <td><button name = 'verify'>Verify</button></td>
-                        <label style = 'color:red'>*Verify your coupon to have a discount on this service. Leave it blank if you don't have!</label><br>";
+                        "<td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Coupon Code: </label></td>
+                        <td><input type = 'text' name = 'coupon_code' required style = 'position:absolute;align-items:center;margin:19.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
+                        <td><button name = 'verify' style = 
+                        'border: 0;
+                        padding: 7.5px 17px;
+                        background: #86b0b6;
+                        font-size: 12px;
+                        border-radius: 5px;
+                        color: #fff;
+                        cursor:pointer;'>VERIFY</button></td>
+                        <label style = 'position:absolute;margin:18.2% 0% 0% 40.9%;color:red'>*PUT  "."N/A"." if you don't have any coupon code!</label><br>";
                         if(isset($_POST['verify']))
                         {
                             $coupon_code = $_POST['coupon_code'];
@@ -74,8 +81,8 @@
                             {
                                 echo 
                                 "<tr>
-                                    <td>Service Cost: </td>
-                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_total_cost." </td>
+                                    <td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Service Cost: </label></td>
+                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_total_cost." /></td>
                                     <td>".$service_total_cost."</td>
                                 </tr><br>";
                             }
@@ -83,8 +90,8 @@
                             {
                                 echo 
                                 "<tr>
-                                    <td>Service Cost: </td>
-                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost." </td>
+                                    <td><label style = 'position:absolute;margin:20% 0% 0% 63%;'>Service Cost: </label></td>
+                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost." /></td>
                                     <td>".$service_cost."</td>
                                 </tr><br>";
                             }
@@ -92,16 +99,36 @@
                     }
                     else
                     {
+                        echo "<td>Service Cost: </td>
+                        <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost." </td>
+                        <td>".$service_cost."</td>";
                         echo "<td><input type = 'hidden' name = 'coupon_code' value = 'N/A' /></td>";
                     }
                 echo "</tr><br>
                 <tr>
                     <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
-                    <td><button name = 'reserve_service'>RESERVE</button></td>
+                    <td><button name = 'reserve_service' style = 
+                    'border: 0;
+                    padding: 7.5px 17px;
+                    background: #86b0b6;
+                    font-size: 12px;
+                    border-radius: 5px;
+                    color: #fff;
+                    cursor:pointer;'>RESERVE</button></td>
                     
                 </tr>
                 <tr>
-                    <td><a href = 'index.php'>Go Home</a></td>
+                    <td><a href = 'services_detail.php' style =
+                    '
+                    position:absolute;
+                    text-decoration:none;
+                    background-color:#86b0b6;
+                    font-size:12px;
+                    color:#fff;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    padding: 7.5px 17px;
+                    border-radius: 5px;
+                    margin: 0% 2% 10% 1%;'>GO BACK</a></td>
                 </tr>
             </form>";
 
@@ -118,13 +145,14 @@
                 $check_coupon->setFetchMode(PDO:: FETCH_ASSOC);
                 $check_coupon->execute();
         
-                $rowCount = $check_coupon->rowCount();
+                $get_coupon = $check_coupon->fetch();
+                $coup = $get_coupon['coupon_code'];
 
-                if($rowCount > 0)
+                if($coup != $coupon_code)
                 {
-                    echo "Coupon Code already used!";
+                    echo "Try Again Another Code!";
                 }
-                else
+                elseif($coup == 'N/A')
                 {
                     $receiver = $row2['user_email'];
                     $subject = "Transaction Code";

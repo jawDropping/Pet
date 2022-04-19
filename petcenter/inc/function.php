@@ -6,18 +6,18 @@
         include("inc/db.php");
         if(isset($_POST['login_user']))
         {
-            $pet_center_name = $_POST['pet_center_name'];
+            $email = $_POST['email'];
             $pet_center_password = $_POST['pet_center_password'];
 
-            $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name' AND pet_center_password = '$pet_center_password'");
+            $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
             $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
             $fetchuser->execute();
-            $countUser = $fetchuser->rowCount();
-
+            
             $row = $fetchuser->fetch();
+            $countUser = $fetchuser->rowCount();
             if($countUser>0)
             {
-                $_SESSION['pet_center_name'] = $_POST['pet_center_name'];
+                $_SESSION['pet_center_name'] = $row['pet_center_name'];
                 echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
             }
             else
@@ -108,36 +108,45 @@
             $contact_number = $_POST['contact_number'];
             $accept_coupons = $_POST['accept_coupons'];
 
-            $add_service = $con->prepare("INSERT INTO pet_center_tbl (
-                pet_center_name,
-                pet_center_password,
-                email,
-                contact_number,
-                pet_center_photo,
-                active_coupon
-            ) 
-            VALUES (
-                '$pet_center_name',
-                '$pet_center_password',
-                '$email',
-                '$contact_number',
-                'userIcon.svg',
-                '$accept_coupons'
-            )");
-
-            if($add_service->execute())
+            if(strlen($pet_center_password) >= 8 &&
+            preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+            preg_match('/[a-z]/', $pet_center_password) > 0)
             {
-                echo "
-                <script>
-                alert('Registered Successful!');
-                if ( window.history.replaceState ) {
-                   window.history.replaceState( null, null, window.location.href );
-               }            
-                </script>"; 
+                $add_service = $con->prepare("INSERT INTO pet_center_tbl (
+                    pet_center_name,
+                    pet_center_password,
+                    email,
+                    contact_number,
+                    pet_center_photo,
+                    active_coupon
+                ) 
+                VALUES (
+                    '$pet_center_name',
+                    '$pet_center_password',
+                    '$email',
+                    '$contact_number',
+                    'userIcon.svg',
+                    '$accept_coupons'
+                )");
+    
+                if($add_service->execute())
+                {
+                    echo "
+                    <script>
+                    alert('Registered Successful!');
+                    if ( window.history.replaceState ) {
+                       window.history.replaceState( null, null, window.location.href );
+                   }            
+                    </script>"; 
+                }
+                else
+                {
+                    echo "<script>alert('Registered Unsuccessful!');</script>";
+                }
             }
             else
             {
-                echo "<script>alert('Registered Unsuccessful!');</script>";
+                echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
             }
         }
     }
@@ -357,13 +366,21 @@
 
             $row_user = $view_user->fetch();
             $user_username = $row_user['user_username'];
+            $empty_coupon = "N/A";
             echo
             "<form method = 'POST'>
                 <tr>
                     <td>".$user_username."</td>
-                    <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>
-                    <td>".$row2['coupon_code']."</td>
-                    <td>".$row2['transaction_code']."</td> 
+                    <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>";
+                    if($row2['coupon_code'] == '')
+                    {
+                        echo "<td>".$empty_coupon."</td>";
+                    }
+                    else
+                    {
+                        echo "<td>".$row2['coupon_code']."</td>";
+                    }
+                    echo "<td>".$row2['transaction_code']."</td> 
                     <td><button name = 'confirm_request' value = ".$row2['reserve_id'].">Confirm</button></td>
                 </tr>
             </form>";

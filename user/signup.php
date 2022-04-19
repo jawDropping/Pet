@@ -5,6 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
+        <title>Sign Up</title>
     </head>
     <body>
     <?php  include("inc/db.php"); ?>
@@ -23,7 +24,7 @@
                     </div>
                     <div class="fieldCont">
                         <p class = "label">Email:</p>
-                        <input type="text" name = "user_email" class = "inputs" required>
+                        <input type="email" name = "user_email" class = "inputs" required>
                     </div>
 
                     <div class="fieldCont">
