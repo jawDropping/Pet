@@ -6,18 +6,18 @@
         include("inc/db.php");
         if(isset($_POST['login_user']))
         {
-            $pet_center_name = $_POST['pet_center_name'];
+            $email = $_POST['email'];
             $pet_center_password = $_POST['pet_center_password'];
 
-            $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name' AND pet_center_password = '$pet_center_password'");
+            $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
             $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
             $fetchuser->execute();
-            $countUser = $fetchuser->rowCount();
-
+            
             $row = $fetchuser->fetch();
+            $countUser = $fetchuser->rowCount();
             if($countUser>0)
             {
-                $_SESSION['pet_center_name'] = $_POST['pet_center_name'];
+                $_SESSION['pet_center_name'] = $row['pet_center_name'];
                 echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
             }
             else

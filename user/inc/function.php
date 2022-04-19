@@ -76,13 +76,10 @@
             $fetchuser->execute();
 
             $row = $fetchuser->fetch();
-            $user_username = $row['user_username'];
             $countUser = $fetchuser->rowCount();
-
-            // $row = $fetchuser->fetch();
             if($countUser>0)
             {
-                $_SESSION['user_username'] = $user_username;
+                $_SESSION['user_username'] = $row['user_username'];
                 echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."','_self');</script>";
             }
             else
