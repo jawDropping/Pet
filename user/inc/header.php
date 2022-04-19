@@ -41,10 +41,10 @@
 
                     echo "<img class='profileImg' src = '../uploads/user_profile/".$row['user_profilephoto']."'>
                             <ul class = 'dropcontent'>
-                                <li><a href = 'myProfile.php'>My Profile</a></li>
-                                <li><a href = 'view_order.php?user_id=".$row['user_id']."'>My Orders</a></li>
-                                <li><a href = 'transaction_history.php?user_id=".$row['user_id']."'>Transaction History</a></li>
-                                <li><a href = 'logout.php'>Log Out</a></li>
+                                <li><img src = '../uploads/forDropDown.png' class = 'imageDrop'><a href = 'myProfile.php'>Profile</a></li>
+                                <li><img src = '../uploads/orderist.png' class = 'imageDrop'><a href = 'view_order.php?user_id=".$row['user_id']."'>My Orders</a></li>
+                                <li><img src = '../uploads/history.png' class = 'imageDrop3'><a href = 'transaction_history.php?user_id=".$row['user_id']."'>Transaction History</a></li>
+                                <li><img src = '../uploads/logouter.png' class = 'imageDrop2'><a href = 'logout.php'>Log Out</a></li>
                             </ul>";
                     
                 }
@@ -67,3 +67,21 @@
     
    <!-- <End of Link> -->
 </div><!-- <End of Header> -->
+    <style>
+        .imageDrop{
+            height: 24px;
+            margin-top: 8px;
+            margin-left: 4px;
+        }
+        .imageDrop2{
+            height: 18px;
+            margin-top: 8px;
+            margin-left: 6px;
+        }
+        .imageDrop3{
+            height: 22px;
+            margin-top: 8px;
+            margin-left: 6px;
+        }
+
+    </style>
