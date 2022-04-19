@@ -17,39 +17,48 @@
             $user_address = $_POST['user_address'];
 
         
-            $add_user = $con->prepare("INSERT INTO users_table(
-                user_username,
-                user_email,
-                user_contactnumber,
-                user_password,
-                municipality,
-                barangay,
-                user_address,
-                user_profilephoto
-            ) 
-            VALUES (
-                '$user_username',
-                '$user_email',
-                '$user_contactnumber',
-                '$user_password',
-                '$municipality',
-                '$barangay',
-                '$user_address',
-                'userIcon.svg'
-            )");
-
-            if($add_user->execute())
+            if(strlen($user_password) >= 8 &&
+            preg_match('/[A-Z]/', $user_password) > 0 &&
+            preg_match('/[a-z]/', $user_password) > 0)
             {
-                echo "<script>alert('Registration Successfull!');</script>"; 
-                echo "<script>
-                if ( window.history.replaceState ) {
-                   window.history.replaceState( null, null, window.location.href );
-               }            
-                </script>";
+                $add_user = $con->prepare("INSERT INTO users_table(
+                    user_username,
+                    user_email,
+                    user_contactnumber,
+                    user_password,
+                    municipality,
+                    barangay,
+                    user_address,
+                    user_profilephoto
+                ) 
+                VALUES (
+                    '$user_username',
+                    '$user_email',
+                    '$user_contactnumber',
+                    '$user_password',
+                    '$municipality',
+                    '$barangay',
+                    '$user_address',
+                    'userIcon.svg'
+                )");
+    
+                if($add_user->execute())
+                {
+                    echo "<script>alert('Registration Successfull!');</script>"; 
+                    echo "<script>
+                    if ( window.history.replaceState ) {
+                       window.history.replaceState( null, null, window.location.href );
+                   }            
+                    </script>";
+                }
+                else
+                {
+                    echo "<script>alert('Registration Unsuccessfull!');</script>";
+                }
             }
             else
             {
-                echo "<script>alert('Registration Unsuccessfull!');</script>";
+                echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
             }
         }
     }
