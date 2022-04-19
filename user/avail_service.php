@@ -37,7 +37,7 @@
 
             echo 
             "<form method = 'POST'>
-                
+                <label style = 'color:red'>Please verify your coupon to get the exact amount!</label><br>
                 <tr>
                     <td><label>Book Appointment: </label></td>
                     <td><input type = 'date' name = 'reserve_date'  required style = 'width:108px;height:28px;border-radius:5px'/></td>
