@@ -37,21 +37,21 @@
 
             echo 
             "<form method = 'POST'>
-                <label style = 'color:red'>Please verify your coupon to get the exact amount!</label><br>
+                <label style = 'color:#fff;position:absolute;margin:10% 0% 0% 40.7%;background-color:#000;padding: 10px 10px;border-radius:5px;'>Please verify your coupon to get the exact amount!</label><br>
                 <tr>
-                    <td><label>Book Appointment: </label></td>
-                    <td><input type = 'date' name = 'reserve_date'  required style = 'width:108px;height:28px;border-radius:5px'/></td>
+                    <td><label style = 'position:absolute;margin:15% 0% 0% 30%;'>Book Appointment: </label></td>
+                    <td><input type = 'date' name = 'reserve_date'  required style = 'position:absolute;align-items:center;margin:14.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
                 </tr><br>
                 <tr>
-                    <td>Time: </td>
-                    <td><input type = 'time' name = 'reserve_time'  required style = 'width:108px;height:28px;border-radius:5px'/></td><br>
+                    <td><label style = 'position:absolute;margin:18% 0% 0% 30%;'>Time: </label></td>
+                    <td><input type = 'time' name = 'reserve_time'  required style = 'position:absolute;align-items:center;margin:17.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td><br>
                 </tr><br>
                 <tr>";
                     if($row3['active_coupon'] == 'yes')
                     {
                         echo 
-                        "<td>Coupon Code: </td>
-                        <td><input type = 'text' name = 'coupon_code' required style = 'width:115px;height:28px;border-radius:5px'/></td>
+                        "<td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Coupon Code: </label></td>
+                        <td><input type = 'text' name = 'coupon_code' required style = 'position:absolute;align-items:center;margin:19.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
                         <td><button name = 'verify' style = 
                         'border: 0;
                         padding: 7.5px 17px;
@@ -60,7 +60,7 @@
                         border-radius: 5px;
                         color: #fff;
                         cursor:pointer;'>VERIFY</button></td>
-                        <label style = 'color:red'>*PUT  "."N/A"." if you don't have any coupon code!</label><br>";
+                        <label style = 'position:absolute;margin:18.2% 0% 0% 40.9%;color:red'>*PUT  "."N/A"." if you don't have any coupon code!</label><br>";
                         if(isset($_POST['verify']))
                         {
                             $coupon_code = $_POST['coupon_code'];
@@ -81,8 +81,8 @@
                             {
                                 echo 
                                 "<tr>
-                                    <td>Service Cost: </td>
-                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_total_cost." </td>
+                                    <td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Service Cost: </label></td>
+                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_total_cost." /></td>
                                     <td>".$service_total_cost."</td>
                                 </tr><br>";
                             }
@@ -90,8 +90,8 @@
                             {
                                 echo 
                                 "<tr>
-                                    <td>Service Cost: </td>
-                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost." </td>
+                                    <td><label style = 'position:absolute;margin:20% 0% 0% 63%;'>Service Cost: </label></td>
+                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost." /></td>
                                     <td>".$service_cost."</td>
                                 </tr><br>";
                             }
