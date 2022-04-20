@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <!-- Created with Vectornator for iOS (http://vectornator.io/) --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="100%" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 24 24">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="1"/>
+<vectornator:setting key="PencilOnly" value="0"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="CMYKEnabledKey" value="0"/>
+<vectornator:setting key="SnapToEdges" value="0"/>
+<vectornator:setting key="OutlineMode" value="0"/>
+<vectornator:setting key="DisplayWhiteBackground" value="0"/>
+<vectornator:setting key="doHistoryDisabled" value="0"/>
+<vectornator:setting key="TimeLapseWatermarkDisabled" value="0"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="Units" value="Points"/>
+<vectornator:setting key="IsolateActiveLayer" value="0"/>
+<vectornator:setting key="SnapToGrid" value="0"/>
+<vectornator:setting key="DynamicGuides" value="0"/>
+</metadata>
+<defs/>
+<g id="bounding_box" vectornator:layerName="bounding_box">
+<path d="M0+0L24+0L24+0L24+24L24+24L0+24L0+24L0+0L0+0Z" opacity="1" fill="none"/>
+</g>
+<g id="design" vectornator:layerName="design">
+<g opacity="1">
+<path d="M4.87+11L5.13+11C6.16+11+7+10.16+7+9.13L7+8.87C7+7.84+6.16+7+5.13+7L3.5+7C3.22+7+3+7.22+3+7.5L3+9.13C3+10.16+3.84+11+4.87+11Z" opacity="1" fill="#f9f9f9"/>
+<path d="M8.87+7L9.13+7C10.16+7+11+6.16+11+5.13L11+4.87C11+3.84+10.16+3+9.13+3L7.5+3C7.22+3+7+3.22+7+3.5L7+5.13C7+6.16+7.84+7+8.87+7Z" opacity="1" fill="#f9f9f9"/>
+<path d="M19+11L19+11C17.9+11+17+10.1+17+9L17+9C17+7.9+17.9+7+19+7L20.5+7C20.78+7+21+7.22+21+7.5L21+9C21+10.1+20.1+11+19+11Z" opacity="1" fill="#f9f9f9"/>
+<path d="M15.13+7L14.87+7C13.84+7+13+6.16+13+5.13L13+4.87C13+3.84+13.84+3+14.87+3L16.5+3C16.78+3+17+3.22+17+3.5L17+5.13C17+6.16+16.16+7+15.13+7Z" opacity="1" fill="#f9f9f9"/>
+<path d="M18.93+17.91C18.8+18.66+18.44+19.33+17.95+19.85C17.46+20.38+16.82+20.76+16.11+20.92C15.24+21.1+14.38+20.98+13.63+20.58C12.52+19.99+11.54+19.97+10.33+20.6C9.82+20.86+9.26+21+8.69+21C8.46+21+8.21+20.98+7.97+20.93C6.47+20.63+5.3+19.38+5.05+17.81C4.9+16.83+5.1+15.86+5.61+15.07L9.03+10.57C9.05+10.54+9.06+10.52+9.08+10.49C9.77+9.56+10.86+9+12+9C13.14+9+14.23+9.56+14.92+10.49C14.94+10.52+14.96+10.54+14.97+10.57L18.35+15C18.92+15.9+19.11+16.91+18.93+17.91Z" opacity="1" fill="#f9f9f9"/>
+</g>
+</g>
+</svg>
