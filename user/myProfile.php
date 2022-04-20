@@ -1,153 +1,63 @@
-<?php
-    include("inc/function.php");
-    echo myProfile();
-?>
+<html>
 <head>
+<title>Pet Society</title>
+        <link rel = "stylesheet" href="css/profile.css" />
+        <link rel = "stylesheet" href="css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
- <style>
-            *{
-                margin: 0;
-                padding: 0;
-                
-            }
-            body{
-                background-image: linear-gradient(#5a5bf3, #91e7d9);
-                background-repeat: no-repeat;
-                height: 100vh;
-            }
-                form{
-                    display: flex;
-                    justify-content: center;
-                    background: white;
-                    width: 90%;
-                    margin-left: 5%;
-                    height: 95vh;
-                    margin-top: 2vh;
-                }
-                .profileTable{
-                  
-                    width: 100%;
-                    font-family: 'Open Sans', sans-serif;
-                
-                }
-                .contf{
-                    display: flex;
-                    height: 100%;
-                }
-                .username{
-                    display: block;
-                    height: 52px;
-                    background: #eee;
-                    width: 90%;
-                    border-radius: 3px;
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                   
-                }
-                .usernameb{
-                    display: block;
-                    height: 52px;
-                    background: #5a5bf3;
-                    width: 90%;
-                    
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                   
-                }
-                .usernameh{
-                    display: block;
-                    height: 52px;
-                    background: #eee;
-                    width: 90%;
-                  
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                   
-                }
-                .user_name{
-                    border-radius: 5px;
-                    outline: none;
-                    border: none;
-                    width: 100%;
-                    height: 32px;
-                    padding-left: 5px;
-                    background: #eee;
-                }
-                .us{
-                    font-size: 10px;
-                    padding: 5px;
-                }
-                img{
-                    height: 100px;
-                    width: 100px;
-                    border-radius: 25px;
-                    margin-left: 10px;
-                    transform: translate(0, 30px);
-                }
-                button{
-                    background: #5a5bf3;
-                    height: 42px;
-                    width: 100%;
-                    border: none;
-                    color: white;
-                }
-                .back{
-                    background: #eee;
-                    height: 42px;
-                    width: 100%;
-                   border: none;
-                    color: #888;
-
-                }
-                .photo{
-                    background: #eee;
-                    height: 15vh;
-                    
-                    width: 100%;
-
-                }
-                .photo:hover .fileUpload{
-                    display: block;
-                    transition: 1s ease;
-                }
-               
-                .fileUpload{
-                  display: none;
-                  margin-left: 10%;
-                }
-                    .name{
-                        font-size: 32px;
-                        font-family: "Fredoka", sans-serif;
-                        margin-top: 10px;
-                        margin-left: 10px;
-                    }
-                    .formt{
+<body>
+<?php 
+            include ("inc/header.php"); 
+            include ("inc/navbar.php"); 
+            include("inc/function.php");
         
-                       width: 60%;
-                        padding-left: 10%;
-                
-                    }
-                    .rightSide{
-                        width:40%;
-                        background-image: url("../uploads/myprofile.svg");
-                        background-repeat: no-repeat;
-                        height: 75%;
-                    }
-
-                    @media (max-width: 600px){
-                      .formt{
-                        margin-top: 0%;
-                        height: 100vh;
-                        width: 100vw;
-                        }
-                        img{
+        ?>
+       
+<form method = 'POST' enctype='multipart/form-data'>
+                <div class='profileTable'>
+                <div class = 'photo'>
+                    <img src = '../uploads/user_profile/".$row['user_profilephoto']."' />
+                    <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' value = '".$row['user_profilephoto']."' required />
+                </div>
+                <p class='name'>User's Name</p>
+                <div class = 'contf'>
+                <div class='formt'>
+                    <div class='username'>
+                        <p class='us'>username </p>
+                        <input class='user_name'type = 'text' name =  'user_username' value = '".$row['user_username']."' />
+                    </div>
+                    <div class='username'>
+                        <p class = 'us'>password </p>
+                        <input class='user_name' type = 'password' name = 'user_password' value = '".$row['user_password']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class='us'>email </p>
+                        <input class='user_name' type = 'email' name = 'user_email' value = '".$row['user_email']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class = 'us'>Contact Number: </p>
+                        <input  class = 'user_name 'type = 'text' name = 'user_contactnumber' value = '".$row['user_contactnumber']."' />
+                    </div>
+                    <div class = 'usernameb'>
+                        <button name = 'update_user'>Update Profile</button>
+                    </div>
+                    <div class = 'usernameh'>
+                        <button class = 'back'><a href = 'index.php'>Back to Home</a></button>
+                    </div>
+                    </div>
+                    <div class='rightSide'>
                         
-                       }
-                       .rightSide{
-                           display: none;
-                       }
-
-
-
-            </style>
+                    </div>
+                    </div>
+                </div>
+                
+            </form>
+            <?php
+         call_user_func('add_pet_center_user');
+         ?>
+</body>
+</html>
