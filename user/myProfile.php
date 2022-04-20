@@ -1,153 +1,147 @@
-<?php
-    include("inc/function.php");
-    echo myProfile();
+<html>
+    <head>
+    <title>Pet Society</title>
+        <link rel = "stylesheet" href="css/style.css" />
+        <link rel = "stylesheet" href="css/profile.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
+    </head>
+    <body>
+    <?php 
+            include ("inc/function.php");
+            include ("inc/header.php"); 
+            include ("inc/navbar.php"); 
+        ?>
+        <div class="mainDiv">
+
+        <?php
+    if(!isset($_SESSION['user_username']))
+    {
+        header("Location: login.php");
+    }
+    else
+    {
+        include("inc/db.php");
+        $user_id = $_SESSION['user_username'];
+        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+        $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_user_username->execute();
+
+        $row = $fetch_user_username->fetch();
+        $id = $row['user_id'];
+
+        echo 
+        "
+        <div class='profileTable'>
+        <form method = 'POST' enctype='multipart/form-data'>
+            
+            <div class = 'contf'>
+            <div class = 'photo'>
+            <div class = 'piktur'>
+            <img id = 'profs' src = '../uploads/user_profile/".$row['user_profilephoto']."' />
+            </div>
+            <div class = 'intpus'>
+            <p class ='uss'>Change Profile Picture</p>
+            <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' value = '".$row['user_profilephoto']."'/>
+            </div>
+             </div>
+            <div id = 'forBckgnd'>
+            <div class='formt'>
+            <div class = 'innerFormt'>
+                <div class='username'>
+                    <p class='us'>username </p>
+                    <input class='user_name'type = 'text' name =  'user_username' value = '".$row['user_username']."' />
+                </div>
+                <div class='username'>
+                    <p class = 'us'>password </p>
+                    <input class='user_name' type = 'password' name = 'user_password' value = '".$row['user_password']."' />
+                </div>
+                <div class = 'username'>
+                    <p class='us'>email </p>
+                    <input class='user_name' type = 'email' name = 'user_email' value = '".$row['user_email']."' />
+                </div>
+                <div class = 'username'>
+                    <p class = 'us'>Contact Number: </p>
+                    <input  class = 'user_name 'type = 'text' name = 'user_contactnumber' value = '".$row['user_contactnumber']."' />
+                </div>
+                <div class = 'username'>
+                    <p class = 'us'>Municipality: </p>
+                    <input  class = 'user_name 'type = 'text' name = 'municipality' value = '".$row['municipality']."' />
+                </div>
+                <div class = 'username'>
+                <p class = 'us'> Barangay: </p>
+                <input  class = 'user_name 'type = 'text' name = 'barangay' value = '".$row['barangay']."' />
+                 </div>
+                <div class = 'username'>
+                <p class = 'us'> Street: </p>
+                <input  class = 'user_name 'type = 'text' name = 'user_address' value = '".$row['user_address']."' />
+                 </div>
+                 <div></div>
+                </div>
+
+                <div class = 'bottomBtn'>
+
+                <div class = 'btn'>
+                    <button id = 'regs2'><a id = 'bckHm' href = 'index.php'>Back to Home</a></button>
+                </div>
+                <div class = 'btn'>
+                    <button name = 'update_user' id = 'regs'>Update Profile</button>
+                </div>
+                
+                </div>
+                </div>
+                </div>
+                </div>
+            </div>
+            
+        </form>
+        </div>
+        ";
+
+        if(isset($_POST['update_user']))
+        {
+            $user_username = $_POST['user_username'];
+            $user_password =  $_POST['user_password'];
+            $user_contactnumber = $_POST['user_contactnumber'];
+            $user_email = $_POST['user_email'];
+            $user_address = $_POST['user_address'];
+            $barangay = $_POST['barangay'];
+            $municipality = $_POST['municipality'];
+
+            $user_profilephoto = $_FILES['user_profilephoto']['name'];
+            $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
+
+            move_uploaded_file($user_profilephoto_tmp,"..uploads/user_profile/$user_profilephoto");
+
+            $update_user = $con->prepare("UPDATE users_table 
+            SET 
+                user_username='$user_username',
+                user_password = '$user_password',
+                user_contactnumber = '$user_contactnumber',
+                user_email = '$user_email',
+                user_address = '$user_address',
+                barangay = '$barangay',
+                municipality = '$municipality',
+                user_profilephoto = '$user_profilephoto'
+
+            WHERE 
+                user_id = '$id'");
+
+            if($update_user->execute())
+            {
+                echo "<script>alert('Your Information Successfully Updated!');</script>";
+                echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+            }
+        }
+    }
+    
 ?>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
- <style>
-            *{
-                margin: 0;
-                padding: 0;
-                
-            }
-            body{
-                background-image: linear-gradient(#5a5bf3, #91e7d9);
-                background-repeat: no-repeat;
-                height: 100vh;
-            }
-                form{
-                    display: flex;
-                    justify-content: center;
-                    background: white;
-                    width: 90%;
-                    margin-left: 5%;
-                    height: 95vh;
-                    margin-top: 2vh;
-                }
-                .profileTable{
-                  
-                    width: 100%;
-                    font-family: 'Open Sans', sans-serif;
-                
-                }
-                .contf{
-                    display: flex;
-                    height: 100%;
-                }
-                .username{
-                    display: block;
-                    height: 52px;
-                    background: #eee;
-                    width: 90%;
-                    border-radius: 3px;
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                   
-                }
-                .usernameb{
-                    display: block;
-                    height: 52px;
-                    background: #5a5bf3;
-                    width: 90%;
-                    
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                   
-                }
-                .usernameh{
-                    display: block;
-                    height: 52px;
-                    background: #eee;
-                    width: 90%;
-                  
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                   
-                }
-                .user_name{
-                    border-radius: 5px;
-                    outline: none;
-                    border: none;
-                    width: 100%;
-                    height: 32px;
-                    padding-left: 5px;
-                    background: #eee;
-                }
-                .us{
-                    font-size: 10px;
-                    padding: 5px;
-                }
-                img{
-                    height: 100px;
-                    width: 100px;
-                    border-radius: 25px;
-                    margin-left: 10px;
-                    transform: translate(0, 30px);
-                }
-                button{
-                    background: #5a5bf3;
-                    height: 42px;
-                    width: 100%;
-                    border: none;
-                    color: white;
-                }
-                .back{
-                    background: #eee;
-                    height: 42px;
-                    width: 100%;
-                   border: none;
-                    color: #888;
-
-                }
-                .photo{
-                    background: #eee;
-                    height: 15vh;
-                    
-                    width: 100%;
-
-                }
-                .photo:hover .fileUpload{
-                    display: block;
-                    transition: 1s ease;
-                }
-               
-                .fileUpload{
-                  display: none;
-                  margin-left: 10%;
-                }
-                    .name{
-                        font-size: 32px;
-                        font-family: "Fredoka", sans-serif;
-                        margin-top: 10px;
-                        margin-left: 10px;
-                    }
-                    .formt{
-        
-                       width: 60%;
-                        padding-left: 10%;
-                
-                    }
-                    .rightSide{
-                        width:40%;
-                        background-image: url("../uploads/myprofile.svg");
-                        background-repeat: no-repeat;
-                        height: 75%;
-                    }
-
-                    @media (max-width: 600px){
-                      .formt{
-                        margin-top: 0%;
-                        height: 100vh;
-                        width: 100vw;
-                        }
-                        img{
-                        
-                       }
-                       .rightSide{
-                           display: none;
-                       }
 
 
-
-            </style>
+</div>
+<?php
+include ("inc/footer.php"); 
+?>
+</body>
+</html>
