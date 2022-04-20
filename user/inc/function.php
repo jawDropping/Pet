@@ -1160,34 +1160,129 @@
         if(isset($_GET['search']) && isset($_GET['user_query']))
         {
             $user_query = $_GET['user_query'];
-            $search = $con->prepare("SELECT * from product_tbl WHERE pro_name LIKE '%$user_query%' or pro_keyword LIKE '%$user_query%'");
+
+            $search = $con->query("SELECT pro_name FROM product_tbl WHERE pro_name LIKE '%$user_query%' UNION SELECT services_name FROM services WHERE services_name LIKE '%$user_query%' UNION SELECT org_name FROM organizations WHERE org_name LIKE '%$user_query%'");
             $search->setFetchMode(PDO:: FETCH_ASSOC);
             $search->execute();
 
             echo "<div id = 'bodyleft'><ul>";
             if($search->rowCount() == 0){
-                echo "<h2>Product Not Found</h2>";
+                echo "<h2>NOT FOUND!</h2>";
             }
             else
             {
                 while($row=$search->fetch()):
-                    echo"
-                    </br>
-                        <li>
-                            <a href='pro_detail.php?pro_id=".$row['pro_id']."'>
-                                <h4>".$row['pro_name']."</h4>
-                                <img src ='../uploads/products/".$row['pro_img']."' />
-                                <center>
+                    echo 
+                    "</br>
+                    <li>";
+                    $name = $row['pro_name'];
+                    $sql = $con->prepare("SELECT * FROM product_tbl");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+
+                    $row_pro = $sql->fetch();
+                    $pro_name = $row_pro['pro_name'];
+
+                    $sql2 = $con->prepare("SELECT * FROM services");
+                    $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql2->execute();
+
+                    $row_service = $sql2->fetch();
+                    $services_name = $row_service['services_name'];
+
+                    $sql3 = $con->prepare("SELECT * FROM organizations");
+                    $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql3->execute();
+
+                    $row_org = $sql3->fetch();
+                    $org_name = $row_org['org_name'];
+
+                   
+                    if($name == $pro_name)
+                    {
+                        echo 
+                        "<a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                            <h4>".$row_pro['pro_name']."</h4>
+                            <img src ='../uploads/products/".$row_pro['pro_img']."' />
+                            <center>
                                 <button id = 'pro_btnView'>
-                                <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
-                            </button>
-                             </center>
+                                    <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                                </button>
+                            </center>
+                        </a>
+                    </li>";
+                    }
+                    elseif($name == $services_name)
+                    {
+                        echo 
+                        "<a href='service_detail.php?cat_id=".$row_service['service_id']."'>
+                            <h4>".$row_service['services_name']."</h4>
+                            <img src ='../uploads/user_profile/".$row_service['service_photo']."' />
+                                <center>
+                                    <button id = 'pro_btn'>
+                                        <a href = 'show_service_info.php?id=".$row_service['id']."'>Show Info</a>
+                                    </button>
+                                </center>
                             </a>
-                        </li>
-                        ";
+                        </li>";
+                    }
+                    elseif($name == $org_name)
+                    {
+                        echo
+                        "<a href='org_detail.php?id=".$row_org['id']."'>
+                            <h4>".$row_org['org_name']."</h4>
+                            <img src ='../uploads/orgs/".$row_org['org_photo']."' />
+                                <center>
+                                    <button id = 'pro_btnView'>
+                                        <a href = 'org_detail.php?id=".$row_org['id']."'>Show Info</a>
+                                    </button>
+                                </center>
+                            </a>
+                        </li>";
+                    }
                 endwhile;
+                echo "</ul></div>";
             }
             echo "</ul></div>";
+            // SELECT 
+            // p.pro_id, 
+            // p.pro_name, 
+            // SUM(o.qty), 
+            // o.delivery_status, 
+            // o.user_id from orders_tbl 
+            // o join product_tbl 
+            // p on o.pro_id = p.pro_id 
+            // where o.user_id = '$user_id' 
+            // group by p.pro_id, p.pro_name, 
+            // o.delivery_status
+            // $search = $con->prepare("SELECT * from product_tbl WHERE pro_name LIKE '%$user_query%' or pro_keyword LIKE '%$user_query%'");
+            // $search->setFetchMode(PDO:: FETCH_ASSOC);
+            // $search->execute();
+
+            // echo "<div id = 'bodyleft'><ul>";
+            // if($search->rowCount() == 0){
+            //     echo "<h2>Product Not Found</h2>";
+            // }
+            // else
+            // {
+            //     while($row=$search->fetch()):
+            //         echo"
+            //         </br>
+            //             <li>
+            //                 <a href='pro_detail.php?pro_id=".$row['pro_id']."'>
+            //                     <h4>".$row['pro_name']."</h4>
+            //                     <img src ='../uploads/products/".$row['pro_img']."' />
+            //                     <center>
+            //                     <button id = 'pro_btnView'>
+            //                     <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
+            //                 </button>
+            //                  </center>
+            //                 </a>
+            //             </li>
+            //             ";
+            //     endwhile;
+            // }
+            // echo "</ul></div>";
         }
     }
 
