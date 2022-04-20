@@ -95,42 +95,7 @@
         include("inc/db.php");
         if(isset($_SESSION['user_username']))
         {
-            $user_id = $_SESSION['user_username'];
-            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
-            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetch_user_username->execute();
-    
-            $row = $fetch_user_username->fetch();
-            $id = $row['user_id'];
-    
-            if(isset($_POST['update_user']))
-            {
-                $user_username = $_POST['user_username'];
-                $user_password =  $_POST['user_password'];
-                $user_contactnumber = $_POST['user_contactnumber'];
-                $user_email = $_POST['user_email'];
-
-                $user_profilephoto = $_FILES['user_profilephoto']['name'];
-                $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
-
-                move_uploaded_file($user_profilephoto_tmp,"..uploads/user_profile/$user_profilephoto");
-    
-                $update_user = $con->prepare("UPDATE users_table 
-                SET 
-                    user_username='$user_username',
-                    user_password = '$user_password',
-                    user_contactnumber = '$user_contactnumber',
-                    user_email = '$user_email',
-                    user_profilephoto = '$user_profilephoto'
-                WHERE 
-                    user_id = '$id'");
-    
-                if($update_user->execute())
-                {
-                    echo "<script>alert('Your Information Successfully Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
-                }
-            }
+           
         }
     }
 
