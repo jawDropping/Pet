@@ -24,7 +24,7 @@
                     </div>
                     <div class="fieldCont">
                         <p class = "label">Email:</p>
-                        <input type="text" name = "user_email" class = "inputs" required>
+                        <input type="email" name = "user_email" class = "inputs" required>
                     </div>
 
                     <div class="fieldCont">

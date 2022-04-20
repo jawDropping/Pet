@@ -17,6 +17,10 @@
                             <a class='gotoUser' href= '../user/index.php'>User Page</a>
                           </div>";
                 }
+                else
+                {
+                  echo "<script>window.open('login.php', '_self');</script>";
+                }
             ?>
           </div>
         <div class="timeSide">
