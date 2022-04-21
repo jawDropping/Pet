@@ -351,20 +351,29 @@
                 $pro_price = $row_get_prod_id['pro_price'];
                 $sub_total = $qty * $pro_price;
                 echo
-                "<tr>
-                    <td>".$row_get_prod_id['pro_name']."</td>
-                    <td>".$row['SUM(o.qty)']."</td>
-                    <td>".$row_prod['delivery_status']."</td>
-                    <td><a href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>CANCEL</a></td>
-                </tr>";
+                "
+                    <div class = 'dataHolders'>
+                    <p class = 'dataCont' >".$row_get_prod_id['pro_name']."</p>
+                    </div>
+                    <div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row['SUM(o.qty)']."</p>
+                    </div>
+                    <div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row_prod['delivery_status']."</p>
+                    </div>
+                    <div class = 'dataHolder'>
+                    <p class = 'dataCont'><a class = 'dataLenk' href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>Cancel</a></p>
+                    </div>
+                ";
                 $net_total = $net_total + $sub_total;
               
                
             endwhile;
             echo 
-            "<tr>
-                <td>TOTAL AMOUNT: ".$net_total."</td>
-            </tr>";
+            "<div></div><div></div><div></div>
+            <div class = 'dataHolderTot'>
+                <p class = 'dataCont'>TOTAL AMOUNT: ".$net_total."</p>
+            </div>";
         }    
     }
 
@@ -1198,18 +1207,24 @@
                     $org_name = $row_org['org_name'];
 
                    
-                    echo 
-                        "<a href='pro_detail.php?pro_id=".$row['pro_id']."'>
-                            <h4>".$row['pro_name']."</h4>
-                            <img src ='../uploads/products/".$row['pro_img']."' />
+
+                    if($name == $pro_name)
+                    {
+                        echo 
+                        "<a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                            <h4>".$row_pro['pro_name']."</h4>
+                            <img src ='../uploads/products/".$row_pro['pro_img']."' />
                             <center>
                                 <button id = 'pro_btnView'>
-                                    <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
+                                    <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+
                                 </button>
                             </center>
                         </a>
                     </li>";
-                    if($name == $services_name)
+
+                    }
+                    elseif($name == $services_name)
                     {
                         echo 
                         "<a href='service_detail.php?cat_id=".$row_service['service_id']."'>

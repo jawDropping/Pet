@@ -28,7 +28,7 @@
                 <form method = "POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"; enctype = "multipart/form-data">
                  
                        
-                        <input class = "input" type="email" name = "user_email" placeholder = "Username"/>               
+                        <input class = "input" type="email" name = "user_email" placeholder = "Email"/>               
                         <input class = "input"type="password" name = "user_password"  placeholder = "Password"/></br>
                         <p>Or <a href = "/Pet/petcenter/login.php">Log in as Pet Center?</a></p>
                             <button  class = "button" name = "login_user" id = "login_user" >LOGIN</button>
