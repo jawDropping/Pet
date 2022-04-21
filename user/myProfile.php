@@ -32,20 +32,28 @@
         $id = $row['user_id'];
 
         echo 
-        "
-        <div class='profileTable'>
-        <form method = 'POST' enctype='multipart/form-data'>
-            
-            <div class = 'contf'>
-            <div class = 'photo'>
+        
+        "<div class='profileTable'>
+        <form method = 'POST' enctype = 'multipart/form-data'>
+        <div class = 'contf'>
+        <div class = 'photo'>
             <div class = 'piktur'>
-            <img id = 'profs' src = '../uploads/user_profile/".$row['user_profilephoto']."' />
+                <img id = 'profs' src = '../uploads/user_profile/".$row['user_profilephoto']."' />
             </div>
             <div class = 'intpus'>
-            <p class ='uss'>Change Profile Picture</p>
-            <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' value = '".$row['user_profilephoto']."'/>
+                <p class ='uss'>Change Profile Picture</p>
+                <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' value = '".$row['user_profilephoto']."'/>
             </div>
-             </div>
+            <div>
+                <button name = 'update_profile'>Update Profile</button>
+            </div>
+         </div>
+        </form>
+        </div>";
+        
+        echo "<form method = 'POST' enctype='multipart/form-data'>
+            
+           
             <div id = 'forBckgnd'>
             <div class='formt'>
             <div class = 'innerFormt'>
@@ -96,8 +104,8 @@
             </div>
             
         </form>
-        </div>
-        ";
+        </div>";
+        
 
         if(isset($_POST['update_user']))
         {
@@ -109,10 +117,7 @@
             $barangay = $_POST['barangay'];
             $municipality = $_POST['municipality'];
 
-            $user_profilephoto = $_FILES['user_profilephoto']['name'];
-            $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
-
-            move_uploaded_file($user_profilephoto_tmp,"..uploads/user_profile/$user_profilephoto");
+    
 
             $update_user = $con->prepare("UPDATE users_table 
             SET 
@@ -122,8 +127,7 @@
                 user_email = '$user_email',
                 user_address = '$user_address',
                 barangay = '$barangay',
-                municipality = '$municipality',
-                user_profilephoto = '$user_profilephoto'
+                municipality = '$municipality'
 
             WHERE 
                 user_id = '$id'");
@@ -131,6 +135,21 @@
             if($update_user->execute())
             {
                 echo "<script>alert('Your Information Successfully Updated!');</script>";
+                echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+            }
+        }
+        if(isset($_POST['update_profile']))
+        {
+            $user_profilephoto = $_FILES['user_profilephoto']['name'];
+            $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
+
+            move_uploaded_file($user_profilephoto_tmp,"..uploads/user_profile/$user_profilephoto");
+
+            $update_profile = $con->prepare("UPDATE users_table SET user_profilephoto = '$user_profilephoto' WHERE user_id = '$id'");
+
+            if($update_profile->execute())
+            {
+                echo "<script>alert('Profile Updated!');</script>";
                 echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
             }
         }

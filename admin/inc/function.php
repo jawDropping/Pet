@@ -414,10 +414,10 @@
                 echo 
                 "<form method = 'POST' enctype = 'multipart/form-data'>
                    <tr>
-                        <input type = 'hidden' name = 'user_username' value = ".$row_username['user_username']." />
+                        <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
                         <td>".$row_username['user_username']."</td>
                   
-                        <input type = 'hidden' name = 'pro_name' value = ".$row_pro_name['pro_name']." />
+                        <input type = 'hidden' name = 'pro_name' value = '".$row_pro_name['pro_name']."' />
                         <td>".$row_pro_name['pro_name']."</td>
                       
                         <input type = 'hidden' name = 'qty' value = ".$row['SUM(o.qty)']." />
@@ -451,47 +451,38 @@
             $view_status->setFetchMode(PDO:: FETCH_ASSOC);
             $view_status->execute();
 
-            $row = $view_status->fetch();
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
 
-            if($row['delivery_status'] == 'FOR CONFIRMATION')
+            $row_user = $sql->fetch();
+            var_dump($user_id = $row_user['user_id']);
+
+            $receiver = $row_user['user_email'];
+            $subject = "Order Confirmation Mail";
+            $body = "Your Order has been confirmed and it will be delivered on $delivery_date ,please keep your lines open!.";
+            $sender = "ianjohn0101@gmail.com";
+
+            if(mail($receiver, $subject, $body, $sender))
             {
-                echo "<script>alert('Delivery Already on Process');</script>";
-            }
-            else
-            {
-                $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
-                $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql->execute();
-
-                $row_user = $sql->fetch();
-                $user_id = $row_user['user_id'];
-
-                $receiver = $row_user['user_email'];
-                $subject = "Order Confirmation Mail";
-                $body = "Your Order has been confirmed and it will be delivered on $delivery_date ,please keep your lines open!.";
-                $sender = "ianjohn0101@gmail.com";
-
-                if(mail($receiver, $subject, $body, $sender))
+                $to_deliver = $con->prepare("INSERT INTO delivery_tbl SET 
+                                pro_name = '$pro_name',
+                                user_id = $user_id,
+                                qty = $qty,
+                                delivery_date = '$delivery_date',
+                                total_amount = $total_amount,
+                                delivery_status = 'FOR DELIVERY'
+                                ");
+                if($to_deliver->execute())
                 {
-                    $to_deliver = $con->prepare("INSERT INTO delivery_tbl SET 
-                                    pro_name = '$pro_name',
-                                    user_id = $user_id,
-                                    qty = $qty,
-                                    delivery_date = '$delivery_date',
-                                    total_amount = $total_amount,
-                                    delivery_status = 'FOR DELIVERY'
-                                    ");
-                    if($to_deliver->execute())
-                    {
-                        $update_status = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
-                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-                        $update_status->execute();
+                    $update_status = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
+                    $update_status->setFetchMode(PDO:: FETCH_ASSOC);
+                    $update_status->execute();
 
-                        if($update_status->execute())
-                        {
-                            echo "<script>alert('Item for delivery');</script>";
-                            echo "<script>window.open('index.php?viewall_orders.php','_self');</script>";
-                        }
+                    if($update_status->execute())
+                    {
+                        echo "<script>alert('Item for delivery');</script>";
+                        echo "<script>window.open('index.php?viewall_orders.php','_self');</script>";
                     }
                 }
             }
