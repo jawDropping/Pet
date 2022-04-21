@@ -1198,17 +1198,7 @@
                     $org_name = $row_org['org_name'];
 
                    
-                    echo 
-                        "<a href='pro_detail.php?pro_id=".$row['pro_id']."'>
-                            <h4>".$row['pro_name']."</h4>
-                            <img src ='../uploads/products/".$row['pro_img']."' />
-                            <center>
-                                <button id = 'pro_btnView'>
-                                    <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
-                                </button>
-                            </center>
-                        </a>
-                    </li>";
+                    
                     if($name == $services_name)
                     {
                         echo 
