@@ -18,11 +18,24 @@ $display_cart->execute();
 $row = $display_cart->fetch();
 $qty = array_count_values($_SESSION['cart'])[$row['pro_id']];
 
+$sql = $con->query("SELECT * FROM orders_tbl");
+$sql->setFetchMode(PDO:: FETCH_ASSOC);
+
+$row = $sql->fetch();
+$order_id = 1;
+if($row)
+{
+    $order_id = intval($row['order_id']+1);
+}
+// var_dump($row);
+// die($order_id);
+
+
 if($row_user['municipality'] == "mandaue" || $row_user['municipality'] == "cebu" || $row_user['municipality'] == "consolacion" || $row_user['municipality'] == "talisay")
 {
     foreach($_SESSION['cart'] as $prodID)
     { 
-        $query = $con->prepare("INSERT INTO orders_tbl(user_id, pro_id, qty, delivery_status) VALUES($userID, $prodID, $qty, 'PENDING')");
+        $query = $con->prepare("INSERT INTO orders_tbl(order_id, user_id, pro_id, qty, delivery_status) VALUES($order_id, $userID, $prodID, $qty, 'PENDING')");
         try{
             if($query->execute())
             {
