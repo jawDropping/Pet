@@ -12,24 +12,109 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
         ?>
-<div class = "scroll" id ="bodyright">
+<div class = "containersest">
+    <div class="ttl">
+    <img src="../uploads/orderist.png" id = 'orderIc' >
     <h3>Transaction History</h3>
-    <table>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Date Delivered</th>
-        </tr>
-        <tr>
+    </div>
+    
+    <div class = "contTable">
+        <div class = "inside">
+            <div class="divHead">
+                <p class = 'headers'>Product Name</p>
+            </div>
+           <div class="divHead">
+                <p class = 'headers'>Quantity</p>
+           </div>
+            <div class="divHead">
+               <p class = 'headers'>Date Delivered</p>
+            </div>
+            
+        
+  
             <?php
                  viewall_transactions();
             ?>
-        </tr>
+     </div>
         <a href = 'index.php'>Go Home</a>
-        </table>
+        </div>
 </div>
 
     </body>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .inside{
+            display: grid;
+            grid-template-columns: 25% 25% 25% 25%;
+            text-align: center;
+            row-gap: 10px;
+
+        }
+        .containersest{
+            margin-top: 20px;
+            flex-direction: column;
+            height: 90vh;
+            width: 90vw;
+            margin-left: 5%;
+        }
+        .divHead{
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        .headers{
+            padding: 5px;
+            font-weight: bold;
+            color: #888;
+        }
+        h3{
+            margin-bottom: 10px;
+        }
+        .dataHolders{
+            text-align: left;
+        }
+        .dataCont{
+            padding: 15px;
+            
+        }
+       
+        .dataLenk{
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #EC8173;
+        }
+        .dataLenk:hover{
+            background: #EC8173;
+            color: white;
+            transition: .5s;
+        }
+        .contTable{
+            padding: 20px;
+            border-radius: 8px;
+            background: red;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        .dataHolderTot
+        {
+            background: #ffb830;
+            width: 90%;
+            margin-left: 10%;
+            text-align: center;
+            border-radius: 10px;
+        }
+        #orderIc{
+            height: 25px;
+            margin-right: 5px;
+            background: red;
+        }
+        .ttl{
+            display: flex;
+            margin-bottom: 10px;
+        }
+    </style>
 </html>
 
 

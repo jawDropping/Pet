@@ -13,7 +13,11 @@
             include ("inc/navbar.php"); 
         ?>
     <div class="containersest">
-    <h3>Order</h3>
+
+    <div class="ttl">
+    <img src="../uploads/orderist.png" id = 'orderIc' > <h3>Orders</h3>
+    </div>
+    
     <div class="contTable">
     <div class = 'inside'>
         <div class = 'divHead'>
@@ -62,7 +66,7 @@
         }
         .divHead{
             padding: 5px;
-            background: #eee;
+            border-bottom: 1px solid #ddd;
         }
         .headers{
             padding: 5px;
@@ -72,11 +76,24 @@
         h3{
             margin-bottom: 10px;
         }
-        .dataHolder{
-            
+        .dataHolders{
+            text-align: left;
         }
         .dataCont{
             padding: 15px;
+            
+        }
+       
+        .dataLenk{
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #EC8173;
+        }
+        .dataLenk:hover{
+            background: #EC8173;
+            color: white;
+            transition: .5s;
         }
         .contTable{
             padding: 20px;
@@ -91,6 +108,14 @@
             margin-left: 10%;
             text-align: center;
             border-radius: 10px;
+        }
+        #orderIc{
+            height: 25px;
+            margin-right: 5px;
+        }
+        .ttl{
+            display: flex;
+            margin-bottom: 10px;
         }
     </style>
 </html>

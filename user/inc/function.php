@@ -352,7 +352,7 @@
                 $sub_total = $qty * $pro_price;
                 echo
                 "
-                    <div class = 'dataHolder'>
+                    <div class = 'dataHolders'>
                     <p class = 'dataCont' >".$row_get_prod_id['pro_name']."</p>
                     </div>
                     <div class = 'dataHolder'>
@@ -362,7 +362,7 @@
                     <p class = 'dataCont'>".$row_prod['delivery_status']."</p>
                     </div>
                     <div class = 'dataHolder'>
-                    <p class = 'dataCont'><a href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>CANCEL</a></p>
+                    <p class = 'dataCont'><a class = 'dataLenk' href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>Cancel</a></p>
                     </div>
                 ";
                 $net_total = $net_total + $sub_total;

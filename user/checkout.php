@@ -49,17 +49,17 @@
                     <br>
                     <p><img src= '../uploads/informate.png' id = 'locatePng'>Contact Details</p>
                     <div id ='editinfo' style = 'margin-left:90%;'>
-                    <p><img src= '../uploads/pencil.png' id = 'locatePng'><a href = 'myProfile.php' style = 'text-decoration:none;color:#000;font-family: Verdana, Geneva, Tahoma, sans-serif;'>Edit Info</a></p>
+                   
                 </div>
                 <div id = 'locationDiv'>
                 <div id = 'groupContainer'>
                 <div class = 'group'>
                     <p class = 'tag'>Contact Number: </p>
-                    <input type = 'text' class = 'inputed' name = 'user_contactnumber' value = ".$row_user['user_contactnumber']." disabled/>
+                    <input type = 'text' class = 'inputed' name = 'user_contactnumber' value = ".$row_user['user_contactnumber']." />
                 </div>
                 <div class = 'group'>
                     <p class = 'tag'>Email Address: </p>
-                    <td><input type = 'text' class = 'inputed' name = 'user_email' value = ".$row_user['user_email']." disabled/></td>
+                    <td><input type = 'text' class = 'inputed' name = 'user_email' value = ".$row_user['user_email']." /></td>
                    </div>
                 </div>
                 </div>
@@ -69,15 +69,15 @@
                     <div id = 'groupContainer'>
                     <div class = 'group'>
                     <p class = 'tag'>Street </p>
-                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['user_address']." disabled/>
+                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['user_address']." />
                     </div>
                     <div class = 'group'>
                     <p class = 'tag'>Brgy </p>
-                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['barangay']." disabled/>
+                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['barangay']." />
                     </div>
                     <div class = 'group'>
                     <p class = 'tag'>Municipality </p>
-                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['municipality']." disabled/>
+                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['municipality']." />
                     </div>
                     </div>
                     </div>
