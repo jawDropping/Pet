@@ -1198,21 +1198,18 @@
                     $org_name = $row_org['org_name'];
 
                    
-                    if($name == $pro_name)
-                    {
-                        echo 
-                        "<a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                            <h4>".$row_pro['pro_name']."</h4>
-                            <img src ='../uploads/products/".$row_pro['pro_img']."' />
+                    echo 
+                        "<a href='pro_detail.php?pro_id=".$row['pro_id']."'>
+                            <h4>".$row['pro_name']."</h4>
+                            <img src ='../uploads/products/".$row['pro_img']."' />
                             <center>
                                 <button id = 'pro_btnView'>
-                                    <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                                    <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
                                 </button>
                             </center>
                         </a>
                     </li>";
-                    }
-                    elseif($name == $services_name)
+                    if($name == $services_name)
                     {
                         echo 
                         "<a href='service_detail.php?cat_id=".$row_service['service_id']."'>
