@@ -163,7 +163,7 @@
                 $user_password =  $_POST['user_password'];
                 $user_contactnumber = $_POST['user_contactnumber'];
                 $user_email = $_POST['user_email'];
-
+             
                 $user_profilephoto = $_FILES['user_profilephoto']['name'];
                 $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
 
@@ -912,7 +912,7 @@
     }
     function viewall_services()
     {
-        
+
         include("inc/db.php");
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1207,22 +1207,22 @@
                     $org_name = $row_org['org_name'];
 
                    
-
                     if($name == $pro_name)
                     {
-                        echo 
+                        echo
                         "<a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                            <h4>".$row_pro['pro_name']."</h4>
-                            <img src ='../uploads/products/".$row_pro['pro_img']."' />
-                            <center>
-                                <button id = 'pro_btnView'>
-                                    <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-
-                                </button>
-                            </center>
-                        </a>
-                    </li>";
-
+                        <h4>".$row_pro['pro_name']."</h4>
+                        <img src ='../uploads/products/".$row_pro['pro_img']."' />
+                        <center>
+                            <button id = 'pro_btnView'>
+                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                            </button>
+                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button id = 'pro_btn' name = 'cart_btn'>Cart
+                            </button>
+                            
+                        </center>
+                    </a>";
                     }
                     elseif($name == $services_name)
                     {
@@ -1298,44 +1298,6 @@
         }
     }
 
-    function search_service() {
-        include("inc/db.php");
-
-        if(isset($_GET['search']) && isset($_GET['user_query']))
-        {
-            $user_query = $_GET['user_query'];
-            $search = $con->prepare("SELECT * from services WHERE services_name LIKE '%$user_query%'");
-            $search->setFetchMode(PDO:: FETCH_ASSOC);
-            $search->execute();
-
-            echo "<div id = 'bodyleft'><ul>";
-            if($search->rowCount() == 0){
-                echo "<h2>Service Not Found</h2>";
-            }
-            else
-            {
-                while($row=$search->fetch()):
-                    echo"
-                    </br>
-                    <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='show_service_info.php?id=".$row['id']."'>
-                        <h4>".$row['services_name']."</h4>
-                        <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                        <center>
-                            <button id = 'pro_btnView'>
-                                <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                        </center>
-                    </a>
-                    </form>
-                  
-                </li>";
-                endwhile;
-            }
-            echo "</ul></div>";
-        }
-    }
+    
 ?>
 
