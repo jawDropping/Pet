@@ -92,6 +92,9 @@
             text-align: center;
             border-radius: 10px;
         }
+        .act{
+            padding: 5px;
+        }
     </style>
 </html>
 

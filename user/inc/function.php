@@ -273,7 +273,7 @@
                     <p class = 'dataCont'>".$row_prod['delivery_status']."</p>
                     </div>
                     <div class = 'dataHolder'>
-                    <p class = 'dataCont'><a href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>CANCEL</a></p>
+                    <p class = 'dataCont'><a class = 'act' href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>CANCEL</a></p>
                     </div>
                 ";
                 $net_total = $net_total + $sub_total;
