@@ -8,7 +8,7 @@
     </head>
     <body>
     <?php 
-    include("inc/function.php");
+            include("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
         ?>
