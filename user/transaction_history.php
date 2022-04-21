@@ -105,8 +105,6 @@
                <p class = 'headers'>Date Delivered</p>
             </div>
             
-        
-  
             <?php
                  viewall_transactions();
             ?>
@@ -115,9 +113,7 @@
      </div>
      
 </div>
-<?php
-include("inc/footer.php");
-?> 
+
     </body>
 </html>
 
