@@ -108,46 +108,60 @@
             $contact_number = $_POST['contact_number'];
             $accept_coupons = $_POST['accept_coupons'];
 
-            if(strlen($pet_center_password) >= 8 &&
-            preg_match('/[A-Z]/', $pet_center_password) > 0 &&
-            preg_match('/[a-z]/', $pet_center_password) > 0)
+            $view_emails = $con->prepare("SELECT * FROM pet_center_tbl");
+            $view_emails->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_emails->execute();
+
+            $row = $view_emails->fetch();
+            $pet_center_email = $row['email'];
+            if($pet_center_email == $email)
             {
-                $add_service = $con->prepare("INSERT INTO pet_center_tbl (
-                    pet_center_name,
-                    pet_center_password,
-                    email,
-                    contact_number,
-                    pet_center_photo,
-                    active_coupon
-                ) 
-                VALUES (
-                    '$pet_center_name',
-                    '$pet_center_password',
-                    '$email',
-                    '$contact_number',
-                    'userIcon.svg',
-                    '$accept_coupons'
-                )");
-    
-                if($add_service->execute())
-                {
-                    echo "
-                    <script>
-                    alert('Registered Successful!');
-                    if ( window.history.replaceState ) {
-                       window.history.replaceState( null, null, window.location.href );
-                   }            
-                    </script>"; 
-                }
-                else
-                {
-                    echo "<script>alert('Registered Unsuccessful!');</script>";
-                }
+                echo "Email already existed!";
             }
             else
             {
-                echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
+                if(strlen($pet_center_password) >= 8 &&
+                preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+                preg_match('/[a-z]/', $pet_center_password) > 0)
+                {
+                    $add_service = $con->prepare("INSERT INTO pet_center_tbl (
+                        pet_center_name,
+                        pet_center_password,
+                        email,
+                        contact_number,
+                        pet_center_photo,
+                        active_coupon
+                    ) 
+                    VALUES (
+                        '$pet_center_name',
+                        '$pet_center_password',
+                        '$email',
+                        '$contact_number',
+                        'userIcon.svg',
+                        '$accept_coupons'
+                    )");
+        
+                    if($add_service->execute())
+                    {
+                        echo "
+                        <script>
+                        alert('Registered Successful!');
+                        if ( window.history.replaceState ) {
+                           window.history.replaceState( null, null, window.location.href );
+                       }            
+                        </script>"; 
+                    }
+                    else
+                    {
+                        echo "<script>alert('Registered Unsuccessful!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
+                }
             }
+            
         }
     }
     function add_service()

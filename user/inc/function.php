@@ -1207,6 +1207,7 @@
                     $org_name = $row_org['org_name'];
 
                    
+
                     if($name == $pro_name)
                     {
                         echo 
@@ -1216,10 +1217,12 @@
                             <center>
                                 <button id = 'pro_btnView'>
                                     <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+
                                 </button>
                             </center>
                         </a>
                     </li>";
+
                     }
                     elseif($name == $services_name)
                     {
