@@ -16,49 +16,61 @@
             $barangay = $_POST['barangay'];
             $user_address = $_POST['user_address'];
 
-        
-            if(strlen($user_password) >= 8 &&
-            preg_match('/[A-Z]/', $user_password) > 0 &&
-            preg_match('/[a-z]/', $user_password) > 0)
+            $view_emails = $con->prepare("SELECT * FROM users_table");
+            $view_emails->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_emails->execute();
+
+            $row = $view_emails->fetch();
+            $email = $row['user_email'];
+            if($email == $user_email)
             {
-                $add_user = $con->prepare("INSERT INTO users_table(
-                    user_username,
-                    user_email,
-                    user_contactnumber,
-                    user_password,
-                    municipality,
-                    barangay,
-                    user_address,
-                    user_profilephoto
-                ) 
-                VALUES (
-                    '$user_username',
-                    '$user_email',
-                    '$user_contactnumber',
-                    '$user_password',
-                    '$municipality',
-                    '$barangay',
-                    '$user_address',
-                    'userIcon.svg'
-                )");
-    
-                if($add_user->execute())
-                {
-                    echo "<script>alert('Registration Successfull!');</script>"; 
-                    echo "<script>
-                    if ( window.history.replaceState ) {
-                       window.history.replaceState( null, null, window.location.href );
-                   }            
-                    </script>";
-                }
-                else
-                {
-                    echo "<script>alert('Registration Unsuccessfull!');</script>";
-                }
+               echo "Email already existed!";
             }
             else
             {
-                echo "<script>alert('Password must have 8 characters long, an uppercase and at least 1 special character!');</script>";
+                if(strlen($user_password) >= 8 &&
+                preg_match('/[A-Z]/', $user_password) > 0 &&
+                preg_match('/[a-z]/', $user_password) > 0)
+                {
+                    $add_user = $con->prepare("INSERT INTO users_table(
+                        user_username,
+                        user_email,
+                        user_contactnumber,
+                        user_password,
+                        municipality,
+                        barangay,
+                        user_address,
+                        user_profilephoto
+                    ) 
+                    VALUES (
+                        '$user_username',
+                        '$user_email',
+                        '$user_contactnumber',
+                        '$user_password',
+                        '$municipality',
+                        '$barangay',
+                        '$user_address',
+                        'userIcon.svg'
+                    )");
+        
+                    if($add_user->execute())
+                    {
+                        echo "<script>alert('Registration Successfull!');</script>"; 
+                        echo "<script>
+                        if ( window.history.replaceState ) {
+                           window.history.replaceState( null, null, window.location.href );
+                       }            
+                        </script>";
+                    }
+                    else
+                    {
+                        echo "<script>alert('Registration Unsuccessfull!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
+                }
             }
         }
     }
@@ -95,7 +107,84 @@
         include("inc/db.php");
         if(isset($_SESSION['user_username']))
         {
-           
+            $user_id = $_SESSION['user_username'];
+            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_user_username->execute();
+    
+            $row = $fetch_user_username->fetch();
+            $id = $row['user_id'];
+    
+            echo 
+            "<form method = 'POST' enctype='multipart/form-data'>
+                <div class='profileTable'>
+                <div class = 'photo'>
+                    <img src = '../uploads/user_profile/".$row['user_profilephoto']."' />
+                    <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' value = '".$row['user_profilephoto']."' required />
+                </div>
+                <p class='name'>User's Name</p>
+                <div class = 'contf'>
+                <div class='formt'>
+                    <div class='username'>
+                        <p class='us'>username </p>
+                        <input class='user_name'type = 'text' name =  'user_username' value = '".$row['user_username']."' />
+                    </div>
+                    <div class='username'>
+                        <p class = 'us'>password </p>
+                        <input class='user_name' type = 'password' name = 'user_password' value = '".$row['user_password']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class='us'>email </p>
+                        <input class='user_name' type = 'email' name = 'user_email' value = '".$row['user_email']."' />
+                    </div>
+                    <div class = 'username'>
+                        <p class = 'us'>Contact Number: </p>
+                        <input  class = 'user_name 'type = 'text' name = 'user_contactnumber' value = '".$row['user_contactnumber']."' />
+                    </div>
+                    <div class = 'usernameb'>
+                        <button name = 'update_user'>Update Profile</button>
+                    </div>
+                    <div class = 'usernameh'>
+                        <button class = 'back'><a href = 'index.php'>Back to Home</a></button>
+                    </div>
+                    </div>
+                    <div class='rightSide'>
+                        
+                    </div>
+                    </div>
+                </div>
+                
+            </form>
+            ";
+    
+            if(isset($_POST['update_user']))
+            {
+                $user_username = $_POST['user_username'];
+                $user_password =  $_POST['user_password'];
+                $user_contactnumber = $_POST['user_contactnumber'];
+                $user_email = $_POST['user_email'];
+
+                $user_profilephoto = $_FILES['user_profilephoto']['name'];
+                $user_profilephoto_tmp = $_FILES['user_profilephoto']['tmp_name'];
+
+                move_uploaded_file($user_profilephoto_tmp,"..uploads/user_profile/$user_profilephoto");
+    
+                $update_user = $con->prepare("UPDATE users_table 
+                SET 
+                    user_username='$user_username',
+                    user_password = '$user_password',
+                    user_contactnumber = '$user_contactnumber',
+                    user_email = '$user_email',
+                    user_profilephoto = '$user_profilephoto'
+                WHERE 
+                    user_id = '$id'");
+    
+                if($update_user->execute())
+                {
+                    echo "<script>alert('Your Information Successfully Updated!');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+                }
+            }
         }
     }
 
@@ -263,7 +352,7 @@
                 $sub_total = $qty * $pro_price;
                 echo
                 "
-                    <div class = 'dataHolder'>
+                    <div class = 'dataHolders'>
                     <p class = 'dataCont' >".$row_get_prod_id['pro_name']."</p>
                     </div>
                     <div class = 'dataHolder'>
@@ -273,7 +362,7 @@
                     <p class = 'dataCont'>".$row_prod['delivery_status']."</p>
                     </div>
                     <div class = 'dataHolder'>
-                    <p class = 'dataCont'><a class = 'act' href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>CANCEL</a></p>
+                    <p class = 'dataCont'><a class = 'dataLenk' href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>Cancel</a></p>
                     </div>
                 ";
                 $net_total = $net_total + $sub_total;
@@ -1080,34 +1169,129 @@
         if(isset($_GET['search']) && isset($_GET['user_query']))
         {
             $user_query = $_GET['user_query'];
-            $search = $con->prepare("SELECT * from product_tbl WHERE pro_name LIKE '%$user_query%' or pro_keyword LIKE '%$user_query%'");
+
+            $search = $con->query("SELECT pro_name FROM product_tbl WHERE pro_name LIKE '%$user_query%' UNION SELECT services_name FROM services WHERE services_name LIKE '%$user_query%' UNION SELECT org_name FROM organizations WHERE org_name LIKE '%$user_query%'");
             $search->setFetchMode(PDO:: FETCH_ASSOC);
             $search->execute();
 
             echo "<div id = 'bodyleft'><ul>";
             if($search->rowCount() == 0){
-                echo "<h2>Product Not Found</h2>";
+                echo "<h2>NOT FOUND!</h2>";
             }
             else
             {
                 while($row=$search->fetch()):
-                    echo"
-                    </br>
-                        <li>
-                            <a href='pro_detail.php?pro_id=".$row['pro_id']."'>
-                                <h4>".$row['pro_name']."</h4>
-                                <img src ='../uploads/products/".$row['pro_img']."' />
-                                <center>
+                    echo 
+                    "</br>
+                    <li>";
+                    $name = $row['pro_name'];
+                    $sql = $con->prepare("SELECT * FROM product_tbl");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+
+                    $row_pro = $sql->fetch();
+                    $pro_name = $row_pro['pro_name'];
+
+                    $sql2 = $con->prepare("SELECT * FROM services");
+                    $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql2->execute();
+
+                    $row_service = $sql2->fetch();
+                    $services_name = $row_service['services_name'];
+
+                    $sql3 = $con->prepare("SELECT * FROM organizations");
+                    $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql3->execute();
+
+                    $row_org = $sql3->fetch();
+                    $org_name = $row_org['org_name'];
+
+                   
+                    if($name == $pro_name)
+                    {
+                        echo 
+                        "<a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                            <h4>".$row_pro['pro_name']."</h4>
+                            <img src ='../uploads/products/".$row_pro['pro_img']."' />
+                            <center>
                                 <button id = 'pro_btnView'>
-                                <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
-                            </button>
-                             </center>
+                                    <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                                </button>
+                            </center>
+                        </a>
+                    </li>";
+                    }
+                    elseif($name == $services_name)
+                    {
+                        echo 
+                        "<a href='service_detail.php?cat_id=".$row_service['service_id']."'>
+                            <h4>".$row_service['services_name']."</h4>
+                            <img src ='../uploads/user_profile/".$row_service['service_photo']."' />
+                                <center>
+                                    <button id = 'pro_btn'>
+                                        <a href = 'show_service_info.php?id=".$row_service['id']."'>Show Info</a>
+                                    </button>
+                                </center>
                             </a>
-                        </li>
-                        ";
+                        </li>";
+                    }
+                    elseif($name == $org_name)
+                    {
+                        echo
+                        "<a href='org_detail.php?id=".$row_org['id']."'>
+                            <h4>".$row_org['org_name']."</h4>
+                            <img src ='../uploads/orgs/".$row_org['org_photo']."' />
+                                <center>
+                                    <button id = 'pro_btnView'>
+                                        <a href = 'org_detail.php?id=".$row_org['id']."'>Show Info</a>
+                                    </button>
+                                </center>
+                            </a>
+                        </li>";
+                    }
                 endwhile;
+                echo "</ul></div>";
             }
             echo "</ul></div>";
+            // SELECT 
+            // p.pro_id, 
+            // p.pro_name, 
+            // SUM(o.qty), 
+            // o.delivery_status, 
+            // o.user_id from orders_tbl 
+            // o join product_tbl 
+            // p on o.pro_id = p.pro_id 
+            // where o.user_id = '$user_id' 
+            // group by p.pro_id, p.pro_name, 
+            // o.delivery_status
+            // $search = $con->prepare("SELECT * from product_tbl WHERE pro_name LIKE '%$user_query%' or pro_keyword LIKE '%$user_query%'");
+            // $search->setFetchMode(PDO:: FETCH_ASSOC);
+            // $search->execute();
+
+            // echo "<div id = 'bodyleft'><ul>";
+            // if($search->rowCount() == 0){
+            //     echo "<h2>Product Not Found</h2>";
+            // }
+            // else
+            // {
+            //     while($row=$search->fetch()):
+            //         echo"
+            //         </br>
+            //             <li>
+            //                 <a href='pro_detail.php?pro_id=".$row['pro_id']."'>
+            //                     <h4>".$row['pro_name']."</h4>
+            //                     <img src ='../uploads/products/".$row['pro_img']."' />
+            //                     <center>
+            //                     <button id = 'pro_btnView'>
+            //                     <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>View</a>
+            //                 </button>
+            //                  </center>
+            //                 </a>
+            //             </li>
+            //             ";
+            //     endwhile;
+            // }
+            // echo "</ul></div>";
         }
     }
 
