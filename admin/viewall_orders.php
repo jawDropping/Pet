@@ -4,11 +4,13 @@
     <table>
         <tr>
     
-            <th>User </th>
+            <th>ORDER ID </th>
+
+            <th>USER</th>
      
-            <th>Product Name</th>
-        
-            <th>Product Quantity</th>
+            <th>ITEMS</th>
+
+            <th>TOTAL AMOUNT</th>
 
             <th>Delivery Date</th>
            
