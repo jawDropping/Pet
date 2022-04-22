@@ -518,20 +518,31 @@
                   <img class = 'images' src ='../uploads/orgs/".$row_org['org_photo']."'/> 
                   </center>
                   <div id = 'innerService'>
+                  <div id = 'content'>
                     <p class = 'Heads' >".$row_org['org_name']."</p>
-                    <div>
-                        <p>
-                            Org Location: ".$row_org['org_location']."
+                    <div id = 'oks'>
+                        <p class = 'fsTxt'>
+                        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'<br>
                         </p>
-                        <p>
-                        Org Contact Number: ".$row_org['org_contact_number']."
+                        <div class = 'infoss'>
+                        <p class = 'lebels'>
+                            Location:
+                            </p>
+                            <p class = 'dates'> ".$row_org['org_location']."
+                        </p>
+                        <p class = 'lebels'>
+                        Contact Number:</p><p class = 'dates'> ".$row_org['org_contact_number']."
                        
                         </p>
-                        <p>
-                        Org Email Address: ".$row_org['org_email_address']."
+                        <p class = 'lebels'>
+                       Email Address: </p>
+                       <p class = 'dates'>".$row_org['org_email_address']."
                         </p>
+                        </div>
                     </div>
-                    <a href = 'donate.php?donate=".$row_org['id']."'>Donate</a>
+                    <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'>Donate</a>
+                    
+                </div>
                 </div>
                 </div>
                 </div>";          

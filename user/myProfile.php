@@ -34,24 +34,24 @@
         echo 
         
         "<div class='profileTable'>
-        <form method = 'POST' enctype = 'multipart/form-data'>
         <div class = 'contf'>
+        <form method = 'POST' enctype = 'multipart/form-data' id = 'pikt'>
         <div class = 'photo'>
             <div class = 'piktur'>
                 <img id = 'profs' src = '../uploads/user_profile/".$row['user_profilephoto']."' />
             </div>
             <div class = 'intpus'>
+            <div id = 'arden'>
                 <p class ='uss'>Change Profile Picture</p>
-                <input type = 'file' name = 'user_profilephoto' class = 'fileUpload' value = '".$row['user_profilephoto']."'/>
-            </div>
-            <div>
-                <button name = 'update_profile'>Update Profile</button>
+                <input type = 'file'  name = 'user_profilephoto' id = 'checks' class = 'fileUpload' value = '".$row['user_profilephoto']."'/><br>
+                </div>
+                <button id = 'regss' name = 'update_profile'>Update Profile Picture</button>
             </div>
          </div>
+         
         </form>
-        </div>";
         
-        echo "<form method = 'POST' enctype='multipart/form-data'>
+       <form method = 'POST' enctype='multipart/form-data' id = 'datapkt'>
             
            
             <div id = 'forBckgnd'>
@@ -102,7 +102,7 @@
                 </div>
                 </div>
             </div>
-            
+            </div>
         </form>
         </div>";
         
@@ -163,4 +163,25 @@
 include ("inc/footer.php"); 
 ?>
 </body>
+<script>
+     let input = document.querySelector("#checks");
+            let button = document.querySelector(".button");
+            button.disabled = true;
+
+            input.addEventListener("change", stateHandle);
+
+            function stateHandle() {
+           if (document.querySelector(".input").value === "") {
+              button.disabled = true; //button remains disabled
+              button.style.background = "#fafafa";
+              button.style.boxShadow = "none";
+              button.style.color = "#888";
+             } else {
+                  button.disabled = false; //button is enabled
+                  button.style.background = "#5a5bf3";
+                  button.style.boxShadow = "5px 7px 8px #aaa";
+                  button.style.color = "white";
+                  }
+            }
+</script>
 </html>
