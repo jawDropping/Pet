@@ -20,12 +20,14 @@
     
     <div class="contTable">
     <div class = 'inside'>
-        <div class = 'divHead'>
-             <p class = 'headers'>PRODUCT</p>
-        </div>
+        
         <div class="divHead">
-            <p class = 'headers'>QUANITTY</p>
+            <p class = 'headers'>ITEMS</p>
         </div>
+        <div class = 'divHead'>
+             <p class = 'headers'>SUB-TOTAL</p>
+        </div>
+        
         <div class="divHead">
              <p class = 'headers'>ORDER STATUS</p>
         </div>  

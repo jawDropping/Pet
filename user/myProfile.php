@@ -87,9 +87,7 @@
                  </div>
                  <div></div>
                 </div>
-
                 <div class = 'bottomBtn'>
-
                 <div class = 'btn'>
                     <button id = 'regs2'><a id = 'bckHm' href = 'index.php'>Back to Home</a></button>
                 </div>
@@ -128,7 +126,6 @@
                 user_address = '$user_address',
                 barangay = '$barangay',
                 municipality = '$municipality'
-
             WHERE 
                 user_id = '$id'");
 

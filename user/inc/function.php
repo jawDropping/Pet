@@ -326,49 +326,34 @@
             $user_id = $row_get_user_id['user_id'];
 
             $net_total = 0;
-            $display_prod = $con->prepare("SELECT p.pro_id, p.pro_name, SUM(o.qty), o.delivery_status, o.user_id from orders_tbl o join product_tbl p on o.pro_id = p.pro_id where o.user_id = '$user_id' group by p.pro_id, p.pro_name, o.delivery_status");
-            $display_prod->setFetchMode(PDO:: FETCH_ASSOC);
-            $display_prod->execute();
-            while($row = $display_prod->fetch()):
-              
-                $prod_id = $row['pro_id'];
-
-                $prod_name = $con->prepare("SELECT * FROM orders_tbl WHERE pro_id = '$prod_id'");
-                $prod_name->setFetchMode(PDO:: FETCH_ASSOC);
-                $prod_name->execute();
-                $row_prod = $prod_name->fetch();
-
-                $order_id = $row_prod['order_id'];
-                $pro_id = $row_prod['pro_id'];
-                
-
-                $display_prods = $con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-                $display_prods->setFetchMode(PDO:: FETCH_ASSOC);
-                $display_prods->execute();
-                $row_get_prod_id = $display_prods->fetch();
-
-                $qty = $row['SUM(o.qty)'];
-                $pro_price = $row_get_prod_id['pro_price'];
-                $sub_total = $qty * $pro_price;
+            $q = $con->query("
+            SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
+            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
+            from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
+            WHERE o.user_id = $user_id
+            group by o.order_id, p.pro_name, o.delivery_status) od
+            group by od.order_id, od.delivery_status
+            ");
+            $orders = $q->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($orders as $order) {
+                $net_total += $order['sum(od.qty * od.price)'];
                 echo
-                "
+                "<div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$order['items']."</p>
+                    </div>
                     <div class = 'dataHolders'>
-                    <p class = 'dataCont' >".$row_get_prod_id['pro_name']."</p>
+                    <p class = 'dataCont' >".$order['sum(od.qty * od.price)']."</p>
                     </div>
                     <div class = 'dataHolder'>
-                    <p class = 'dataCont'>".$row['SUM(o.qty)']."</p>
+                    <p class = 'dataCont'>".$order['delivery_status']."</p>
                     </div>
                     <div class = 'dataHolder'>
-                    <p class = 'dataCont'>".$row_prod['delivery_status']."</p>
-                    </div>
-                    <div class = 'dataHolder'>
-                    <p class = 'dataCont'><a class = 'dataLenk' href = 'cancel_order.php?cancel_order=".$row_prod['order_id']."'>Cancel</a></p>
+                    <p class = 'dataCont'><a class = 'dataLenk' href = 'cancel_order.php?cancel_order=".$order['order_id']."'>Cancel</a></p>
                     </div>
                 ";
-                $net_total = $net_total + $sub_total;
-              
-               
-            endwhile;
+                // $net_total = $net_total + $sub_total;
+             
+            }
             echo 
             "<div></div><div></div><div></div>
             <div class = 'dataHolderTot'>
@@ -425,24 +410,16 @@
             $row_get_user_id = $get_name->fetch();
 
             $userID = $row_get_user_id['user_id'];
-            $display_order = $con->prepare("SELECT * FROM delivered_items WHERE user_id = '$userID'");
+            $user_username = $row_get_user_id['user_username'];
+            $display_order = $con->prepare("SELECT * FROM delivered_items WHERE user_username = '$user_username' ORDER BY order_id");
             $display_order->setFetchMode(PDO:: FETCH_ASSOC);
             $display_order->execute();
             
             while($row = $display_order->fetch()):
-                $pro_name = $row['pro_name'];
-    
-                $product_order = $con->prepare("SELECT * FROM product_tbl WHERE pro_name = '$pro_name'");
-                $product_order->setFetchMode(PDO:: FETCH_ASSOC);
-                $product_order->execute();
-    
-                $row3 = $product_order->fetch();
-                $pro_name = $row3['pro_name'];
-
                 echo 
                 "<tr>
-                    <td>".$pro_name."</td>
-                    <td>".$row['qty']."</td>
+                    <td>".$row['order_id']."</td>
+                    <td>".$row['items']."</td>
                     <td>".$row['date_delivered']."</td>
                 </tr>";
             endwhile;
@@ -928,9 +905,9 @@
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
-
+        echo "<h3>Services Available </h3>";
         while($row = $sql->fetch()):
-            echo "<h3>Services Available </h3>";
+            
             echo
             "<li>
             <form method = 'post' enctype='multipart/form-data'>

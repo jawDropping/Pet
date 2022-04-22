@@ -85,6 +85,7 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
         ?>
+
 <div class = "containersest">
 <div class="ttl">
 <img src = '../uploads/history.png' id = 'orderIc'><h3>Transaction History</h3>
