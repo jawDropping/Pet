@@ -327,8 +327,8 @@
 
             $net_total = 0;
             $q = $con->query("
-            SELECT od.order_id, od.delivery_status, od.total, GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
-            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price * qty total, o.delivery_status 
+            SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
+            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
             from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
             WHERE o.user_id = $user_id
             group by o.order_id, p.pro_name, o.delivery_status) od
@@ -336,15 +336,13 @@
             ");
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) {
-                $net_total += $order['total'];
+                $net_total += $order['sum(od.qty * od.price)'];
                 echo
-                "
-                    
-                    <div class = 'dataHolder'>
+                "<div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['items']."</p>
                     </div>
                     <div class = 'dataHolders'>
-                    <p class = 'dataCont' >".$order['total']."</p>
+                    <p class = 'dataCont' >".$order['sum(od.qty * od.price)']."</p>
                     </div>
                     <div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['delivery_status']."</p>
@@ -893,9 +891,9 @@
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
-
+        echo "<h3>Services Available </h3>";
         while($row = $sql->fetch()):
-            echo "<h3>Services Available </h3>";
+            
             echo
             "<li>
             <form method = 'post' enctype='multipart/form-data'>

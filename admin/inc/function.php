@@ -386,16 +386,19 @@
     {
         include("inc/db.php");
 
+        $net_total = 0;
         $q = $con->query("
-            SELECT od.order_id, od.delivery_status, od.total, GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
-            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price * qty total, o.delivery_status 
+            SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
+            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
             from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
+            WHERE o.user_id = 1
             group by o.order_id, p.pro_name, o.delivery_status) od
             group by od.order_id, od.delivery_status
             ");
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
             {
+                $net_total += $order['sum(od.qty * od.price)'];
                 $order_id = $order['order_id'];
                 echo
                 "<form method = 'POST' enctype = 'multipart/form-data'>
@@ -420,6 +423,8 @@
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' />
                     <td>".$order['items']."</td>
+                    <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
+                    <td>".$net_total."</td>
                     <td><input type = 'date' name = 'delivery_date' required/></td>
                     <td><button name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a></td>
@@ -430,6 +435,7 @@
             {
                 $order_id = $_POST['order_id'];
                 $items = $_POST['items'];
+                $total_amount = $_POST['total_amount'];
                 $user_username = $_POST['user_username'];
                 $delivery_date = $_POST['delivery_date'];
                 $delivery_status = "FOR DELIVERY!";
@@ -451,6 +457,7 @@
                     (
                         order_id, 
                         items, 
+                        total_amount,
                         user_username, 
                         delivery_date, 
                         delivery_status
@@ -459,6 +466,7 @@
                     (
                         $order_id,
                         '$items',
+                        '$total_amount',
                         '$user_username',
                         '$delivery_date',
                         '$delivery_status'
@@ -643,29 +651,58 @@
         // }
     }
 
-    function viewalldelivered_items()
+    function view_prods()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM delivered_items");
+        $sql = $con->prepare("SELECT * FROM product_tbl");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
         while($row = $sql->fetch()):
-            $user_id = $row['user_id'];
-            $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-            $view_user->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_user->execute();
-
-            $row_user = $view_user->fetch();
-
             echo
             "<tr>
                 <td>".$row['pro_name']."</td>
-                <td>".$row_user['user_username']."</td>
+                <td>".$row['pro_price']."</td>
+                <td style = 'min-width:200px'>
+                    <img src = '../uploads/products/".$row['pro_img']."'/>
+                </td>
+                <td style = 'min-width:200px'>
+                    <img src = '../uploads/products/".$row['pro_img2']."'/>
+                </td>
+                <td style = 'min-width:200px'>
+                    <img src = '../uploads/products/".$row['pro_img3']."'/>
+                </td>
+                <td style = 'min-width:200px'>
+                    <img src = '../uploads/products/".$row['pro_img4']."'/>
+                </td>
+              
+                <td>".$row['pro_quantity']."</td>
+                <td><button name = 'edit' value = ".$row['pro_id'].">Edit</button>
+                <button name = 'delete' value = ".$row['pro_id'].">Delete</button></td>
+            </tr>";
+        endwhile;
+    }
+
+    function viewalldelivered_items()
+    {
+        include("inc/db.php");
+        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY order_id");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        while($row = $sql->fetch()):
+
+            echo
+            "<tr>
+                <td>".$row['order_id']."</td>
+                <td>".$row['items']."</td>
+                <td>".$row['user_username']."</td>
                 <td>".$row['date_delivered']."</td>
             </tr>";
         endwhile;
     }
+
+    
 
     function viewall_deliveries()
     {
@@ -675,12 +712,20 @@
         $sql->execute();
 
         while($row = $sql->fetch()):
+            $user_username = $row['user_username'];
+            $view_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_user->execute();
 
+            $row_user = $view_user->fetch();
+            $user_address = $row_user['user_address'];
             echo 
             "<tr>
                 <td>".$row['order_id']."</td>
                 <td>".$row['items']."</td>
+                <td>".$row['total_amount']."</td>
                 <td>".$row['user_username']."</td>
+                <td>".$user_address."</td>
                 <td>".$row['delivery_date']."</td>
                 <td><a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</td>
             </tr>";
