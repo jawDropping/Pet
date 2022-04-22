@@ -489,25 +489,28 @@
 
             $row_org = $fetch_org->fetch();
             echo 
-                "<div id = 'pro_img'>
-                    <img src ='../uploads/orgs/".$row_org['org_photo']."'/>
-                    
-                  </div>
-                  <div id = 'pro_brand'>
-                    <h3>".$row_org['org_name']."</h3>
-                    <ul>
-                        <li>
+                "<div class = 'mainCont'>
+                  <div id = 'serviceDet'>
+                  <center>
+                  <img class = 'images' src ='../uploads/orgs/".$row_org['org_photo']."'/> 
+                  </center>
+                  <div id = 'innerService'>
+                    <p class = 'Heads' >".$row_org['org_name']."</p>
+                    <div>
+                        <p>
                             Org Location: ".$row_org['org_location']."
-                        </li>
-                        <li>
+                        </p>
+                        <p>
                         Org Contact Number: ".$row_org['org_contact_number']."
                        
-                        </li>
-                        <li>
+                        </p>
+                        <p>
                         Org Email Address: ".$row_org['org_email_address']."
-                        </li>
-                    </ul>
+                        </p>
+                    </div>
                     <a href = 'donate.php?donate=".$row_org['id']."'>Donate</a>
+                </div>
+                </div>
                 </div>";          
         }
     }
@@ -886,7 +889,7 @@
     }
     function viewall_services()
     {
-    
+
         include("inc/db.php");
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);

@@ -17,6 +17,35 @@
             include ("inc/footer.php");
             
         ?>
-
+    
     </body>
+    <style>
+        .mainCont{
+            display: flex;
+            width: 100%;
+        }
+        .Heads{
+            color: gray;
+            font-weight: bold;
+            padding: 10px;
+        }
+       
+        #serviceDet { 
+         width: 100%;
+         background: #fff;
+        }
+        .images{
+            width: 100%;
+            height: 100vh;
+           
+        }
+        #innerService{
+         box-sizing: border-box;
+         width: 100%;
+        
+        }
+        center{
+        
+        }
+    </style>
 </html>
