@@ -17,19 +17,19 @@
                     <div>
                         <tr>
                             <td>Name: </td>
-                            <td><input type='text' name = 'pet_center_name' /></td>
+                            <td><input type='text' name = 'pet_center_name' required /></td>
                         </tr>
                         <tr>
                             <td>Password: </td>
-                            <td><input type='text' name =  'pet_center_password' /></td>
+                            <td><input type='text' name =  'pet_center_password' required /></td>
                         </tr>
                         <tr>
                             <td>Email: </td>
-                            <td><input type='text' name =  'email' /></td>
+                            <td><input type='email' name =  'email' required /></td>
                         </tr>
                         <tr>
                             <td>Contact Number: </td>
-                            <td><input type='text' name =  'contact_number' /></td>
+                            <td><input type='text' name =  'contact_number' required /></td>
                         </tr>
                         <tr>
                             <td>Will you accept coupons?  <p>Learn more about coupons</p></td>

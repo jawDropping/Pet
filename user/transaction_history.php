@@ -8,7 +8,7 @@
     </head>
     <body>
     <?php 
-    include("inc/function.php");
+            include("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
         ?>
@@ -16,8 +16,8 @@
     <h3>Transaction History</h3>
     <table>
         <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
+            <th>Order Id</th>
+            <th>Items</th>
             <th>Date Delivered</th>
         </tr>
         <tr>

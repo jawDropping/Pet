@@ -22,8 +22,8 @@
     else
     {
         include("inc/db.php");
-        $user_id = $_SESSION['user_username'];
-        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+        $user_username = $_SESSION['user_username'];
+        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
         $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_user_username->execute();
 
@@ -33,66 +33,72 @@
     
         $row_user = $fetch_user_username->fetch();
         $net_total = 0;
-       echo "<div id = 'headist'><img src='../uploads/orderCheckout.png' id = 'ordPic'>Order Details</div>";
+
+        echo "<div class = checkoutTab>
+        ";
+        echo"</tr>
+        <div class = 'info'>
+            <div class = 'innerInfo'>
+            <p id='confLine'>Please Check Your Personal Information</p>
+            <br>
+            <p><img src= '../uploads/informate.png' id = 'locatePng'>Contact Details</p>
+            <div id ='editinfo' style = 'margin-left:90%;'>
+            <p><img src= '../uploads/pencil.png' id = 'locatePng'><a href = 'myProfile.php' style = 'text-decoration:none;color:#000;font-family: Verdana, Geneva, Tahoma, sans-serif;'>Edit Info</a></p>
+        </div>
+        <div id = 'locationDiv'>
+        <div id = 'groupContainer'>
+        <div class = 'group'>
+            <p class = 'tag'>Contact Number: </p>
+            <input type = 'text' class = 'inputed' name = 'user_contactnumber' value = ".$row_user['user_contactnumber']." disabled/>
+        </div>
+        <div class = 'group'>
+            <p class = 'tag'>Email Address: </p>
+            <td><input type = 'text' class = 'inputed' name = 'user_email' value = ".$row_user['user_email']." disabled/></td>
+           </div>
+        </div>
+        </div>
+        <tr>
+        <div id = 'locationDiv'>
+            <p><img src = '../uploads/icon.png' id = 'locatePng'>Location </p>
+            <div id = 'groupContainer'>
+            <div class = 'group'>
+            <p class = 'tag'>Street </p>
+            <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['user_address']." disabled/>
+            </div>
+            <div class = 'group'>
+            <p class = 'tag'>Brgy </p>
+            <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['barangay']." disabled/>
+            </div>
+            <div class = 'group'>
+            <p class = 'tag'>Municipality </p>
+            <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['municipality']." disabled/>
+            </div>
+            </div>
+            </div>
+        </tr>
+        </div>
+        </div>";
+        echo "<div id = 'headist'><img src='../uploads/orderCheckout.png' id = 'ordPic'>Order Details</div>";
+        echo " <div id = 'productDet'>
+        <div id = 'innerproductDet'>
+        <p>Product Details</p>
+        <div id = 'groupContainer'>
+        <div class = 'group'>";
+
+       
         while($row = $display_cart->fetch()):
             $qty = array_count_values($_SESSION['cart'])[$row['pro_id']];
             $pro_price = $row['pro_price'];
             $sub_total = $qty * $pro_price; 
         echo 
         "<form method = 'POST'  enctype = 'multipart/form-data'>
-            <div class = checkoutTab>
-                ";
-                echo"</tr>
-                <div class = 'info'>
-                    <div class = 'innerInfo'>
-                    <p id='confLine'>Please Check Your Personal Information</p>
-                    <br>
-                    <p><img src= '../uploads/informate.png' id = 'locatePng'>Contact Details</p>
-              
-                <div id = 'locationDiv'>
-                <div id = 'groupContainer'>
-                <div class = 'group'>
-                    <p class = 'tag'>Contact Number: </p>
-                    <input type = 'text' class = 'inputed' name = 'user_contactnumber' value = ".$row_user['user_contactnumber']." />
-                </div>
-                <div class = 'group'>
-                    <p class = 'tag'>Email Address: </p>
-                    <td><input type = 'text' class = 'inputed' name = 'user_email' value = ".$row_user['user_email']." /></td>
-                   </div>
-                </div>
-                </div>
-                <tr>
-                <div id = 'locationDiv'>
-                    <p><img src = '../uploads/icon.png' id = 'locatePng'>Location </p>
-                    <div id = 'groupContainer'>
-                    <div class = 'group'>
-                    <p class = 'tag'>Street </p>
-                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['user_address']."/>
-                    </div>
-                    <div class = 'group'>
-                    <p class = 'tag'>Brgy </p>
-                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['barangay']." />
-                    </div>
-                    <div class = 'group'>
-                    <p class = 'tag'>Municipality </p>
-                    <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['municipality']." />
-                    </div>
-                    </div>
-                    </div>
-                </tr>
-                </div>
-                </div>";
+        ";
                 
-                echo " <div id = 'productDet'>
-                        <div id = 'innerproductDet'>
-                        <p>Product Details</p>
-                        <div id = 'groupContainer'>
-                        <div class = 'group'>
-                   <p class = 'tag'>Product Name</p>";
+             
                 echo"
                     
                     <input class = 'useless' type = 'hidden' name = 'pro_id' value = ".$row['pro_id']." />
-                    <input class = 'inputed' type = 'text' name = 'pro_id' value = ".$row['pro_name']." disabled/>
+                    Product Name: <input class = 'inputed' type = 'text' name = 'pro_id' value = ".$row['pro_name']." disabled/>
                     </div>
                     <div class = 'group'>
                     <p class = 'tag'>Qty: </p>
@@ -142,20 +148,17 @@
             </div>
             </div>
             </div>
+            <div class='btnSection'>
+                <button class = 'place' name = 'confirm'><a id = 'placelink'href = 'payorder.php'> Confirm Order</a></button>
+                <button class = 'cancelBtn'><a href = 'cart.php'> Cancel </a></button>
+            </div>
+            <br>
         </form>";
-        
-        
-       
     }
     
 ?>
 
-<div class="btnSection">
-   
-    <button class = "place" onclick="window.location.href = 'payorder.php';">Confirm Order</button>
-    <button class = "cancelBtn" onclick="window.location.href = 'cart.php';"><a href = 'cart.php'> Cancel </a></button>
-    </div>
-<br>
+
 </div>
    
 </body>
@@ -231,6 +234,11 @@
         color: white;
         font-weight: bold;
         
+        
+    }
+    #placelink{
+        text-decoration: none;
+        color: white;
     }
     .cancelBtn{
         background: white;

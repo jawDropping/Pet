@@ -11,7 +11,8 @@
     if(!isset($_GET['manage_donation'])){
     if(!isset($_GET['manage_partner'])){
     if(!isset($_GET['search_transaction_number'])){
-
+    if(!isset($_GET['viewalldelivered_items'])){
+    if(!isset($_GET['sales_inventory'])){
 
 ?>
 
@@ -46,7 +47,11 @@
         {
             include("search_transaction_number.php");
         }
+        if(isset($_GET['sales_inventory']))
+        {
+            include("sales_inventory.php");
+        }
     ?>
 </div>
 
-<?php }}}}}}}}}}} ?>
+<?php }}}}}}}}}}}}} ?>
