@@ -10,6 +10,8 @@
      
             <th>ITEMS</th>
 
+            <th>TOTAL AMOUNT</th>
+
             <th>Delivery Date</th>
            
             <th>Action</th>

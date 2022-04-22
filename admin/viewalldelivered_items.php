@@ -4,8 +4,9 @@
     <table>
         <tr>
   
-            <th>Product Name</th>
-            <th>User Name</th>
+            <th>ORDER ID</th>
+            <th>ITEMS</th>
+            <th>CUSTOMER</th>
             <th>Date Delivered</th>
         </tr>
         <tr>
