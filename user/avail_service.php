@@ -260,5 +260,3 @@
         return $randomString;
     }
 ?>
-
-       
