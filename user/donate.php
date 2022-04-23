@@ -109,6 +109,11 @@
         }
     }
 ?>
+<?php 
+            include ("inc/footer.php");
+          
+            
+        ?>
     </body>
     <style>
         
@@ -116,6 +121,7 @@
             display: grid;
             grid-template-columns: 15% 35%;
             row-gap: 5px;
+            background: white;
         }
         .sels{
             color: gray;
@@ -129,6 +135,9 @@
         }
         .mainConers{
             padding: 10px;
+        }
+        .mainConers{
+            height: 75vh;
         }
     </style>
 </html>

@@ -83,7 +83,7 @@
         <div id = 'innerproductDet'>
         <p>Product Details</p>
         <div id = 'groupContainer'>
-        <div class = 'group'>";
+        ";
 
        
         while($row = $display_cart->fetch()):
@@ -96,9 +96,10 @@
                 
              
                 echo"
-                    
-                    <input class = 'useless' type = 'hidden' name = 'pro_id' value = ".$row['pro_id']." />
-                    Product Name: <input class = 'inputed' type = 'text' name = 'pro_id' value = ".$row['pro_name']." disabled/>
+                    <div class = 'group'>
+                    <input class = 'useless' style = 'display:none;' type = 'hidden' name = 'pro_id' value = ".$row['pro_id']." />
+                    <p class = 'tag'>Product Name: <p/>
+                    <input class = 'inputed' type = 'text' name = 'pro_id' value = ".$row['pro_name']." disabled/>
                     </div>
                     <div class = 'group'>
                     <p class = 'tag'>Qty: </p>
