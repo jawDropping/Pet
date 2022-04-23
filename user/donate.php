@@ -42,12 +42,8 @@
    <input class = 'ints' type = "text" name = "contact_number" required/>
  </div>
   <div class="contData">
-  <p class = 'lebel' >First Name</p>
+  <p class = 'lebel' >Name</p>
    <input class = 'ints' type = "text" name = "first_name" required/>
-  </div>
-  <div class="contData">
-  <p class = 'lebel' >Last Name</p>
-   <input class = 'ints' type = "text" name = "last_name" required/>
   </div>
    <div class="contData">
    <p class = 'lebel' >Email Address</p>
@@ -63,7 +59,7 @@
    <p class = 'lebel' >Photo</p>
    <input class = 'ints' type = "file" name = "proof_photo" required/>
    <div></div>
-<button name = "donate" class='dons'>Donate</button>
+<button name = "donate" class='dons'>Apply For Coupon</button>
 </div>
         </form>
         </div>
@@ -75,8 +71,7 @@
     {
         $transaction_number = $_POST['transaction_number'];
         $org_id = $_GET['donate'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
+        $full_name = $_POST['full_name'];
         $contact_number = $_POST['contact_number'];
         $email_address = $_POST['email_address'];
         $amount = $_POST['amount'];
@@ -91,8 +86,7 @@
         (
             transaction_number,
             org_id,
-            first_name,
-            last_name,
+            full_name,
             contact_number,
             email_address,
             proof_photo,
@@ -104,8 +98,7 @@
         (
             '$transaction_number',
             '$org_id',
-            '$first_name',
-            '$last_name',
+            '$full_name',
             '$contact_number',
             '$email_address',
             '$proof_photo',
@@ -159,11 +152,15 @@
             display: flex;
         }
         .dons{
-            height: 52px;
-            width: 100px;
-            border: none;
-            border-radius: 7px;
-            backgr
+                  background: #ffb830;
+                  outline: none;
+                  border: 1px solid #ffb830;
+                  width: 200px;
+                  padding: 10px;
+                  border-radius: 10px;
+                  margin-right: 10px;
+                  color: white;
+                  font-weight: bold;
         }
        
         .mainConers{
