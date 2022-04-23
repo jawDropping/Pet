@@ -1,48 +1,56 @@
-<div>
+<html>
+<head>
+        <title>Pet Society</title>
+        <link rel = "stylesheet" href="css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
+    </head>
+    <body>
+    <?php 
+            include ("inc/function.php");
+            include ("inc/header.php"); 
+            include ("inc/navbar.php");  
+          
+            
+        ?>
     <div>
-        <form method = "POST" enctype = "multipart/form-data">
-            <tr>
-                <label>Transaction Number</label>
-                <td><input type = "text" name = "transaction_number" required/></td>
-            </tr><br>
-            <tr>
-                <label>First Name</label>
-                <td><input type = "text" name = "first_name" required/></td>
-            </tr><br>
-            <tr>
-                <label>Last Name</label>
-                <td><input type = "text" name = "last_name" required/></td>
-            </tr><br>
-            <tr>
-                <label>Suffix</label>
-                <td>
+    <div class='mainConers'>
+        <form method = "POST" enctype = "multipart/form-data" >
+        <div class = 'donateDiv'>
+   
+                <p>Transaction Number</p>
+                <input type = "text" name = "transaction_number" required/>
+           
+  
+                <p>First Name</p>
+                <input type = "text" name = "first_name" required/>
+
+                <p>Last Name</p>
+                <input type = "text" name = "last_name" required/>
+                <p>Suffix</p>
+                <div class = 'deviants'>
                     <select name = "suffix" required>
                         <option name = "jr">jr</option>
                         <option name = "sr">sr</option>
                         <option name = "n/a">N/A</option>
                     </select>
-                </td>
-                <label style = "color:red">*SELECT N/A IF YOU DON'T HAVE ANY SUFFIX</label>
-            </tr><br>
-            <tr>
-                <label>Contact Number</label>
-                <td><input type = "text" name = "contact_number" required/></td>
-            </tr><br>
-            <tr>
-                <label>Email Address</label>
-                <td><input type = "text" name = "email_address" required/></td>
-            </tr><br>
-            <tr>
-                <label>Amount</label>
-                <td><input type = "text" name = "amount" required/></td>
-            </tr><br>
-            <tr>
-                <label>Photo</label>
-                <td><input type = "file" name = "proof_photo" required/></td>
-            </tr><br>
-            <button name = "donate">Donate</button>
+                    <p class = 'sels'>*SELECT N/A IF YOU DON'T HAVE ANY SUFFIX</p>
+                </div>
+                <p>Contact Number</p>
+                <input type = "text" name = "contact_number" required/>
+
+                <p>Email Address</p>
+                <input type = "text" name = "email_address" required/>
+                <p>Amount</p>
+                <input type = "text" name = "amount" required/>
+                <p>Photo</p>
+                <input type = "file" name = "proof_photo" required/>
+                <div></div>
+            <button name = "donate" class='dons'>Donate</button>
+            </div>
         </form>
-    </div>
+    
 </div>
 
 <?php
@@ -101,3 +109,28 @@
         }
     }
 ?>
+    </body>
+    <style>
+        
+        .donateDiv{
+            display: grid;
+            grid-template-columns: 15% 35%;
+            row-gap: 5px;
+        }
+        .sels{
+            color: gray;
+            font-size: 10px;
+        }
+        .deviants{
+            display: flex;
+        }
+        .dons{
+            height: 52px;
+        }
+        .mainConers{
+            padding: 10px;
+        }
+    </style>
+</html>
+
+
