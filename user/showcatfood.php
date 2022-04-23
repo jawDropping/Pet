@@ -17,29 +17,16 @@
             ?>
             <div id='bodyleft'>
             <div id = "insideDiv">
-            <div class="contDiv">
-            <img class = "image" src="../uploads/dog.svg" alt="">
-            <a class = "linkes" href = "showdogfood.php">Dog</a>
-            </div>
-            <div class="contDivSel">
-            <img class = "image2" src="../uploads/cat.svg" alt="">
-            <a class = "linkes" href = "showcatfood.php">Cat</a>
-            </div>
-            <div class="contDiv">
-            <img class = "image" src="../uploads/fish.png" alt="">
-            <a class = "linkes" href = "showfishfood.php">Fish</a>
-            </div>
-            <div class="contDiv">
-            <img class = "image" src="../uploads/bird.jpg" alt="">
-            <a class = "linkes" href = "showbirdfood.php">Bird</a>
-            </div>
-            <div class="contDiv">
-            <img class = "image" src="../uploads/spider.svg" alt="">
-            <a class = "linkes" href = "showotherfoods.php">others</a>
-            </div>
+            <a class = 'contDiv' href = "showdogfood.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/dog.svg" alt="">Dog</a>
+            <a class = 'contDivSel' href = "showcatfood.php" style = "text-decoration: none;color:#000;"><img class = "image2" src="../uploads/cat.svg" alt="">Cat</a>
+            <a class = 'contDiv' href = "showfishfood.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/fish.png" alt="">Fish</a>
+            <a class = 'contDiv' href = "showbirdfood.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/bird.jpg" alt="">Bird</a>
+            <a class = 'contDiv' href = "showotherfoods.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/spider.svg" alt="">others</a>
         </div>
 
 
+        <div class = 'hed' ><img src = '../uploads/cat.gif' id = 'imgTop'><p class = 'ttlHead' >meow</p>
+        </div><br>
             <?php
             echo "<ul>";
                    cat_food_products(); echo"</ul>
@@ -60,6 +47,20 @@
             padding: 3px;
             justify-content: center;
             border-radius: 5px;
+            cursor: default;
+        }
+        #imgTop{
+            height: 42px;
+            padding: 10px;
+            margin-left: 90%;
+        }
+        .hed{
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        .ttlHead{
+            margin-top: 20px;
+            color: #777;
         }
     </style>
 </html>

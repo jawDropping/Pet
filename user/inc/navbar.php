@@ -5,7 +5,7 @@
                 </li>
                 
                 <li> 
-                    <a href = "/Pet/user/services_detail.php">Services</a>
+                    <a href = "/Pet/user/services.php">Services</a>
                 </li>
                 <li> <a href = "/Pet/user/donation.php">Donate</a></li>
                 <li>

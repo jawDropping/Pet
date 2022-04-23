@@ -31,6 +31,18 @@ body {
   width: 40%;
   height: 95%;
 }
+#mandaue {
+  display: none;
+}
+#Cebu {
+  display: none;
+}
+#Consolacion {
+  display: none;
+}
+#Lapulapu {
+  display: none;
+}
 .label {
   font-size: 12px;
   font-family: "Varela Round", sans-serif;
