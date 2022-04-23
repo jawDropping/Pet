@@ -3,8 +3,8 @@
         <title>Pet Society</title>
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
     <body>
     <?php 
@@ -14,43 +14,59 @@
           
             
         ?>
-    <div>
-    <div class='mainConers'>
-        <form method = "POST" enctype = "multipart/form-data" >
-        <div class = 'donateDiv'>
+
+    <div class = 'forBkg'>
    
-                <p>Transaction Number</p>
-                <input type = "text" name = "transaction_number" required/>
-           
-  
-                <p>First Name</p>
-                <input type = "text" name = "first_name" required/>
-
-                <p>Last Name</p>
-                <input type = "text" name = "last_name" required/>
-                <p>Suffix</p>
-                <div class = 'deviants'>
-                    <select name = "suffix" required>
-                        <option name = "jr">jr</option>
-                        <option name = "sr">sr</option>
-                        <option name = "n/a">N/A</option>
-                    </select>
-                    <p class = 'sels'>*SELECT N/A IF YOU DON'T HAVE ANY SUFFIX</p>
-                </div>
-                <p>Contact Number</p>
-                <input type = "text" name = "contact_number" required/>
-
-                <p>Email Address</p>
-                <input type = "text" name = "email_address" required/>
-                <p>Amount</p>
-                <input type = "text" name = "amount" required/>
-                <p>Photo</p>
-                <input type = "file" name = "proof_photo" required/>
-                <div></div>
-            <button name = "donate" class='dons'>Donate</button>
+        <br>
+    <div class='mainConers'>
+        <div class = 'leftS'>
+            <div class="sulod">
+            <img src="../uploads/gcash.png" id = 'imageGcash' >
+            <br><br>
+            <p class = 'heading' >Inform Us with your Gcash Transaction with the Organization so that we can provide you the Coupon code :></p>
+            
             </div>
+      
+        </div>
+    <div class="second">
+        <form method = "POST" enctype = "multipart/form-data" >
+        
+        <div class = 'donateDiv'>
+            
+   <div class="contData">
+   <p class = 'lebel' >GCash Ref. Number</p>
+   <input class = 'ints' type = "number" name = "transaction_number" required/>
+   </div>
+   <div class="contData">
+ <p class = 'lebel' >GCash Number</p>
+   <input class = 'ints' type = "text" name = "contact_number" required/>
+ </div>
+  <div class="contData">
+  <p class = 'lebel' >First Name</p>
+   <input class = 'ints' type = "text" name = "first_name" required/>
+  </div>
+  <div class="contData">
+  <p class = 'lebel' >Last Name</p>
+   <input class = 'ints' type = "text" name = "last_name" required/>
+  </div>
+   <div class="contData">
+   <p class = 'lebel' >Email Address</p>
+   <input class = 'ints' type = "text" name = "email_address" required/>
+   </div>
+  <div class="contData">
+  <p class = 'lebel' >Amount</p>
+   <input class = 'ints' type = "text" name = "amount" required/>
+  </div>
+   
+   
+   
+   <p class = 'lebel' >Photo</p>
+   <input class = 'ints' type = "file" name = "proof_photo" required/>
+   <div></div>
+<button name = "donate" class='dons'>Donate</button>
+</div>
         </form>
-    
+        </div>
 </div>
 
 <?php
@@ -61,7 +77,6 @@
         $org_id = $_GET['donate'];
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
-        $suffix = $_POST['suffix'];
         $contact_number = $_POST['contact_number'];
         $email_address = $_POST['email_address'];
         $amount = $_POST['amount'];
@@ -79,7 +94,6 @@
             first_name,
             last_name,
             contact_number,
-            suffix,
             email_address,
             proof_photo,
             donation_status,
@@ -93,7 +107,6 @@
             '$first_name',
             '$last_name',
             '$contact_number',
-            '$suffix',
             '$email_address',
             '$proof_photo',
             '$donation_status',
@@ -118,10 +131,25 @@
     <style>
         
         .donateDiv{
-            display: grid;
-            grid-template-columns: 15% 35%;
+           
             row-gap: 5px;
-            background: white;
+            column-gap: 10px;
+            
+           
+            margin-top: 10px;
+            padding: 20px;
+            border-radius: 10px;
+         
+        }
+        .heading{
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-align: right;
+            margin-top: 10%;
+        }
+        .sulod{
+            padding: 20px;
         }
         .sels{
             color: gray;
@@ -132,13 +160,67 @@
         }
         .dons{
             height: 52px;
+            width: 100px;
+            border: none;
+            border-radius: 7px;
+            backgr
         }
+       
         .mainConers{
+            
+            height: 90vh;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+            width: 80%;
+            margin-left: 10%;
+            display: flex;
+            border-radius: 7px;
+            margin-bottom: 10vh;
+            
+        }
+        .forBkg{
+            background-image: url(../uploads/backgrnd.jpg);
+
+            background-size: cover;
+        
+        }
+        .second{
+          
+            padding: 20px;
+            width: 60%;
+            background: rgba(200, 200, 200, 0.7);
+            
+        }
+        .lebel{
+            color: #888;
+            font-size: 10px;
+        }
+        .ints{
+            height: 42px;
+            padding: 5px;
+            border: none;
+            outline: none;
+            width: 100%;
+         
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+         -webkit-appearance: none;
+         margin: 0;
+        }
+
+        .leftS{
+            width: 40%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .contData{
+            background: white;
+            border-radius: 5px;
             padding: 10px;
+            width: 70%;
+            margin-left: 15%;
+            margin-bottom: 10px;
         }
-        .mainConers{
-            height: 75vh;
-        }
+       
     </style>
 </html>
 
