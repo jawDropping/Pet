@@ -613,7 +613,11 @@
             
                 ";
         endwhile;
-        echo add_cart();
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showdogfood.php?' ,'_self');</script>";  
+        }
     }
 
    
@@ -698,7 +702,11 @@
                 </li>
                 ";
         endwhile;
-        echo add_cart();
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showfishfood.php?' ,'_self');</script>";  
+        }
     }
     //wala pa
     function bird_food_products()
@@ -739,7 +747,11 @@
                 </li>
                 ";
         endwhile;
-        echo add_cart();
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showbirdfood.php?' ,'_self');</script>";  
+        }
     }
 
     //wala pa
@@ -777,7 +789,11 @@
         </div>
                 ";
         endwhile;
-        echo add_cart();
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showcatfood.php?' ,'_self');</script>";  
+        }
     }
 
     //wala pa
@@ -819,7 +835,11 @@
                 </li>
                 ";
         endwhile;
-        echo add_cart();
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showotherfoods.php?' ,'_self');</script>";  
+        }
     }
 
     function pro_details()
