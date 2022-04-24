@@ -462,9 +462,10 @@
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
             <a class = 'aTag' href='org_detail.php?id=".$row['id']."'>
-                <h4>".$row['org_name']."</h4>
+                
                 <img class = 'fikture' src ='../uploads/orgs/".$row['org_photo']."' />
                 <div id = 'lowerSide'>
+                <h4>".$row['org_name']."</h4>
                     <button id = 'pro_btnView'>
                         <a href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
                     </button>
