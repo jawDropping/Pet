@@ -448,7 +448,22 @@
 
                 $receiver = $row_username['user_email'];
                 $subject = "Order Confirmation Mail";
-                $body = "Your Order has been confirmed and it will be delivered on $delivery_date ,please keep your lines open!.";
+                $body = "
+                Greetings!
+    
+                Your Order has been confirmed and will be delivered on $delivery_date 
+    
+                Order Number: $order_id
+                Items: $items
+    
+                Please do keep your lines open because your items will be arrived to your
+                destination according to the delivery date.
+                Thank you for purchasing to our store hopefully you're 
+                happy with those items you purchased. 
+    
+                Lovely store,
+                Pet Society
+                ";
                 $sender = "ianjohn0101@gmail.com";
 
                 if(mail($receiver, $subject, $body, $sender))
@@ -761,8 +776,18 @@
 
 
             $reciever = $row_username['user_email'];
-            $subject = "Coupon Code";
-            $body = "Your Order has been delivered. Thank you for choosing our store!.";
+            $subject = "Order Delivered!";
+            $body = "
+            Greetings!
+
+            Your Order has been delivered on $today
+
+            Thank you for purchasing to our store hopefully you're 
+            happy with those items you purchased. 
+
+            Lovely store,
+            Pet Society
+            ";
             $sender = "ianjohn0101@gmail.com";
 
             if(mail($reciever, $subject, $body, $sender))

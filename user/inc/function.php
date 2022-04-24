@@ -342,7 +342,7 @@
                     <p class = 'dataCont'>".$order['items']."</p>
                     </div>
                     <div class = 'dataHolders'>
-                    <p class = 'dataCont' >".$order['sum(od.qty * od.price)']."</p>
+                    <p class = 'dataCont' >₱".$order['sum(od.qty * od.price)']."</p>
                     </div>
                     <div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['delivery_status']."</p>
@@ -357,7 +357,7 @@
             echo 
             "<div></div><div></div><div></div>
             <div class = 'dataHolderTot'>
-                <p class = 'dataCont'>TOTAL AMOUNT: ".$net_total."</p>
+                <p class = 'dataCont'>TOTAL AMOUNT: ₱".$net_total."</p>
             </div>";
         }    
     }
@@ -417,11 +417,22 @@
             
             while($row = $display_order->fetch()):
                 echo 
-                "<tr>
-                    <td>".$row['order_id']."</td>
-                    <td>".$row['items']."</td>
-                    <td>".$row['date_delivered']."</td>
-                </tr>";
+                // "<tr>
+                //     <td>".$row['order_id']."</td>
+                //     <td>".$row['items']."</td>
+                //     <td>".$row['date_delivered']."</td>
+                // </tr>";
+                "<div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row['order_id']."</p>
+                    </div>
+                    <div class = 'dataHolders'>
+                    <p class = 'dataCont' >".$row['items']."</p>
+                    </div>
+                    <div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row['date_delivered']."</p>
+                    </div>
+                    
+                ";
             endwhile;
         
         }    
@@ -602,6 +613,7 @@
             
                 ";
         endwhile;
+        echo add_cart();
     }
 
    
@@ -645,6 +657,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     function fish_food_products()
@@ -685,6 +698,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
     //wala pa
     function bird_food_products()
@@ -725,6 +739,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     //wala pa
@@ -762,6 +777,7 @@
         </div>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     //wala pa
@@ -803,6 +819,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     function pro_details()
