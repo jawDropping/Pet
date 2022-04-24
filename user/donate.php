@@ -57,8 +57,9 @@
     <span class="drop-zone__prompt">Drop file here or click to upload</span>
     <input type="file" name="proof_photo" class="drop-zone__input">
   </div>
-   <div></div>
-<button name = "donate" class='dons'>Apply For Coupon</button>
+  <br><br>
+   <div></div> <div></div>
+<button name = "donate" class='dons'>Submit</button>
 </div>
         </form>
         </div>
@@ -128,7 +129,7 @@
             row-gap: 5px;
             column-gap: 10px;
             margin-top: 10px;
-            padding-top: 10px;
+            padding-top: 50px;
             border-radius: 10px;
         }
         .heading{
@@ -152,20 +153,20 @@
                   background: #ffb830;
                   outline: none;
                   border: 1px solid #ffb830;
-                  width: 200px;
-                  padding: 10px;
+                  width: 80%;
+                  padding: 15px;
                   border-radius: 5px;
-                  margin-right: 15%;
+                  margin-left: 5%;
                   margin-top: 10%;
                   color: white;
                   font-weight: bold;
-                  float: right;
+                  
                   
         }
        
         .mainConers{
             
-            height: 90vh;
+            height: 70vh;
             box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
             width: 80%;
             margin-left: 10%;
@@ -221,7 +222,7 @@
 
 
         .drop-zone {
-            width: 70%;;
+            width: 80%;;
   height: 50px;
   padding: 6px;
   display: flex;
@@ -233,9 +234,9 @@
   font-size: 14px;
   cursor: pointer;
   color: #777;
-  border: 4px dashed #009578;
+  border: 2px dashed #009578;
   border-radius: 10px;
-  margin-left: 15%;
+  margin-left: 5%;
             margin-bottom: 10px;
 }
 

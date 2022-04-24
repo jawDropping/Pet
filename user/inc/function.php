@@ -452,7 +452,6 @@
 
     function donate()
     {
-        echo "<h3>Select Organization to Donate </h3>";
         include("inc/db.php");
         $sql = $con->prepare("SELECT * FROM organizations");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -460,20 +459,20 @@
 
         while($row = $sql->fetch()):
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='org_detail.php?id=".$row['id']."'>
+            <a class = 'aTag' href='org_detail.php?id=".$row['id']."'>
                 <h4>".$row['org_name']."</h4>
-                <img src ='../uploads/orgs/".$row['org_photo']."' />
-                <center>
+                <img class = 'fikture' src ='../uploads/orgs/".$row['org_photo']."' />
+                <div id = 'lowerSide'>
                     <button id = 'pro_btnView'>
                         <a href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
                     </button>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -528,7 +527,7 @@
                         </p>
                         </div>
                     </div>
-                    <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'>Donate</a>
+                    <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'> Apply for Coupon</a>
                     
                 </div>
                 </div>
