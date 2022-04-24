@@ -464,11 +464,11 @@
             <a class = 'aTag' href='org_detail.php?id=".$row['id']."'>
                 
                 <img class = 'fikture' src ='../uploads/orgs/".$row['org_photo']."' />
-                <div id = 'lowerSide'>
+                <div class = 'prodDet'>
                 <h4>".$row['org_name']."</h4>
-                    <button id = 'pro_btnView'>
-                        <a href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                    <br>
+                        <a class = 'btnLinkView' href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
+                    
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -933,21 +933,22 @@
         while($row = $sql->fetch()):
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
                 <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
                     <button id = 'pro_btnView'>
                         <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     </button>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
 
     
@@ -1308,6 +1309,8 @@
             // }
             // echo "</ul></div>";
         }
+        function avial(){
+           
     }
 
     

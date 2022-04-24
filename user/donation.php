@@ -52,13 +52,25 @@
 
     </div>
             </div>
+            <div class="textes">
+                <div class="phar">
+                <img src="../uploads/textes.png" class = 'imges'>
+                </div>
+                <div class="imgPic">
+                    
+                    <p class = 'sayings' >The real road of compassion, that is, giving, helping, assistance and community service, is a road that can be set and declared as your life's purpose</p><br>
+                <p class = 'auth'> - Byron Pulsifer</p>
+                </div>
+               
+            </div>
             <div class="orgs">
+                <h3 class="headister">Our Selected Organizations</h3>
             <ul>
                   <?php donate(); ?>
                 </ul>
             </div>
                
-                
+               
                   </div>
                   <?php
                     include ("inc/footer.php"); 
@@ -158,8 +170,8 @@
   display: none;
 }
 .orgs{
-    margin-top: 5%;
-    background: red;
+    margin-top: 10%;
+
     width: 90%;
     margin-left: 5%;
 }
@@ -189,7 +201,7 @@
   animation-duration: 2s;
 }
 #lowerSide{
-    
+
 }
  /* @keyframes animate {
   from {
@@ -208,7 +220,39 @@
 @keyframes slide {
     100% { left: 0; }
 }  */
+.textes{
+    width: 90%;
+    margin-left: 5%;
+    padding: 10px;
+    margin-top: 50px;
+    display: flex;
+  
+}
+.sayings{
 
+    font-weight: bold;
+    font-size: 28px;
+    color: #0080fe;
+    font-family: "Varela Round", sans-serif;
+}
+.phar{
+    width: 50%;
+    height: 300px;
+}
+.auth{
+    float: right;
+    color: #0080fe;
+}
+.imgPic{
+    width: 40%;
+    height: 300px;
+
+}
+.imges{
+    height: 100%;
+    float: left;
+    margin-left: 20%;
+}
     </style>
 
 
