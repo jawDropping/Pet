@@ -613,6 +613,7 @@
             
                 ";
         endwhile;
+        echo add_cart();
     }
 
    
@@ -656,6 +657,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     function fish_food_products()
@@ -696,6 +698,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
     //wala pa
     function bird_food_products()
@@ -736,6 +739,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     //wala pa
@@ -773,6 +777,7 @@
         </div>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     //wala pa
@@ -814,6 +819,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     function pro_details()
