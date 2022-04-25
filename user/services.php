@@ -15,7 +15,7 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
             ?>
-          <div id='bodyleft'>
+          <div id='main'>
           <div id = "insideDiv">
             <a class = 'servDiv' href = "service_grooming.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/grooming.png" alt="">Grooming</a>
             <a class = 'servDiv' href = "service_pethotel.php" style = "text-decoration: none;color:#000;"><img class = "image2" src="../uploads/pethotel.png" alt="">Pet Hotel</a>
@@ -23,6 +23,7 @@
             <a class = 'servDiv' href = "service_clinic.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/clinic.png" alt="">Vet Clinic</a>
             <a class = 'servDiv' href = "service_other.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/otherService.png" alt="">others</a>
         </div>
+        <br>
               <ul>
                    <?php viewall_services(); ?>
                    </ul>
@@ -31,9 +32,12 @@
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 
             ?>
-        ?>
+  
     </body>
     <style>
-        
+        #main{
+            width: 90%;
+            margin-left: 5%;
+        }
     </style>
 </html>

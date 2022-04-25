@@ -13,6 +13,7 @@ body {
   width: 100vw;
   position: fixed;
   display: inline-flex;
+  z-index: 20;
 }
 
 #logo {
@@ -317,6 +318,7 @@ body {
   background: #0080fe;
   overflow: hidden;
   padding-top: 60px;
+  z-index: 20;
 }
 
 #navbar ul {
