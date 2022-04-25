@@ -50,51 +50,53 @@
                     {
                         echo 
                         "<td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Coupon Code: </label></td>
-                        <td><input type = 'text' name = 'coupon_code'  style = 'position:absolute;align-items:center;margin:19.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
-                        <td><button name = 'verify' style = 
-                        'border: 0;
-                        padding: 7.5px 17px;
-                        background: #86b0b6;
-                        font-size: 12px;
-                        border-radius: 5px;
-                        color: #fff;
-                        cursor:pointer;'>VERIFY</button></td>
-                        <label style = 'position:absolute;margin:18.2% 0% 0% 40.9%;color:red'>*PUT  "."N/A"." if you don't have any coupon code!</label><br>";
-                        if(isset($_POST['verify']))
-                        {
-                            $coupon_code = $_POST['coupon_code'];
-                            $verify_coupon = $con->prepare("SELECT * FROM donations");
-                            $verify_coupon->setFetchMode(PDO:: FETCH_ASSOC);
-                            $verify_coupon->execute();
+                        <td><input type = 'text' name = 'coupon_code'  style = 'position:absolute;align-items:center;margin:19.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>";
+                        // <td><button name = 'verify' style = 
+                        // 'border: 0;
+                        // padding: 7.5px 17px;
+                        // background: #86b0b6;
+                        // font-size: 12px;
+                        // border-radius: 5px;
+                        // color: #fff;
+                        // cursor:pointer;'>VERIFY</button></td>
+                        // <label style = 'position:absolute;margin:18.2% 0% 0% 40.9%;color:red'>*PUT  "."N/A"." if you don't have any coupon code!</label><br>";
+                        // if(isset($_POST['verify']))
+                        // {
+                        //     $coupon_code = $_POST['coupon_code'];
+                        //     $verify_coupon = $con->prepare("SELECT * FROM donations");
+                        //     $verify_coupon->setFetchMode(PDO:: FETCH_ASSOC);
+                        //     $verify_coupon->execute();
                             
-                            $row_coupon = $verify_coupon->fetch();
-                            $coupon_val = $row_coupon['coupon_code'];
-                            $discount = "0.02";
+                        //     $row_coupon = $verify_coupon->fetch();
+                        //     $coupon_val = $row_coupon['coupon_code'];
+                        //     $discount = "0.02";
 
-                            $total = $service_cost * $discount;
-                            $convertfloat = floatval($total);
+                        //     $total = $service_cost * $discount;
+                        //     $convertfloat = floatval($total);
 
-                            $service_total_cost = $service_cost - $convertfloat;
+                        //     $service_total_cost = $service_cost - $convertfloat;
                             
-                            if($coupon_val == $coupon_code)
-                            {
-                                echo 
-                                "<tr>
-                                    <td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Service Cost: </label></td>
-                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_total_cost." /></td>
-                                    <td>".$service_total_cost."</td>
-                                </tr><br>";
-                            }
-                            else
-                            {
-                                echo 
-                                "<tr>
-                                    <td><label style = 'position:absolute;margin:20% 0% 0% 63%;'>Service Cost: </label></td>
-                                    <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost." /></td>
-                                    <td>".$service_cost."</td>
-                                </tr><br>";
-                            }
-                        }
+                        //     if($coupon_val == $coupon_code)
+                        //     {
+                        //         echo 
+                        //         "<tr>
+                        //             <td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Service Cost: </label></td>
+                        //             <td><input type = 'hidden' name = 'service_cost' value = ".$service_total_cost." /></td>
+                        //             <td>".$service_total_cost."</td>
+                        //         </tr><br>";
+                        //     }
+                        //     else
+                        //     {
+                        //         echo 
+                        //         "<tr>
+                                    
+                        //         </tr><br>";
+                        //     }
+                        // }
+                        echo 
+                        "<td><label style = 'position:absolute;margin:25% 0% 0% 30%;'>Service Cost: </label></td>
+                        <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost."   /></td>
+                        <td >".$service_cost.   "</td>";
                     }
                     else
                     {
@@ -119,7 +121,7 @@
                     
                 </tr>
                 <tr>
-                    <td><a href = 'services_detail.php' style =
+                    <td><a href = 'services.php' style =
                     '
                     position:absolute;
                     text-decoration:none;
@@ -133,7 +135,7 @@
                 </tr>
             </form>";
 
-          
+    
             if(isset($_POST['reserve_service']))
             {
                 $service_cost = $_POST['service_cost'];
@@ -141,111 +143,138 @@
                 $coupon_code = $_POST['coupon_code'];
                 $reserve_time = $_POST['reserve_time'];
                 $transaction_code = generateRandomString();
+
+                $datenow = getdate();
+
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
                 
-                $check_coupon = $con->prepare("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
-                $check_coupon->setFetchMode(PDO:: FETCH_ASSOC);
-                $check_coupon->execute();
-
-                $row_coups = $check_coupon->fetch();
-
-                $row_coup = $check_coupon->rowCount();
-            //    var_dump($coupon_code); 
-                if($coupon_code == null)
+                if($reserve_date < $today)
                 {
-                    $receiver = $row2['user_email'];
-                    $subject = "Transaction Code";
-                    $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                    $sender = "ianjohn0101@gmail.com";
-
-                    if(mail($receiver, $subject, $body, $sender))
-                    {
-                        $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                            pet_center_id,
-                            service_id,
-                            user_id,
-                            service_cost,
-                            reserve_date,
-                            reserve_time,
-                            coupon_code,
-                            transaction_code,
-                            service_status
-                        ) 
-                        VALUES (
-                            '$pet_center_id',
-                            '$service_id',
-                            '$user_id',
-                            '$service_cost',
-                            '$reserve_date',
-                            '$reserve_time',
-                            '$coupon_code',
-                            '$transaction_code',
-                            'For Confirmation'
-                        )");
+                    echo "INVALID DATE!";
+                }
+                else
+                {
+                    $sql = $con->query("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+    
+                    $sql2 = $con->query("SELECT * FROM reserve_services");
+                    $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql2->execute();
+    
+                    $row = $sql->rowCount();
+                    $row_user = $sql2->fetch();
+                    $user_id = $row_user['user_id'];
+    
+                    $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                    $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                    $fetch_user_username->execute();
             
-                        if($reserve_service->execute())
+                    $row4 = $fetch_user_username->fetch();
+                    if($row>0)
+                    {
+                        echo "Code Exist!";
+                    }
+                    else
+                    {
+                        $view_coupon = $con->prepare("SELECT * FROM donations WHERE coupon_code = '$coupon_code'");
+                        $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
+                        $view_coupon->execute();
+    
+                        $row2 = $view_coupon->rowCount();
+                        if($row2>0)
                         {
-                            echo "SUCCESSFUL"; 
+                            $discount = "0.02";
+    
+                            $total = $service_cost * $discount;
+                            $convertfloat = floatval($total);
+    
+                            $service_total_cost = $service_cost - $convertfloat;
+    
+                            $receiver = $row4['user_email'];
+                            $subject = "Transaction Code";
+                            $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                            $sender = "ianjohn0101@gmail.com";
+    
+                            if(mail($receiver, $subject, $body, $sender))
+                            {
+                                $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                    pet_center_id,
+                                    service_id,
+                                    user_id,
+                                    service_cost,
+                                    reserve_date,
+                                    reserve_time,
+                                    coupon_code,
+                                    transaction_code,
+                                    service_status
+                                ) 
+                                VALUES (
+                                    '$pet_center_id',
+                                    '$service_id',
+                                    '$user_id',
+                                    '$service_total_cost',
+                                    '$reserve_date',
+                                    '$reserve_time',
+                                    '$coupon_code',
+                                    '$transaction_code',
+                                    'For Confirmation'
+                                )");
+                    
+                                if($reserve_service->execute())
+                                {
+                                    echo "SUCCESSFUL"; 
+                                }
+                                else
+                                {
+                                    echo "UNSUCCESSFUL";
+                                }
+                            }
                         }
                         else
                         {
-                            echo "UNSUCCESSFUL";
+                            $receiver = $row4['user_email'];
+                            $subject = "Transaction Code";
+                            $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                            $sender = "ianjohn0101@gmail.com";
+    
+                            if(mail($receiver, $subject, $body, $sender))
+                            {
+                                $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                    pet_center_id,
+                                    service_id,
+                                    user_id,
+                                    service_cost,
+                                    reserve_date,
+                                    reserve_time,
+                                    coupon_code,
+                                    transaction_code,
+                                    service_status
+                                ) 
+                                VALUES (
+                                    '$pet_center_id',
+                                    '$service_id',
+                                    '$user_id',
+                                    '$service_cost',
+                                    '$reserve_date',
+                                    '$reserve_time',
+                                    '$coupon_code',
+                                    '$transaction_code',
+                                    'For Confirmation'
+                                )");
+                    
+                                if($reserve_service->execute())
+                                {
+                                    echo "SUCCESSFUL"; 
+                                }
+                                else
+                                {
+                                    echo "UNSUCCESSFUL";
+                                }
+                            }
                         }
                     }
                 }
-                elseif($coupon_code == $row_coups['coupon_code'])
-                {
-                    echo "Code Exist!";
-                }
-                
-                    // var_dump($pet_center_id);
-                    // var_dump($service_id);
-                    // var_dump($user_id);
-                    // var_dump($service_cost);
-                    // var_dump($reserve_date);
-                    // var_dump($reserve_time);
-                    // var_dump($coupon_code);
-                    // var_dump($transaction_code);
-                    
-                    // $receiver = $row2['user_email'];
-                    // $subject = "Transaction Code";
-                    // $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                    // $sender = "ianjohn0101@gmail.com";
-
-                    // if(mail($receiver, $subject, $body, $sender))
-                    // {
-                    //     $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                    //         pet_center_id,
-                    //         service_id,
-                    //         user_id,
-                    //         service_cost,
-                    //         reserve_date,
-                    //         reserve_time,
-                    //         coupon_code,
-                    //         transaction_code,
-                    //         service_status
-                    //     ) 
-                    //     VALUES (
-                    //         '$pet_center_id',
-                    //         '$service_id',
-                    //         '$user_id',
-                    //         '$service_cost',
-                    //         '$reserve_date',
-                    //         '$reserve_time',
-                    //         '$coupon_code',
-                    //         '$transaction_code',
-                    //         'For Confirmation'
-                    //     )");
-            
-                    //     if($reserve_service->execute())
-                    //     {
-                    //         echo "SUCCESSFUL"; 
-                    //     }
-                    //     else
-                    //     {
-                    //         echo "UNSUCCESSFUL";
-                    //     }
-                    // }
-                // } 
             }
         }
     }
