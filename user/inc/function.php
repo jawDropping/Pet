@@ -507,15 +507,21 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         <div class = 'prodDet'>
                         <p class = 'head4' >".$row_pro['pro_name']."</p>
                         <p class = 'prays'>₱".$row_pro['pro_price']."<p>
-                            <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
-                        </div>
+                            <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>";
+                        if($row_pro['pro_quantity'] != 0)
+                        {
+
+                            echo"<input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>";
+                        }
+                        else
+                        {
+                            echo "<a>Out of Stock</a>";
+                        }
+                       echo" </div>
                     </a>
                     </form>
-                </div>
-            
-                ";
+                </div>";
         endwhile;
     }
 
