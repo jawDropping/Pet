@@ -46,33 +46,34 @@
         </div>
 </div>
 <div id="bodyright">
+<p class= 'hed'>Application for Coupons</p>
 <div class="manage_donation">
     <div class="body">
-        <p>Donation for approval</p>
-       <table>
-        <tr>
-            <th>Transaction Number</th>
+       
+       <div class = 'tebs'>
+        <div class = 'yopak'>
+            <p>Transaction Number</p>
 
-            <th>Full Name</th>
+            <p>Donors Name</p>
 
-            <th>Selected Organization</th>
+            <p>Selected Organization</p>
 
-            <th>Contact Number</th>
+            <p>Contact Number</p>
 
-            <th>Email Address</th>
+           
 
-            <th>Amount</th>
+            <p>Amount</p>
 
-            <th>Proof of Payment</th>
+            <p>Proof of Donation</p>
 
-            <th>Action</th>
-        </tr>
+            <p>Action</p>
+        </div>
         <tr>
             <?php
                 echo viewall_donations();
             ?>
         </tr>
-       </table>
+       </div>
     </div>
 
 </div>
@@ -82,23 +83,74 @@
     <style>
         .manage_donation{
         width: 100%;
+        
   
+    }
+    .tebs{
+        width: 100%;
     }
     .body{
         margin-top: 7vh;
-        margin-left: 2vw;
-        background: #ddd;
+        background: #fff;
         height: 90%;
         width: 95%;
         border-radius: 5px;
+        padding: 10px;
+        margin-left: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
     }
     p{
         padding: 10px;
     }
     .selection {
-  background: #28287774;
-}
-
+        background: #28287774;
+    }
+    .hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
+    #forming{
+        display: grid;
+        grid-template-columns:  15% 12% 15% 15% 12% 15% 15%;
+        font-size: 14px;
+        margin-top: 20px;
+    }
+    .yopak{
+        display: grid;
+        grid-template-columns: 15% 12% 15% 15% 12% 15% 15%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+        
+        
+    }
+    #aksyon{
+        display: flex;
+        color: black;
+    }
+    .holdest{
+        height: 42px;
+    }
+    #views{
+        height: 30px;
+  color: #777;
+  font-weight: bold;
+  border-radius: 3px;
+  width: 100px;
+  background: white;
+  border: 1px solid #5a5bf3;
+  margin-left: 5px;
+    }
+    #views2{
+        height: 30px;
+  color: #fff;
+  border-radius: 3px;
+  width: 100px;
+  background: #5a5bf3;
+  border: none;
+    }
     </style>
     <script>
         var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];

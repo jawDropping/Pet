@@ -46,44 +46,69 @@
         </div>
 </div>
         <div id="bodyright">
+        <p class = 'hed'>Partnered Organizations</p>
         <div class="partnerBody">
     <div class="body">
-        <p>Donation Partnered Organizations</p>
-       <table>
-        <tr>
-            <td>Name</td>
-            <td>Location</td>
-            <td>Contact Number</td>
-            <td>Email Address</td>
-            <td>Edit</td>
-            <td>Delete</td>
-        </tr>
+        
+       <div>
+        <div class ='gridnasad'>
+            <p>Name</p>
+            <p>Location</p>
+            <p>Contact Number</p>
+            <p>Email Address</p>
+            <p>Edit</p>
+            <p>Delete</p>
+        </div>
         <tr>
             <?php
                 echo viewall_partners();
             ?>
         </tr>
-       </table>
+       </div>
+  
     </div>
-
+    <form method = 'POST' action = 'add_partners.php' enctype = 'multipart/form-data'>
+                <button class = 'addPart'>Add Partners</button>
+            </form>
 </div>
         </div>
            </div>
     </body>
   
 <style>
+    .gridnasad{
+        display: grid;
+        grid-template-columns:  16% 16% 16% 20% 12% 12%;
+        border-bottom: 1px solid #aaa;
+    }
+    .addPart{
+        padding: 10px;
+        float: right;
+        margin-right: 2vw;
+        margin-top: 5vh;
+        width: 10vw;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+    }
     .partnerBody{
-        height: 100vh;
+        height: 200vh;
         width: 100%;
-  
+        
+    }
+    #forming{
+        display: grid;
+        grid-template-columns:  16% 16% 16% 20% 12% 12%;
+        font-size: 14px;
+        margin-top: 20px;
     }
     .body{
         margin-top: 7vh;
         margin-left: 2vw;
-        background: #ddd;
-        height: 90%;
+        background: #fff;
         width: 95%;
         border-radius: 5px;
+        padding: 10px;
     }
     p{
         padding: 10px;
@@ -91,7 +116,32 @@
     .selection {
   background: #28287774;
 }
-  
+.hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
+    .holdest{
+        height: 42px;
+    }
+    #views{
+        height: 30px;
+  color: #777;
+  font-weight: bold;
+  border-radius: 3px;
+  width: 100px;
+  background: white;
+  border: 1px solid #5a5bf3;
+  margin-left: 5px;
+    }
+    #views2{
+        height: 30px;
+  color: #fff;
+  border-radius: 3px;
+  width: 100px;
+  background: #5a5bf3;
+  border: none;
+    }
     
 </style>
     <script>
