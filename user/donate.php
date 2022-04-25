@@ -43,23 +43,23 @@
  </div>
   <div class="contData">
   <p class = 'lebel' >Name</p>
-   <input class = 'ints' type = "text" name = "first_name" required/>
+   <input class = 'ints' type = "text" name = "full_name" required/>
   </div>
-   <div class="contData">
-   <p class = 'lebel' >Email Address</p>
-   <input class = 'ints' type = "text" name = "email_address" required/>
-   </div>
+  <div class="contData">
+  <p class = 'lebel' >Email</p>
+   <input class = 'ints' type = "text" name = "email" required/>
+  </div>
   <div class="contData">
   <p class = 'lebel' >Amount</p>
    <input class = 'ints' type = "text" name = "amount" required/>
   </div>
-   
-   
-   
-   <p class = 'lebel' >Photo</p>
-   <input class = 'ints' type = "file" name = "proof_photo" required/>
-   <div></div>
-<button name = "donate" class='dons'>Apply For Coupon</button>
+  <div class="drop-zone">
+    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+    <input type="file" name="proof_photo" class="drop-zone__input">
+  </div>
+  <br><br>
+   <div></div> <div></div>
+<button name = "donate" class='dons'>Submit</button>
 </div>
         </form>
         </div>
@@ -73,8 +73,8 @@
         $org_id = $_GET['donate'];
         $full_name = $_POST['full_name'];
         $contact_number = $_POST['contact_number'];
-        $email_address = $_POST['email_address'];
         $amount = $_POST['amount'];
+        $email = $_POST['email'];
         $donation_status = "FOR CONFIRMATION";
 
         $proof_photo = $_FILES['proof_photo']['name'];
@@ -87,8 +87,8 @@
             transaction_number,
             org_id,
             full_name,
+            email,
             contact_number,
-            email_address,
             proof_photo,
             donation_status,
             coupon_code,
@@ -99,8 +99,8 @@
             '$transaction_number',
             '$org_id',
             '$full_name',
+            '$email',
             '$contact_number',
-            '$email_address',
             '$proof_photo',
             '$donation_status',
             'N/A',
@@ -124,15 +124,13 @@
     <style>
         
         .donateDiv{
-           
+            display: grid;
+            grid-template-columns: 50% 50%;
             row-gap: 5px;
             column-gap: 10px;
-            
-           
             margin-top: 10px;
-            padding: 20px;
+            padding-top: 50px;
             border-radius: 10px;
-         
         }
         .heading{
             font-size: 24px;
@@ -155,17 +153,20 @@
                   background: #ffb830;
                   outline: none;
                   border: 1px solid #ffb830;
-                  width: 200px;
-                  padding: 10px;
-                  border-radius: 10px;
-                  margin-right: 10px;
+                  width: 80%;
+                  padding: 15px;
+                  border-radius: 5px;
+                  margin-left: 5%;
+                  margin-top: 10%;
                   color: white;
                   font-weight: bold;
+                  
+                  
         }
        
         .mainConers{
             
-            height: 90vh;
+            height: 70vh;
             box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
             width: 80%;
             margin-left: 10%;
@@ -213,12 +214,140 @@
             background: white;
             border-radius: 5px;
             padding: 10px;
-            width: 70%;
-            margin-left: 15%;
+            width: 80%;
+            margin-left: 5%;
             margin-bottom: 10px;
         }
        
+
+
+        .drop-zone {
+            width: 80%;;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  color: #777;
+  border: 2px dashed #009578;
+  border-radius: 10px;
+  margin-left: 5%;
+            margin-bottom: 10px;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+
+
     </style>
+    <script>
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  const dropZoneElement = inputElement.closest(".drop-zone");
+
+  dropZoneElement.addEventListener("click", (e) => {
+    inputElement.click();
+  });
+
+  inputElement.addEventListener("change", (e) => {
+    if (inputElement.files.length) {
+      updateThumbnail(dropZoneElement, inputElement.files[0]);
+    }
+  });
+
+  dropZoneElement.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
+
+  ["dragleave", "dragend"].forEach((type) => {
+    dropZoneElement.addEventListener(type, (e) => {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    if (e.dataTransfer.files.length) {
+      inputElement.files = e.dataTransfer.files;
+      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+    }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
+});
+
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
+function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  }
+
+  // First time - there is no thumbnail element, so lets create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+
+    </script>
 </html>
 
 

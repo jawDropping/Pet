@@ -383,7 +383,6 @@
 
     function donate()
     {
-        echo "<h3>Select Organization to Donate </h3>";
         include("inc/db.php");
         $sql = $con->prepare("SELECT * FROM organizations");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -391,20 +390,21 @@
 
         while($row = $sql->fetch()):
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='org_detail.php?id=".$row['id']."'>
+            <a class = 'aTag' href='org_detail.php?id=".$row['id']."'>
+                
+                <img class = 'fikture' src ='../uploads/orgs/".$row['org_photo']."' />
+                <div class = 'prodDet'>
                 <h4>".$row['org_name']."</h4>
-                <img src ='../uploads/orgs/".$row['org_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                    <br>
+                        <a class = 'btnLinkView' href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
+                    
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -441,25 +441,37 @@
                     <p class = 'Heads' >".$row_org['org_name']."</p>
                     <div id = 'oks'>
                         <p class = 'fsTxt'>
-                        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'<br>
-                        </p>
+                        IRO cares for over 100 companion animals who are awaiting adoption into forever homes.<br>  IRO also cares for a number of animals who are receiving treatment for medical injuries or illnesses or are being rehabilitated for behavioural issues relating to their backgrounds.
+
+IRO is run entirely by a team of volunteers and as a community-focused organization; IRO not only relies on the support of the public (both local and international) for funding but also to assist with the organization’s operations.
+
+IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (3) non-profit animal rescue organization.</p>
+                        <div class = 'mainInfos'>
+                        <div class = 'rightInfo'>
+                       
+                        <img class = 'donsite' src = '../uploads/donateBy.png' >
+                        </div>
                         <div class = 'infoss'>
+                    
                         <p class = 'lebels'>
                             Location:
                             </p>
                             <p class = 'dates'> ".$row_org['org_location']."
                         </p>
                         <p class = 'lebels'>
-                        Contact Number:</p><p class = 'dates'> ".$row_org['org_contact_number']."
+                        GCash Number:</p><p class = 'dates'> ".$row_org['org_contact_number']."
                        
                         </p>
                         <p class = 'lebels'>
                        Email Address: </p>
                        <p class = 'dates'>".$row_org['org_email_address']."
                         </p>
+                        <div></div>
+                        <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'> Apply for Coupon</a>
+                        </div>
                         </div>
                     </div>
-                    <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'>Donate</a>
+                   
                     
                 </div>
                 </div>
@@ -984,21 +996,22 @@
         while($row = $sql->fetch()):
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
                 <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
                     <button id = 'pro_btnView'>
                         <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     </button>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 

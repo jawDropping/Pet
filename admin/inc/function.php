@@ -121,10 +121,6 @@
 
     function viewall_partners()
     {
-        echo
-            "<form method = 'POST' action = 'add_partners.php' enctype = 'multipart/form-data'>
-                <button>Add Partners</button>
-            </form>";
         include("inc/db.php");
         $viewall_partners = $con->prepare("SELECT * FROM organizations");
         $viewall_partners->setFetchMode(PDO:: FETCH_ASSOC);
@@ -133,15 +129,33 @@
         while($row = $viewall_partners->fetch()):
             
             echo 
-            "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>".$row['org_name']."</td>
-                    <td>".$row['org_location']."</td>
-                    <td>".$row['org_contact_number']."</td>
-                    <td>".$row['org_email_address']."</td>
-                    <td><button name = 'edit_org' value = ".$row['id'].">Edit</button></td>
-                    <td><button name = 'delete_org' value = ".$row['id'].">Delete</button></td>
-                </tr>
+            "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data' id = 'forming'>
+                
+            <div class = 'holdest'>
+            <p>".$row['org_name']."</p>
+            </div>
+            <div class = 'holdest'>
+            <p>".$row['org_location']."</p>
+            </div>
+            <div class = 'holdest'>
+            <p>".$row['org_contact_number']."</p>
+            </div>
+            <div class = 'holdest'>
+            <p>".$row['org_email_address']."</p>
+            </div>
+            <div class = 'holdest'>
+            <button id='views2' name = 'edit_org' value = ".$row['id'].">Edit</button>
+            </div>
+            <div class = 'holdest'>
+            <button  id='views' name = 'delete_org' value = ".$row['id'].">Delete</button>
+            </div>
+                    
+                    
+                   
+                    
+                    
+                   
+        
             </form>";
         endwhile;
     }
@@ -197,75 +211,7 @@
 
     function add_product() 
     {
-        echo
-        "<div id ='bodyright'>
-        <div class = 'addProduct'>
-        <h3>Add Products</h3>
-        <form method = 'POST' enctype = 'multipart/form-data'>
-            <div class='formleft'>
-    
-            </div>
-            <div class='formright'>
-    
-            </div>
-            <table>
-                <tr>
-                    <td>Enter Product Name: </td>
-                    <td><input type='text' name = 'pro_name' required/></td>
-                </tr>
-                <tr>
-                    <td>Select Category Name: </td>
-                    <td>
-                        <select name = 'cat_name'>";
-             
-                                echo viewall_cat(); 
-                            
-                       echo" </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Other Category: </td>
-                    <td><input type='text' name = 'pro_brand' placeholder = 'Other category you prefer..'/></td>
-                    
-                </tr>
-                <tr>
-                    <td>Enter Product Brand: </td>
-                    <td><input type='text' name = 'pro_brand' required /></td>
-                </tr>
-                <tr>
-                    <td>Select 1st Product Image: </td>
-                    <td><input type='file' name = 'pro_img' required/></td>
-                </tr>
-                <tr>
-                    <td>Select 2nd Product Image: </td>
-                    <td><input type='file' name = 'pro_img2' required/></td>
-                </tr>
-                <tr>
-                    <td>Select 3rd Product Image: </td>
-                    <td><input type='file' name = 'pro_img3' required/></td>
-                </tr>
-                <tr>
-                    <td>Select 4th Product Image: </td>
-                    <td><input type='file' name = 'pro_img4' required/></td>
-                </tr>
-                <tr>
-                    <td>Enter Price: </td>
-                    <td><input type= 'text' name = 'pro_price' required/></td>
-                </tr>
-                <tr>
-                    <td>Enter Quantity: </td>
-                    <td><input type='text' name = 'pro_quantity' required/></td>
-                </tr>
-                <tr>
-                    <td>Enter KeyWord: </td>
-                    <td><input type= 'text' name = 'pro_keyword' required/></td>
-                </tr>
-            </table>
-            <button name = 'add_prod'>Add Product</button>
-        </form>
-        </div>
-        
-    </div>";
+
 
        include("inc/db.php");
        if(isset($_POST['add_prod']))
@@ -914,32 +860,35 @@
             $row_org = $sql->fetch();
             $org_name = $row_org['org_name'];
             echo 
-            "<form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td><input type = 'hidden' name = 'transaction_number' value =".$row['transaction_number']."/></td>
-                    <td>".$row['transaction_number']."</td>
+            "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+        
+
                     
-                    <td><input type = 'hidden' name = 'first_name' value = ".$row['first_name']." /></td>
-                    <td><input type = 'hidden' name = 'last_name' value = ".$row['last_name']." /></td>
-                    <td>".$row['last_name'].", ".$row['first_name']."</td>
-
-                    <td><input type = 'hidden' name = 'org_name' value =".$org_name." /></td>
-                    <td>".$org_name."</td>
-
-                    <td><input type = 'hidden' name = 'contact_number' value =".$row['contact_number']." /></td>
-                    <td>".$row['contact_number']."</td>
-
-                    <td><input type = 'hidden' name = 'email_address' value =".$row['email_address']." /></td>
-                    <td>".$row['email_address']."</td>
-
-                    <td><input type = 'hidden' name = 'amount' value =".$row['amount']." /></td>
-                    <td>".$row['amount']."</td>
-
-                    <td><input type = 'hidden' name = 'proof_photo' value =".$row['proof_photo']." /></td>
-                    <td>".$row['proof_photo']."</td>
-
-                    <td><button name = 'confirm_donation' value = ".$row['id'].">Confirm</button></td>
-                </tr>
+                    <div class = 'holdest'>
+                    <p  name = 'transaction_number'>".$row['transaction_number']."</p>
+                    </div>
+                    <div class = 'holdest'>
+                    <p>".$row['full_name']."</p>
+                    </div>
+                    <div class = 'holdest'>
+                    <p>".$org_name."</p>
+                    </div>
+                    <div class = 'holdest'>
+                    <p>".$row['contact_number']."</p>
+                    </div>
+                    <div class = 'holdest'>
+                    <p>".$row['amount']."</p>
+                    </div>
+                    <div class = 'holdest'>
+                    <p>".$row['proof_photo']."</p>
+                    </div>
+                    <div class = 'holdest'>
+                    <div id = 'aksyon'>
+                    <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
+                    <button id = 'views'  name = 'confirm_donation' value = ".$row['id'].">View</button>
+                    </div>
+                    </div>
+  
             </form>";
         endwhile;
         if(isset($_POST['confirm_donation']))
@@ -960,14 +909,14 @@
             if($row['donation_status'] == 'CONFIRMED')
             {
                 echo "<script>alert('Donation Already Confirmed!');</script>";
-                echo "<script>window.open('index.php?manage_donation','_self');</script>";
+                echo "<script>window.open('manage_donation.php','_self');</script>";
             }
             else
             {
                 if(mail($receiver, $subject, $body, $sender))
                 {
                     $transaction_number = $_POST['transaction_number'];
-                    $first_name = $_POST['first_name'];
+                    $full_name = $_POST['full_name'];
                     $last_name = $_POST['last_name'];
                     $amount = $_POST['amount'];
                     $org_name = $_POST['org_name'];
@@ -980,8 +929,7 @@
                     (
                         transaction_number,
                         org_name,
-                        first_name,
-                        last_name,
+                        full_name,
                         contact_number,
                         date_confirmed
                     ) 
