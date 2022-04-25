@@ -1309,8 +1309,6 @@
             // }
             // echo "</ul></div>";
         }
-        function avial(){
-           
     }
 
     
