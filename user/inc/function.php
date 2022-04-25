@@ -13,7 +13,7 @@
             $user_email = $_POST['user_email'];
             $user_contactnumber = $_POST['user_contactnumber'];
             $municipality = $_POST['municipality'];
-            $barangay = $_POST['barangay'];
+            $barangay = $_POST['barangays'];
             $user_address = $_POST['user_address'];
 
             $view_emails = $con->prepare("SELECT * FROM users_table");
@@ -342,7 +342,7 @@
                     <p class = 'dataCont'>".$order['items']."</p>
                     </div>
                     <div class = 'dataHolders'>
-                    <p class = 'dataCont' >".$order['sum(od.qty * od.price)']."</p>
+                    <p class = 'dataCont' >₱".$order['sum(od.qty * od.price)']."</p>
                     </div>
                     <div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['delivery_status']."</p>
@@ -357,7 +357,7 @@
             echo 
             "<div></div><div></div><div></div>
             <div class = 'dataHolderTot'>
-                <p class = 'dataCont'>TOTAL AMOUNT: ".$net_total."</p>
+                <p class = 'dataCont'>TOTAL AMOUNT: ₱".$net_total."</p>
             </div>";
         }    
     }
@@ -417,11 +417,22 @@
             
             while($row = $display_order->fetch()):
                 echo 
-                "<tr>
-                    <td>".$row['order_id']."</td>
-                    <td>".$row['items']."</td>
-                    <td>".$row['date_delivered']."</td>
-                </tr>";
+                // "<tr>
+                //     <td>".$row['order_id']."</td>
+                //     <td>".$row['items']."</td>
+                //     <td>".$row['date_delivered']."</td>
+                // </tr>";
+                "<div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row['order_id']."</p>
+                    </div>
+                    <div class = 'dataHolders'>
+                    <p class = 'dataCont' >".$row['items']."</p>
+                    </div>
+                    <div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row['date_delivered']."</p>
+                    </div>
+                    
+                ";
             endwhile;
         
         }    
@@ -441,7 +452,6 @@
 
     function donate()
     {
-        echo "<h3>Select Organization to Donate </h3>";
         include("inc/db.php");
         $sql = $con->prepare("SELECT * FROM organizations");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -449,20 +459,21 @@
 
         while($row = $sql->fetch()):
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='org_detail.php?id=".$row['id']."'>
+            <a class = 'aTag' href='org_detail.php?id=".$row['id']."'>
+                
+                <img class = 'fikture' src ='../uploads/orgs/".$row['org_photo']."' />
+                <div class = 'prodDet'>
                 <h4>".$row['org_name']."</h4>
-                <img src ='../uploads/orgs/".$row['org_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                    <br>
+                        <a class = 'btnLinkView' href = 'org_detail.php?id=".$row['id']."'>Show Info</a>
+                    
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -495,20 +506,43 @@
                   <img class = 'images' src ='../uploads/orgs/".$row_org['org_photo']."'/> 
                   </center>
                   <div id = 'innerService'>
+                  <div id = 'content'>
                     <p class = 'Heads' >".$row_org['org_name']."</p>
-                    <div>
-                        <p>
-                            Org Location: ".$row_org['org_location']."
+                    <div id = 'oks'>
+                        <p class = 'fsTxt'>
+                        IRO cares for over 100 companion animals who are awaiting adoption into forever homes.<br>  IRO also cares for a number of animals who are receiving treatment for medical injuries or illnesses or are being rehabilitated for behavioural issues relating to their backgrounds.
+
+IRO is run entirely by a team of volunteers and as a community-focused organization; IRO not only relies on the support of the public (both local and international) for funding but also to assist with the organization’s operations.
+
+IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (3) non-profit animal rescue organization.</p>
+                        <div class = 'mainInfos'>
+                        <div class = 'rightInfo'>
+                       
+                        <img class = 'donsite' src = '../uploads/donateBy.png' >
+                        </div>
+                        <div class = 'infoss'>
+                    
+                        <p class = 'lebels'>
+                            Location:
+                            </p>
+                            <p class = 'dates'> ".$row_org['org_location']."
                         </p>
-                        <p>
-                        Org Contact Number: ".$row_org['org_contact_number']."
+                        <p class = 'lebels'>
+                        GCash Number:</p><p class = 'dates'> ".$row_org['org_contact_number']."
                        
                         </p>
-                        <p>
-                        Org Email Address: ".$row_org['org_email_address']."
+                        <p class = 'lebels'>
+                       Email Address: </p>
+                       <p class = 'dates'>".$row_org['org_email_address']."
                         </p>
+                        <div></div>
+                        <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'> Apply for Coupon</a>
+                        </div>
+                        </div>
                     </div>
-                    <a href = 'donate.php?donate=".$row_org['id']."'>Donate</a>
+                   
+                    
+                </div>
                 </div>
                 </div>
                 </div>";          
@@ -525,7 +559,7 @@
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
+        echo"<h3>Dog products</h3>";
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id' LIMIT 0,3");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -534,25 +568,21 @@
         while($row_pro = $fetch_pro->fetch()):
             echo"
             
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='../uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btnView'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button id = 'pro_btn' name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                        //    echo add_cart();
-                        echo"</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
             
                 ";
         endwhile;
@@ -568,7 +598,7 @@
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
+        
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id'");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -577,29 +607,29 @@
         while($row_pro = $fetch_pro->fetch()):
             echo"
             
-                <li>
+                <div class = 'idNiSha'>
                     <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <img src ='../uploads/products/".$row_pro['pro_img']."' />
+                    <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                        <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
                         
-                        <center>
-                        <h4>".$row_pro['pro_name']."</h4>
-                            <button id = 'pro_btnView'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
+                        <div class = 'prodDet'>
+                        <p class = 'head4' >".$row_pro['pro_name']."</p>
+                        <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                            <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                        //    echo add_cart();
-                        echo"</center>
+                            <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                        </div>
                     </a>
                     </form>
-                </li>
+                </div>
             
                 ";
         endwhile;
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showdogfood.php?' ,'_self');</script>";  
+        }
     }
 
    
@@ -643,6 +673,7 @@
                 </li>
                 ";
         endwhile;
+        echo add_cart();
     }
 
     function fish_food_products()
@@ -655,7 +686,6 @@
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id'");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -684,6 +714,11 @@
                 </li>
                 ";
         endwhile;
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showfishfood.php?' ,'_self');</script>";  
+        }
     }
     //wala pa
     function bird_food_products()
@@ -696,7 +731,7 @@
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
+     
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id'");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -724,6 +759,11 @@
                 </li>
                 ";
         endwhile;
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showbirdfood.php?' ,'_self');</script>";  
+        }
     }
 
     //wala pa
@@ -737,7 +777,6 @@
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id'");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -745,25 +784,28 @@
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='../uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                        echo "</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
                 ";
         endwhile;
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showcatfood.php?' ,'_self');</script>";  
+        }
     }
 
     //wala pa
@@ -777,7 +819,7 @@
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
+        
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id'");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -805,6 +847,11 @@
                 </li>
                 ";
         endwhile;
+        if(isset($_POST['cart_btn']))
+        {
+            array_push( $_SESSION['cart'], $_POST['pro_id']);
+            echo "<script>window.open('/Pet/user/showotherfoods.php?' ,'_self');</script>";  
+        }
     }
 
     function pro_details()
@@ -898,21 +945,22 @@
         while($row = $sql->fetch()):
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
                 <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
                     <button id = 'pro_btnView'>
                         <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     </button>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
 
     

@@ -1,0 +1,37 @@
+.contDivSel {
+  display: flex;
+  background: #ffb830;
+  width: 120px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: default;
+}
+.servDiv {
+  display: flex;
+  background: white;
+  width: 120px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 16%);
+}
+#imgTop {
+  height: 42px;
+  padding: 10px;
+  margin-left: 90%;
+}
+.hed {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+.ttlHead {
+  margin-top: 20px;
+  color: #777;
+}

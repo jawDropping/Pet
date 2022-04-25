@@ -374,6 +374,17 @@
 
         while($row2 = $sql2->fetch()):
             $user_id = $row2['user_id'];
+            $date = $row2['reserve_date'];
+            $transaction_code = $row2['transaction_code'];
+            $service_id = $row2['service_id'];
+
+            $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+            $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_service->execute();
+
+            $row_service = $view_service->fetch();
+            $service_name = $row_service['services_name'];
+
             $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
             $view_user->setFetchMode(PDO:: FETCH_ASSOC);
             $view_user->execute();
@@ -402,7 +413,15 @@
         
         $receiver = $row_user['user_email'];
         $subject = "Reserve Confirmation";
-        $body = "Reservation Confirmed!";
+        $body = 
+        "
+        Greetings! 
+
+        This is from $service_name we are hoping for your best experience for the service we provide. 
+        Please come with the respective date $date, with the $transaction_code
+        
+        Respecfully yours,
+        $service_name";
         $sender = "ianjohn0101@gmail.com";
 
         if(mail($receiver, $subject, $body, $sender))

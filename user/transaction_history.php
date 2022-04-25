@@ -13,7 +13,7 @@
         }
         .inside{
             display: grid;
-            grid-template-columns: 25% 25% 25% 25%;
+            grid-template-columns: 35% 32% 30%;
             text-align: center;
             row-gap: 10px;
 
@@ -93,15 +93,12 @@
     
     <div class = "contTable">
         <div class = "inside">
-        <div class="divHead">
+            <div class="divHead">
                 <p class = 'headers'>Transaction Id</p>
             </div>
             <div class="divHead">
-                <p class = 'headers'>Product Name</p>
+                <p class = 'headers'>Items</p>
             </div>
-           <div class="divHead">
-                <p class = 'headers'>Quantity</p>
-           </div>
             <div class="divHead">
                <p class = 'headers'>Date Delivered</p>
             </div>
