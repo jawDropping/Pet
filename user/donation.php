@@ -63,8 +63,24 @@
                 </div>
                
             </div>
+            <div class="under">
+                <p class = 'sayings2' >What PetSociety do?</p><br>
+                <p class = 'smaller' >We found out that most of the time when you donate theres no reward for your good deeds. Thats the reason why we create an agreement between petcenters that they'll give you atleast 2% of discount or higher if you donate directly to the organizations.</p>
+                <p class="smaller">Our job is to give information about the organizations, and to check or validate if you donate to those organization by sending us the proof of transaction between you and the organization, if you donate and choose not to inform us it's still okay but youll not be given for the coupon code to claim your discount</p>
+            </div>
+            <a href = '../petcenter/signup.php' class = 'toSignup'>
+            <div class="underist">
+                <div class="lefter">
+                    <img  class = 'leftrImg' src="../uploads/becomePartner.gif" >
+                </div>
+                <div class="righter">
+                    <p class = 'rightist' >Become one of our Petcenters? :></p>
+                    <p class = 'smaller2' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias maxime fugiat sapiente eum vel. Quaerat officia libero magnam et enim similique ea reiciendis, hic sint, numquam modi ipsam fugit possimus.</p>
+                </div>
+            </div>
+            </a>
             <div class="orgs">
-                <h3 class="headister">Our Selected Organizations</h3>
+                <h3 class="headister">Our Selected Organizations</h3><br>
             <ul>
                   <?php donate(); ?>
                 </ul>
@@ -77,7 +93,36 @@
                   ?>
     </body>
     <style>
-       
+        .toSignup{
+            text-decoration: none;
+        }
+       .underist{
+           display: flex;
+           width: 80%;
+           margin: 30px 10% 10px 10%;
+           height: 20vh;
+           box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+           
+       }
+       .rightist{
+           font-size: 18px;
+           padding: 10px;
+           font-weight: bold;
+           color: #777;
+           text-decoration: none;
+       }
+       .smaller2{
+        font-size: 14px;
+           padding: 10px;
+           color: #777;
+           text-decoration: none;
+       }
+       .lefter{
+           width: 20%;
+       }
+       .leftrImg{
+           height: 100%;
+       }
         :root {
   --primary-color: slategrey;
 }
@@ -170,10 +215,8 @@
   display: none;
 }
 .orgs{
-    margin-top: 10%;
-
+    margin: 10% 5% 20% 5%;
     width: 90%;
-    margin-left: 5%;
 }
 /* The dots/bullets/indicators */
 .dots {
@@ -228,12 +271,34 @@
     display: flex;
   
 }
+.under
+{
+    width: 90%;
+    margin-left: 5%;
+    padding: 10px;
+    margin-top: 50px;
+    line-height: 2;
+    border-bottom: 1px solid #333;
+
+}
 .sayings{
 
     font-weight: bold;
     font-size: 28px;
     color: #0080fe;
     font-family: "Varela Round", sans-serif;
+}
+.sayings2{
+
+font-weight: bold;
+font-size: 30px;
+color: #333;
+font-family: "Varela Round", sans-serif;
+}
+.samller{
+    font-size: 12px; 
+  
+    
 }
 .phar{
     width: 50%;
