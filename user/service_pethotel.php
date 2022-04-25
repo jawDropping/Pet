@@ -27,7 +27,7 @@
         <div class = 'hed' ><img src = '../uploads/bird.gif' id = 'imgTop'><p class = 'ttlHead' >twit</p>
         </div><br>
               <ul>
-                   <?php viewall_services(); ?>
+                   <?php pet_hotels_facilities(); ?>
                    </ul>
           </div>
          

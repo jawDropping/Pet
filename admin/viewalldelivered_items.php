@@ -1,5 +1,5 @@
 <div class = "scroll" id ="bodyright">
-    <h3>Sales Inventory</h3>
+    <h3>Transaction History</h3>
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>

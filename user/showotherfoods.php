@@ -32,7 +32,7 @@
                   </div>";
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 
-            
+            // echo add_cart();
             
         ?>
     </body>
