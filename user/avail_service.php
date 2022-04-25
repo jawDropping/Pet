@@ -50,6 +50,7 @@
                     {
                         echo 
                         "<td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Coupon Code: </label></td>
+                        
                         <td><input type = 'text' name = 'coupon_code'  style = 'position:absolute;align-items:center;margin:19.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>";
                         // <td><button name = 'verify' style = 
                         // 'border: 0;
@@ -147,8 +148,11 @@
                 $datenow = getdate();
 
                 $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
+                $dateTimestamp = strtotime($reserve_date);
+                $dateTimestamp2 = strtotime($today);
                 
-                if($reserve_date < $today)
+                if($dateTimestamp < $dateTimestamp2)
                 {
                     echo "INVALID DATE!";
                 }
