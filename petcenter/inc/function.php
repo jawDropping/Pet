@@ -372,11 +372,20 @@
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
+        
+            
+        $datenow = getdate();
+
+        $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
         while($row2 = $sql2->fetch()):
+            $reserve_id = $row2['reserve_id'];
             $user_id = $row2['user_id'];
             $date = $row2['reserve_date'];
             $transaction_code = $row2['transaction_code'];
             $service_id = $row2['service_id'];
+            $service_cost = $row2['service_cost'];
+            $coupon_code = $row2['coupon_code'];
 
             $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
             $view_service->setFetchMode(PDO:: FETCH_ASSOC);
@@ -384,6 +393,7 @@
 
             $row_service = $view_service->fetch();
             $service_name = $row_service['services_name'];
+
 
             $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
             $view_user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -395,6 +405,13 @@
             echo
             "<form method = 'POST'>
                 <tr>
+                    <td><input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' /></td>
+                    <td><input type = 'hidden' name = 'service_id' value = '".$service_id."' /></td>
+                    <td><input type = 'hidden' name = 'user_id' value = '".$user_id."' /></td>
+                    <td><input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' /></td>
+                    <td><input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' /></td>
+                    <td><input type = 'hidden' name = 'date_confirmed' value = '".$today."' /></td>
+                    <td><input type = 'hidden' name = 'service_cost' value = '".$service_cost."' /></td>
                     <td>".$user_username."</td>
                     <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>";
                     if($row2['coupon_code'] == '')
@@ -403,10 +420,10 @@
                     }
                     else
                     {
-                        echo "<td>".$row2['coupon_code']."</td>";
+                        echo "<td>".$coupon_code."</td>";
                     }
-                    echo "<td>".$row2['transaction_code']."</td> 
-                    <td><button name = 'confirm_request' value = ".$row2['reserve_id'].">Confirm</button></td>
+                    echo "<td>".$transaction_code."</td> 
+                    <td><button name = 'confirm_request' value = ".$reserve_id.">Confirm</button></td>
                 </tr>
             </form>";
         endwhile;
@@ -418,28 +435,126 @@
         Greetings! 
 
         This is from $service_name we are hoping for your best experience for the service we provide. 
-        Please come with the respective date $date, with the $transaction_code
+        Please come with the respective date $date, with the Transacton Code: $transaction_code
         
         Respecfully yours,
         $service_name";
         $sender = "ianjohn0101@gmail.com";
 
+
         if(mail($receiver, $subject, $body, $sender))
         {
+            // var_dump($pet_center_id);
+            // var_dump($service_id);
+            // var_dump($user_id);
+            // var_dump($coupon_code);
+            // var_dump($transaction_code);
+            // var_dump($today);
+            // var_dump($service_cost);
             if(isset($_POST['confirm_request']))
             {
                 $reserve_id = $_POST['confirm_request'];
-                $confirm = $con->prepare("UPDATE reserve_services SET service_status = 'CONFIRMED' WHERE reserve_id = '$reserve_id'");
-                $confirm->setFetchMode(PDO:: FETCH_ASSOC);
-                $confirm->execute();
-    
+                $pet_center_id = $_POST['pet_center_id'];
+                $service_id = $_POST['service_id'];
+                $user_id = $_POST['user_id'];
+                $coupon_code = $_POST['coupon_code'];
+                $transaction_code = $_POST['transaction_code'];
+                $date_confirmed = $_POST['date_confirmed'];
+                $amount = $_POST['service_cost'];
+                $confirm = $con->prepare("INSERT INTO confirmed_services
+                (
+                    pet_center_id,
+                    service_id,
+                    user_id,
+                    coupon_code,
+                    transaction_code,
+                    date_confirmed,
+                    amount
+                ) 
+                VALUES
+                (
+                    '$pet_center_id',
+                    '$service_id',
+                    '$user_id',
+                    '$coupon_code',
+                    '$transaction_code',
+                    '$today',
+                    '$service_cost'
+                )");
                 if($confirm->execute())
                 {
-                    echo "<script>alert('Services Successfully Updated!');</script>";
-                    echo "<script>window.open('confirmRequests.php', '_self');</script>";
+                    $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
+                    if($delete_reservation->execute())
+                    {
+                        echo "<script>alert('Services Successfully Confirmed!');</script>";
+                        echo "<script>window.open('confirmRequests.php', '_self');</script>";
+                    }
                 }
             }
         }
+    }
+
+    function viewHistory()
+    {
+        include("inc/db.php");
+        $user_name = $_SESSION['pet_center_name'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        $row = $sql->fetch();
+        $pet_center_id = $row['pet_center_id'];
+
+        $sql2 = $con->prepare("SELECT * FROM confirmed_services");
+        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql2->execute();
+
+        $sql3 = $con->prepare("SELECT SUM(amount) FROM confirmed_services");
+        $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql3->execute();
+
+        $row2 = $sql3->fetch();
+
+        // <th>User Name</th>
+        //     <th>Coupon Code</th>
+        //     <th>Transaction Code</th>
+        //     <th>Date Confirmed</th>
+        //     <th>Amount</th>
+        $total_amount = 0;
+        while($row = $sql2->fetch()):
+            $user_id = $row['user_id'];
+
+            $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+            $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_username->execute();
+
+            $row_username = $fetch_username->fetch();
+            $empty = "N/A";
+            echo
+            "<tr>
+                <td>".$row_username['user_username']."</td>";
+                if($row['coupon_code'] == '')
+                {
+                    echo "<td>".$empty."</td>";
+                }
+                else
+                {
+                    echo "<td>".$row['coupon_code']."</td>";
+                }
+                echo 
+                "<td>".$row['transaction_code']."</td>
+                <td>".$row['amount']."</td>
+                <td>".$row['date_confirmed']."</td>
+            </tr>";   
+        endwhile;
+        echo 
+        "<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total Amount: ".$row2['SUM(amount)']."</td>
+        </tr>";
     }
 
     function edit_service()
