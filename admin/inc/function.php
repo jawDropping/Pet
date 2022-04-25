@@ -650,8 +650,8 @@
                 </td>
               
                 <td>".$row['pro_quantity']."</td>
-                <td><button name = 'edit' value = ".$row['pro_id'].">Edit</button>
-                <button name = 'delete' value = ".$row['pro_id'].">Delete</button></td>
+                <td><a href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
+                <a href = 'delete_cat.php?delete_prod=".$row['pro_id']."'>Delete</button></td>
             </tr>";
         endwhile;
     }
@@ -1151,40 +1151,24 @@
             $fetch_pro_name->execute();
             $row = $fetch_pro_name->fetch();
             $cat_id = $row['cat_id'];
-            $sub_cat_id = $row['sub_cat_id'];
 
             $fetch_cat = $con->prepare("SELECT * from pet_prod WHERE prod_id='$cat_id'");
             $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_cat->execute();
             $row_cat = $fetch_cat->fetch();
-            $cat_name = $row_cat['cat_name'];
-
-            $fetch_sub_cat = $con->prepare("SELECT * from sub_cat WHERE sub_cat_id='$sub_cat_id'");
-            $fetch_sub_cat->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetch_sub_cat->execute();
-            $row_sub_cat = $fetch_cat->fetch();
-            $sub_cat_name = $row_sub_cat['sub_cat_name'];
 
             echo "<h3>Edit Product</h3>
-            <form method = 'POST'>
+            <form method = 'POST' enctype = 'multipart/form-data'>
                 <table>
                     <tr>
                         <td>Update Category Name: </td>
                         <td>
                             <select name = 'cat_name'>
-                                <option value = '".$row['cat_id']."'>".$cat_name."</option>
+                                <option value = '".$row_cat['prod_id']."'>".$row_cat['cat_name']."</option>
                                 ";echo viewall_cat(); echo"
                             </select>
                         </td>
                     </tr>
-                   <tr>
-                        <td>Update Sub-Category Name: </td>
-                        <td>
-                            <select name = 'sub_cat_name'>
-                                <option value = '".$row['sub_cat_id']."'>".$sub_cat_name."</option>
-                                ";echo viewall_sub_cat(); echo"
-                            </select>
-                        </td>
                     </tr>
                     <tr>
                         <td>Product Name: </td>
@@ -1206,61 +1190,65 @@
                         <td>Product Keyword: </td>
                         <td><input type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/></td>
                     </tr>
-                    <tr>
-                        <td>Update 1st Product Image: </td>
-                        <td>
-                            <input type='file' name = 'pro_img'/>
-                            <img src = '../uploads/products/".$row['pro_img']."'  />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Update 2nd Product Image: </td>
-                        <td>
-                            <input type='file' name = 'pro_img2'/>
-                            <img src = '../uploads/products/".$row['pro_img2']."' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Update 3rd Product Image: </td>
-                        <td>
-                            <input type='file' name = 'pro_img3'/>
-                            <img src = '../uploads/products/".$row['pro_img3']."' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Update 4th Product Image: </td>
-                        <td>
-                            <input type='file' name = 'pro_img4'/>
-                            <img src = '../uploads/products/".$row['pro_img4']."' />
-                        </td>
-                    </tr>
-                    
                    
                 </table>
                 <button name = 'update_prod'>Update Product</button>
+            </form>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>
+                        <label>Sample Image #1</label>
+                        <img src = '../uploads/products/".$row['pro_img']."'  style = 'height:50px;width:50px;' />
+                        <br><input type = 'file' name = 'sample_img1' value = ".$row['pro_img']." required/><br>
+                    </td>
+                </tr><br>
+                <button name = 'update_first_image'>Update First Image</button>
+            </form>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>
+                        <label>Sample Image #2</label>
+                        <img src = '../uploads/products/".$row['pro_img2']."'  style = 'height:50px;width:50px;' />
+                        <br><input type = 'file' name = 'sample_img2' value = ".$row['pro_img2']." required/><br>
+                    </td>
+                </tr><br>
+                <button name = 'update_second_image'>Update Second Image</button>
+            </form>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>
+                        <label>Sample Image #1</label>
+                        <img src = '../uploads/products/".$row['pro_img3']."'  style = 'height:50px;width:50px;' />
+                        <br><input type = 'file' name = 'sample_img3' value = ".$row['pro_img3']." required/><br>
+                    </td>
+                </tr><br>
+                <button name = 'update_third_image'>Update Third Image</button>
+            </form>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>
+                        <label>Sample Image #4</label>
+                        <img src = '../uploads/products/".$row['pro_img4']."'  style = 'height:50px;width:50px;' />
+                        <br><input type = 'file' name = 'sample_img4' value = ".$row['pro_img4']." required/><br>
+                    </td>
+                </tr><br>
+                <button name = 'update_fourth_image'>Update Fourth Image</button>
             </form>";
-
             if(isset($_POST['update_prod']))
             {
+                $cat_name = $_POST['cat_name'];
                 $pro_name = $_POST['pro_name'];
                 $pro_brand = $_POST['pro_brand'];
                 $pro_quantity = $_POST['pro_quantity'];
                 $pro_price = $_POST['pro_price'];
-                $pro_img = $_POST['pro_img'];
-                $pro_img2 = $_POST['pro_img2'];
-                $pro_img3 = $_POST['pro_img3'];
-                $pro_img4 = $_POST['pro_img4'];
                 $pro_keyword = $_POST['pro_keyword'];
                 $update_prod = $con->prepare("UPDATE product_tbl 
                 SET 
+                cat_id='$cat_name',
                 pro_name='$pro_name',
                 pro_brand = '$pro_brand',
                 pro_quantity = '$pro_quantity',
                 pro_price = '$pro_price',
-                pro_img = '$pro_img',
-                pro_img2 = '$pro_img2',
-                pro_img3 = '$pro_img3',
-                pro_img4 = '$pro_img4',
                 pro_keyword = '$pro_keyword'
                 WHERE 
                 pro_id = '$pro_id'");
@@ -1268,7 +1256,76 @@
                 if($update_prod->execute())
                 {
                     echo "<script>alert('Product Updated Successfully!');</script>";
-                    echo "<script>window.open('index.php?viewall_products','_self');</script>";
+                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                }
+            }
+            if(isset($_POST['update_first_image']))
+            {
+                $pro_img = $_FILES['sample_img1']['name'];
+                $pro_img_tmp = $_FILES['sample_img1']['tmp_name'];
+
+               
+                move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
+
+                $update_first_img = $con->prepare("UPDATE product_tbl SET 
+                pro_img = '$pro_img'
+                WHERE
+                pro_id = '$pro_id'");
+                if($update_first_img->execute())
+                {
+                    echo "<script>alert('Product Updated Successfully!');</script>";
+                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                }
+            }
+            if(isset($_POST['update_second_image']))
+            {
+                $pro_img2 = $_FILES['sample_img2']['name'];
+                $pro_img2_tmp = $_FILES['sample_img2']['tmp_name'];
+
+                move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
+
+                $update_second_img = $con->prepare("UPDATE product_tbl SET 
+                pro_img2 = '$pro_img2'
+                WHERE
+                pro_id = '$pro_id'");
+                if($update_second_img->execute())
+                {
+                    echo "<script>alert('Product Updated Successfully!');</script>";
+                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                }
+            }
+            if(isset($_POST['update_third_image']))
+            {
+                $pro_img3 = $_FILES['sample_img3']['name'];
+                $pro_img3_tmp = $_FILES['sample_img3']['tmp_name'];
+
+                move_uploaded_file($pro_img3_tmp,"../uploads/products/$pro_img3");
+
+                $update_third_img = $con->prepare("UPDATE product_tbl SET 
+                pro_img3 = '$pro_img3'
+                WHERE
+                pro_id = '$pro_id'");
+                if($update_third_img->execute())
+                {
+                    echo "<script>alert('Product Updated Successfully!');</script>";
+                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                }
+            }
+            if(isset($_POST['update_fourth_image']))
+            {
+                $pro_img4 = $_FILES['sample_img4']['name'];
+                $pro_img4_tmp = $_FILES['sample_img4']['tmp_name'];
+
+                move_uploaded_file($pro_img4_tmp,"../uploads/products/$pro_img4");
+
+                $update_fourth_img = $con->prepare("UPDATE product_tbl SET 
+                pro_img4 = '$pro_img4'
+                WHERE
+                pro_id = '$pro_id'");
+                if($update_fourth_img->execute())
+                {
+                    echo "<script>alert('Product Updated Successfully!');</script>";
+                    echo "<script>window.open('sales_inventory.php','_self');</script>";
                 }
             }
         }
