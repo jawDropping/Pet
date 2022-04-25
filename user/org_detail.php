@@ -36,7 +36,7 @@
          background: #fff;
         }
         .images{
-            width: 100%;
+            width: 80vw;
             height: 100vh;
            
         }
@@ -55,30 +55,52 @@
         .fsTxt{
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             margin-bottom: 20px;
+            line-height: 1.5;
         }
         .btnDon{
             padding: 10px;
             background: #ffb830;
             text-decoration: none;
-            margin-top: 30px;
+            
             color: white;
             border-radius: 5px;
+            text-align: center;
+        }
+        .mainInfos{
+            display: flex;
+            border-radius: 8px;
+            width: 80%;
+            
+            margin-left: 10%;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         }
         .infoss{
             display: grid;
-            grid-template-columns: 12% 50%;
+            grid-template-columns: 20% 50%;
             row-gap: 5px;
+            width:80%;
+            padding: 20px;
+           
+        }
+        .donsite{
+         height: 300px;
+        }
+        .rightInfo{
+            width: 30%;
+          
+         
         }
         .lebels{
             padding: 10px;
             text-align: right;
-            color: white;
+            color: #777;
             font-size: 14px;
-            background: #0080fe;;
+           
             border-radius: 3px;
         }
         .dates{
             padding: 10px;
+           
         }
     </style>
 </html>
