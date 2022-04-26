@@ -977,11 +977,7 @@
 
     function showledger()
     {
-        echo
-        "<form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
-           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
-           <button id = 'search_btn' name = 'search'>Search</button><br>
-        </form>";
+       
 
         include("inc/db.php");
         $show_ledger = $con->prepare("SELECT * FROM ledger_tbl");
@@ -991,16 +987,15 @@
         while($row = $show_ledger->fetch()):
           
             echo
-            "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data'>
-            <tr>
-                <td>".$row['transaction_number']."</td>
-                <td>".$row['org_name']."</td>
-                <td>".$row['last_name'].", ".$row['first_name']."</td>
-                <td>".$row['contact_number']."</td>
-                <td>".$row['date_confirmed']."</td>
-            </tr>
-            <button name = 'sort_asc'>Sort Asc by Org</button>
-            <button name = 'sort_desc'>Desc Asc by Org</button>
+            "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
+            
+                <p>".$row['transaction_number']."</p>
+                <p>".$row['full_name']."</p>
+                <p>".$row['org_name']."</p>
+                <p>".$row['contact_number']."</p>
+                <p>".$row['date_confirmed']."</p>
+       
+           
         </form>";
         endwhile;
     }
@@ -1023,8 +1018,8 @@
                     echo 
                     "<tr>
                         <td>".$row['transaction_number']."</td>
+                        <td>".$row['full_name']."</td>
                         <td>".$row['org_name']."</td>
-                        <td>".$row['last_name'].", ".$row['first_name']."</td>
                         <td>".$row['contact_number']."</td>
                         <td>".$row['date_confirmed']."</td>
                     </tr>";

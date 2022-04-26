@@ -47,29 +47,38 @@
         </div>
 </div>
 <div id="bodyright">
+
+<p class = 'hed'>Donation Records</p>
 <div class="ledger">
     <div class="body">
-        <p>Donation Records</p>
-       <table>
-        <tr>
-           <th>Transaction Number</th>
+        
+       <div>
+       <form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
+           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
+           <button id = 'search_btn' name = 'search'>Search</button><br>
+        </form>
+        <form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
+        <button name = 'sort_asc'>Sort Asc by Org</button>
+            <button name = 'sort_desc'>Desc Asc by Org</button>
+        </form>
+        <div class = 'gridnasad'>
+           <p>Transaction Number</p>
 
-            <th>Full Name</th>
+            <p>Full Name</p>
 
-            <th>Selected Organization</th>
+            <p>Selected Organization</p>
 
-            <th>Contact Number</th>
+            <p>Contact Number</p>
 
-            <th>Contact Number</th>
-
-            <th>Date Confirmed</th>
-        </tr>
+            <p>Date Confirmed</p>
+            <div></div>
+        </div>
         <tr>
             <?php
                 echo showledger();
             ?>
         </tr>
-       </table>
+       </div>
     </div>
 
 </div>
@@ -91,10 +100,11 @@
     .body{
         margin-top: 7vh;
         margin-left: 2vw;
-        background: #ddd;
-        height: 90%;
+        background: #fff;
         width: 95%;
         border-radius: 5px;
+        padding: 10px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
     p{
         padding: 10px;
@@ -102,7 +112,22 @@
     .selection {
   background: #28287774;
 }
-    
+.hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
+    .gridnasad{
+        display: grid;
+        grid-template-columns:  20% 20% 20% 20% 20%;
+        border-bottom: 1px solid #aaa;
+    }
+    #forming{
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20% 20%;
+        font-size: 14px;
+        margin-top: 20px;
+    }
 </style>
 
 
