@@ -862,37 +862,51 @@
             else
             {
                 while($row = $search->fetch()):
-                    $service_id = $row['service_id'];
-                    $user_id = $row['user_id'];
-                    $coupon_code = $row['coupon_code'];
-                    $transaction_code = $row['transaction_code'];
-                    $date_confirmed = $row['date_confirmed'];
-                    $amount = $row['amount'];
-    
-                    $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
-                    $view_service->setFetchMode(PDO:: FETCH_ASSOC);
-                    $view_service->execute();
-    
-                    $row_service = $view_service->fetch();
-                    $service_name = $row_service['services_name'];
-    
-    
-                    $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                    $pet_center_id = $row['pet_center_id'];
+                    $current_user = $_SESSION['pet_center_name'];
+
+                    $view_user = $con->query("SELECT * FROM pet_center_tbl");
                     $view_user->setFetchMode(PDO:: FETCH_ASSOC);
                     $view_user->execute();
-    
+                    
                     $row_user = $view_user->fetch();
-                    $user_username = $row_user['user_username'];
-    
-                    echo
-                    "<tr>
-                        <td>".$service_name."</td>
-                        <td>".$user_username."</td>
-                        <td>".$coupon_code."</td>
-                        <td>".$transaction_code."</td>
-                        <td>".$date_confirmed."</td>
-                        <td>".$amount."</td>
-                    </tr>";
+                    $pet_center_name = $row_user['pet_center_name'];
+                    
+                    if($current_user == $pet_center_name)
+                    {
+                        $service_id = $row['service_id'];
+                        $user_id = $row['user_id'];
+                        $coupon_code = $row['coupon_code'];
+                        $transaction_code = $row['transaction_code'];
+                        $date_confirmed = $row['date_confirmed'];
+                        $amount = $row['amount'];
+        
+                        $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                        $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+                        $view_service->execute();
+        
+                        $row_service = $view_service->fetch();
+                        $service_name = $row_service['services_name'];
+        
+        
+                        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                        $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+                        $view_user->execute();
+        
+                        $row_user = $view_user->fetch();
+                        $user_username = $row_user['user_username'];
+        
+                        echo
+                        "<tr>
+                            <td>".$service_name."</td>
+                            <td>".$user_username."</td>
+                            <td>".$coupon_code."</td>
+                            <td>".$transaction_code."</td>
+                            <td>".$date_confirmed."</td>
+                            <td>".$amount."</td>
+                        </tr>";
+                    }
+                    
                 endwhile;
             }
         }
