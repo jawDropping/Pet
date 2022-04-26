@@ -1,10 +1,13 @@
 <div id = "navbar">
     <ul>
-        <li>
-            <a href = 'addService.php'>Add Service</a>
+    <li>
+            <a id = 'choice' href = 'addService.php'>My services</a>
         </li>
         <li>
-            <a href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
+            <a id = 'choice' href = 'addService.php'>Add Service</a>
+        </li>
+        <li>
+            <a id = 'choice' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
         </li>
     </ul>
 </div>

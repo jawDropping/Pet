@@ -10,9 +10,7 @@
    
    
     <div id = "search">
-        <form method = "get" action = "search.php" enctype="multipart/form-data">
-            <input type="text" name = 'user_query' placeholder = "Search services here..">
-            <button id = "search_btn" name = "search"><img src = "../uploads/search.svg" class = "searchIcon"></button>
+       
             <div id = 'link'>
 
             <?php
@@ -51,7 +49,6 @@
                 }   
                 ?>
             </div>
-        </form>
     </div><!-- <End of Search> -->
 
     

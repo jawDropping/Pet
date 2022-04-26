@@ -99,7 +99,7 @@
     }
     .body{
         margin-top: 7vh;
-        margin-left: 2vw;
+        margin-left: 20px;
         background: #fff;
         width: 95%;
         border-radius: 5px;
