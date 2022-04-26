@@ -47,14 +47,14 @@
                 </div>
                 <div id="bodyright">
                 <div class = "scroll">
-    <h3>View All Orders</h3>
+    <h3>View All Products</h3>
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
     
             <th>PRODUCT NAME </th>
 
-            <th>PRODUCT QUANTITY</th>
+            <th>PRODUCT PRICE</th>
      
             <th>SAMPLE IMAGE #1</th>
 
@@ -64,7 +64,7 @@
            
             <th>SAMPLE IMAGE #4</th>
 
-            <th>PRODUCT PRICE</th>
+            <th>PRODUCT QUANTITY</th>
 
             <th>Action</th>
         </tr>
