@@ -14,9 +14,6 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
-            // echo "<div id='bodyleft'><ul>";
-            //     search(); echo"</ul>
-            //       </div>";
             echo
             "<div id='bodyleft'>
                 <table>
