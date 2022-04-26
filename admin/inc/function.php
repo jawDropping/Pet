@@ -64,19 +64,28 @@
                 $admin_name = $_POST['admin_name'];
                 $admin_password =  $_POST['admin_password'];
                 $admin_email = $_POST['admin_email'];
-            
-                $update_user = $con->prepare("UPDATE admintbl 
-                SET 
-                    admin_name='$admin_name',
-                    admin_password = '$admin_password',
-                    admin_email = '$admin_email'
-                WHERE 
-                    id = '$id'");
-    
-                if($update_user->execute())
+
+                if(strlen($admin_password) >= 9 &&
+                preg_match('/[A-Z]/', $admin_password) > 0 &&
+                preg_match('/[a-z]/', $admin_password) > 0)
                 {
-                    echo "<script>alert('Your Information Successfully Updated!');</script>";
-                    echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."', '_self');</script>";
+                    echo "Password must at least 8 characters in length with at least 1 special character, 1 number!";
+                }
+                else
+                {
+                    $update_user = $con->prepare("UPDATE admintbl 
+                    SET 
+                        admin_name='$admin_name',
+                        admin_password = '$admin_password',
+                        admin_email = '$admin_email'
+                    WHERE 
+                        id = '$id'");
+        
+                    if($update_user->execute())
+                    {
+                        echo "<script>alert('Your Information Successfully Updated!');</script>";
+                        echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."', '_self');</script>";
+                    }
                 }
             }
         }

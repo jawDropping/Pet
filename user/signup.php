@@ -316,62 +316,76 @@ include("inc/db.php");
             $barangay = $_POST['barangays'];
             $user_address = $_POST['user_address'];
 
-            $view_emails = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
-            $view_emails->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_emails->execute();
+            $view_email = $con->prepare("SELECT COUNT(*) AS all_emails FROM users_table WHERE user_email = '$user_email'");
+            $view_email->setFetchMode(PDO::FETCH_ASSOC);
+            $view_email->execute();
 
-            $row = $view_emails->rowCount();
-            if($row>0)
+            $row = $view_email->fetch();
+
+            $view_name = $con->prepare("SELECT COUNT(*) AS all_usernames FROM users_table WHERE user_username = '$user_username'");
+            $view_name->setFetchMode(PDO::FETCH_ASSOC);
+            $view_name->execute();
+
+            $row2 = $view_name->fetch();
+
+            if($row['all_emails']>0)
             {
-               echo "Email already existed!";
+                echo "Email Exists";
+            }
+            elseif($row2['all_usernames']>0)
+            {
+                echo "Name Exists";
+            }
+            elseif(!is_numeric($user_contactnumber))
+            {
+                echo "Only Digits Allowed!";
+            }
+            elseif(strlen($user_contactnumber)>=12)
+            {
+                echo "Number must at least 11 digits!";
+            }
+            elseif(strlen($user_password) >= 9 &&
+            preg_match('/[A-Z]/', $user_password) > 0 &&
+            preg_match('/[a-z]/', $user_password) > 0)
+            {
+                echo "Password must at least 8 characters in length!";
             }
             else
             {
-                if(strlen($user_password) >= 8 &&
-                preg_match('/[A-Z]/', $user_password) > 0 &&
-                preg_match('/[a-z]/', $user_password) > 0)
+                $add_user = $con->prepare("INSERT INTO users_table(
+                    user_username,
+                    user_email,
+                    user_contactnumber,
+                    user_password,
+                    municipality,
+                    barangay,
+                    user_address,
+                    user_profilephoto
+                ) 
+                VALUES (
+                    '$user_username',
+                    '$user_email',
+                    '$user_contactnumber',
+                    '$user_password',
+                    '$municipality',
+                    '$barangay',
+                    '$user_address',
+                    'userIcon.svg'
+                )");
+    
+                if($add_user->execute())
                 {
-                    $add_user = $con->prepare("INSERT INTO users_table(
-                        user_username,
-                        user_email,
-                        user_contactnumber,
-                        user_password,
-                        municipality,
-                        barangay,
-                        user_address,
-                        user_profilephoto
-                    ) 
-                    VALUES (
-                        '$user_username',
-                        '$user_email',
-                        '$user_contactnumber',
-                        '$user_password',
-                        '$municipality',
-                        '$barangay',
-                        '$user_address',
-                        'userIcon.svg'
-                    )");
-        
-                    if($add_user->execute())
-                    {
-                        echo "<script>alert('Registration Successfull!');</script>"; 
-                        echo "<script>
-                        if ( window.history.replaceState ) {
-                           window.history.replaceState( null, null, window.location.href );
-                       }            
-                        </script>";
-                    }
-                    else
-                    {
-                        echo "<script>alert('Registration Unsuccessfull!');</script>";
-                    }
+                    echo "<script>alert('Registration Successfull!');</script>"; 
+                    echo "<script>
+                    if ( window.history.replaceState ) {
+                       window.history.replaceState( null, null, window.location.href );
+                   }            
+                    </script>";
                 }
                 else
                 {
-                    echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
+                    echo "<script>alert('Registration Unsuccessfull!');</script>";
                 }
             }
         }
 ?>
-
-    
