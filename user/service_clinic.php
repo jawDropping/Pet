@@ -24,7 +24,7 @@
             <a class = 'servDiv' href = "service_other.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/otherService.png" alt="">others</a>
         </div>
               <ul>
-                   <?php viewall_services(); ?>
+                   <?php vet_clinics(); ?>
                    </ul>
           </div>
             <?php
