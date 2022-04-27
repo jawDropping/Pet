@@ -47,9 +47,10 @@
         </div>
 </div>
 <div id="bodyright">
-
-                <div class = 'addProduct'>
-        <h3>Add Products</h3>
+<p class = 'hed'>Add Products</p>
+    <div class="body">
+    <div class = 'addProduct'>
+        
         <form method = 'POST' enctype = 'multipart/form-data'>
             <div class='formleft'>
     
@@ -57,60 +58,66 @@
             <div class='formright'>
     
             </div>
-            <table>
-                <tr>
-                    <td>Enter Product Name: </td>
-                    <td><input type='text' name = 'pro_name' required/></td>
-                </tr>
-                <tr>
-                    <td>Select Category Name: </td>
-                    <td>
-                        <select name = 'cat_name'>";
-             
-                                echo viewall_cat(); 
-                            
-                       echo" </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Other Category: </td>
-                    <td><input type='text' name = 'pro_brand' placeholder = 'Other category you prefer..'/></td>
+            <div class = 'mainIntus'>
+                <div class = 'inputHolder'>
+                    <p id = 'lebelss'>Enter Product Name: </p>
+                    <input class = 'intus' type='text' name = 'pro_name' required/>
+                </div>
+                <div class = 'inputHolder'>
+                    <p id = 'lebelss'>Select Category Name: </p>
                     
-                </tr>
-                <tr>
-                    <td>Enter Product Brand: </td>
-                    <td><input type='text' name = 'pro_brand' required /></td>
-                </tr>
-                <tr>
-                    <td>Select 1st Product Image: </td>
-                    <td><input type='file' name = 'pro_img' required/></td>
-                </tr>
-                <tr>
-                    <td>Select 2nd Product Image: </td>
-                    <td><input type='file' name = 'pro_img2' required/></td>
-                </tr>
-                <tr>
-                    <td>Select 3rd Product Image: </td>
-                    <td><input type='file' name = 'pro_img3' required/></td>
-                </tr>
-                <tr>
-                    <td>Select 4th Product Image: </td>
-                    <td><input type='file' name = 'pro_img4' required/></td>
-                </tr>
-                <tr>
-                    <td>Enter Price: </td>
-                    <td><input type= 'text' name = 'pro_price' required/></td>
-                </tr>
-                <tr>
-                    <td>Enter Quantity: </td>
-                    <td><input type='text' name = 'pro_quantity' required/></td>
-                </tr>
-                <tr>
-                    <td>Enter KeyWord: </td>
-                    <td><input type= 'text' name = 'pro_keyword' required/></td>
-                </tr>
-            </table>
-            <button name = 'add_prod'>Add Product</button>
+                        <select  class = 'intus' name = 'cat_name'>
+             
+                              <?php  echo viewall_cat(); ?>
+                            
+                      </select>
+                    
+                </div>
+               
+                <div class = 'inputHolder'>
+                    <p  id = 'lebelss'>Enter Product Brand: </p>
+                    <input class = 'intus' type='text' name = 'pro_brand' required />
+                </div>
+                <div class = 'inputHolder'>
+                <div class="drop-zone">
+                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                    <input type="file" name = 'pro_img' class="drop-zone__input">
+                    </div>
+                </div>
+                <div class = 'inputHolder'>
+                <div class="drop-zone">
+                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                    <input type="file" name = 'pro_img2' class="drop-zone__input">
+                    </div>
+                </div>
+                    
+   
+
+                <div class = 'inputHolder'>
+                <div class="drop-zone">
+                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                    <input type="file" name = 'pro_img3' class="drop-zone__input">
+                    </div>
+                </div>
+                
+                <div class = 'inputHolder'>
+                    <p  id = 'lebelss'>Enter Price: </p>
+                    <input class = 'intus'  type= 'text' name = 'pro_price' required/>
+                </div>
+                <div class = 'inputHolder'>
+                    <p  id = 'lebelss'>Enter Quantity: </p>
+                    <input class = 'intus'  type='text' name = 'pro_quantity' required/></td>
+                </div>
+                <div class = 'inputHolder'>
+                    <p  id = 'lebelss'>Enter KeyWord: </p>
+                    <input class = 'intus' type= 'text' name = 'pro_keyword' required/></td>
+                </div>
+                <div></div><div></div>
+               
+         
+                
+            </div>
+            <button class= 'add' name = 'add_prod'>Add Product</button>
         </form>
         </div>
                 </div>
@@ -120,16 +127,129 @@
                 include ("inc/footer.php"); 
             
         ?>
+    </div>
+               
     </body>
     <style>
     .addProduct {
-      margin-top: 7vh;
+
       width: 100%;
       }
       .selection {
   background: #28287774;
 }
-  
+.mainIntus{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    row-gap: 10px;
+    margin: 2vh 0vh 5vh 0vh;
+}
+.body{
+        margin-top: 7vh;
+        background: #fff;
+       
+        width: 95%;
+        border-radius: 5px;
+        padding: 10px;
+        margin-left: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+    }
+    .add{
+        height: 52px;
+        width: 90%;
+        margin-left: 5%;
+        padding: 5px;
+        border: none;
+        outline: none;
+        color: white;
+        background: #28287774;
+        border-radius: 5px;
+    }
+    .add:hover{
+        background: #5a5bf3;
+    }
+    .hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        padding: 10px;
+    }
+    
+    .inputHolder{
+        width: 90%;
+        margin-left: 5%;
+        padding: 5px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+    #lebelss{
+        font-size: 12px;
+        color: #888;
+    }
+    .intus{
+        height: 42px;
+        width: 90%;
+        border: none;
+        outline: none;
+        padding: 5px;
+
+    }
+
+
+
+
+    .drop-zone {
+            width: 80%;;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  color: #777;
+  border: 2px dashed #009578;
+  border-radius: 10px;
+  margin-left: 5%;
+            margin-bottom: 10px;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+
+
 </style>
     
 
@@ -141,6 +261,82 @@
         var date = today.getFullYear()+'-'+month[(today.getMonth())]+'-'+today.getDate();
         var date2 = month[(today.getMonth())]+' '+today.getDate()+' '+today.getFullYear();
         document.getElementById("currentDate").innerHTML = date2;
+
+
+
+
+
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  const dropZoneElement = inputElement.closest(".drop-zone");
+
+  dropZoneElement.addEventListener("click", (e) => {
+    inputElement.click();
+  });
+
+  inputElement.addEventListener("change", (e) => {
+    if (inputElement.files.length) {
+      updateThumbnail(dropZoneElement, inputElement.files[0]);
+    }
+  });
+
+  dropZoneElement.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
+
+  ["dragleave", "dragend"].forEach((type) => {
+    dropZoneElement.addEventListener(type, (e) => {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    if (e.dataTransfer.files.length) {
+      inputElement.files = e.dataTransfer.files;
+      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+    }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
+});
+
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
+function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  }
+
+  // First time - there is no thumbnail element, so lets create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
     </script>
 </html>
 

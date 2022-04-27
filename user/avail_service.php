@@ -1,15 +1,31 @@
-<?php
-    session_start();
-    include("inc/db.php");
+<html>
+    <head>
+    <title>Pet Society</title>
+        <link rel = "stylesheet" href="css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
+    </head>
+    <body>
+    <?php 
+
+            include ("inc/header.php"); 
+            include ("inc/navbar.php"); 
+        ?>
+        <div class="mainDiv">
+        <?php
+        
+    
 
     if(!isset($_SESSION['user_username']))
     {
-        echo "<script>window.open('login.php', '_self');</script>";
+        header("Location: login.php");
     }
     else
     {
         if(isset($_GET['avail_service']))
         {
+            include("inc/db.php");
             $service_id = $_GET['avail_service'];
             $query = $con->prepare("SELECT * FROM services WHERE service_id = '".$service_id."'");
             $query->setFetchMode(PDO:: FETCH_ASSOC);
@@ -323,3 +339,14 @@
         return $randomString;
     }
 ?>
+        </div>
+   
+    </body>
+    <style>
+           .mainDiv{
+        width: 90%;
+        margin-left: 5%;
+    }
+    </style>
+</html>
+

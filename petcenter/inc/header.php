@@ -6,14 +6,13 @@
 <div id = "header">
     <div id = "logo">
         <a href = "index.php"><img src = "../uploads/logo2.png" class="logo"/></a>
+        <p>Dashboard</p>
     </div><!-- <End of Logo> -->
    
    
-    <div id = "search">
-        <form method = "get" action = "search.php" enctype="multipart/form-data">
-            <input type="text" name = 'user_query' placeholder = "Search services here..">
-            <button id = "search_btn" name = "search"><img src = "../uploads/search.svg" class = "searchIcon"></button>
-            <div id = 'link'>
+   
+       
+            <div class = 'leftHead'>
 
             <?php
                 if(isset($_SESSION['pet_center_name']))
@@ -51,8 +50,7 @@
                 }   
                 ?>
             </div>
-        </form>
-    </div><!-- <End of Search> -->
+    
 
     
 
