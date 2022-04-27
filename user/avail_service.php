@@ -19,15 +19,6 @@
 
             
         ?>
-        <div class="mainDiv">
-        <!-- <?php
-        
-        include ("inc/function.php");
-        avail_service();
-
-    
-?>
-        </div> -->
    
     </body>
     <style>
