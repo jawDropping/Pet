@@ -16,7 +16,7 @@
         <?php
         
     
-
+session_start();
     if(!isset($_SESSION['user_username']))
     {
         header("Location: login.php");
@@ -25,6 +25,7 @@
     {
         if(isset($_GET['avail_service']))
         {
+            
             include("inc/db.php");
             $service_id = $_GET['avail_service'];
             $query = $con->prepare("SELECT * FROM services WHERE service_id = '".$service_id."'");

@@ -46,8 +46,9 @@
         </div>
                 </div>
                 <div id="bodyright">
+                <p class = 'hed'>View All Products</p>
                 <div class = "scroll">
-    <h3>View All Products</h3>
+    
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
@@ -84,8 +85,14 @@
         margin-top: 7vh;
     }
     .selection {
-  background: #28287774;
-}
+        background: #28287774;
+    }
+    .hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        padding: 10px;
+    }
 </style>
 <script>
         var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
