@@ -92,7 +92,7 @@
     .body{
         margin-top: 7vh;
         background: #fff;
-        height: 90%;
+
         width: 95%;
         border-radius: 5px;
         padding: 10px;
