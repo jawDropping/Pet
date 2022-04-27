@@ -6,12 +6,13 @@
 <div id = "header">
     <div id = "logo">
         <a href = "index.php"><img src = "../uploads/logo2.png" class="logo"/></a>
+        <p>Dashboard</p>
     </div><!-- <End of Logo> -->
    
    
-    <div id = "search">
+   
        
-            <div id = 'link'>
+            <div class = 'leftHead'>
 
             <?php
                 if(isset($_SESSION['pet_center_name']))
@@ -49,7 +50,7 @@
                 }   
                 ?>
             </div>
-    </div><!-- <End of Search> -->
+    
 
     
 

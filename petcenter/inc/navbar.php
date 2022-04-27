@@ -1,7 +1,7 @@
 <div id = "navbar">
     <ul>
     <li>
-            <a id = 'choice' href = 'addService.php'>My services</a>
+            <a id = 'choice' href = 'index.php'>My services</a>
         </li>
         <li>
             <a id = 'choice' href = 'addService.php'>Add Service</a>
