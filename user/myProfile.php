@@ -89,7 +89,7 @@
                 </div>
                 <div class = 'bottomBtn'>
                 <div class = 'btn'>
-                    <button id = 'regs2'><a id = 'bckHm' href = 'index.php'>Back to Home</a></button>
+                    <button id = 'regs2'><a id = 'bckHm' href = 'Pet/index.php'>Back to Home</a></button>
                 </div>
                 <div class = 'btn'>
                     <button name = 'update_user' id = 'regs'>Update Profile</button>
@@ -115,25 +115,47 @@
             $barangay = $_POST['barangay'];
             $municipality = $_POST['municipality'];
 
-    
-
-            $update_user = $con->prepare("UPDATE users_table 
-            SET 
-                user_username='$user_username',
-                user_password = '$user_password',
-                user_contactnumber = '$user_contactnumber',
-                user_email = '$user_email',
-                user_address = '$user_address',
-                barangay = '$barangay',
-                municipality = '$municipality'
-            WHERE 
-                user_id = '$id'");
-
-            if($update_user->execute())
+            if(is_numeric($user_contactnumber))
             {
-                echo "<script>alert('Your Information Successfully Updated!');</script>";
-                echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+                if(strlen($user_contactnumber) <= 11)
+                {
+                    if(strlen($pet_center_password) >= 9 &&
+                    preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+                    preg_match('/[a-z]/', $pet_center_password) > 0)
+                    {
+                        echo "Password must at least 8 characters in length with at least 1 special character, 1 number!";
+                    }
+                    else
+                    {
+                        $update_user = $con->prepare("UPDATE users_table 
+                        SET 
+                            user_username='$user_username',
+                            user_password = '$user_password',
+                            user_contactnumber = '$user_contactnumber',
+                            user_email = '$user_email',
+                            user_address = '$user_address',
+                            barangay = '$barangay',
+                            municipality = '$municipality'
+                        WHERE 
+                            user_id = '$id'");
+
+                        if($update_user->execute())
+                        {
+                            echo "<script>alert('Your Information Successfully Updated!');</script>";
+                            echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+                        }
+                    }
+                }
+                else
+                {
+                    echo "Contact Number must at least 11 digits only!";
+                }
             }
+            else
+            {
+                echo "Only digits allowed!";
+            }
+
         }
         if(isset($_POST['update_profile']))
         {

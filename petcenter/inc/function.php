@@ -31,35 +31,42 @@
     {
         include("inc/db.php");
         
-        $user = $_SESSION['pet_center_name'];
-        $view_user = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user'");
-        $view_user->setFetchMode(PDO:: FETCH_ASSOC);
-        $view_user->execute();
-
-        $row_user = $view_user->fetch();
-        $pet_center_id = $row_user['pet_center_id'];
-
-        $view_user_service = $con->prepare("SELECT * FROM services WHERE pet_center_id = '$pet_center_id'");
-        $view_user_service->setFetchMode(PDO:: FETCH_ASSOC);
-        $view_user_service->execute();
-
-        while($row = $view_user_service->fetch()): 
-            echo
-            "<li>
-                <form method = 'post' enctype='multipart/form-data'>
-                <a href='show_service_info.php?id=".$row['id']."'>
-                    <h4>".$row['services_name']."</h4>
-                    <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                    <center>
-                        <button id = 'pro_btnView'>
-                            <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                        </button>
-                        <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                    </center>
-                </a>
-                </form>
-            </li>";
-        endwhile;
+        if(!isset($_SESSION['pet_center_name']))
+        {
+            header('Location: login.php');
+        }
+        else
+        {
+            $user = $_SESSION['pet_center_name'];
+            $view_user = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user'");
+            $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_user->execute();
+    
+            $row_user = $view_user->fetch();
+            $pet_center_id = $row_user['pet_center_id'];
+    
+            $view_user_service = $con->prepare("SELECT * FROM services WHERE pet_center_id = '$pet_center_id'");
+            $view_user_service->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_user_service->execute();
+    
+            while($row = $view_user_service->fetch()): 
+                echo
+                "<li>
+                    <form method = 'post' enctype='multipart/form-data'>
+                    <a href='show_service_info.php?id=".$row['id']."'>
+                        <h4>".$row['services_name']."</h4>
+                        <img src ='../uploads/user_profile/".$row['service_photo']."' />
+                        <center>
+                            <button id = 'pro_btnView'>
+                                <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
+                            </button>
+                            <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+                        </center>
+                    </a>
+                    </form>
+                </li>";
+            endwhile;
+        }
        
     }
 
@@ -100,6 +107,7 @@
     function add_pet_center_user()
     {
         include("inc/db.php");
+
         if(isset($_POST['add_user']))
         {
             $pet_center_name = $_POST['pet_center_name'];
@@ -108,60 +116,74 @@
             $contact_number = $_POST['contact_number'];
             $accept_coupons = $_POST['accept_coupons'];
 
-            $view_emails = $con->prepare("SELECT * FROM pet_center_tbl");
-            $view_emails->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_emails->execute();
+            $view_email = $con->prepare("SELECT COUNT(*) AS pet_center_email FROM pet_center_tbl WHERE email = '$email'");
+            $view_email->setFetchMode(PDO::FETCH_ASSOC);
+            $view_email->execute();
 
-            $row = $view_emails->fetch();
-            $pet_center_email = $row['email'];
-            if($pet_center_email == $email)
+            $row = $view_email->fetch();
+
+            $view_name = $con->prepare("SELECT COUNT(*) AS pet_cent_name FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name'");
+            $view_name->setFetchMode(PDO::FETCH_ASSOC);
+            $view_name->execute();
+
+            $row2 = $view_name->fetch();
+
+            if($row['pet_center_email']>0)
             {
-                echo "Email already existed!";
+                echo "Email Exists";
+            }
+            elseif($row2['pet_cent_name']>0)
+            {
+                echo "Name Exists";
+            }
+            elseif(!is_numeric($contact_number))
+            {
+                echo "Only Digits Allowed!";
+            }
+            elseif(strlen($contact_number)>=12)
+            {
+                echo "Number must at least 11 digits!";
+            }
+            elseif(strlen($pet_center_password) >= 9 &&
+            preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+            preg_match('/[a-z]/', $pet_center_password) > 0)
+            {
+                echo "Password must at least 8 characters in length!";
             }
             else
             {
-                if(strlen($pet_center_password) >= 8 &&
-                preg_match('/[A-Z]/', $pet_center_password) > 0 &&
-                preg_match('/[a-z]/', $pet_center_password) > 0)
+                $add_service = $con->prepare("INSERT INTO pet_center_tbl (
+                    pet_center_name,
+                    pet_center_password,
+                    email,
+                    contact_number,
+                    pet_center_photo,
+                    active_coupon
+                ) 
+                VALUES (
+                    '$pet_center_name',
+                    '$pet_center_password',
+                    '$email',
+                    '$contact_number',
+                    'userIcon.svg',
+                    '$accept_coupons'
+                )");
+    
+                if($add_service->execute())
                 {
-                    $add_service = $con->prepare("INSERT INTO pet_center_tbl (
-                        pet_center_name,
-                        pet_center_password,
-                        email,
-                        contact_number,
-                        pet_center_photo,
-                        active_coupon
-                    ) 
-                    VALUES (
-                        '$pet_center_name',
-                        '$pet_center_password',
-                        '$email',
-                        '$contact_number',
-                        'userIcon.svg',
-                        '$accept_coupons'
-                    )");
-        
-                    if($add_service->execute())
-                    {
-                        echo "
-                        <script>
-                        alert('Registered Successful!');
-                        if ( window.history.replaceState ) {
-                           window.history.replaceState( null, null, window.location.href );
-                       }            
-                        </script>"; 
-                    }
-                    else
-                    {
-                        echo "<script>alert('Registered Unsuccessful!');</script>";
-                    }
+                    echo "
+                    <script>
+                    alert('Registered Successful!');
+                    if ( window.history.replaceState ) {
+                       window.history.replaceState( null, null, window.location.href );
+                   }            
+                    </script>"; 
                 }
                 else
                 {
-                    echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
+                    echo "<script>alert('Registered Unsuccessful!');</script>";
                 }
             }
-            
         }
     }
     function add_service()
@@ -372,11 +394,20 @@
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
+        
+            
+        $datenow = getdate();
+
+        $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
         while($row2 = $sql2->fetch()):
+            $reserve_id = $row2['reserve_id'];
             $user_id = $row2['user_id'];
             $date = $row2['reserve_date'];
             $transaction_code = $row2['transaction_code'];
             $service_id = $row2['service_id'];
+            $service_cost = $row2['service_cost'];
+            $coupon_code = $row2['coupon_code'];
 
             $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
             $view_service->setFetchMode(PDO:: FETCH_ASSOC);
@@ -384,6 +415,7 @@
 
             $row_service = $view_service->fetch();
             $service_name = $row_service['services_name'];
+
 
             $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
             $view_user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -395,6 +427,13 @@
             echo
             "<form method = 'POST'>
                 <tr>
+                    <td><input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' /></td>
+                    <td><input type = 'hidden' name = 'service_id' value = '".$service_id."' /></td>
+                    <td><input type = 'hidden' name = 'user_id' value = '".$user_id."' /></td>
+                    <td><input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' /></td>
+                    <td><input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' /></td>
+                    <td><input type = 'hidden' name = 'date_confirmed' value = '".$today."' /></td>
+                    <td><input type = 'hidden' name = 'service_cost' value = '".$service_cost."' /></td>
                     <td>".$user_username."</td>
                     <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>";
                     if($row2['coupon_code'] == '')
@@ -403,10 +442,10 @@
                     }
                     else
                     {
-                        echo "<td>".$row2['coupon_code']."</td>";
+                        echo "<td>".$coupon_code."</td>";
                     }
-                    echo "<td>".$row2['transaction_code']."</td> 
-                    <td><button name = 'confirm_request' value = ".$row2['reserve_id'].">Confirm</button></td>
+                    echo "<td>".$transaction_code."</td> 
+                    <td><button name = 'confirm_request' value = ".$reserve_id.">Confirm</button></td>
                 </tr>
             </form>";
         endwhile;
@@ -418,28 +457,126 @@
         Greetings! 
 
         This is from $service_name we are hoping for your best experience for the service we provide. 
-        Please come with the respective date $date, with the $transaction_code
+        Please come with the respective date $date, with the Transacton Code: $transaction_code
         
         Respecfully yours,
         $service_name";
         $sender = "ianjohn0101@gmail.com";
 
+
         if(mail($receiver, $subject, $body, $sender))
         {
+            // var_dump($pet_center_id);
+            // var_dump($service_id);
+            // var_dump($user_id);
+            // var_dump($coupon_code);
+            // var_dump($transaction_code);
+            // var_dump($today);
+            // var_dump($service_cost);
             if(isset($_POST['confirm_request']))
             {
                 $reserve_id = $_POST['confirm_request'];
-                $confirm = $con->prepare("UPDATE reserve_services SET service_status = 'CONFIRMED' WHERE reserve_id = '$reserve_id'");
-                $confirm->setFetchMode(PDO:: FETCH_ASSOC);
-                $confirm->execute();
-    
+                $pet_center_id = $_POST['pet_center_id'];
+                $service_id = $_POST['service_id'];
+                $user_id = $_POST['user_id'];
+                $coupon_code = $_POST['coupon_code'];
+                $transaction_code = $_POST['transaction_code'];
+                $date_confirmed = $_POST['date_confirmed'];
+                $amount = $_POST['service_cost'];
+                $confirm = $con->prepare("INSERT INTO confirmed_services
+                (
+                    pet_center_id,
+                    service_id,
+                    user_id,
+                    coupon_code,
+                    transaction_code,
+                    date_confirmed,
+                    amount
+                ) 
+                VALUES
+                (
+                    '$pet_center_id',
+                    '$service_id',
+                    '$user_id',
+                    '$coupon_code',
+                    '$transaction_code',
+                    '$today',
+                    '$service_cost'
+                )");
                 if($confirm->execute())
                 {
-                    echo "<script>alert('Services Successfully Updated!');</script>";
-                    echo "<script>window.open('confirmRequests.php', '_self');</script>";
+                    $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
+                    if($delete_reservation->execute())
+                    {
+                        echo "<script>alert('Services Successfully Confirmed!');</script>";
+                        echo "<script>window.open('confirmRequests.php', '_self');</script>";
+                    }
                 }
             }
         }
+    }
+
+    function viewHistory()
+    {
+        include("inc/db.php");
+        $user_name = $_SESSION['pet_center_name'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        $row = $sql->fetch();
+        $pet_center_id = $row['pet_center_id'];
+
+        $sql2 = $con->prepare("SELECT * FROM confirmed_services");
+        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql2->execute();
+
+        $sql3 = $con->prepare("SELECT SUM(amount) FROM confirmed_services");
+        $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql3->execute();
+
+        $row2 = $sql3->fetch();
+
+        // <th>User Name</th>
+        //     <th>Coupon Code</th>
+        //     <th>Transaction Code</th>
+        //     <th>Date Confirmed</th>
+        //     <th>Amount</th>
+        $total_amount = 0;
+        while($row = $sql2->fetch()):
+            $user_id = $row['user_id'];
+
+            $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+            $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_username->execute();
+
+            $row_username = $fetch_username->fetch();
+            $empty = "N/A";
+            echo
+            "<tr>
+                <td>".$row_username['user_username']."</td>";
+                if($row['coupon_code'] == '')
+                {
+                    echo "<td>".$empty."</td>";
+                }
+                else
+                {
+                    echo "<td>".$row['coupon_code']."</td>";
+                }
+                echo 
+                "<td>".$row['transaction_code']."</td>
+                <td>".$row['amount']."</td>
+                <td>".$row['date_confirmed']."</td>
+            </tr>";   
+        endwhile;
+        echo 
+        "<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total Amount: ".$row2['SUM(amount)']."</td>
+        </tr>";
     }
 
     function edit_service()
@@ -586,28 +723,25 @@
             echo 
             "<form method = 'POST' enctype='multipart/form-data'>
                 <div class='profileTable'>
-                <div class = 'photo'>
-                    <img src = '../uploads/userIcon.svg'  />
-                    <input type = 'file' name = 'pet_center_photo' class = 'fileUpload' />
-                </div>
-                <p class='name'>User's Name</p>
+              
+                <p class='name'>User's Details</p>
                 <div class = 'contf'>
                 <div class='formt'>
                     <div class='username'>
                         <p class='us'>username </p>
-                        <input class='user_name'type = 'text' name =  'user_username' value = '".$row['pet_center_name']."' />
+                        <input class='user_name'type = 'text' name =  'pet_center_name' value = '".$row['pet_center_name']."' />
                     </div>
                     <div class='username'>
                         <p class = 'us'>password </p>
-                        <input class='user_name' type = 'password' name = 'user_password' value = '".$row['pet_center_password']."' />
+                        <input class='user_name' type = 'password' name = 'pet_center_password' value = '".$row['pet_center_password']."' />
                     </div>
                     <div class = 'username'>
                         <p class='us'>email </p>
-                        <input class='user_name' type = 'email' name = 'user_email' value = '".$row['email']."' />
+                        <input class='user_name' type = 'email' name = 'email' value = '".$row['email']."' />
                     </div>
                     <div class = 'username'>
                         <p class = 'us'>Contact Number: </p>
-                        <input  class = 'user_name 'type = 'text' name = 'user_contactnumber' value = '".$row['contact_number']."' />
+                        <input  class = 'user_name 'type = 'text' name = 'contact_number' value = '".$row['contact_number']."' />
                     </div>
                     <div class = 'usernameb'>
                         <button name = 'update_user'>Update Profile</button>
@@ -620,10 +754,19 @@
                         
                     </div>
                     </div>
-                </div>
+             
                 
             </form>
-            ";
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>
+                        <label>Profile Picture</label>
+                        <img src = '../uploads/user_profile/".$row['pet_center_photo']."'  style = 'height:50px;width:50px;' />
+                        <br><input type = 'file' name = 'pet_center_photo' value = '".$row['pet_center_photo']."' required/><br>
+                    </td>
+                </tr><br>
+                <button name = 'update_profile'>Update Proifle</button>
+            </form>";
     
             if(isset($_POST['update_user']))
             {
@@ -631,21 +774,58 @@
                 $pet_center_password =  $_POST['pet_center_password'];
                 $contact_number = $_POST['contact_number'];
                 $email = $_POST['email'];
-                $pet_center_photo = $_POST['pet_center_photo'];
-    
-                $update_user = $con->prepare("UPDATE pet_center_tbl 
-                SET 
-                    pet_center_name='$pet_center_name',
-                    pet_center_password = '$pet_center_password',
-                    contact_number = '$contact_number',
-                    email = '$email',
-                    pet_center_photo = '$pet_center_photo'
-                WHERE 
-                    pet_center_id = '$id'");
-    
-                if($update_user->execute())
+
+                if(is_numeric($contact_number))
                 {
-                    echo "<script>alert('Your Information Successfully Updated!');</script>";
+                    if(strlen($contact_number) <= 11)
+                    {
+                        if(strlen($pet_center_password) >= 9 &&
+                        preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+                        preg_match('/[a-z]/', $pet_center_password) > 0)
+                        {
+                            echo "Password must at least 8 characters in length with at least 1 special character, 1 number!";
+                        }
+                        else
+                        {
+                            $update_user = $con->prepare("UPDATE pet_center_tbl 
+                            SET 
+                                pet_center_name='$pet_center_name',
+                                pet_center_password = '$pet_center_password',
+                                contact_number = '$contact_number',
+                                email = '$email'
+                            WHERE 
+                                pet_center_id = '$id'");
+                
+                            if($update_user->execute())
+                            {
+                                echo "<script>alert('Your Information Successfully Updated!');</script>";
+                                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        echo "Contact Number must at least 11 digits only!";
+                    }
+                }
+                else
+                {
+                    echo "Only digits allowed!";
+                }
+                
+            }
+            if(isset($_POST['update_profile']))
+            {
+                $pet_center_photo = $_FILES['pet_center_photo']['name'];
+                $pet_center_photo_tmp = $_FILES['pet_center_photo']['tmp_name'];
+
+                move_uploaded_file($pet_center_photo_tmp,"../uploads/user_profile/$pet_center_photo");
+
+                $update_profile = $con->prepare("UPDATE pet_center_tbl SET pet_center_photo = '$pet_center_photo' WHERE pet_center_id = '$id'");
+
+                if($update_profile->execute())
+                {
+                    echo "<script>alert('Profile Updated!');</script>";
                     echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
                 }
             }
@@ -663,6 +843,75 @@
             echo "<option value = '".$row['id']."'>".$row['days']."</option>";
         endwhile;
     }
+
+    function search() {
+        include("inc/db.php");
+
+        if(isset($_GET['search']) && isset($_GET['user_query']))
+        {
+            $user_query = $_GET['user_query'];
+
+            $search = $con->query("SELECT * FROM confirmed_services WHERE transaction_code LIKE '%$user_query%'");
+            $search->setFetchMode(PDO:: FETCH_ASSOC);
+            $search->execute();
+
+            echo "<div id = 'bodyleft'><ul>";
+            if($search->rowCount() == 0){
+                echo "<h2>NOT FOUND!</h2>";
+            }
+            else
+            {
+                while($row = $search->fetch()):
+                    $pet_center_id = $row['pet_center_id'];
+                    $current_user = $_SESSION['pet_center_name'];
+
+                    $view_user = $con->query("SELECT * FROM pet_center_tbl");
+                    $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_user->execute();
+                    
+                    $row_user = $view_user->fetch();
+                    $pet_center_name = $row_user['pet_center_name'];
+                    
+                    if($current_user == $pet_center_name)
+                    {
+                        $service_id = $row['service_id'];
+                        $user_id = $row['user_id'];
+                        $coupon_code = $row['coupon_code'];
+                        $transaction_code = $row['transaction_code'];
+                        $date_confirmed = $row['date_confirmed'];
+                        $amount = $row['amount'];
+        
+                        $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                        $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+                        $view_service->execute();
+        
+                        $row_service = $view_service->fetch();
+                        $service_name = $row_service['services_name'];
+        
+        
+                        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                        $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+                        $view_user->execute();
+        
+                        $row_user = $view_user->fetch();
+                        $user_username = $row_user['user_username'];
+        
+                        echo
+                        "<tr>
+                            <td>".$service_name."</td>
+                            <td>".$user_username."</td>
+                            <td>".$coupon_code."</td>
+                            <td>".$transaction_code."</td>
+                            <td>".$date_confirmed."</td>
+                            <td>".$amount."</td>
+                        </tr>";
+                    }
+                    
+                endwhile;
+            }
+        }
+    }
+
 
     
 

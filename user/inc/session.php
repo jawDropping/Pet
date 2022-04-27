@@ -1,4 +1,4 @@
-<?php 
+<!-- <?php 
     include ("inc/db.php");
     session_start();
     
@@ -17,4 +17,4 @@
             
 ?>    
         
-
+ -->

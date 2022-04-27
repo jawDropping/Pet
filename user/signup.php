@@ -285,8 +285,7 @@
                     </div>
                     <button id = "sngup" name = "add_user">Sign Up</button><br>  
                 </form>
-                <?php 
-                 include("inc/function.php"); call_user_func('signUp');?>
+                
                 </div>
                 <div class="leftSide">
                 
@@ -302,6 +301,91 @@
 
 </div>
 
+<?php
 
+include("inc/db.php");
+        
+        
+        if(isset($_POST['add_user']))
+        {
+            $user_username = $_POST['user_username'];
+            $user_password = $_POST['user_password'];
+            $user_email = $_POST['user_email'];
+            $user_contactnumber = $_POST['user_contactnumber'];
+            $municipality = $_POST['municipality'];
+            $barangay = $_POST['barangays'];
+            $user_address = $_POST['user_address'];
 
+            $view_email = $con->prepare("SELECT COUNT(*) AS all_emails FROM users_table WHERE user_email = '$user_email'");
+            $view_email->setFetchMode(PDO::FETCH_ASSOC);
+            $view_email->execute();
+
+            $row = $view_email->fetch();
+
+            $view_name = $con->prepare("SELECT COUNT(*) AS all_usernames FROM users_table WHERE user_username = '$user_username'");
+            $view_name->setFetchMode(PDO::FETCH_ASSOC);
+            $view_name->execute();
+
+            $row2 = $view_name->fetch();
+
+            if($row['all_emails']>0)
+            {
+                echo "Email Exists";
+            }
+            elseif($row2['all_usernames']>0)
+            {
+                echo "Name Exists";
+            }
+            elseif(!is_numeric($user_contactnumber))
+            {
+                echo "Only Digits Allowed!";
+            }
+            elseif(strlen($user_contactnumber)>=12)
+            {
+                echo "Number must at least 11 digits!";
+            }
+            elseif(strlen($user_password) >= 9 &&
+            preg_match('/[A-Z]/', $user_password) > 0 &&
+            preg_match('/[a-z]/', $user_password) > 0)
+            {
+                echo "Password must at least 8 characters in length!";
+            }
+            else
+            {
+                $add_user = $con->prepare("INSERT INTO users_table(
+                    user_username,
+                    user_email,
+                    user_contactnumber,
+                    user_password,
+                    municipality,
+                    barangay,
+                    user_address,
+                    user_profilephoto
+                ) 
+                VALUES (
+                    '$user_username',
+                    '$user_email',
+                    '$user_contactnumber',
+                    '$user_password',
+                    '$municipality',
+                    '$barangay',
+                    '$user_address',
+                    'userIcon.svg'
+                )");
     
+                if($add_user->execute())
+                {
+                    echo "<script>alert('Registration Successfull!');</script>"; 
+                    echo "<script>
+                    if ( window.history.replaceState ) {
+                       window.history.replaceState( null, null, window.location.href );
+                   }            
+                    </script>";
+                }
+                else
+                {
+                    echo "<script>alert('Registration Unsuccessfull!');</script>";
+                }
+            }
+        }
+?>
