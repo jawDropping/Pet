@@ -67,6 +67,10 @@
                     echo "You can now log in!";
                 }
             }
+            else
+            {
+                echo "Email or Verification Code is incorrect!";
+            }
         }
     }
 
