@@ -11,6 +11,7 @@
         </tr>
         <tr>
             <?php
+                include("inc/function.php");
                 echo viewalldelivered_items();
             ?>
         </tr>

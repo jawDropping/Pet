@@ -581,7 +581,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id' LIMIT 0,3");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -589,26 +588,30 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
+            
+                <div class = 'idNiSha'>
                     <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                            
-                        echo"</center>
+                    <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                        <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                        
+                        <div class = 'prodDet'>
+                        <p class = 'head4' >".$row_pro['pro_name']."</p>
+                        <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                            <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>";
+                        if($row_pro['pro_quantity'] != 0)
+                        {
+
+                            echo"<input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>";
+                        }
+                        else
+                        {
+                            echo "<a>Out of Stock</a>";
+                        }
+                       echo" </div>
                     </a>
                     </form>
-                </li>
-                ";
+                </div>";
         endwhile;
     }
 
@@ -936,9 +939,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         </li>
                         <li>
                             <img src ='../uploads/products/".$row_pro['pro_img3']."'/>
-                        </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img4']."'/>
                         </li>
                     </ul>
                   </div>
@@ -1690,7 +1690,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             }
         }
     }
-    
+
     function service_cat_detail()
     {
         include("inc/db.php");

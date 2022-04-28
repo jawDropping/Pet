@@ -62,7 +62,6 @@
 
             <th>SAMPLE IMAGE #3</th>
            
-            <th>SAMPLE IMAGE #4</th>
 
             <th>PRODUCT QUANTITY</th>
 

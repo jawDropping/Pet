@@ -110,7 +110,7 @@
 
         if($add_donation->execute())
         {
-            echo "<script>alert('Thanks for donating, check your email for exciting surprises!');</script>";
+            echo "<script>alert('Please wait for the us to confirm your donation!');</script>";
             echo "<script>window.open('donation.php' ,'_self');</script>";
         }
     }
