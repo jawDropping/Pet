@@ -238,7 +238,7 @@
            $pro_img3 = $_FILES['pro_img3']['name'];
            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
            
-   
+
         
            move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
            move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
