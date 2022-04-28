@@ -209,7 +209,9 @@
                         email,
                         contact_number,
                         pet_center_photo,
-                        active_coupon
+                        active_coupon,
+                        v_key,
+                        verified
                     ) 
                     VALUES (
                         '$pet_center_name',
@@ -218,6 +220,8 @@
                         '$contact_number',
                         'userIcon.svg',
                         '$accept_coupons'
+                        '$verification_key',
+                        0
                     )");
         
                     if($add_service->execute())
