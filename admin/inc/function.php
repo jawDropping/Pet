@@ -238,6 +238,7 @@
            $pro_img3 = $_FILES['pro_img3']['name'];
            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
            
+
         
            move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
            move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
@@ -245,6 +246,8 @@
            
            $pro_price = $_POST['pro_price'];
            $pro_quantity = $_POST['pro_quantity'];
+
+    
            $add_pro = $con->prepare("insert into product_tbl
            (
                pro_name, 
@@ -649,9 +652,7 @@
                 <td style = 'min-width:200px'>
                     <img src = '../uploads/products/".$row['pro_img3']."'/>
                 </td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img4']."'/>
-                </td>
+                
               
                 <td>".$row['pro_quantity']."</td>
                 <td><a href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
@@ -856,6 +857,7 @@
 
         while($row = $get_donations->fetch()):
             $org_id = $row['org_id'];
+            $donator_email = $row['email'];
 
             $sql = $con->prepare("SELECT * FROM organizations WHERE id = '$org_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -865,131 +867,186 @@
             $org_name = $row_org['org_name'];
             echo 
             "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
-        
-
+                    <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
                     
                     <div class = 'holdest'>
+                    <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
                     <p  name = 'transaction_number'>".$row['transaction_number']."</p>
                     </div>
                     <div class = 'holdest'>
+                    <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
                     <p>".$row['full_name']."</p>
                     </div>
+                    <input type = 'hidden' name = 'org_name' value = '".$org_name."' />
                     <div class = 'holdest'>
                     <p>".$org_name."</p>
                     </div>
                     <div class = 'holdest'>
+                    <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
                     <p>".$row['contact_number']."</p>
                     </div>
                     <div class = 'holdest'>
                     <p>".$row['amount']."</p>
                     </div>
                     <div class = 'holdest'>
-                    <p>".$row['proof_photo']."</p>
+                    <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
                     </div>
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
                     <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
-                    <button id = 'views'  name = 'confirm_donation' value = ".$row['id'].">View</button>
                     </div>
                     </div>
-  
+                    <div class = 'holdest'>
+                    <a href = view_donation.php?view_donation=".$row['id'].">View</a>
+                    </div>
             </form>";
+       
         endwhile;
+        
+
+
         if(isset($_POST['confirm_donation']))
         {
             $id = $_POST['confirm_donation'];
+            
+            $transaction_number = $_POST['transaction_number'];
+            $org_name = $_POST['org_name'];
+            $contact_number = $_POST['contact_number'];
+            $full_name = $_POST['full_name'];
+            $donator_email = $_POST['donator_email'];
+          
+            $datenow = getdate();
 
-            $view_donation = $con->prepare("SELECT * FROM donations WHERE id = $id");
-            $view_donation->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_donation->execute();
+            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
-            $row = $view_donation->fetch();
-            $receiver = $row['email_address'];
-            $subject = "Coupon Code";
-            $coupon_code = generateRandomString();
-            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            $receiver = $donator_email;
+            $subject = "Donation Confirmed";
+            $body = "Your donation has been confirmed!";
             $sender = "ianjohn0101@gmail.com";
-
-            if($row['donation_status'] == 'CONFIRMED')
+           
+            if(mail($receiver, $body, $sender, $sender))
             {
-                echo "<script>alert('Donation Already Confirmed!');</script>";
-                echo "<script>window.open('manage_donation.php','_self');</script>";
-            }
-            else
-            {
-                if(mail($receiver, $subject, $body, $sender))
+                $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+                SET 
+                transaction_number = '$transaction_number',
+                org_name = '$org_name',
+                full_name = '$full_name',
+                contact_number = '$contact_number',
+                date_confirmed = '$today'
+                ");
+                if($add_ledger->execute())
                 {
-                    $transaction_number = $_POST['transaction_number'];
-                    $full_name = $_POST['full_name'];
-                    $last_name = $_POST['last_name'];
-                    $amount = $_POST['amount'];
-                    $org_name = $_POST['org_name'];
-                    $contact_number = $_POST['contact_number'];
-        
-                    $datenow = getdate();
-                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-        
-                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl
-                    (
-                        transaction_number,
-                        org_name,
-                        full_name,
-                        contact_number,
-                        date_confirmed
-                    ) 
-                    VALUES(
-                        '$transaction_number',
-                        '$org_name',
-                        '$first_name',
-                        '$last_name',
-                        '$contact_number',
-                        '$today'
-                    )");
+                    $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+                    $del_donation->execute();
+                    if($del_donation->execute())
+                    {
+                        echo "SUCCESS!";
+                    }
+                }    
+            }
+        }
+    }
+
+    // function date_today()
+    // {
+    //     $datenow = getdate();
+
+    //     $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    // }
+
+    function view_detail()
+    {
+        include("inc/db.php");
+        if(isset($_GET['view_donation']))
+        {
+            $id = $_GET['view_donation'];
+            $sql = $con->prepare("SELECT * FROM donations WHERE id = $id");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            while($row = $sql->fetch()):
+                $org_id = $row['org_id'];
+                $donator_email = $row['email'];
+
+                $sql2 = $con->prepare("SELECT * FROM organizations WHERE id = '$org_id'");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+
+                $row_org = $sql2->fetch();
+                $org_name = $row_org['org_name'];
+                echo 
+                "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+                        <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
+                        
+                        <div class = 'holdest'>
+                        <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
+                        <p  name = 'transaction_number'>".$row['transaction_number']."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
+                        <p>".$row['full_name']."</p>
+                        </div>
+                        <input type = 'hidden' name = 'org_name' value = '".$org_name."' />
+                        <div class = 'holdest'>
+                        <p>".$org_name."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
+                        <p>".$row['contact_number']."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <p>".$row['amount']."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
+                        </div>
+                        <div class = 'holdest'>
+                        <div id = 'aksyon'>
+                        <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
+                        </div>
+                        </div>
+                </form>";
+            endwhile;
+            if(isset($_POST['confirm_donation']))
+            {
+                $id = $_POST['confirm_donation'];
+                
+                $transaction_number = $_POST['transaction_number'];
+                $org_name = $_POST['org_name'];
+                $contact_number = $_POST['contact_number'];
+                $full_name = $_POST['full_name'];
+                $donator_email = $_POST['donator_email'];
+              
+                $datenow = getdate();
+    
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    
+                $receiver = $donator_email;
+                $subject = "Donation Confirmed";
+                $body = "Your donation has been confirmed!";
+                $sender = "ianjohn0101@gmail.com";
+               
+                if(mail($receiver, $body, $sender, $sender))
+                {
+                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+                    SET 
+                    transaction_number = '$transaction_number',
+                    org_name = '$org_name',
+                    full_name = '$full_name',
+                    contact_number = '$contact_number',
+                    date_confirmed = '$today'
+                    ");
                     if($add_ledger->execute())
                     {
-                        $update_status = $con->prepare("UPDATE donations SET donation_status = 'CONFIRMED', coupon_code = '$coupon_code' WHERE id = $id");
-                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-                        $update_status->execute();
-                        if($update_status->execute())
+                        $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+                        $del_donation->execute();
+                        if($del_donation->execute())
                         {
-                            echo "<script>alert('Donation Confirmed!');</script>";
-                            echo "<script>window.open('index.php?manage_donation','_self');</script>";
+                            echo "SUCCESS!";
                         }
-                    }
+                    }    
                 }
             }
-
-            // $view_email = $con->prepare("SELECT * FROM donations WHERE id = '$id'");
-            // $view_email->setFetchMode(PDO:: FETCH_ASSOC);
-            // $view_email->execute();
-
-            //ledger db
-            //transac number 
-            //date confirmed
-            //first name, last name
-            //amount
-            //org name
-
-            // $row = $view_email->fetch();
-            // $coupon_code = generateRandomString();
-            
-            // $receiver = $row['email_address'];
-            // $subject = "Coupon Code";
-            // $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
-            // $sender = "ianjohn0101@gmail.com";
-
-            // if(mail($reciever, $subject, $body, $sender))
-            // {
-            //     $update_tbl = $con->prepare("UPDATE donations SET coupon_code = '$coupon_code', SET donation_status = 'Confirmed' WHERE id = '$id'");
-            //     $update_tbl->setFetchMode(PDO:: FETCH_ASSOC);
-            //     $update_tbl->execute();
-
-            //     if($update_tbl->fetch())
-            //     {
-            //         echo "<script>alert('Donation Confirmed!');</script>";
-            //         echo "<script>window.open('index.php?manage_donation','_self');</script>";
-            //     }
-            // }
         }
     }
 
@@ -1222,16 +1279,6 @@
                     </td>
                 </tr><br>
                 <button name = 'update_third_image'>Update Third Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #4</label>
-                        <img src = '../uploads/products/".$row['pro_img4']."'  style = 'height:50px;width:50px;' />
-                        <br><input type = 'file' name = 'sample_img4' value = ".$row['pro_img4']." required/><br>
-                    </td>
-                </tr><br>
-                <button name = 'update_fourth_image'>Update Fourth Image</button>
             </form>";
             if(isset($_POST['update_prod']))
             {
@@ -1305,23 +1352,6 @@
                 WHERE
                 pro_id = '$pro_id'");
                 if($update_third_img->execute())
-                {
-                    echo "<script>alert('Product Updated Successfully!');</script>";
-                    echo "<script>window.open('sales_inventory.php','_self');</script>";
-                }
-            }
-            if(isset($_POST['update_fourth_image']))
-            {
-                $pro_img4 = $_FILES['sample_img4']['name'];
-                $pro_img4_tmp = $_FILES['sample_img4']['tmp_name'];
-
-                move_uploaded_file($pro_img4_tmp,"../uploads/products/$pro_img4");
-
-                $update_fourth_img = $con->prepare("UPDATE product_tbl SET 
-                pro_img4 = '$pro_img4'
-                WHERE
-                pro_id = '$pro_id'");
-                if($update_fourth_img->execute())
                 {
                     echo "<script>alert('Product Updated Successfully!');</script>";
                     echo "<script>window.open('sales_inventory.php','_self');</script>";

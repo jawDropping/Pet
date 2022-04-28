@@ -74,10 +74,14 @@
             <tr>
                 <td><input type = 'text' name = 'org_email_address' value = '".$row['org_email_address']."' /></td>
             </tr><br>
-            <tr>
-                <td><input type = 'file' name = 'org_photo' value = '".$row['org_photo']."'/></td>
-            </tr><br>
+            
             <button name = 'update'>Update</button>
+        </form>
+        <form method = 'POST' enctype = 'multipart/form-data'>
+        <tr>
+                <td><input type = 'file' name = 'org_photo' value = '".$row['org_photo']."' required/></td>
+            </tr><br>
+            <button name = 'update_img'>Update Image<button>
         </form>";
     
         
@@ -88,15 +92,13 @@
             $org_location = $_POST['org_location'];
             $org_contact_number = $_POST['org_contact_number'];
             $org_email_address = $_POST['org_email_address'];
-            $org_photo = $_POST['org_photo'];
 
             $update_org = $con->prepare("UPDATE organizations 
             SET 
             org_name='$org_name',
             org_location='$org_location',
             org_contact_number='$org_contact_number',
-            org_email_adddress='$org_email_adddress',
-            org_photo='$org_photo'
+            org_email_adddress='$org_email_adddress'
             WHERE 
             id = '$id'");
     
@@ -124,6 +126,22 @@
             echo "<script>alert('Deleted Successfully!');</script>";
             echo "<script>window.open('index.php?manage_partner', '_self');</script>";
         }
+    }
+
+    if(isset($_POST['update_img']))
+    {
+        $org_photo = $_FILES['org_photo']['name'];
+        $org_photo_tmp = $_FILES['org_photo']['tmp_name'];
+
+        move_uploaded_file($org_photo_tmp,"../uploads/orgs/$org_photo");
+
+        $upd_img = $con->prepare("UPDATE organizations SET org_photo = '$org_photo' WHERE id = '$id'");
+        if($upd_img->execute())
+        {
+            echo "<script>alert('Updated Successfully!');</script>";
+            echo "<script>window.open('index.php?manage_partner', '_self');</script>";
+        }
+
     }
 ?>
 
