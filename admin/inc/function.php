@@ -238,13 +238,10 @@
            $pro_img3 = $_FILES['pro_img3']['name'];
            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
            
-           $pro_img4 = $_FILES['pro_img4']['name'];
-           $pro_img4_tmp = $_FILES['pro_img4']['tmp_name'];
         
            move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
            move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
            move_uploaded_file($pro_img3_tmp,"../uploads/products/$pro_img3");
-           move_uploaded_file($pro_img4_tmp,"../uploads/products/$pro_img4");
            
            $pro_price = $_POST['pro_price'];
            $pro_quantity = $_POST['pro_quantity'];
@@ -255,8 +252,7 @@
                pro_brand, 
                pro_img, 
                pro_img2, 
-               pro_img3, 
-               pro_img4, 
+               pro_img3,
                pro_price, 
                pro_quantity,
                pro_keyword
@@ -268,7 +264,6 @@
                 '$pro_img',
                 '$pro_img2',
                 '$pro_img3',
-                '$pro_img4',
                 '$pro_price',
                 '$pro_quantity',
                 '$pro_keyword'

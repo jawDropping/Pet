@@ -36,7 +36,7 @@
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
         <li><a href= "/Pet/admin/viewall_users.php"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
-        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Delivered Items</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -101,15 +101,15 @@
                 </div>
                 
                 <div class = 'inputHolder'>
-                    <p  id = 'lebelss'>Enter Price: </p>
+                    <p  id = 'lebelss'>Price: </p>
                     <input class = 'intus'  type= 'text' name = 'pro_price' required/>
                 </div>
                 <div class = 'inputHolder'>
-                    <p  id = 'lebelss'>Enter Quantity: </p>
+                    <p  id = 'lebelss'>Quantity: </p>
                     <input class = 'intus'  type='text' name = 'pro_quantity' required/></td>
                 </div>
                 <div class = 'inputHolder'>
-                    <p  id = 'lebelss'>Enter KeyWord: </p>
+                    <p  id = 'lebelss'>Description: </p>
                     <input class = 'intus' type= 'text' name = 'pro_keyword' required/></td>
                 </div>
                 <div></div><div></div>
@@ -118,6 +118,7 @@
                 
             </div>
             <button class= 'add' name = 'add_prod'>Add Product</button>
+            <?php add_product(); ?>
         </form>
         </div>
                 </div>

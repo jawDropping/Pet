@@ -38,7 +38,7 @@
         <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
         </ul>
 </div>
-         <div div class="leftFooter">
+         <div class="leftFooter">
           <div class="iconContainer">
             <img src="../uploads/settings.svg" class="footicons">
             <img src="../uploads/notification.svg" class="footicons">
