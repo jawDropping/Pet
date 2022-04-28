@@ -315,6 +315,7 @@ include("inc/db.php");
             $municipality = $_POST['municipality'];
             $barangay = $_POST['barangays'];
             $user_address = $_POST['user_address'];
+            $verification_key = generateRandomString();
 
             $view_email = $con->prepare("SELECT COUNT(*) AS all_emails FROM users_table WHERE user_email = '$user_email'");
             $view_email->setFetchMode(PDO::FETCH_ASSOC);
@@ -327,6 +328,11 @@ include("inc/db.php");
             $view_name->execute();
 
             $row2 = $view_name->fetch();
+
+            $receiver = $user_email;
+            $subject = "Email Verification";
+            $body = "Use this Verification Code: $verification_key to verify your email!";
+            $sender = "ianjohn0101@gmail.com";
 
             if($row['all_emails']>0)
             {
@@ -352,40 +358,57 @@ include("inc/db.php");
             }
             else
             {
-                $add_user = $con->prepare("INSERT INTO users_table(
-                    user_username,
-                    user_email,
-                    user_contactnumber,
-                    user_password,
-                    municipality,
-                    barangay,
-                    user_address,
-                    user_profilephoto
-                ) 
-                VALUES (
-                    '$user_username',
-                    '$user_email',
-                    '$user_contactnumber',
-                    '$user_password',
-                    '$municipality',
-                    '$barangay',
-                    '$user_address',
-                    'userIcon.svg'
-                )");
-    
-                if($add_user->execute())
+                if(mail($receiver, $subject, $body, $sender))
                 {
-                    echo "<script>alert('Registration Successfull!');</script>"; 
-                    echo "<script>
-                    if ( window.history.replaceState ) {
-                       window.history.replaceState( null, null, window.location.href );
-                   }            
-                    </script>";
-                }
-                else
-                {
-                    echo "<script>alert('Registration Unsuccessfull!');</script>";
+                    $add_user = $con->prepare("INSERT INTO users_table(
+                        user_username,
+                        user_email,
+                        user_contactnumber,
+                        user_password,
+                        municipality,
+                        barangay,
+                        user_address,
+                        user_profilephoto
+                        verified,
+                        verification_key
+                    ) 
+                    VALUES (
+                        '$user_username',
+                        '$user_email',
+                        '$user_contactnumber',
+                        '$user_password',
+                        '$municipality',
+                        '$barangay',
+                        '$user_address',
+                        'userIcon.svg',
+                        0,
+                        '$verification_key'
+                    )");
+        
+                    if($add_user->execute())
+                    {
+                        echo "<script>alert('Registration Successfull!');</script>"; 
+                        echo "<script>
+                        if ( window.history.replaceState ) {
+                           window.history.replaceState( null, null, window.location.href );
+                       }            
+                        </script>";
+                    }
+                    else
+                    {
+                        echo "<script>alert('Registration Unsuccessfull!');</script>";
+                    }
                 }
             }
+        }
+
+        function generateRandomString($length = 8) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
         }
 ?>

@@ -14,20 +14,58 @@
             $user_email = $_POST['user_email'];
             $user_password = $_POST['user_password'];
 
-            $fetchuser = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
-            $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetchuser->execute();
+            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+            $check_email->setFetchMode(PDO::FETCH_ASSOC);
+            $check_email->execute();
 
-            $row = $fetchuser->fetch();
-            $countUser = $fetchuser->rowCount();
-            if($countUser>0)
+            $verified = $check_email->fetch();
+            $isVerified = $verified['verified'];
+
+            if($isVerified == 1)
             {
-                $_SESSION['user_username'] = $row['user_username'];
-                echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."','_self');</script>";
-            }
+                $fetchuser = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
+                $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetchuser->execute();
+
+                $row = $fetchuser->fetch();
+                $countUser = $fetchuser->rowCount();
+                if($countUser>0)
+                {
+                    $_SESSION['user_username'] = $row['user_username'];
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."','_self');</script>";
+                }
+                else
+                {
+                    echo "<script>alert('Email or Password is incorrect!');</script>";
+                }
+            }   
             else
             {
-                echo "<script>alert('Email or Password is incorrect!');</script>";
+                echo "Please verify your email!";
+            }
+        }
+    }
+
+    function verify()
+    {
+        include("inc/db.php");
+        if(isset($_POST['verify_key']))
+        {
+            $user_email = $_POST['user_email'];
+            $v_key = $_POST['v_key'];
+
+            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND v_key = '$v_key'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                $update_verification = $con->prepare("UPDATE users_table SET verified = 1 WHERE user_email = '$user_email'");
+                if($update_verification->execute())
+                {
+                    echo "You can now log in!";
+                }
             }
         }
     }
