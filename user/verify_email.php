@@ -1,6 +1,6 @@
 <?php 
     include("inc/function.php");
-    echo LogIn();
+    echo verify();
 ?>
 <html>
     <head>
@@ -29,14 +29,11 @@
                  
                        
                         <input class = "input" type="email" name = "user_email" placeholder = "Email"/>               
-                        <input class = "input"type="password" name = "user_password"  placeholder = "Password"/></br>
-                        <p>Or <a href = "/Pet/petcenter/login.php">Log in as Pet Center?</a></p>
-                            <button  class = "button" name = "login_user" id = "login_user" >LOGIN</button>
-                            <button  class = "signup" name = "signup" id = "signup"><a href = "/Pet/user/signup.php">SIGNUP</a></button>
+                        <input class = "input"type="text" name = "v_key"  placeholder = "Verification Key"/></br>
+                            <button  class = "button" name = "verify_key" id = "login_user" >VERIFY</button>
                         </br>
                      
                     </form>
-                    <a href = 'verify_email.php'>Verify My Email</a>
                 </div>
            
             </div>

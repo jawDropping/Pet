@@ -9,20 +9,63 @@
             $email = $_POST['email'];
             $pet_center_password = $_POST['pet_center_password'];
 
-            $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
-            $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetchuser->execute();
             
-            $row = $fetchuser->fetch();
-            $countUser = $fetchuser->rowCount();
-            if($countUser>0)
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email'");
+            $check_email->setFetchMode(PDO::FETCH_ASSOC);
+            $check_email->execute();
+
+            $verified = $check_email->fetch();
+            $isVerified = $verified['verified'];
+
+            if($isVerified == 1)
             {
-                $_SESSION['pet_center_name'] = $row['pet_center_name'];
-                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
+                $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
+                $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetchuser->execute();
+                
+                $row = $fetchuser->fetch();
+                $countUser = $fetchuser->rowCount();
+                if($countUser>0)
+                {
+                    $_SESSION['pet_center_name'] = $row['pet_center_name'];
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
+                }
+                else
+                {
+                    echo "<script>alert('Username or Password is incorrect!');</script>";
+                }
             }
             else
             {
-                echo "<script>alert('Username or Password is incorrect!');</script>";
+                echo "Please verify your email!";
+            }
+        }
+    }
+
+    function verify()
+    {
+        include("inc/db.php");
+        if(isset($_POST['verify_key']))
+        {
+            $user_email = $_POST['email'];
+            $v_key = $_POST['v_key'];
+
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$user_email' AND v_key = '$v_key'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                $update_verification = $con->prepare("UPDATE pet_center_tbl SET verified = 1 WHERE email = '$user_email'");
+                if($update_verification->execute())
+                {
+                    echo "You can now log in!";
+                }
+            }
+            else
+            {
+                echo "Email or Verification Code is incorrect!";
             }
         }
     }
@@ -115,6 +158,7 @@
             $email = $_POST['email'];
             $contact_number = $_POST['contact_number'];
             $accept_coupons = $_POST['accept_coupons'];
+            $verification_key = generateRandomString();
 
             $view_email = $con->prepare("SELECT COUNT(*) AS pet_center_email FROM pet_center_tbl WHERE email = '$email'");
             $view_email->setFetchMode(PDO::FETCH_ASSOC);
@@ -152,37 +196,49 @@
             }
             else
             {
-                $add_service = $con->prepare("INSERT INTO pet_center_tbl (
-                    pet_center_name,
-                    pet_center_password,
-                    email,
-                    contact_number,
-                    pet_center_photo,
-                    active_coupon
-                ) 
-                VALUES (
-                    '$pet_center_name',
-                    '$pet_center_password',
-                    '$email',
-                    '$contact_number',
-                    'userIcon.svg',
-                    '$accept_coupons'
-                )");
-    
-                if($add_service->execute())
+                $receiver = $user_email;
+                $subject = "Email Verification";
+                $body = "Use this Verification Code: $verification_key to verify your email!";
+                $sender = "ianjohn0101@gmail.com";
+
+                if(mail($receiver, $subject, $body, $sender))
                 {
-                    echo "
-                    <script>
-                    alert('Registered Successful!');
-                    if ( window.history.replaceState ) {
-                       window.history.replaceState( null, null, window.location.href );
-                   }            
-                    </script>"; 
-                }
-                else
-                {
-                    echo "<script>alert('Registered Unsuccessful!');</script>";
-                }
+                    $add_service = $con->prepare("INSERT INTO pet_center_tbl (
+                        pet_center_name,
+                        pet_center_password,
+                        email,
+                        contact_number,
+                        pet_center_photo,
+                        active_coupon,
+                        v_key,
+                        verified
+                    ) 
+                    VALUES (
+                        '$pet_center_name',
+                        '$pet_center_password',
+                        '$email',
+                        '$contact_number',
+                        'userIcon.svg',
+                        '$accept_coupons'
+                        '$verification_key',
+                        0
+                    )");
+        
+                    if($add_service->execute())
+                    {
+                        echo "
+                        <script>
+                        alert('Registered Successful!');
+                        if ( window.history.replaceState ) {
+                        window.history.replaceState( null, null, window.location.href );
+                    }            
+                        </script>"; 
+                    }
+                    else
+                    {
+                        echo "<script>alert('Registered Unsuccessful!');</script>";
+                    }
+                } 
             }
         }
     }
