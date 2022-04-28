@@ -119,6 +119,7 @@
             </div>
             <button class= 'add' name = 'add_prod'>Add Product</button>
         </form>
+        <?php add_product(); ?>
         </div>
                 </div>
                 </div>
