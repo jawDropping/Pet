@@ -396,7 +396,7 @@
 
                 $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
                 
-                if($delivery_date < $today)
+                if($delivery_date > $today)
                 {
                     echo "INVALID DATE!";
                 }
