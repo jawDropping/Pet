@@ -68,11 +68,11 @@
 
             <p>Action</p>
         </div>
-        <tr>
+        <div>
             <?php
                 echo viewall_donations();
             ?>
-        </tr>
+        </div>
        </div>
     </div>
 
@@ -150,6 +150,20 @@
   width: 100px;
   background: #5a5bf3;
   border: none;
+    }
+    #viewok{
+        
+  color: #fff;
+  border-radius: 3px;
+  width: 100px;
+  
+  border: 1px solid #5a5bf3;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 2px;
+  padding-top: 5px;
+  font-weight: bold;
+  color: black;
     }
     </style>
     <script>

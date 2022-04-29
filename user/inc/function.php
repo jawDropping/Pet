@@ -1450,63 +1450,39 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
             $user_id = $row2['user_id'];
 
-            if($row3['active_coupon'] == 'yes')
-            {
-
-                echo 
-                "<form method = 'POST'>
-                    <label style = 'color:#fff;position:absolute;margin:10% 0% 0% 40.7%;background-color:#000;padding: 10px 10px;border-radius:5px;'>Please verify your coupon to get the exact amount!</label><br>
-                    <tr>
-                        <td><label style = 'position:absolute;margin:15% 0% 0% 30%;'>Book Appointment: </label></td>
-                        <td><input type = 'date' name = 'reserve_date'  required style = 'position:absolute;align-items:center;margin:14.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
-                    </tr><br>
-                    <tr>
-                        <td><label style = 'position:absolute;margin:18% 0% 0% 30%;'>Time: </label></td>
-                        <td><input type = 'time' name = 'reserve_time'  required style = 'position:absolute;align-items:center;margin:17.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td><br>
-                    </tr><br>
-                    <tr>
-                        <td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Coupon Code: </label></td>
-                        <td><input type = 'text' name = 'coupon_code'  style = 'position:absolute;align-items:center;margin:19.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
-                    </tr>
-                    <tr>";
-                        
-                            echo 
-                            "<td><label style = 'position:absolute;margin:25% 0% 0% 30%;'>Service Cost: </label></td>
-                            <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost."   /></td>
-                            <td >".$service_cost.   "</td>";
-                        
-                    echo "</tr><br>
-                    <tr>
-                        <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
-                        <td><button name = 'reserve_service' value = ".$row['service_id']." style = 
-                        'border: 0;
-                        padding: 7.5px 17px;
-                        background: #86b0b6;
-                        font-size: 12px;
-                        border-radius: 5px;
-                        color: #fff;
-                        cursor:pointer;'>RESERVE</button></td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href = 'services.php' style =
-                        '
-                        position:absolute;
-                        text-decoration:none;
-                        background-color:#86b0b6;
-                        font-size:12px;
-                        color:#fff;
-                        font-family: Verdana, Geneva, Tahoma, sans-serif;
-                        padding: 7.5px 17px;
-                        border-radius: 5px;
-                        margin: 0% 2% 10% 1%;'>GO BACK</a></td>
-                    </tr>
-                </form>";
-            }
-            else
+  if($row3['active_coupon'] == 'yes')
+                    {
+            echo 
+            "<form method = 'POST'>
+                <label class = 'hh'>Please verify your coupon to get the exact amount!</label>
+                <div class = 'maines'>
+                
+                    <p>Book Appointment: </p>
+                    <input type = 'date' name = 'reserve_date'  required/>
+                
+                    <p>Time: </p></td>
+                    <input type = 'time' name = 'reserve_time'  required/></td>
+                    <p>Coupon Code: </p>
+                    <input type = 'text' name = 'coupon_code'/>
+                    <p>Service Cost: </p>
+                    <input type = 'text' name = 'service_cost' value = ".$service_cost."   />
+                    <p>Service Cost: </p>
+                    <input type = 'text' name = 'service_cost>".$service_cost."/>"; 
+                echo "
+       
+                    <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
+                    <div>
+                    <button name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
+                    <a href = 'services.php'>GO BACK</a>
+                    </div>
+                    
+                </div>
+            </form>";
+           else
             {
                 echo "This service provides no coupon, Click here to avail the service without any coupon used!<a href = 'avail_service_nocoupon.php?avail_service=".$row['id']."'>Avail Service(without coupon)</a>";
             }
+
 
     
             if(isset($_POST['reserve_service']))
