@@ -344,7 +344,7 @@
             SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
             (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
             from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
-            WHERE o.user_id = 1
+            WHERE o.user_id = o.user_id
             group by o.order_id, p.pro_name, o.delivery_status) od
             group by od.order_id, od.delivery_status
             ");
@@ -1128,8 +1128,8 @@
         while($row = $view_coupons->fetch()):
             echo 
             "<tr>
-                <td>".$row['last_name'].", ".$row['first_name']."</td>
-                <td>".$row['email_address']."</td>
+                <td>".$row['full_name']."</td>
+                <td>".$row['email']."</td>
                 <td>".$row['coupon_code']."</td>
             </tr>"; 
         endwhile;

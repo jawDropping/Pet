@@ -55,7 +55,7 @@
             $pet_details = $_POST['pet_details'];
             
             $pet_photo = $_FILES['pet_photo']['name'];
-            $pet_photo_tmp = $_FILES['pet_photo_tmp']['tmp_name'];
+            $pet_photo_tmp = $_FILES['pet_photo']['tmp_name'];
     
             move_uploaded_file($pet_photo_tmp,"../uploads/pets/$pet_photo");
     

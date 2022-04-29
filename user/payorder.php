@@ -25,7 +25,7 @@ $row = $sql->fetch();
 $order_id = 1;
 if($row)
 {
-    $order_id = intval($row['order_id']+1);
+    $order_id = intval($row['order_id']+2);
 }
 // var_dump($row);
 // die($order_id);
@@ -41,6 +41,7 @@ if($row_user['municipality'] == "mandaue" || $row_user['municipality'] == "cebu"
             {
                 header("Location: index.php");
                 unset($_SESSION['cart']);
+            
             }  
         }
         catch(PDOException $e)

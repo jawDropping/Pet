@@ -674,25 +674,21 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                            
-                        echo"</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
                 ";
         endwhile;
         if(isset($_POST['cart_btn']))
@@ -712,7 +708,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-     
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id'");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -720,24 +715,21 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                        echo "</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
                 ";
         endwhile;
         if(isset($_POST['cart_btn']))
@@ -757,7 +749,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-     
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id' LIMIT 0,3");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -765,29 +756,26 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                        echo "</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
                 ";
         endwhile;
     }
 
-    //wala pa
+   
     function featured_cat_food_products()
     {
         include("inc/db.php");
