@@ -36,7 +36,11 @@
     .maines{
         background: red;
         display: grid;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: 40% 60%;
+        width: 50%;
+        padding: 10px;
+        margin-left: 25%;
+        row-gap: 20px;
     }
     .hh{
         text-align: center;
