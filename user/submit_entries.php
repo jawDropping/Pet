@@ -10,8 +10,8 @@
     {
         if(isset($_POST['submit']))
         {
-            $user_username = $_SESSION['user_username'];
-            $user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $users_id = $_SESSION['user_id'];
+            $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
             $user->setFetchMode(PDO:: FETCH_ASSOC);
             $user->execute();
             $row = $user->fetch();
@@ -31,8 +31,8 @@
 
         if(isset($_POST['like']))
         {
-            $user_username = $_SESSION['user_username'];
-            $user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $users_id = $_SESSION['user_id'];
+            $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
             $user->setFetchMode(PDO:: FETCH_ASSOC);
             $user->execute();
             

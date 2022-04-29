@@ -1,9 +1,9 @@
 <?php
 session_start();
 include("inc/db.php");
-$user_username = $_SESSION['user_username'];
+$users_id = $_SESSION['user_id'];
 
-$sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+$sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
 $sql->setFetchMode(PDO:: FETCH_ASSOC);
 $sql->execute();
 

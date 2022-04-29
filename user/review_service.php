@@ -2,14 +2,14 @@
     session_start();
     include("inc/db.php");
     
-    if(!isset($_SESSION['user_username']))
+    if(!isset($_SESSION['user_id']))
     {
         echo "<script>window.open('login.php','_self');</script>";
     }   
     else
     {
-        $user_username = $_SESSION['user_username'];
-        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+        $users_id = $_SESSION['user_id'];
+        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_username'");
         $view_user->setFetchMode(PDO:: FETCH_ASSOC);
         $view_user->execute();
         

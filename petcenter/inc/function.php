@@ -27,8 +27,8 @@
                 $countUser = $fetchuser->rowCount();
                 if($countUser>0)
                 {
-                    $_SESSION['pet_center_name'] = $row['pet_center_name'];
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
+                    $_SESSION['pet_center_id'] = $row['pet_center_id'];
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."','_self');</script>";
                 }
                 else
                 {
@@ -74,14 +74,14 @@
     {
         include("inc/db.php");
         
-        if(!isset($_SESSION['pet_center_name']))
+        if(!isset($_SESSION['pet_center_id']))
         {
             header('Location: login.php');
         }
         else
         {
-            $user = $_SESSION['pet_center_name'];
-            $view_user = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user'");
+            $user = $_SESSION['pet_center_id'];
+            $view_user = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$user'");
             $view_user->setFetchMode(PDO:: FETCH_ASSOC);
             $view_user->execute();
     
@@ -124,7 +124,7 @@
             if($add_cat->execute())
             {
                 echo "<script>alert('Category Added Successfully!');</script>"; 
-                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
+                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."','_self');</script>";
             }
             else
             {
@@ -299,10 +299,10 @@
         include ("inc/db.php");
         if(isset($_POST['add_service']))
         {
-            $pet_center_name = $_SESSION['pet_center_name'];
+            $pet_cent_id = $_SESSION['pet_center_id'];
           
 
-            $fetch_name = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name'");
+            $fetch_name = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
             $fetch_name->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_name->execute();
 
@@ -373,8 +373,8 @@
     {
         echo "<a href = 'addService.php'>Add Service</a>";
         include("inc/db.php");
-        $user_name = $_SESSION['pet_center_name'];
-        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $pet_cent_id = $_SESSION['pet_center_id'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -423,8 +423,8 @@
     function view_requests()
     {
         include("inc/db.php");
-        $user_name = $_SESSION['pet_center_name'];
-        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $pet_cent_id = $_SESSION['pet_center_id'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -553,8 +553,8 @@
     function viewHistory()
     {
         include("inc/db.php");
-        $user_name = $_SESSION['pet_center_name'];
-        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $pet_cent_id = $_SESSION['pet_center_id'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -696,7 +696,7 @@
                 if($update_service->execute())
                 {
                     echo "<script>alert('Services Successfully Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
                 }
             }
 
@@ -716,7 +716,7 @@
                 if($update_service->execute())
                 {
                     echo "<script>alert('Services Successfully Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
                 }
             }
         }
@@ -730,7 +730,7 @@
         if($delete_service->execute())
         {
             echo "<script>alert('Service Deleted Successfully!');</script>";
-            echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+            echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
         }
     }
 
@@ -748,10 +748,10 @@
     function myProfile()
     {
         include("inc/db.php");
-        if(isset($_SESSION['pet_center_name']))
+        if(isset($_SESSION['pet_center_id']))
         {
-            $user_id = $_SESSION['pet_center_name'];
-            $fetch_user_username = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_id'");
+            $user_id = $_SESSION['pet_center_id'];
+            $fetch_user_username = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$user_id'");
             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user_username->execute();
     
@@ -837,7 +837,7 @@
                             if($update_user->execute())
                             {
                                 echo "<script>alert('Your Information Successfully Updated!');</script>";
-                                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
                             }
                         }
                     }
@@ -864,7 +864,7 @@
                 if($update_profile->execute())
                 {
                     echo "<script>alert('Profile Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
                 }
             }
         }
@@ -901,7 +901,7 @@
             {
                 while($row = $search->fetch()):
                     $pet_center_id = $row['pet_center_id'];
-                    $current_user = $_SESSION['pet_center_name'];
+                    $current_user = $_SESSION['pet_center_id'];
 
                     $view_user = $con->query("SELECT * FROM pet_center_tbl");
                     $view_user->setFetchMode(PDO:: FETCH_ASSOC);
