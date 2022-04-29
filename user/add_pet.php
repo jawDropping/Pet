@@ -32,7 +32,7 @@
     session_start();
     include("inc/db.php");
 
-    if(!isset($_SESSION['user_username']))
+    if(!isset($_SESSION['user_id']))
     {
         echo "<script>window.open('login.php', '_self');</script>";
     }
@@ -40,8 +40,8 @@
     {
         if(isset($_POST['add_pet']))
         {
-            $user_username = $_SESSION['user_username'];
-            $user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $users_id = $_SESSION['user_id'];
+            $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
             $user->setFetchMode(PDO:: FETCH_ASSOC);
             $user->execute();
         

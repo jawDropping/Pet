@@ -103,11 +103,11 @@
                         <div id = 'commentors'>
                         <img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
                         
-                        if(isset($_SESSION['user_username']))
+                        if(isset($_SESSION['user_id']))
                         {
                             //check kinsay naka login
-                            $current_user = $_SESSION['user_username'];
-                            $check_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$current_user'");
+                            $current_user = $_SESSION['user_id'];
+                            $check_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
                             $check_user->setFetchMode(PDO:: FETCH_ASSOC);
                             $check_user->execute();
     

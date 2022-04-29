@@ -16,15 +16,15 @@
         <div class="mainDiv">
 
         <?php
-    if(!isset($_SESSION['user_username']))
+    if(!isset($_SESSION['user_id']))
     {
         header("Location: login.php");
     }
     else
     {
         include("inc/db.php");
-        $user_id = $_SESSION['user_username'];
-        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+        $user_id = $_SESSION['user_id'];
+        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
         $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_user_username->execute();
 
@@ -142,7 +142,7 @@
                         if($update_user->execute())
                         {
                             echo "<script>alert('Your Information Successfully Updated!');</script>";
-                            echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+                            echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."', '_self');</script>";
                         }
                     }
                 }
@@ -169,7 +169,7 @@
             if($update_profile->execute())
             {
                 echo "<script>alert('Profile Updated!');</script>";
-                echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+                echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."', '_self');</script>";
             }
         }
     }

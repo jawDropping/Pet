@@ -31,8 +31,8 @@
                 $countUser = $fetchuser->rowCount();
                 if($countUser>0)
                 {
-                    $_SESSION['user_username'] = $row['user_username'];
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."','_self');</script>";
+                    $_SESSION['user_id'] = $row['user_id'];
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."','_self');</script>";
                 }
                 else
                 {
@@ -78,10 +78,10 @@
     function myProfile()
     {
         include("inc/db.php");
-        if(isset($_SESSION['user_username']))
+        if(isset($_SESSION['user_id']))
         {
-            $user_id = $_SESSION['user_username'];
-            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+            $user_id = $_SESSION['user_id'];
+            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user_username->execute();
     
@@ -155,7 +155,7 @@
                 if($update_user->execute())
                 {
                     echo "<script>alert('Your Information Successfully Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."', '_self');</script>";
                 }
             }
         }
@@ -1453,8 +1453,8 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
             $row3 = $sql2->fetch();
             
-            $user_username = $_SESSION['user_username'];
-            $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $users_id = $_SESSION['user_id'];
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
             $sql->execute();
 
@@ -1716,14 +1716,15 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
             $row3 = $sql2->fetch();
             
-            $user_username = $_SESSION['user_username'];
-            $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $users_id = $_SESSION['user_id'];
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
             $sql->execute();
 
             $row2 = $sql->fetch();
 
             $user_id = $row2['user_id'];
+            $empty_coupon = '';
 
             echo 
             "<form method = 'POST'>
@@ -1736,62 +1737,17 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     <td><label style = 'position:absolute;margin:18% 0% 0% 30%;'>Time: </label></td>
                     <td><input type = 'time' name = 'reserve_time'  required style = 'position:absolute;align-items:center;margin:17.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td><br>
                 </tr><br>
+                <tr>
+                <tr>
+                    <td><label style = 'position:absolute;margin:19.5% 0% 0% 30%;'>Service Cost: ".$service_cost."</label></td>
+                    <td><input type = 'hidden' name = 'service_cost' value = '".$service_cost."'  style = 'position:absolute;align-items:center;margin:19.1% 0% 0% 42%;width:420px;height:32px;border-radius:5px'></label></td><br>
+                </tr><br>
+                <tr>
+                <tr>
+                <td><input type = 'hidden' name = 'coupon_code' value = '".$empty_coupon."' required style = 'position:absolute;align-items:center;margin:17.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td><br>
+                </tr><br>
                 <tr>";
-                    if($row3['active_coupon'] == 'yes')
-                    {
-                        $empty_coupon = '';
-                        echo 
-                        "
-                        
-                        <td><input type = 'hidden' name = 'coupon_code'  value = '".$empty_coupon."' style = 'position:absolute;align-items:center;margin:19.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>";
-                        // <td><button name = 'verify' style = 
-                        // 'border: 0;
-                        // padding: 7.5px 17px;
-                        // background: #86b0b6;
-                        // font-size: 12px;
-                        // border-radius: 5px;
-                        // color: #fff;
-                        // cursor:pointer;'>VERIFY</button></td>
-                        // <label style = 'position:absolute;margin:18.2% 0% 0% 40.9%;color:red'>*PUT  "."N/A"." if you don't have any coupon code!</label><br>";
-                        // if(isset($_POST['verify']))
-                        // {
-                        //     $coupon_code = $_POST['coupon_code'];
-                        //     $verify_coupon = $con->prepare("SELECT * FROM donations");
-                        //     $verify_coupon->setFetchMode(PDO:: FETCH_ASSOC);
-                        //     $verify_coupon->execute();
-                            
-                        //     $row_coupon = $verify_coupon->fetch();
-                        //     $coupon_val = $row_coupon['coupon_code'];
-                        //     $discount = "0.02";
-
-                        //     $total = $service_cost * $discount;
-                        //     $convertfloat = floatval($total);
-
-                        //     $service_total_cost = $service_cost - $convertfloat;
-                            
-                        //     if($coupon_val == $coupon_code)
-                        //     {
-                        //         echo 
-                        //         "<tr>
-                        //             <td><label style = 'position:absolute;margin:20% 0% 0% 30%;'>Service Cost: </label></td>
-                        //             <td><input type = 'hidden' name = 'service_cost' value = ".$service_total_cost." /></td>
-                        //             <td>".$service_total_cost."</td>
-                        //         </tr><br>";
-                        //     }
-                        //     else
-                        //     {
-                        //         echo 
-                        //         "<tr>
-                                    
-                        //         </tr><br>";
-                        //     }
-                        // }
-                        echo 
-                        "<td><label style = 'position:absolute;margin:25% 0% 0% 30%;'>Service Cost: </label></td>
-                        <td><input type = 'hidden' name = 'service_cost' value = ".$service_cost."   /></td>
-                        <td >".$service_cost.   "</td>";
-                    }
-                    else
+                
                 echo "</tr><br>
                 <tr>
                     <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
@@ -2026,7 +1982,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     if($rowCount2 > 0)
                     {
                         echo 
-                        "<a href='service_detail.php?cat_id=".$row_service['service_id']."'>
+                        "<a href='show_service_info.php?id=".$row_service['id']."'>
                             <h4>".$row_service['services_name']."</h4>
                             <img src ='../uploads/user_profile/".$row_service['service_photo']."' />
                                 <center>
