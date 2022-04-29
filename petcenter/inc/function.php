@@ -252,18 +252,6 @@
             <td><input type='text' name = 'services_name' required /></td>
         </tr>
         <tr>
-            <td>Location: </td>
-            <td><input type='text' name =  'services_loc' required /></td>
-        </tr>
-        <tr>
-            <td>Email: </td>
-            <td><input type='text' name =  'services_email' required /></td>
-        </tr>
-        <tr>
-            <td>Contact Number: </td>
-            <td><input type='text' name =  'services_contact_number' required /></td>
-        </tr>
-        <tr>
             <td>Service Day From: </td>
             <td>
                 <select name = 'day_open' required>";
@@ -324,9 +312,9 @@
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];
-            $services_loc = $_POST['services_loc'];
-            $services_email = $_POST['services_email'];
-            $services_contact_number = $_POST['services_contact_number'];
+            $services_loc = $row['location'];
+            $services_email = $row['email'];
+            $services_contact_number = $row['contact_number'];
             $day_open = $_POST['day_open'];
             $day_close = $_POST['day_close'];
             $time_open = $_POST['time_open'];
@@ -421,9 +409,6 @@
             "<tr>
                 <td>".$row3['cat_name']."</td>
                 <td>".$row2['services_name']."</td>
-                <td>".$row2['services_loc']."</td>
-                <td>".$row2['services_email']."</td>
-                <td>".$row2['services_contact_number']."</td>
                 <td>".$row4['days']." - ".$row5['days']."</td>
                 <td>".date('g:i A', strtotime($row2['time_open']))." - ".date('g:i A', strtotime($row2['time_close']))."</td>
                 <td>".$row2['service_cost']."</td>
@@ -519,26 +504,19 @@
         $service_name";
         $sender = "ianjohn0101@gmail.com";
 
-
-        if(mail($receiver, $subject, $body, $sender))
+        if(isset($_POST['confirm_request']))
         {
-            // var_dump($pet_center_id);
-            // var_dump($service_id);
-            // var_dump($user_id);
-            // var_dump($coupon_code);
-            // var_dump($transaction_code);
-            // var_dump($today);
-            // var_dump($service_cost);
-            if(isset($_POST['confirm_request']))
+            $reserve_id = $_POST['confirm_request'];
+            $pet_center_id = $_POST['pet_center_id'];
+            $service_id = $_POST['service_id'];
+            $user_id = $_POST['user_id'];
+            $coupon_code = $_POST['coupon_code'];
+            $transaction_code = $_POST['transaction_code'];
+            $date_confirmed = $_POST['date_confirmed'];
+            $amount = $_POST['service_cost'];
+            
+            if(mail($receiver, $subject, $body, $sender))
             {
-                $reserve_id = $_POST['confirm_request'];
-                $pet_center_id = $_POST['pet_center_id'];
-                $service_id = $_POST['service_id'];
-                $user_id = $_POST['user_id'];
-                $coupon_code = $_POST['coupon_code'];
-                $transaction_code = $_POST['transaction_code'];
-                $date_confirmed = $_POST['date_confirmed'];
-                $amount = $_POST['service_cost'];
                 $confirm = $con->prepare("INSERT INTO confirmed_services
                 (
                     pet_center_id,
@@ -662,25 +640,16 @@
             echo 
             "<form method = 'POST' enctype='multipart/form-data'>
                 <div>
-                    <input type = 'text' name = 'services_name' value = '".$row['services_name']."' />
+                    <input type = 'text' name = 'services_name' value = '".$row['services_name']."' required/>
                 </div>
                 <div>
-                    <input type = 'text' name = 'services_loc' value = '".$row['services_loc']."' />
+                    <input type = 'text' name = 'service_cost' value = '".$row['service_cost']."' required/>
                 </div>
                 <div>
-                    <input type = 'text' name = 'services_email' value = '".$row['services_email']."' />
+                    <input type = 'time' name = 'time_open' value = '".$row['time_open']."' required/>
                 </div>
                 <div>
-                    <input type = 'text' name = 'services_contact_number' value = '".$row['services_contact_number']."' />
-                </div>
-                <div>
-                    <input type = 'text' name = 'service_cost' value = '".$row['service_cost']."' />
-                </div>
-                <div>
-                    <input type = 'time' name = 'time_open' value = '".$row['time_open']."' />
-                </div>
-                <div>
-                    <input type = 'time' name = 'time_close' value = '".$row['time_close']."' />
+                    <input type = 'time' name = 'time_close' value = '".$row['time_close']."' required/>
                 </div>
                 <div>
                     <select name = 'day_open' required>";
@@ -692,42 +661,55 @@
                         echo days();
                     echo" </select>
                 </div>
-                <div>
-                    <input type = 'file' name = 'service_photo' value = '".$row['service_photo']."' />
-                </div>
+              
                 <div>
                     <button name = 'update_service'>Update Service</button>
                 </div>
+            </form>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                <div>
+                <img src = '../uploads/user_profile/".$row['service_photo']."'  style = 'height:50px;width:50px;' />
+                    <input type = 'file' name = 'service_photo' value = '".$row['service_photo']."' required/>
+                </div>
+                <button name = 'update_img'> Update Image </button>
             </form>";
             if(isset($_POST['update_service']))
             {
                 $services_name = $_POST['services_name'];
-                $services_loc =  $_POST['services_loc'];
-                $services_email = $_POST['services_email'];
-                $services_contact_number = $_POST['services_contact_number'];
                 $day_open = $_POST['day_open'];
                 $day_close = $_POST['day_close'];
                 $time_open = $_POST['time_open'];
                 $time_close = $_POST['time_close'];
                 $service_cost = $_POST['service_cost'];
-              
-                $service_photo = $_FILES['service_photo']['name'];
-                $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
-
-                move_uploaded_file($service_photo_tmp,"../uploads/user_profile/$service_photo");
                 
                 $update_service = $con->prepare("UPDATE services 
                 SET 
                     services_name='$services_name',
-                    services_loc = '$services_loc',
-                    services_email = '$services_email',
-                    services_contact_number = '$services_contact_number',
                     day_open = '$day_open',
                     day_close = '$day_close',
                     time_open = '$time_open',
                     time_close = '$time_close',
-                    service_cost = '$service_cost',
-                    service_photo = '$service_photo'
+                    service_cost = '$service_cost'
+                WHERE 
+                    id = '$service_id'");
+    
+                if($update_service->execute())
+                {
+                    echo "<script>alert('Services Successfully Updated!');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                }
+            }
+
+            if(isset($_POST['update_img']))
+            {
+                $service_photo = $_FILES['service_photo']['name'];
+                $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
+
+                move_uploaded_file($service_photo_tmp,"../uploads/user_profile/$service_photo");
+
+                $update_service = $con->prepare("UPDATE services 
+                SET 
+                    service_photo='$service_photo'
                 WHERE 
                     id = '$service_id'");
     
