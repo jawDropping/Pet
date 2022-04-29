@@ -238,7 +238,7 @@
            $pro_img3 = $_FILES['pro_img3']['name'];
            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
            
-   
+
         
            move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
            move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
@@ -732,11 +732,10 @@
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
                     <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
+                    <a  id = 'viewok' href = view_donation.php?view_donation=".$row['id'].">View</a>
                     </div>
                     </div>
-                    <div class = 'holdest'>
-                    <a href = view_donation.php?view_donation=".$row['id'].">View</a>
-                    </div>
+                    
             </form>";
        
         endwhile;

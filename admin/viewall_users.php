@@ -47,9 +47,9 @@
         </div>
 </div>
 <div id="bodyright">
-
+<p class = 'hed'>View All Users</p>
 <div class = "scroll">
-    <h3>View All Users</h3>
+    
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
@@ -88,7 +88,11 @@
     .selection {
   background: #28287774;
 }
-    
+.hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
 </style>
 
 
