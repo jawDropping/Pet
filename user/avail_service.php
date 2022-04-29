@@ -13,19 +13,33 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
 
-            echo 
-            "<div class ='mainDiv'>";
-            avail_service();
-            echo"</div>";
+            
 
             
         ?>
+
+ 
+            <div class ='mainDiv'>
+            <?php avail_service(); ?>
+            </div>
    
     </body>
     <style>
            .mainDiv{
         width: 90%;
-        margin-left: 5%;
+        margin: 7vh 5% 0 5%;
+        height: 90vh;
+        background: green;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    .maines{
+        background: red;
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+    .hh{
+        text-align: center;
     }
     </style>
 </html>

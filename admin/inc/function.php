@@ -894,11 +894,10 @@
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
                     <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
+                    <a  id = 'viewok' href = view_donation.php?view_donation=".$row['id'].">View</a>
                     </div>
                     </div>
-                    <div class = 'holdest'>
-                    <a href = view_donation.php?view_donation=".$row['id'].">View</a>
-                    </div>
+                    
             </form>";
        
         endwhile;
