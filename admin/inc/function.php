@@ -17,8 +17,8 @@
             $row = $fetchuser->fetch();
             if($countUser>0)
             {
-                $_SESSION['admin_name'] = $_POST['admin_name'];
-                echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."','_self');</script>";
+                $_SESSION['id'] = $row['id'];
+                echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['id']."','_self');</script>";
             }
             else
             {
@@ -30,10 +30,10 @@
     function AdminProfile()
     {
         include("inc/db.php");
-        if(isset($_SESSION['admin_name']))
+        if(isset($_SESSION['id']))
         {
-            $user_id = $_SESSION['admin_name'];
-            $fetch_user_username = $con->prepare("SELECT * FROM admintbl WHERE admin_name = '$user_id'");
+            $user_id = $_SESSION['id'];
+            $fetch_user_username = $con->prepare("SELECT * FROM admintbl WHERE id = '$user_id'");
             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user_username->execute();
     
@@ -84,7 +84,7 @@
                     if($update_user->execute())
                     {
                         echo "<script>alert('Your Information Successfully Updated!');</script>";
-                        echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."', '_self');</script>";
+                        echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['id']."', '_self');</script>";
                     }
                 }
             }
@@ -344,7 +344,7 @@
             SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
             (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
             from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
-            WHERE o.user_id = 1
+            WHERE o.user_id = o.user_id
             group by o.order_id, p.pro_name, o.delivery_status) od
             group by od.order_id, od.delivery_status
             ");
@@ -396,7 +396,7 @@
 
                 $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
                 
-                if($delivery_date < $today)
+                if($delivery_date > $today)
                 {
                     echo "INVALID DATE!";
                 }
@@ -1128,8 +1128,8 @@
         while($row = $view_coupons->fetch()):
             echo 
             "<tr>
-                <td>".$row['last_name'].", ".$row['first_name']."</td>
-                <td>".$row['email_address']."</td>
+                <td>".$row['full_name']."</td>
+                <td>".$row['email']."</td>
                 <td>".$row['coupon_code']."</td>
             </tr>"; 
         endwhile;

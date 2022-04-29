@@ -25,21 +25,18 @@
                 <form method = "POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"; enctype = "multipart/form-data">
                  
                        
-                        <input class = "input" type="email" name = "email" placeholder = "Username"/>               
-                        <input class = "input"type="password" name = "pet_center_password"  placeholder = "Password"/></br>
-                        <p>Or <a href = "/Pet/user/login.php">Log in as Customer?</a></p>
-                            <button  class = "button" name = "login_user" id = "login_user" >LOGIN</button>
-                            <button  class = "signup" name = "signup" id = "signup"><a href = "/Pet/petcenter/signup.php">SIGNUP</a></button>
+                        <input class = "input" type="email" name = "email" placeholder = "Email"/>               
+                        <input class = "input"type="text" name = "v_key"  placeholder = "Verification Key"/></br>
+                            <button  class = "button" name = "verify_key" id = "login_user" >LOGIN</button>
                         </br>
                      
                     </form>
-                    <a href = 'verify_email.php'>Verify My Email</a>
                 </div>
            
             </div>
         <?php
             include ("inc/function.php");
-            call_user_func('LogIn');
+            call_user_func('verify');
         ?>
     </div>
     </body>

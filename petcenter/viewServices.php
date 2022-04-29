@@ -5,9 +5,7 @@
         <tr>
             <th>Services Applied</th>
             <th>Service Name</th>
-            <th>Service Location</th>
-            <th>Service Email</th>
-            <th>Service Contact Number</th>
+         
             <th>Service Day Open and Close</th>
             <th>Service Time Open and Close</th>
             <th>Service Cost</th>

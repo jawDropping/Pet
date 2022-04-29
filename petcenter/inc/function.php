@@ -9,20 +9,63 @@
             $email = $_POST['email'];
             $pet_center_password = $_POST['pet_center_password'];
 
-            $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
-            $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetchuser->execute();
             
-            $row = $fetchuser->fetch();
-            $countUser = $fetchuser->rowCount();
-            if($countUser>0)
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email'");
+            $check_email->setFetchMode(PDO::FETCH_ASSOC);
+            $check_email->execute();
+
+            $verified = $check_email->fetch();
+            $isVerified = $verified['verified'];
+
+            if($isVerified == 1)
             {
-                $_SESSION['pet_center_name'] = $row['pet_center_name'];
-                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
+                $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
+                $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetchuser->execute();
+                
+                $row = $fetchuser->fetch();
+                $countUser = $fetchuser->rowCount();
+                if($countUser>0)
+                {
+                    $_SESSION['pet_center_id'] = $row['pet_center_id'];
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."','_self');</script>";
+                }
+                else
+                {
+                    echo "<script>alert('Username or Password is incorrect!');</script>";
+                }
             }
             else
             {
-                echo "<script>alert('Username or Password is incorrect!');</script>";
+                echo "Please verify your email!";
+            }
+        }
+    }
+
+    function verify()
+    {
+        include("inc/db.php");
+        if(isset($_POST['verify_key']))
+        {
+            $user_email = $_POST['email'];
+            $v_key = $_POST['v_key'];
+
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$user_email' AND v_key = '$v_key'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                $update_verification = $con->prepare("UPDATE pet_center_tbl SET verified = 1 WHERE email = '$user_email'");
+                if($update_verification->execute())
+                {
+                    echo "You can now log in!";
+                }
+            }
+            else
+            {
+                echo "Email or Verification Code is incorrect!";
             }
         }
     }
@@ -31,14 +74,14 @@
     {
         include("inc/db.php");
         
-        if(!isset($_SESSION['pet_center_name']))
+        if(!isset($_SESSION['pet_center_id']))
         {
             header('Location: login.php');
         }
         else
         {
-            $user = $_SESSION['pet_center_name'];
-            $view_user = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user'");
+            $user = $_SESSION['pet_center_id'];
+            $view_user = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$user'");
             $view_user->setFetchMode(PDO:: FETCH_ASSOC);
             $view_user->execute();
     
@@ -81,7 +124,7 @@
             if($add_cat->execute())
             {
                 echo "<script>alert('Category Added Successfully!');</script>"; 
-                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."','_self');</script>";
+                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."','_self');</script>";
             }
             else
             {
@@ -115,6 +158,7 @@
             $email = $_POST['email'];
             $contact_number = $_POST['contact_number'];
             $accept_coupons = $_POST['accept_coupons'];
+            $verification_key = generateRandomString();
 
             $view_email = $con->prepare("SELECT COUNT(*) AS pet_center_email FROM pet_center_tbl WHERE email = '$email'");
             $view_email->setFetchMode(PDO::FETCH_ASSOC);
@@ -152,37 +196,49 @@
             }
             else
             {
-                $add_service = $con->prepare("INSERT INTO pet_center_tbl (
-                    pet_center_name,
-                    pet_center_password,
-                    email,
-                    contact_number,
-                    pet_center_photo,
-                    active_coupon
-                ) 
-                VALUES (
-                    '$pet_center_name',
-                    '$pet_center_password',
-                    '$email',
-                    '$contact_number',
-                    'userIcon.svg',
-                    '$accept_coupons'
-                )");
-    
-                if($add_service->execute())
+                $receiver = $user_email;
+                $subject = "Email Verification";
+                $body = "Use this Verification Code: $verification_key to verify your email!";
+                $sender = "ianjohn0101@gmail.com";
+
+                if(mail($receiver, $subject, $body, $sender))
                 {
-                    echo "
-                    <script>
-                    alert('Registered Successful!');
-                    if ( window.history.replaceState ) {
-                       window.history.replaceState( null, null, window.location.href );
-                   }            
-                    </script>"; 
-                }
-                else
-                {
-                    echo "<script>alert('Registered Unsuccessful!');</script>";
-                }
+                    $add_service = $con->prepare("INSERT INTO pet_center_tbl (
+                        pet_center_name,
+                        pet_center_password,
+                        email,
+                        contact_number,
+                        pet_center_photo,
+                        active_coupon,
+                        v_key,
+                        verified
+                    ) 
+                    VALUES (
+                        '$pet_center_name',
+                        '$pet_center_password',
+                        '$email',
+                        '$contact_number',
+                        'userIcon.svg',
+                        '$accept_coupons'
+                        '$verification_key',
+                        0
+                    )");
+        
+                    if($add_service->execute())
+                    {
+                        echo "
+                        <script>
+                        alert('Registered Successful!');
+                        if ( window.history.replaceState ) {
+                        window.history.replaceState( null, null, window.location.href );
+                    }            
+                        </script>"; 
+                    }
+                    else
+                    {
+                        echo "<script>alert('Registered Unsuccessful!');</script>";
+                    }
+                } 
             }
         }
     }
@@ -194,18 +250,6 @@
         <tr>
             <td>Name: </td>
             <td><input type='text' name = 'services_name' required /></td>
-        </tr>
-        <tr>
-            <td>Location: </td>
-            <td><input type='text' name =  'services_loc' required /></td>
-        </tr>
-        <tr>
-            <td>Email: </td>
-            <td><input type='text' name =  'services_email' required /></td>
-        </tr>
-        <tr>
-            <td>Contact Number: </td>
-            <td><input type='text' name =  'services_contact_number' required /></td>
         </tr>
         <tr>
             <td>Service Day From: </td>
@@ -255,10 +299,10 @@
         include ("inc/db.php");
         if(isset($_POST['add_service']))
         {
-            $pet_center_name = $_SESSION['pet_center_name'];
+            $pet_cent_id = $_SESSION['pet_center_id'];
           
 
-            $fetch_name = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name'");
+            $fetch_name = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
             $fetch_name->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_name->execute();
 
@@ -268,9 +312,9 @@
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];
-            $services_loc = $_POST['services_loc'];
-            $services_email = $_POST['services_email'];
-            $services_contact_number = $_POST['services_contact_number'];
+            $services_loc = $row['location'];
+            $services_email = $row['email'];
+            $services_contact_number = $row['contact_number'];
             $day_open = $_POST['day_open'];
             $day_close = $_POST['day_close'];
             $time_open = $_POST['time_open'];
@@ -329,8 +373,8 @@
     {
         echo "<a href = 'addService.php'>Add Service</a>";
         include("inc/db.php");
-        $user_name = $_SESSION['pet_center_name'];
-        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $pet_cent_id = $_SESSION['pet_center_id'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -365,9 +409,6 @@
             "<tr>
                 <td>".$row3['cat_name']."</td>
                 <td>".$row2['services_name']."</td>
-                <td>".$row2['services_loc']."</td>
-                <td>".$row2['services_email']."</td>
-                <td>".$row2['services_contact_number']."</td>
                 <td>".$row4['days']." - ".$row5['days']."</td>
                 <td>".date('g:i A', strtotime($row2['time_open']))." - ".date('g:i A', strtotime($row2['time_close']))."</td>
                 <td>".$row2['service_cost']."</td>
@@ -382,8 +423,8 @@
     function view_requests()
     {
         include("inc/db.php");
-        $user_name = $_SESSION['pet_center_name'];
-        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $pet_cent_id = $_SESSION['pet_center_id'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -463,26 +504,19 @@
         $service_name";
         $sender = "ianjohn0101@gmail.com";
 
-
-        if(mail($receiver, $subject, $body, $sender))
+        if(isset($_POST['confirm_request']))
         {
-            // var_dump($pet_center_id);
-            // var_dump($service_id);
-            // var_dump($user_id);
-            // var_dump($coupon_code);
-            // var_dump($transaction_code);
-            // var_dump($today);
-            // var_dump($service_cost);
-            if(isset($_POST['confirm_request']))
+            $reserve_id = $_POST['confirm_request'];
+            $pet_center_id = $_POST['pet_center_id'];
+            $service_id = $_POST['service_id'];
+            $user_id = $_POST['user_id'];
+            $coupon_code = $_POST['coupon_code'];
+            $transaction_code = $_POST['transaction_code'];
+            $date_confirmed = $_POST['date_confirmed'];
+            $amount = $_POST['service_cost'];
+            
+            if(mail($receiver, $subject, $body, $sender))
             {
-                $reserve_id = $_POST['confirm_request'];
-                $pet_center_id = $_POST['pet_center_id'];
-                $service_id = $_POST['service_id'];
-                $user_id = $_POST['user_id'];
-                $coupon_code = $_POST['coupon_code'];
-                $transaction_code = $_POST['transaction_code'];
-                $date_confirmed = $_POST['date_confirmed'];
-                $amount = $_POST['service_cost'];
                 $confirm = $con->prepare("INSERT INTO confirmed_services
                 (
                     pet_center_id,
@@ -519,8 +553,8 @@
     function viewHistory()
     {
         include("inc/db.php");
-        $user_name = $_SESSION['pet_center_name'];
-        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_name'");
+        $pet_cent_id = $_SESSION['pet_center_id'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_cent_id'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -606,25 +640,16 @@
             echo 
             "<form method = 'POST' enctype='multipart/form-data'>
                 <div>
-                    <input type = 'text' name = 'services_name' value = '".$row['services_name']."' />
+                    <input type = 'text' name = 'services_name' value = '".$row['services_name']."' required/>
                 </div>
                 <div>
-                    <input type = 'text' name = 'services_loc' value = '".$row['services_loc']."' />
+                    <input type = 'text' name = 'service_cost' value = '".$row['service_cost']."' required/>
                 </div>
                 <div>
-                    <input type = 'text' name = 'services_email' value = '".$row['services_email']."' />
+                    <input type = 'time' name = 'time_open' value = '".$row['time_open']."' required/>
                 </div>
                 <div>
-                    <input type = 'text' name = 'services_contact_number' value = '".$row['services_contact_number']."' />
-                </div>
-                <div>
-                    <input type = 'text' name = 'service_cost' value = '".$row['service_cost']."' />
-                </div>
-                <div>
-                    <input type = 'time' name = 'time_open' value = '".$row['time_open']."' />
-                </div>
-                <div>
-                    <input type = 'time' name = 'time_close' value = '".$row['time_close']."' />
+                    <input type = 'time' name = 'time_close' value = '".$row['time_close']."' required/>
                 </div>
                 <div>
                     <select name = 'day_open' required>";
@@ -636,49 +661,62 @@
                         echo days();
                     echo" </select>
                 </div>
-                <div>
-                    <input type = 'file' name = 'service_photo' value = '".$row['service_photo']."' />
-                </div>
+              
                 <div>
                     <button name = 'update_service'>Update Service</button>
                 </div>
+            </form>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                <div>
+                <img src = '../uploads/user_profile/".$row['service_photo']."'  style = 'height:50px;width:50px;' />
+                    <input type = 'file' name = 'service_photo' value = '".$row['service_photo']."' required/>
+                </div>
+                <button name = 'update_img'> Update Image </button>
             </form>";
             if(isset($_POST['update_service']))
             {
                 $services_name = $_POST['services_name'];
-                $services_loc =  $_POST['services_loc'];
-                $services_email = $_POST['services_email'];
-                $services_contact_number = $_POST['services_contact_number'];
                 $day_open = $_POST['day_open'];
                 $day_close = $_POST['day_close'];
                 $time_open = $_POST['time_open'];
                 $time_close = $_POST['time_close'];
                 $service_cost = $_POST['service_cost'];
-              
-                $service_photo = $_FILES['service_photo']['name'];
-                $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
-
-                move_uploaded_file($service_photo_tmp,"../uploads/user_profile/$service_photo");
                 
                 $update_service = $con->prepare("UPDATE services 
                 SET 
                     services_name='$services_name',
-                    services_loc = '$services_loc',
-                    services_email = '$services_email',
-                    services_contact_number = '$services_contact_number',
                     day_open = '$day_open',
                     day_close = '$day_close',
                     time_open = '$time_open',
                     time_close = '$time_close',
-                    service_cost = '$service_cost',
-                    service_photo = '$service_photo'
+                    service_cost = '$service_cost'
                 WHERE 
                     id = '$service_id'");
     
                 if($update_service->execute())
                 {
                     echo "<script>alert('Services Successfully Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
+                }
+            }
+
+            if(isset($_POST['update_img']))
+            {
+                $service_photo = $_FILES['service_photo']['name'];
+                $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
+
+                move_uploaded_file($service_photo_tmp,"../uploads/user_profile/$service_photo");
+
+                $update_service = $con->prepare("UPDATE services 
+                SET 
+                    service_photo='$service_photo'
+                WHERE 
+                    id = '$service_id'");
+    
+                if($update_service->execute())
+                {
+                    echo "<script>alert('Services Successfully Updated!');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
                 }
             }
         }
@@ -692,7 +730,7 @@
         if($delete_service->execute())
         {
             echo "<script>alert('Service Deleted Successfully!');</script>";
-            echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+            echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
         }
     }
 
@@ -710,10 +748,10 @@
     function myProfile()
     {
         include("inc/db.php");
-        if(isset($_SESSION['pet_center_name']))
+        if(isset($_SESSION['pet_center_id']))
         {
-            $user_id = $_SESSION['pet_center_name'];
-            $fetch_user_username = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$user_id'");
+            $user_id = $_SESSION['pet_center_id'];
+            $fetch_user_username = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$user_id'");
             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user_username->execute();
     
@@ -799,7 +837,7 @@
                             if($update_user->execute())
                             {
                                 echo "<script>alert('Your Information Successfully Updated!');</script>";
-                                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                                echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
                             }
                         }
                     }
@@ -826,7 +864,7 @@
                 if($update_profile->execute())
                 {
                     echo "<script>alert('Profile Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_name']."', '_self');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."', '_self');</script>";
                 }
             }
         }
@@ -863,7 +901,7 @@
             {
                 while($row = $search->fetch()):
                     $pet_center_id = $row['pet_center_id'];
-                    $current_user = $_SESSION['pet_center_name'];
+                    $current_user = $_SESSION['pet_center_id'];
 
                     $view_user = $con->query("SELECT * FROM pet_center_tbl");
                     $view_user->setFetchMode(PDO:: FETCH_ASSOC);

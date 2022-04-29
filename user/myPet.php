@@ -24,9 +24,11 @@
             echo "
             <div class = 'container'>
             <div class = 'firstCont'>
-            <a href = 'add_pet.php'>Share Moments with your Pet :)</a><br></div>";
+            Your Pet</div>";
+
+            $current_user = $_SESSION['user_id'];
         
-            $viewall_pets = $con->prepare("SELECT * FROM pets");
+            $viewall_pets = $con->prepare("SELECT * FROM pets WHERE user_id = '$current_user'");
             $viewall_pets->setFetchMode(PDO:: FETCH_ASSOC);
             $viewall_pets->execute();
     
