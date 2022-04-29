@@ -17,8 +17,8 @@
             $row = $fetchuser->fetch();
             if($countUser>0)
             {
-                $_SESSION['admin_name'] = $_POST['admin_name'];
-                echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."','_self');</script>";
+                $_SESSION['id'] = $row['id'];
+                echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['id']."','_self');</script>";
             }
             else
             {
@@ -30,10 +30,10 @@
     function AdminProfile()
     {
         include("inc/db.php");
-        if(isset($_SESSION['admin_name']))
+        if(isset($_SESSION['id']))
         {
-            $user_id = $_SESSION['admin_name'];
-            $fetch_user_username = $con->prepare("SELECT * FROM admintbl WHERE admin_name = '$user_id'");
+            $user_id = $_SESSION['id'];
+            $fetch_user_username = $con->prepare("SELECT * FROM admintbl WHERE id = '$user_id'");
             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user_username->execute();
     
@@ -84,7 +84,7 @@
                     if($update_user->execute())
                     {
                         echo "<script>alert('Your Information Successfully Updated!');</script>";
-                        echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."', '_self');</script>";
+                        echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['id']."', '_self');</script>";
                     }
                 }
             }
