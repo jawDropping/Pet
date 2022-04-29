@@ -5,14 +5,20 @@
          </div>
          <div class="profile">
             <?php
-                if(isset($_SESSION['admin_name']))
+                if(isset($_SESSION['id']))
                 {
+                  $user_id = $_SESSION['id'];
+                  $fetch_user_username = $con->prepare("SELECT * FROM admintbl WHERE id = '$user_id'");
+                  $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                  $fetch_user_username->execute();
+          
+                  $row = $fetch_user_username->fetch();
                     echo "<div class='dropbtn'>
                             <img id = 'profilePic'/>
-                            <p class='adminName'>".$_SESSION['admin_name']."</p>
+                            <p class='adminName'>".$row['admin_name']."</p>
                           </div>
                           <div class='drop-content'>
-                            <a href='myProfile.php?login_user=".$_SESSION['admin_name']."'>Profile</a>
+                            <a href='myProfile.php?login_user=".$_SESSION['id']."'>Profile</a>
                             <a href ='logout.php'>Logout</a>
                             <a class='gotoUser' href= '../user/index.php'>User Page</a>
                           </div>";

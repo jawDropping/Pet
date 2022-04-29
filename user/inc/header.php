@@ -22,7 +22,7 @@
             <div id = 'link'>
 
             <?php
-                if(isset($_SESSION['user_username']))
+                if(isset($_SESSION['user_id']))
                 {
                     // echo "<img class='profileImg' src = '../uploads/userIcon.svg'>";
                     // echo "
@@ -32,8 +32,8 @@
                     // </ul>
                     // ";
                     include("inc/db.php");
-                    $username = $_SESSION['user_username'];
-                    $getuserprofile = $con->prepare("SELECT * FROM users_table WHERE user_username = '$username'");
+                    $userid = $_SESSION['user_id'];
+                    $getuserprofile = $con->prepare("SELECT * FROM users_table WHERE user_id = '$userid'");
                     $getuserprofile->setFetchMode(PDO:: FETCH_ASSOC);
                     $getuserprofile->execute();
 

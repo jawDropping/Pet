@@ -12,9 +12,9 @@
                     <a href="/Pet/user/viewall_pets.php">Discover</a>
                 </li>
                 <?php
-                    if(isset($_SESSION['user_username']))
+                    if(isset($_SESSION['user_id']))
                     {
-                        echo "<li> <a href = '/Pet/user/index.php?myPet'>My Pet</a></li>";
+                        echo "<li> <a href = '/Pet/user/myPet.php'>My Pet</a></li>";
                     }
                 ?>
             </ul>

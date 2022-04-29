@@ -1,9 +1,9 @@
 <?php
 session_start();
 include("inc/db.php");
-$user_username = $_SESSION['user_username'];
+$users_id = $_SESSION['user_id'];
 
-$sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+$sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
 $sql->setFetchMode(PDO:: FETCH_ASSOC);
 $sql->execute();
 
@@ -25,7 +25,7 @@ $row = $sql->fetch();
 $order_id = 1;
 if($row)
 {
-    $order_id = intval($row['order_id']+1);
+    $order_id = intval($row['order_id']+2);
 }
 // var_dump($row);
 // die($order_id);
@@ -41,6 +41,7 @@ if($row_user['municipality'] == "mandaue" || $row_user['municipality'] == "cebu"
             {
                 header("Location: index.php");
                 unset($_SESSION['cart']);
+            
             }  
         }
         catch(PDOException $e)
