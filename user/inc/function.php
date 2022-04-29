@@ -1266,45 +1266,91 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $close_time = date('g:i A', strtotime($time_close));
             $open_time = date('g:i A', strtotime($time_open));
             echo 
-                "<div id = 'pro_img'>
-                    <img src ='../uploads/user_profile/".$row_services['service_photo']."'/>
-                    
-                  </div>
-                  <div id = 'pro_brand'>
-                    <h3>".$row_services['services_name']."</h3>
-                    <ul>
-                        <li>
-                            Service Category: ".$cat_name."
-                        </li>
-                        <li>
-                            Contact Number: ".$row_services['services_contact_number']."
-                        </li>
-                        <li>
-                         Email Address: ".$row_services['services_email']."
-                        </li>
-                        <li>
-                            Time Open: ".$open_time."
-                        </li>
-                        <li>
-                            Time Close: ".$close_time."
-                        </li>
-                        <li>
-                            Service Cost: ".$row_services['service_cost']."
-                        </li>
-                        <li>
-                            <a href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."' style='margin: 70% 0% 0% 20%;text-decoration:none;color:#fff;background-color:#0000ff;padding:13px;border-radius:4px;font-size:14px;'>Avail Service(without coupon)</a>
-                        </li>
-                        <li>
-                            <a href = 'avail_service.php?avail_service=".$row_services['id']."' style='margin: 20% 0% 0% 50%;text-decoration:none;color:#fff;background-color:#0000ff;padding:13px;border-radius:4px;font-size:14px;'>Avail Service(with coupon)</a>
-                            <td><a href = 'review_service.php?review_service=".$row_services['id']."' style='text-decoration:none;color:#fff;background-color:#0000ff;padding:13px;border-radius:4px;font-size:14px;'>Give Feedback</a></td>
-                        </li>
-                        Location:
-                        <iframe style = 'width:640px;height:500px;margin: 20px 20% 0% 0%;' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
-                    </ul>
-                </div>";   
+                "
+                <div class = 'pckman'>
+                    <div id = 'pic'>
+                    <img id = 'okpic' src ='../uploads/user_profile/".$row_services['service_photo']."'/>
+                    </div>
+                    <div class = 'secondBody'>
+                        <p class = 'hed'>".$row_services['services_name']."</p>
+                        <div class = 'mainHoldest'>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'> Service Category: </p>
+                                <p class = 'conts' >".$cat_name."</p>
+                            </div>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'> Contact Number: </p>
+                                <p class = 'conts'>".$row_services['services_contact_number']." </p>
+                            </div>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'>Email Address:</p>
+                                <p class = 'conts'> ".$row_services['services_email']."</p>
+                            </div>
+                            <div class = 'holderister'>
+                                <div class = 'holdest2'>
+                                    <p class = 'lebs' >Time Open:</p>
+                                    <p class = 'conts'>".$open_time." </p>
+                                </div>
+                                <div class = 'holdest3'>
+                                    <p class = 'lebs'> Time Close:</p>
+                                    <p class = 'conts' > ".$close_time." </p>
+                                </div>
+                            </div>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'>Service Cost: </p>
+                                <p class = 'conts'>".$row_services['service_cost']."</p>
+                            </div>
+                            <div></div>
+                            <div class = 'btnss' >
+                                <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
+                                <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
+                                <a   class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+                   ";   
                 
-            echo 
-            "Services Feedbacks: ";
+       
+           
+        }
+
+    }
+    function showFeeds(){
+        include("inc/db.php");
+        if(isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+            $fetch_services=$con->prepare("SELECT * FROM services WHERE id = '$id'");
+            $fetch_services->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_services->execute();
+
+            $row_services = $fetch_services->fetch();
+            $pet_center_id = $row_services['pet_center_id'];
+
+            $query = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row_pet_center = $query->fetch();
+            $pet_center_location = $row_pet_center['location'];
+            $location = str_replace(" ", "+", $pet_center_location);
+
+            $service_cat = $row_services['service_id'];
+
+            $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '$service_cat'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row = $sql->fetch();
+            $cat_name = $row['cat_name'];
+
+            $time_open = $row_services['time_open'];
+            $time_close = $row_services['time_close'];
+            $close_time = date('g:i A', strtotime($time_close));
+            $open_time = date('g:i A', strtotime($time_open));
+
+            echo "<p class = 'loc2'>REVIEWS</p>";
             $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");
             $sql2->setFetchMode(PDO:: FETCH_ASSOC);
             $sql2->execute();
@@ -1318,9 +1364,12 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
                 while($row_user = $view_user->fetch()):
                     echo 
-                    "<br><tr>
-                        <td>".$row_user['user_username'].": ".$row_feedbacks['comment']."</td>
-                    </tr>"; 
+                    "
+                    <div class = 'comss'>
+                        <p class = 'revNem'>".$row_user['user_username']."</p>
+                        <p class = 'rev'> ".$row_feedbacks['comment']."</p>
+                        </div>
+                    "; 
                 endwhile;
             endwhile;
         }
@@ -1457,28 +1506,27 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                 <label class = 'hh'>Please verify your coupon to get the exact amount!</label>
                 <div class = 'maines'>
                 
-                    <p>Book Appointment: </p>
-                    <input type = 'date' name = 'reserve_date'  required/>
+                    <p class = 'lebs'>Book Appointment: </p>
+                    <input class = 'inet' type = 'date' name = 'reserve_date'  required/>
                 
-                    <p>Time: </p></td>
-                    <input type = 'time' name = 'reserve_time'  required/></td>
-                    <p>Coupon Code: </p>
-                    <input type = 'text' name = 'coupon_code'/>
-                    <p>Service Cost: </p>
-                    <input type = 'text' name = 'service_cost' value = ".$service_cost."   />
-                    <p>Service Cost: </p>
-                    <input type = 'text' name = 'service_cost>".$service_cost."/>"; 
+                    <p class = 'lebs'>Time: </p></td>
+                    <input class = 'inet' type = 'time' name = 'reserve_time'  required/></td>
+                    <p class = 'lebs'>Coupon Code: </p>
+                    <input class = 'inet' type = 'text' name = 'coupon_code'/>
+                    <p class = 'lebs'>Service Cost: </p>
+                    <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
+                   "; 
                 echo "
        
                     <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
                     <div>
-                    <button name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
-                    <a href = 'services.php'>GO BACK</a>
+                    <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
+                    <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
                     </div>
                     
                 </div>
             </form>";
-           else
+                    }else
             {
                 echo "This service provides no coupon, Click here to avail the service without any coupon used!<a href = 'avail_service_nocoupon.php?avail_service=".$row['id']."'>Avail Service(without coupon)</a>";
             }
@@ -1692,52 +1740,25 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
             echo 
             "<form method = 'POST'>
-                <label style = 'color:#fff;position:absolute;margin:10% 0% 0% 40.7%;background-color:#000;padding: 10px 10px;border-radius:5px;'>Please verify your coupon to get the exact amount!</label><br>
-                <tr>
-                    <td><label style = 'position:absolute;margin:15% 0% 0% 30%;'>Book Appointment: </label></td>
-                    <td><input type = 'date' name = 'reserve_date'  required style = 'position:absolute;align-items:center;margin:14.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td>
-                </tr><br>
-                <tr>
-                    <td><label style = 'position:absolute;margin:18% 0% 0% 30%;'>Time: </label></td>
-                    <td><input type = 'time' name = 'reserve_time'  required style = 'position:absolute;align-items:center;margin:17.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td><br>
-                </tr><br>
-                <tr>
-                <tr>
-                    <td><label style = 'position:absolute;margin:19.5% 0% 0% 30%;'>Service Cost: ".$service_cost."</label></td>
-                    <td><input type = 'hidden' name = 'service_cost' value = '".$service_cost."'  style = 'position:absolute;align-items:center;margin:19.1% 0% 0% 42%;width:420px;height:32px;border-radius:5px'></label></td><br>
-                </tr><br>
-                <tr>
-                <tr>
-                <td><input type = 'hidden' name = 'coupon_code' value = '".$empty_coupon."' required style = 'position:absolute;align-items:center;margin:17.5% 0% 0% 42%;width:420px;height:32px;border-radius:5px'/></td><br>
-                </tr><br>
-                <tr>";
+               
+                <div class = 'maines'>
                 
-                echo "</tr><br>
-                <tr>
-                    <td><input type = 'hidden' name = 'reserve' value = ".$row['service_id']."</td>
-                    <td><button name = 'reserve_service' value = ".$row['service_id']." style = 
-                    'border: 0;
-                    padding: 7.5px 17px;
-                    background: #86b0b6;
-                    font-size: 12px;
-                    border-radius: 5px;
-                    color: #fff;
-                    cursor:pointer;'>RESERVE</button></td>
+                    <p class = 'lebs'>Book Appointment: </p>
+                    <input class = 'inet' type = 'date' name = 'reserve_date'  required/>
+                
+                    <p class = 'lebs'>Time: </p></td>
+                    <input class = 'inet' type = 'time' name = 'reserve_time'  required/>
+                    <p class = 'lebs'>Service Cost: </p>
+                    <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
+              
+       
+                    <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
+                    <div>
+                    <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
+                    <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
+                    </div>
                     
-                </tr>
-                <tr>
-                    <td><a href = 'services.php' style =
-                    '
-                    position:absolute;
-                    text-decoration:none;
-                    background-color:#86b0b6;
-                    font-size:12px;
-                    color:#fff;
-                    font-family: Verdana, Geneva, Tahoma, sans-serif;
-                    padding: 7.5px 17px;
-                    border-radius: 5px;
-                    margin: 0% 2% 10% 1%;'>GO BACK</a></td>
-                </tr>
+                </div>
             </form>";
 
     

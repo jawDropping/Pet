@@ -18,32 +18,72 @@
             
         ?>
 
- 
+           
             <div class ='mainDiv'>
             <?php avail_service(); ?>
             </div>
+            <div class="mainest">
+            <?php include ("inc/footer.php"); ?>
+            </div>
+            
    
     </body>
     <style>
            .mainDiv{
-        width: 90%;
-        margin: 7vh 5% 0 5%;
-        height: 90vh;
-        background: green;
+        width: 80%;
+        margin: 7vh 10% 0 10%;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         border-radius: 5px;
-        padding: 10px;
+        padding: 20px;
+       
     }
     .maines{
-        background: red;
         display: grid;
         grid-template-columns: 40% 60%;
         width: 50%;
         padding: 10px;
         margin-left: 25%;
         row-gap: 20px;
+        margin-top: 20px;
+        
+    }
+    .mainest{
+       
+        margin-top: 25vh;
     }
     .hh{
-        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+       
+    }
+    .inet{
+        height: 42px;
+        padding: 5px;
+    }
+    .lebs{
+        color: #777;
+        font-size: 14px;
+        
+    }
+    .btnn{
+        padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 12px;
+  border: 1px solid #0080fe;
+  color: white;
+  background: #0080fe;
+    }
+    .btnnllnk{
+        padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 12px;
+  border: 1px solid #0080fe;
+  color: #0080fe;
+  background: white;
+  cursor: default;
+
     }
     </style>
 </html>
