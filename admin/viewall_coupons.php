@@ -47,8 +47,8 @@
         </div>
 </div>
 <div id="bodyright">
-<div class = "scroll">
-    <h3>Coupons: </h3>
+<div class = "body">
+    <p class = 'hed'>Coupons: </p>
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
@@ -82,6 +82,11 @@
     .selection {
   background: #28287774;
 }
+.hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
     
 </style>
 

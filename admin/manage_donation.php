@@ -38,7 +38,7 @@
         <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
         </ul>
 </div>
-         <div div class="leftFooter">
+         <div class="leftFooter">
           <div class="iconContainer">
             <img src="../uploads/settings.svg" class="footicons">
             <img src="../uploads/notification.svg" class="footicons">
@@ -68,11 +68,11 @@
 
             <p>Action</p>
         </div>
-        <tr>
+        <div>
             <?php
                 echo viewall_donations();
             ?>
-        </tr>
+        </div>
        </div>
     </div>
 
@@ -92,7 +92,7 @@
     .body{
         margin-top: 7vh;
         background: #fff;
-        height: 90%;
+
         width: 95%;
         border-radius: 5px;
         padding: 10px;
@@ -150,6 +150,20 @@
   width: 100px;
   background: #5a5bf3;
   border: none;
+    }
+    #viewok{
+        
+  color: #fff;
+  border-radius: 3px;
+  width: 100px;
+  
+  border: 1px solid #5a5bf3;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 2px;
+  padding-top: 5px;
+  font-weight: bold;
+  color: black;
     }
     </style>
     <script>

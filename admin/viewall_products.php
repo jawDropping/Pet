@@ -47,8 +47,9 @@
         </div>
 </div>
 <div id="bodyright">
-<div class = "scroll">
-    <h3>View All Deliveries</h3>
+<p class = 'hed'>View All Deliveries</p>
+<div class = "body">
+    
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
@@ -87,6 +88,21 @@
     .selection {
   background: #28287774;
 }
+.hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
+    .body{
+        margin-top: 7vh;
+        background: #fff;
+        width: 95%;
+        border-radius: 5px;
+        padding: 10px;
+        margin-left: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+    }
     
 </style>
 
