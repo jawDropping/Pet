@@ -421,51 +421,62 @@
             ";
             $sender = "ianjohn0101@gmail.com";
 
+            $datenow = getdate();
 
-            $add_delivery = $con->prepare("INSERT INTO delivery_tbl
-            (
-                order_id, 
-                items, 
-                total_amount,
-                user_username, 
-                delivery_date, 
-                delivery_status
-            ) 
-            VALUES
-            (
-                $order_id,
-                '$items',
-                '$total_amount',
-                '$user_username',
-                '$delivery_date',
-                '$delivery_status'
-            )");
+            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
-            if(!$add_delivery->execute())
+
+            if($delivery_date < $today)
             {
-                return;
+                echo "INVALID DATE!";
             }
-            
-            mail($receiver, $subject, $body, $sender);
-
-            $view_details = $con->query("SELECT pro_id, qty FROM orders_tbl WHERE order_id = '$order_id'");
-            $view_details->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_details->execute(); 
-            
-            while($row = $view_details->fetch()):
-                $pro_id = $row['pro_id'];
-                $qty = $row['qty'];
-
-                $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
-                $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
-                $update_qty->execute();
-            endwhile;
-
-            $delete_ord = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
-            if(!$delete_ord->execute())
+            else
             {
-                return;  
-            } 
+                $add_delivery = $con->prepare("INSERT INTO delivery_tbl
+                (
+                    order_id, 
+                    items, 
+                    total_amount,
+                    user_username, 
+                    delivery_date, 
+                    delivery_status
+                ) 
+                VALUES
+                (
+                    $order_id,
+                    '$items',
+                    '$total_amount',
+                    '$user_username',
+                    '$delivery_date',
+                    '$delivery_status'
+                )");
+    
+                if(!$add_delivery->execute())
+                {
+                    return;
+                }
+                
+                mail($receiver, $subject, $body, $sender);
+    
+                $view_details = $con->query("SELECT pro_id, qty FROM orders_tbl WHERE order_id = '$order_id'");
+                $view_details->setFetchMode(PDO:: FETCH_ASSOC);
+                $view_details->execute(); 
+                
+                while($row = $view_details->fetch()):
+                    $pro_id = $row['pro_id'];
+                    $qty = $row['qty'];
+    
+                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
+                    $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
+                    $update_qty->execute();
+                endwhile;
+    
+                $delete_ord = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
+                if(!$delete_ord->execute())
+                {
+                    return;  
+                } 
+            }
         }
     }
 
@@ -519,13 +530,14 @@
                 <td>".$row['items']."</td>
                 <td>".$row['user_username']."</td>
                 <td>".$row['date_delivered']."</td>
+                <td>₱".$row['total_amount']."</td>
             </tr>";
         endwhile;
         echo
         "<tr>
             <td></td>
             <td></td>
-            <td>Amount Collected: ".$row2['SUM(total_amount)']."</td>
+            <td>Amount Collected: ₱".$row2['SUM(total_amount)']."</td>
         </tr>";
     }
 
