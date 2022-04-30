@@ -82,7 +82,7 @@
             )");
             if($add_pet->execute())
             {
-                echo "Pet Successfully Added";
+                echo "<script>alert('Pet Successfully Added');</script>";
             }
         }
     }

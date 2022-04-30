@@ -426,7 +426,7 @@
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
 
-            if($delivery_date < $today)
+            if($delivery_date > $today)
             {
                 echo "INVALID DATE!";
             }
@@ -476,6 +476,8 @@
                 {
                     return;  
                 } 
+                echo "<script>alert('Successfully Confirmed!');</script>";
+                echo "<script>window.open('viewall_orders.php', '_self');</script>";
             }
         }
     }

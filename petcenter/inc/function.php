@@ -37,7 +37,7 @@
             }
             else
             {
-                echo "Please verify your email!";
+                echo "<script>alert('Please verify your email!');</script>";
             }
         }
     }
@@ -60,12 +60,13 @@
                 $update_verification = $con->prepare("UPDATE pet_center_tbl SET verified = 1 WHERE email = '$user_email'");
                 if($update_verification->execute())
                 {
-                    echo "You can now log in!";
+                    echo "<script>alert('You can now log in!');</script>";
+                    echo "<script>window.open('login.php', '_self');</script>";
                 }
             }
             else
             {
-                echo "Email or Verification Code is incorrect!";
+                echo "<script>alert('Email or Verification Code is incorrect!');</script>";
             }
         }
     }
@@ -174,25 +175,25 @@
 
             if($row['pet_center_email']>0)
             {
-                echo "Email Exists";
+                echo "<script>alert('Email Exists');</script>";
             }
             elseif($row2['pet_cent_name']>0)
             {
-                echo "Name Exists";
+                echo "<script>alert('Name Exists');</script>";
             }
             elseif(!is_numeric($contact_number))
             {
-                echo "Only Digits Allowed!";
+                echo "<script>alert('Only Digits Allowed!');</script>";
             }
             elseif(strlen($contact_number)>=12)
             {
-                echo "Number must at least 11 digits!";
+                echo "<script>alert('Number must at least 11 digits!');</script>";
             }
             elseif(strlen($pet_center_password) >= 9 &&
             preg_match('/[A-Z]/', $pet_center_password) > 0 &&
             preg_match('/[a-z]/', $pet_center_password) > 0)
             {
-                echo "Password must at least 8 characters in length!";
+                echo "<script>alert('Password must at least 8 characters in length!');</script>";
             }
             else
             {
@@ -359,11 +360,11 @@
 
             if($query->execute())
             {
-                echo "Service Successfully Added!";
+                echo "<script>alert('Service Successfully Added!');</script>";
             }
             else
             {
-                echo "Unsuccessful!";
+                echo "<script>alert('Unsuccessful!');</script>";
             }
            
         }
@@ -821,7 +822,7 @@
                         preg_match('/[A-Z]/', $pet_center_password) > 0 &&
                         preg_match('/[a-z]/', $pet_center_password) > 0)
                         {
-                            echo "Password must at least 8 characters in length with at least 1 special character, 1 number!";
+                            echo "<script>alert('Password must at least 8 characters in length with at least 1 special character, 1 number!');</script>";
                         }
                         else
                         {
@@ -843,12 +844,12 @@
                     }
                     else
                     {
-                        echo "Contact Number must at least 11 digits only!";
+                        echo "<script>alert('Contact Number must at least 11 digits only!');</script>";
                     }
                 }
                 else
                 {
-                    echo "Only digits allowed!";
+                    echo "<script>alert('Only digits allowed!');</script>";
                 }
                 
             }
