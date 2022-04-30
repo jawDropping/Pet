@@ -148,12 +148,12 @@
                 }
                 else
                 {
-                    echo "Contact Number must at least 11 digits only!";
+                    echo "<script>alert('Contact Number must at least 11 digits only!');</script>";
                 }
             }
             else
             {
-                echo "Only digits allowed!";
+                echo "<script>alert('Only digits allowed!');</script>";
             }
 
         }

@@ -41,7 +41,7 @@
             }   
             else
             {
-                echo "Please verify your email!";
+                echo "<script>alert('Please verify your email!');</script>";
             }
         }
     }
@@ -64,7 +64,8 @@
                 $update_verification = $con->prepare("UPDATE users_table SET verified = 1 WHERE user_email = '$user_email'");
                 if($update_verification->execute())
                 {
-                    echo "You can now log in!";
+                    echo "<script>alert('You can now log in!');</script>";
+                    echo "<script>window.open('login.php' ,'_self');</script>";
                 }
             }
             else
@@ -1584,7 +1585,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             $row4 = $fetch_user_username->fetch();
                             if($row>0)
                             {
-                                echo "Code Exist!";
+                                echo "<script>alert('Code Exist!');</script>";
                             }
                             else
                             {
@@ -1676,11 +1677,11 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             
                                         if($reserve_service->execute())
                                         {
-                                            echo "SUCCESSFUL"; 
+                                            echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
                                         }
                                         else
                                         {
-                                            echo "UNSUCCESSFUL";
+                                            echo "<script>alert('UNSUCCESSFUL');</script>";
                                         }
                                     }
                                 }
@@ -1688,17 +1689,17 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         }
                         else
                         {
-                            echo "Time reserved already, chose another date or time.";
+                            echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                         }
                     }
                     else
                     {
-                        echo "Time you chose is invalid, please check the time open and time close of the service.";
+                        echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
                     }        
                 }
                 else
                 {
-                    echo "INVALID DATE!";
+                    echo "<script>alert('INVALID DATE!');</script>";
                 }
             }
         }
@@ -1841,27 +1842,27 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     
                                 if($reserve_service->execute())
                                 {
-                                    echo "SUCCESSFUL"; 
+                                    echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
                                 }
                                 else
                                 {
-                                    echo "UNSUCCESSFUL";
+                                    echo "<script>alert('UNSUCCESSFUL');</script>";
                                 }
                             }
                         }
                         else
                         {
-                            echo "Time reserved already, chose another date or time.";
+                            echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                         }
                     }
                     else
                     {
-                        echo "Time you chose is invalid, please check the time open and time close of the service.";
+                        echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
                     }        
                 }
                 else
                 {
-                    echo "INVALID DATE!";
+                    echo "<script>alert('INVALID DATE!');</script>";
                 }
             }
         }
