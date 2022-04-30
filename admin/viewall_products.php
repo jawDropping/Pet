@@ -31,7 +31,7 @@
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
         <li><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
-        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Product Management</a></li>
+        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li class = 'selection' ><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
@@ -51,23 +51,23 @@
 <div class = "body">
     
     <form method = "POST" enctype = "multipart/form-data">
-    <table>
-        <tr>
+    <div>
+        <div class = 'hedGrid'>
   
-            <th>Order Id</th>
-            <th>Items</th>
-            <th>Total Amount</th>
-            <th>Customer</th>
-            <th>Delivery Address</th>
-            <th>Delivery Date </th>
-            <th>Action</th>
-        </tr>
-        <tr>
+            <p>Order Id</p>
+            <p>Items</p>
+            <p>Total Amount</p>
+            <p>Customer</p>
+            <p>Delivery Address</p>
+            <p>Delivery Date </p>
+            <p>Action</p>
+        </div>
+        <div>
             <?php
                 echo viewall_deliveries(); 
             ?>
-        </tr>
-        </table>
+        </div>
+        </div>
     </form>
 </div>
               
@@ -103,7 +103,20 @@
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
     }
-    
+    .hedGrid{
+        display: grid;
+        grid-template-columns: 15% 14% 14% 14% 14% 14% 14%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+    }
+    .innerGrid{
+        display: grid;
+        grid-template-columns:15% 14% 14% 14% 14% 14% 14%;
+        text-align: center;
+        
+        margin-top: 20px;
+    }
 </style>
 
 

@@ -354,10 +354,10 @@
                 $net_total += $order['sum(od.qty * od.price)'];
                 $order_id = $order['order_id'];
                 echo
-                "<form method = 'POST' enctype = 'multipart/form-data'>
-                    <tr>
+                "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+                    
                         <input type = 'hidden' name = 'order_id' value = '".$order['order_id']."' />
-                        <td>".$order_id."</td>";
+                        <p>".$order_id."</p>";
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
@@ -372,16 +372,18 @@
                         $row_username = $fetch_username->fetch();
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
-                        <td>".$row_username['user_username']."</td>";
+                        <p>".$row_username['user_username']."</p>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
-                    <td style = 'color:white'>".$order['items']."</td>
+                    <p>".$order['items']."</p>
                     <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <td>".$net_total."</td>
-                    <td><input type = 'date' name = 'delivery_date' required/></td>
-                    <td><button name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
-                     <a href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a></td>
-                    </tr>
+                    <p>".$net_total."</p>
+                    <input class = 'dets' type = 'date' name = 'delivery_date' required/>
+                    <div class ='bots'>
+                    <button name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
+                     <a href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
+                     </div>
+        
                 </form>";
             }
         if(isset($_POST['confirm_order']))
@@ -478,24 +480,15 @@
 
         while($row = $sql->fetch()):
             echo
-            "<tr>
-                <td>".$row['pro_name']."</td>
-                <td>".$row['pro_price']."</td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img']."'/>
-                </td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img2']."'/>
-                </td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img3']."'/>
-                </td>
-                
-              
-                <td style = 'color:white'>".$row['pro_quantity']."</td>
-                <td><a href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
-                <a href = 'delete_cat.php?delete_prod=".$row['pro_id']."'>Delete</button></td>
-            </tr>";
+            "<div class = 'innerGrid'>
+                <p class = 'p1'>".$row['pro_name']."</p>
+                <p class = 'p2'>".$row['pro_price']."</p>
+                <p class = 'p2'>".$row['pro_quantity']."</p>
+                <div>
+                <a class = 'edith' href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
+                <a class = 'byew' href = 'delete_cat.php?delete_prod=".$row['pro_id']."'>Delete</a>
+                </div>
+            </div>";
         endwhile;
     }
 
@@ -547,15 +540,15 @@
             $row_user = $view_user->fetch();
             $user_address = $row_user['user_address'];
             echo 
-            "<tr>
-                <td>".$row['order_id']."</td>
-                <td>".$row['items']."</td>
-                <td>".$row['total_amount']."</td>
-                <td>".$row['user_username']."</td>
-                <td>".$user_address."</td>
-                <td>".$row['delivery_date']."</td>
-                <td><a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</td>
-            </tr>";
+            "<div class = 'innerGrid'>
+                <p>".$row['order_id']."</p>
+                <p>".$row['items']."</p>
+                <p>".$row['total_amount']."</p>
+                <p>".$row['user_username']."</p>
+                <p>".$user_address."</p>
+                <p>".$row['delivery_date']."</p>
+                <a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</a>
+            </div>";
             
         endwhile;
     }
@@ -1050,73 +1043,79 @@
             $fetch_cat->execute();
             $row_cat = $fetch_cat->fetch();
 
-            echo "<h3>Edit Product</h3>
+            echo "
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <table>
-                    <tr>
-                        <td>Update Category Name: </td>
-                        <td>
-                            <select name = 'cat_name'>
+                <div class = 'body'>
+                <div class = 'seconds'>
+                    <div class = 'holders'>
+                        <p class = 'lebs'>Update Category Name: </p>
+                      
+                            <select class = 'oks' name = 'cat_name'>
                                 <option value = '".$row_cat['prod_id']."'>".$row_cat['cat_name']."</option>
                                 ";echo viewall_cat(); echo"
                             </select>
-                        </td>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <td>Product Name: </td>
-                        <td><input type='text' name = 'pro_name' value = '".$row['pro_name']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Brand: </td>
-                        <td><input type='text' name = 'pro_brand' value = '".$row['pro_brand']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Price: </td>
-                        <td><input type='text' name = 'pro_price' value = '".$row['pro_price']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Quantity: </td>
-                        <td><input type='text' name = 'pro_quantity' value = '".$row['pro_quantity']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Keyword: </td>
-                        <td><input type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/></td>
-                    </tr>
-                   
-                </table>
-                <button name = 'update_prod'>Update Product</button>
+                       
+                    </div>
+                    
+                    <div class = 'holders'>
+                        <p class = 'lebs'>Product Name: </p>
+                        <input class = 'oks' type='text' name = 'pro_name' value = '".$row['pro_name']."'/>
+                    </div>
+                    <div class = 'holders'>
+                        <p class = 'lebs'>Product Brand: </p>
+                        <input class = 'oks' type='text' name = 'pro_brand' value = '".$row['pro_brand']."'/>
+                    </div>
+                    <div class = 'holders' >
+                        <p class = 'lebs'>Product Price: </p>
+                        <input class = 'oks' type='text' name = 'pro_price' value = '".$row['pro_price']."'/>
+                    </div>
+                    <div class ='holders'>
+                        <p class = 'lebs'>Product Quantity: </p>
+                        <input class = 'oks' type='text' name = 'pro_quantity' value = '".$row['pro_quantity']."'/>
+                    </div>
+                    <div class = 'holders'>
+                        <p class = 'lebs' >Product Keyword: </p>
+                        <input class = 'oks' type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/>
+                    </di>
+                    
+                </div>
+                <div></div>
+                <button class='btns' name = 'update_prod'>Update Product Details</button>
+                </div>
+                <br>
             </form>
+            <div class = 'bodies'>
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #1</label>
-                        <img src = '../uploads/products/".$row['pro_img']."'  style = 'height:50px;width:50px;' />
+                <div class = 'body2'>
+                    <div>
+                        <p class = 'lebs'>Sample Image #1</p>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
                         <br><input type = 'file' name = 'sample_img1' value = ".$row['pro_img']." required/><br>
-                    </td>
-                </tr><br>
+                    </div>
+                </div><br>
                 <button name = 'update_first_image'>Update First Image</button>
             </form>
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #2</label>
-                        <img src = '../uploads/products/".$row['pro_img2']."'  style = 'height:50px;width:50px;' />
+                <div class = 'body2'>
+                    <div>
+                        <p class = 'lebs'>Sample Image #2</p>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img2']."'/>
                         <br><input type = 'file' name = 'sample_img2' value = ".$row['pro_img2']." required/><br>
-                    </td>
-                </tr><br>
+                    </div>
+                </div><br>
                 <button name = 'update_second_image'>Update Second Image</button>
             </form>
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #1</label>
-                        <img src = '../uploads/products/".$row['pro_img3']."'  style = 'height:50px;width:50px;' />
+                <div class = 'body2'>
+                    <div>
+                        <p class = 'lebs'>Sample Image #1</p>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img3']."'/>
                         <br><input type = 'file' name = 'sample_img3' value = ".$row['pro_img3']." required/><br>
-                    </td>
-                </tr><br>
+                    </div>
+                </div><br>
                 <button name = 'update_third_image'>Update Third Image</button>
-            </form>";
+            </form>
+            </div>";
             if(isset($_POST['update_prod']))
             {
                 $cat_name = $_POST['cat_name'];
