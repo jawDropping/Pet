@@ -1304,7 +1304,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             <div class = 'btnss' >
                                 <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
                                 <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
-                                <a   class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
+                                <a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
                             </div>
                         </div>  
                     </div>
@@ -1719,7 +1719,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $pet_center_id = $row['pet_center_id'];
             $service_time_open = strtotime($row['time_open']);
             $service_time_close = strtotime($row['time_close']);
-
+            
      
 
             $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
