@@ -1,11 +1,6 @@
 <?php
     session_start();
 
-    function signUp()
-    {
-        
-    }
-
     function LogIn()
     {
         include("inc/db.php");
@@ -42,6 +37,61 @@
             else
             {
                 echo "<script>alert('Please verify your email!');</script>";
+            }
+        }
+    }
+
+    function forgotpassword()
+    {
+        include("inc/db.php");
+        if(isset($_POST['update_password']))
+        {
+            $user_email = $_POST['user_email'];
+            $user_password = $_POST['user_password'];
+            $confirm_password = $_POST['confirm_password'];
+
+            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                if($user_password == $confirm_password)
+                {
+                    if(strlen($user_password) >= 8)
+                    {
+                        if(preg_match('/[A-Z]/', $user_password) > 0 &&
+                        preg_match('/[a-z]/', $user_password) > 0)
+                        {
+                            $update_password = $con->prepare("UPDATE users_table SET user_password = '$user_password' WHERE user_email = '$user_email'");
+                            $update_password->setFetchMode(PDO:: FETCH_ASSOC);
+                            $update_password->execute();
+
+                            if($update_password->execute())
+                            {
+                                echo "<script>alert('Succesfully Changed!');</script>";
+                                echo "<script>window.open('login.php', '_self');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Password must at least have 1 number, 1 special character and 1 uppercase letter!');</script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<script>alert('Password length must at least have 8 characters!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "<script>alert('Password doesn't match!');</script>";
+                }
+            }
+            else
+            {
+                echo "<script>alert('Email doesn't exists!');</script>";
             }
         }
     }

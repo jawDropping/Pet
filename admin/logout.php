@@ -1,5 +1,5 @@
 <?php 
     session_start();
-    unset($_SESSION['admin_name']);
+    unset($_SESSION['id']);
     echo "<script>window.open('/Pet/admin/login.php?', '_self');</script>";
 ?>
