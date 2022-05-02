@@ -1,10 +1,10 @@
 <?php 
     include("inc/function.php");
-    echo verify();
+    echo forgotpassword();
 ?>
 <html>
     <head>
-    <title>Verify Email</title>
+    <title>Forgot Password</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,13 +24,14 @@
                     <img src="../uploads/logo2.png" class="logo"> <p class="petsociety">Pet Society</p>
                     </div>
               
-                <h3>Verify Email</h3>
+                <h3>Forgot Password</h3>
                 <form method = "POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"; enctype = "multipart/form-data">
                  
                        
-                        <input class = "input" type="email" name = "user_email" placeholder = "Email"/>               
-                        <input class = "input"type="text" name = "v_key"  placeholder = "Verification Key"/></br>
-                            <button  class = "button" name = "verify_key" id = "login_user" >VERIFY</button>
+                        <input class = "input" type="email" name = "email" placeholder = "Email"/> 
+                        <input class = "input" type="password" name = "pet_center_password" placeholder = "New Password"/> 
+                        <input class = "input" type="password" name = "confirm_password" placeholder = "Confirm Password"/>          
+                            <button  class = "button" name = "update_password" id = "login_user" >Update</button>
                         </br>
                      
                     </form>

@@ -71,6 +71,61 @@
         }
     }
 
+    function forgotpassword()
+    {
+        include("inc/db.php");
+        if(isset($_POST['update_password']))
+        {
+            $email = $_POST['email'];
+            $pet_center_password = $_POST['pet_center_password'];
+            $confirm_password = $_POST['confirm_password'];
+
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                if($pet_center_password == $confirm_password)
+                {
+                    if(strlen($pet_center_password) >= 8)
+                    {
+                        if(preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+                        preg_match('/[a-z]/', $pet_center_password) > 0)
+                        {
+                            $update_password = $con->prepare("UPDATE pet_center_tbl SET pet_center_password = '$pet_center_password' WHERE email = '$email'");
+                            $update_password->setFetchMode(PDO:: FETCH_ASSOC);
+                            $update_password->execute();
+
+                            if($update_password->execute())
+                            {
+                                echo "<script>alert('Succesfully Changed!');</script>";
+                                echo "<script>window.open('login.php', '_self');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Password must at least have 1 number, 1 special character and 1 uppercase letter!');</script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<script>alert('Password length must at least have 8 characters!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "<script>alert('Password doesn't match!');</script>";
+                }
+            }
+            else
+            {
+                echo "<script>alert('Email doesn't exists!');</script>";
+            }
+        }
+    }
+
     function timeline()
     {
         include("inc/db.php");

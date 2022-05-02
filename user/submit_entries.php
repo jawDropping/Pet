@@ -2,7 +2,7 @@
     session_start();
     include("inc/db.php");
 
-    if(!isset($_SESSION['user_username']))
+    if(!isset($_SESSION['user_id']))
     {
         echo "<script>window.open('login.php', '_self');</script>";
     }

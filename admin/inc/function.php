@@ -316,7 +316,12 @@
     function count_orders()
     {
         include("inc/db.php");
-        $count_orders = $con->prepare("SELECT * FROM orders_tbl");
+        $count_orders = $con->prepare("SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
+        (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
+        from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
+        WHERE o.user_id = o.user_id
+        group by o.order_id, p.pro_name, o.delivery_status) od
+        group by od.order_id, od.delivery_status");
         $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
         $count_orders->execute();
 
