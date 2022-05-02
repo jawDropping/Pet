@@ -127,6 +127,25 @@
     .dets{
         height: 30px;
     }
+    .buto{
+        color: #fff;
+        border-radius: 3px;
+         width: 40%;
+         height: 32px;
+        background: #5a5bf3;
+        border: 1px solid  #5a5bf3;
+        text-decoration: none;
+    }
+    .busog{
+        height: 30px;
+    color: #5a5bf3;
+    border-radius: 3px;
+    width: 100px;
+    background: white;
+    border: 1px solid #5a5bf3;
+    text-decoration: none;
+    padding: 5px 5px 5px 5px;
+    }
 </style>
 
 

@@ -385,8 +385,8 @@
                     <p>".$net_total."</p>
                     <input class = 'dets' type = 'date' name = 'delivery_date' required/>
                     <div class ='bots'>
-                    <button name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
-                     <a href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
+                    <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
+                     <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
                      </div>
         
                 </form>";
@@ -566,7 +566,7 @@
                 <p>".$row['user_username']."</p>
                 <p>".$user_address."</p>
                 <p>".$row['delivery_date']."</p>
-                <a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</a>
+                <a class = 'btnssih' href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Delivered</a>
             </div>";
             
         endwhile;
@@ -1030,18 +1030,18 @@
         $i=1;
 
         while($row=$fetch_pro->fetch()):
-            echo "<tr>
-                <td>".$i++."</td>
-                <td style = 'min-width:200px'>".$row['user_username']."</td>
-                <td>".$row['user_email']."</td>
-                <td>".$row['user_contactnumber']."</td>
-                <td>".$row['user_address']."</td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
-                </td>
-                <td><a href='#'>Edit</a></td>
-                <td><a href='#'>Delete</a></td>
-         </tr>";
+            echo "<div class = 'innerGrid'>
+                <p>".$i++."</p>
+                <p>".$row['user_username']."</p>
+                <p>".$row['user_email']."</p>
+                <p>".$row['user_contactnumber']."</p>
+                <p>".$row['user_address']."</p>
+                <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+                <div style = 'display: flex'>
+                <a class = 'btn1' href='#'>Edit</a>
+                <a class = 'btn2' href='#'>Delete</a>
+                </div>
+         </div>";
         endwhile;
     }
 

@@ -116,13 +116,13 @@
     }
     .edith{
         height: 30px;
-  color: #fff;
-  border-radius: 3px;
-  width: 100px;
-  background: #5a5bf3;
-  border: 1px solid  #5a5bf3;
-  text-decoration: none;
-  padding: 5px 15px 5px 15px;
+    color: #fff;
+    border-radius: 3px;
+    width: 100px;
+    background: #5a5bf3;
+    border: 1px solid  #5a5bf3;
+    text-decoration: none;
+    padding: 5px 15px 5px 15px;
     }
     .byew{
     height: 30px;

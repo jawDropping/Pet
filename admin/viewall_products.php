@@ -117,6 +117,18 @@
         
         margin-top: 20px;
     }
+    .btnssih{
+        height: 30px;
+  color: #fff;
+  border-radius: 3px;
+  width: 70%;
+  background: #5a5bf3;
+  border: 1px solid  #5a5bf3;
+  text-decoration: none;
+  padding: 5px;
+  margin-left: 15%;
+
+    }
 </style>
 
 
