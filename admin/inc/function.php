@@ -957,11 +957,11 @@
 
         while($row = $view_coupons->fetch()):
             echo 
-            "<tr>
-                <td>".$row['full_name']."</td>
-                <td>".$row['email']."</td>
-                <td>".$row['coupon_code']."</td>
-            </tr>"; 
+            "<div class = 'inners'>
+                <p>".$row['full_name']."</p>
+                <p class = 'okss'>".$row['email']."</p>
+                <p class = 'okss'>".$row['coupon_code']."</p>
+            </div>"; 
         endwhile;
     }
 
