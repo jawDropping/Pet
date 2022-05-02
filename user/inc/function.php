@@ -1,11 +1,6 @@
 <?php
     session_start();
 
-    function signUp()
-    {
-        
-    }
-
     function LogIn()
     {
         include("inc/db.php");
@@ -41,7 +36,62 @@
             }   
             else
             {
-                echo "Please verify your email!";
+                echo "<script>alert('Please verify your email!');</script>";
+            }
+        }
+    }
+
+    function forgotpassword()
+    {
+        include("inc/db.php");
+        if(isset($_POST['update_password']))
+        {
+            $user_email = $_POST['user_email'];
+            $user_password = $_POST['user_password'];
+            $confirm_password = $_POST['confirm_password'];
+
+            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                if($user_password == $confirm_password)
+                {
+                    if(strlen($user_password) >= 8)
+                    {
+                        if(preg_match('/[A-Z]/', $user_password) > 0 &&
+                        preg_match('/[a-z]/', $user_password) > 0)
+                        {
+                            $update_password = $con->prepare("UPDATE users_table SET user_password = '$user_password' WHERE user_email = '$user_email'");
+                            $update_password->setFetchMode(PDO:: FETCH_ASSOC);
+                            $update_password->execute();
+
+                            if($update_password->execute())
+                            {
+                                echo "<script>alert('Succesfully Changed!');</script>";
+                                echo "<script>window.open('login.php', '_self');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Password must at least have 1 number, 1 special character and 1 uppercase letter!');</script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<script>alert('Password length must at least have 8 characters!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "<script>alert('Password doesn't match!');</script>";
+                }
+            }
+            else
+            {
+                echo "<script>alert('Email doesn't exists!');</script>";
             }
         }
     }
@@ -64,7 +114,8 @@
                 $update_verification = $con->prepare("UPDATE users_table SET verified = 1 WHERE user_email = '$user_email'");
                 if($update_verification->execute())
                 {
-                    echo "You can now log in!";
+                    echo "<script>alert('You can now log in!');</script>";
+                    echo "<script>window.open('login.php' ,'_self');</script>";
                 }
             }
             else
@@ -1304,7 +1355,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             <div class = 'btnss' >
                                 <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
                                 <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
-                                <a   class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
+                                <a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
                             </div>
                         </div>  
                     </div>
@@ -1472,7 +1523,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         {
             include("inc/db.php");
             $service_id = $_GET['avail_service'];
-            $query = $con->prepare("SELECT * FROM services WHERE service_id = '".$service_id."'");
+            $query = $con->prepare("SELECT * FROM services WHERE id = '".$service_id."'");
             $query->setFetchMode(PDO:: FETCH_ASSOC);
             $query->execute();
 
@@ -1533,172 +1584,179 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
 
     
-            if(isset($_POST['reserve_service']))
+            if(!isset($_SESSION['user_id']))
             {
-                $service_cost = $_POST['service_cost'];
-                $reserve_date = $_POST['reserve_date'];
-                $coupon_code = $_POST['coupon_code'];
-                $reserve_time = $_POST['reserve_time'];
-                $transaction_code = generateRandomString();
-
-                $datenow = getdate();
-
-                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-
-                $dateTimestamp = strtotime($reserve_date);
-                $dateTimestamp2 = strtotime($today);
-                $dateTimestamp3 = strtotime($reserve_time);
-
-
-                $view_time = $con->prepare("SELECT * FROM reserve_services");
-                $view_time->setFetchMode(PDO:: FETCH_ASSOC);
-                $view_time->execute();
-
-                // $row_time = $view_time->rowCount();
-                $row_date_and_time = $view_time->fetch();
-                $reserved_date = $row_date_and_time['reserve_date'];
-                $reserved_time = $row_date_and_time['reserve_time'];
-                
-                if($dateTimestamp > $dateTimestamp2)
+                echo "<script>window.open('login.php', '_self');</script>";
+            }
+            else
+            {
+                if(isset($_POST['reserve_service']))
                 {
-                    if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
-                    {
-                        if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
-                        {
-                            $sql = $con->query("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
-                            $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                            $sql->execute();
+                    $service_cost = $_POST['service_cost'];
+                    $reserve_date = $_POST['reserve_date'];
+                    $coupon_code = $_POST['coupon_code'];
+                    $reserve_time = $_POST['reserve_time'];
+                    $transaction_code = generateRandomString();
     
-                            $sql2 = $con->query("SELECT * FROM reserve_services");
-                            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                            $sql2->execute();
+                    $datenow = getdate();
     
-                            $row = $sql->rowCount();
-                            $row_user = $sql2->fetch();
-                            $user_id = $row_user['user_id'];
+                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
     
-                            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-                            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-                            $fetch_user_username->execute();
+                    $dateTimestamp = strtotime($reserve_date);
+                    $dateTimestamp2 = strtotime($today);
+                    $dateTimestamp3 = strtotime($reserve_time);
+    
+    
+                    $view_time = $con->prepare("SELECT * FROM reserve_services");
+                    $view_time->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_time->execute();
+    
+                    // $row_time = $view_time->rowCount();
+                    $row_date_and_time = $view_time->fetch();
+                    $reserved_date = $row_date_and_time['reserve_date'];
+                    $reserved_time = $row_date_and_time['reserve_time'];
                     
-                            $row4 = $fetch_user_username->fetch();
-                            if($row>0)
+                    if($dateTimestamp > $dateTimestamp2)
+                    {
+                        if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
+                        {
+                            if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
                             {
-                                echo "Code Exist!";
-                            }
-                            else
-                            {
-                                $view_coupon = $con->prepare("SELECT * FROM donations WHERE coupon_code = '$coupon_code'");
-                                $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
-                                $view_coupon->execute();
-    
-                                $row2 = $view_coupon->rowCount();
-                                if($row2>0)
+                                $sql = $con->query("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
+                                $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                                $sql->execute();
+        
+                                $sql2 = $con->query("SELECT * FROM reserve_services");
+                                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                                $sql2->execute();
+        
+                                $row = $sql->rowCount();
+                                $row_user = $sql2->fetch();
+                                $user_id = $row_user['user_id'];
+        
+                                $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                                $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                $fetch_user_username->execute();
+                        
+                                $row4 = $fetch_user_username->fetch();
+                                if($row>0)
                                 {
-                                    $discount = "0.02";
-    
-                                    $total = $service_cost * $discount;
-                                    $convertfloat = floatval($total);
-    
-                                    $service_total_cost = $service_cost - $convertfloat;
-    
-                                    $receiver = $row4['user_email'];
-                                    $subject = "Transaction Code";
-                                    $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                                    $sender = "ianjohn0101@gmail.com";
-    
-                                    if(mail($receiver, $subject, $body, $sender))
-                                    {
-                                        $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                            pet_center_id,
-                                            service_id,
-                                            user_id,
-                                            service_cost,
-                                            reserve_date,
-                                            reserve_time,
-                                            coupon_code,
-                                            transaction_code,
-                                            service_status
-                                        ) 
-                                        VALUES (
-                                            '$pet_center_id',
-                                            '$service_id',
-                                            '$user_id',
-                                            '$service_total_cost',
-                                            '$reserve_date',
-                                            '$reserve_time',
-                                            '$coupon_code',
-                                            '$transaction_code',
-                                            'For Confirmation'
-                                        )");
-                            
-                                        if($reserve_service->execute())
-                                        {
-                                            echo "SUCCESSFUL"; 
-                                        }
-                                        else
-                                        {
-                                            echo "UNSUCCESSFUL";
-                                        }
-                                    }
+                                    echo "<script>alert('Code Exist!');</script>";
                                 }
                                 else
                                 {
-                                    $receiver = $row4['user_email'];
-                                    $subject = "Transaction Code";
-                                    $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                                    $sender = "ianjohn0101@gmail.com";
-    
-                                    if(mail($receiver, $subject, $body, $sender))
+                                    $view_coupon = $con->prepare("SELECT * FROM donations WHERE coupon_code = '$coupon_code'");
+                                    $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
+                                    $view_coupon->execute();
+        
+                                    $row2 = $view_coupon->rowCount();
+                                    if($row2>0)
                                     {
-                                        $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                            pet_center_id,
-                                            service_id,
-                                            user_id,
-                                            service_cost,
-                                            reserve_date,
-                                            reserve_time,
-                                            coupon_code,
-                                            transaction_code,
-                                            service_status
-                                        ) 
-                                        VALUES (
-                                            '$pet_center_id',
-                                            '$service_id',
-                                            '$user_id',
-                                            '$service_cost',
-                                            '$reserve_date',
-                                            '$reserve_time',
-                                            '$coupon_code',
-                                            '$transaction_code',
-                                            'For Confirmation'
-                                        )");
-                            
-                                        if($reserve_service->execute())
+                                        $discount = "0.02";
+        
+                                        $total = $service_cost * $discount;
+                                        $convertfloat = floatval($total);
+        
+                                        $service_total_cost = $service_cost - $convertfloat;
+        
+                                        $receiver = $row4['user_email'];
+                                        $subject = "Transaction Code";
+                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                        $sender = "ianjohn0101@gmail.com";
+        
+                                        if(mail($receiver, $subject, $body, $sender))
                                         {
-                                            echo "SUCCESSFUL"; 
+                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                pet_center_id,
+                                                service_id,
+                                                user_id,
+                                                service_cost,
+                                                reserve_date,
+                                                reserve_time,
+                                                coupon_code,
+                                                transaction_code,
+                                                service_status
+                                            ) 
+                                            VALUES (
+                                                '$pet_center_id',
+                                                '$service_id',
+                                                '$user_id',
+                                                '$service_total_cost',
+                                                '$reserve_date',
+                                                '$reserve_time',
+                                                '$coupon_code',
+                                                '$transaction_code',
+                                                'For Confirmation'
+                                            )");
+                                
+                                            if($reserve_service->execute())
+                                            {
+                                                echo "SUCCESSFUL"; 
+                                            }
+                                            else
+                                            {
+                                                echo "UNSUCCESSFUL";
+                                            }
                                         }
-                                        else
+                                    }
+                                    else
+                                    {
+                                        $receiver = $row4['user_email'];
+                                        $subject = "Transaction Code";
+                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                        $sender = "ianjohn0101@gmail.com";
+        
+                                        if(mail($receiver, $subject, $body, $sender))
                                         {
-                                            echo "UNSUCCESSFUL";
+                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                pet_center_id,
+                                                service_id,
+                                                user_id,
+                                                service_cost,
+                                                reserve_date,
+                                                reserve_time,
+                                                coupon_code,
+                                                transaction_code,
+                                                service_status
+                                            ) 
+                                            VALUES (
+                                                '$pet_center_id',
+                                                '$service_id',
+                                                '$user_id',
+                                                '$service_cost',
+                                                '$reserve_date',
+                                                '$reserve_time',
+                                                '$coupon_code',
+                                                '$transaction_code',
+                                                'For Confirmation'
+                                            )");
+                                
+                                            if($reserve_service->execute())
+                                            {
+                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                            }
+                                            else
+                                            {
+                                                echo "<script>alert('UNSUCCESSFUL');</script>";
+                                            }
                                         }
                                     }
                                 }
+                            }
+                            else
+                            {
+                                echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                             }
                         }
                         else
                         {
-                            echo "Time reserved already, chose another date or time.";
-                        }
+                            echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
+                        }        
                     }
                     else
                     {
-                        echo "Time you chose is invalid, please check the time open and time close of the service.";
-                    }        
-                }
-                else
-                {
-                    echo "INVALID DATE!";
+                        echo "<script>alert('INVALID DATE!');</script>";
+                    }
                 }
             }
         }
@@ -1706,162 +1764,169 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
     function avail_service_nocoupon()
     {
-        if(isset($_GET['avail_service']))
+        if(!isset($_SESSION['user_id']))
         {
-            include("inc/db.php");
-            $service_id = $_GET['avail_service'];
-            $query = $con->prepare("SELECT * FROM services WHERE service_id = '".$service_id."'");
-            $query->setFetchMode(PDO:: FETCH_ASSOC);
-            $query->execute();
-
-            $row = $query->fetch(); 
-            $service_cost = $row['service_cost'];
-            $pet_center_id = $row['pet_center_id'];
-            $service_time_open = strtotime($row['time_open']);
-            $service_time_close = strtotime($row['time_close']);
-
-     
-
-            $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
-            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-            $sql2->execute();
-
-            $row3 = $sql2->fetch();
-            
-            $users_id = $_SESSION['user_id'];
-            $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
-            $sql->setFetchMode(PDO:: FETCH_ASSOC);
-            $sql->execute();
-
-            $row2 = $sql->fetch();
-
-            $user_id = $row2['user_id'];
-            $empty_coupon = '';
-
-            echo 
-            "<form method = 'POST'>
-               
-                <div class = 'maines'>
-                
-                    <p class = 'lebs'>Book Appointment: </p>
-                    <input class = 'inet' type = 'date' name = 'reserve_date'  required/>
-                
-                    <p class = 'lebs'>Time: </p></td>
-                    <input class = 'inet' type = 'time' name = 'reserve_time'  required/>
-                    <p class = 'lebs'>Service Cost: </p>
-                    <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
-              
-       
-                    <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
-                    <div>
-                    <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
-                    <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
-                    </div>
-                    
-                </div>
-            </form>";
-
-    
-            if(isset($_POST['reserve_service']))
+            echo "<script>window.open('login.php', '_self');</script>";
+        }
+        else
+        {
+            if(isset($_GET['avail_service']))
             {
-                $service_cost = $_POST['service_cost'];
-                $reserve_date = $_POST['reserve_date'];
-                $coupon_code = $_POST['coupon_code'];
-                $reserve_time = $_POST['reserve_time'];
-                $transaction_code = generateRandomString();
-
-                $datenow = getdate();
-
-                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-
-                $dateTimestamp = strtotime($reserve_date);
-                $dateTimestamp2 = strtotime($today);
-                $dateTimestamp3 = strtotime($reserve_time);
-
-
-                $view_time = $con->prepare("SELECT * FROM reserve_services");
-                $view_time->setFetchMode(PDO:: FETCH_ASSOC);
-                $view_time->execute();
-
-                // $row_time = $view_time->rowCount();
-                $row_date_and_time = $view_time->fetch();
-                $reserved_date = $row_date_and_time['reserve_date'];
-                $reserved_time = $row_date_and_time['reserve_time'];
+                include("inc/db.php");
+                $service_id = $_GET['avail_service'];
+                $query = $con->prepare("SELECT * FROM services WHERE id = '".$service_id."'");
+                $query->setFetchMode(PDO:: FETCH_ASSOC);
+                $query->execute();
+    
+                $row = $query->fetch(); 
+                $service_cost = $row['service_cost'];
+                $pet_center_id = $row['pet_center_id'];
+                $service_time_open = strtotime($row['time_open']);
+                $service_time_close = strtotime($row['time_close']);
                 
-                if($dateTimestamp > $dateTimestamp2)
+         
+    
+                $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+    
+                $row3 = $sql2->fetch();
+                
+                $users_id = $_SESSION['user_id'];
+                $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
+                $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql->execute();
+    
+                $row2 = $sql->fetch();
+    
+                $user_id = $row2['user_id'];
+                $empty_coupon = '';
+    
+                echo 
+                "<form method = 'POST'>
+                   
+                    <div class = 'maines'>
+                    
+                        <p class = 'lebs'>Book Appointment: </p>
+                        <input class = 'inet' type = 'date' name = 'reserve_date'  required/>
+                    
+                        <p class = 'lebs'>Time: </p></td>
+                        <input class = 'inet' type = 'time' name = 'reserve_time'  required/>
+                        <p class = 'lebs'>Service Cost: </p>
+                        <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
+                  
+           
+                        <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
+                        <div>
+                        <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
+                        <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
+                        </div>
+                        
+                    </div>
+                </form>";
+    
+        
+                if(isset($_POST['reserve_service']))
                 {
-                    if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
+                    $service_cost = $_POST['service_cost'];
+                    $reserve_date = $_POST['reserve_date'];
+                    $coupon_code = $_POST['coupon_code'];
+                    $reserve_time = $_POST['reserve_time'];
+                    $transaction_code = generateRandomString();
+    
+                    $datenow = getdate();
+    
+                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    
+                    $dateTimestamp = strtotime($reserve_date);
+                    $dateTimestamp2 = strtotime($today);
+                    $dateTimestamp3 = strtotime($reserve_time);
+    
+    
+                    $view_time = $con->prepare("SELECT * FROM reserve_services");
+                    $view_time->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_time->execute();
+    
+                    // $row_time = $view_time->rowCount();
+                    $row_date_and_time = $view_time->fetch();
+                    $reserved_date = $row_date_and_time['reserve_date'];
+                    $reserved_time = $row_date_and_time['reserve_time'];
+                    
+                    if($dateTimestamp > $dateTimestamp2)
                     {
-                        if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
+                        if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
                         {
-                            
-    
-                            $sql2 = $con->query("SELECT * FROM reserve_services");
-                            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                            $sql2->execute();
-    
-                            $row = $sql->rowCount();
-                            $row_user = $sql2->fetch();
-                            $user_id = $row_user['user_id'];
-    
-                            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-                            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-                            $fetch_user_username->execute();
-                    
-                            $row4 = $fetch_user_username->fetch();
-                            $receiver = $row4['user_email'];
-                            $subject = "Transaction Code";
-                            $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                            $sender = "ianjohn0101@gmail.com";
-
-                            if(mail($receiver, $subject, $body, $sender))
+                            if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
                             {
-                                $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                    pet_center_id,
-                                    service_id,
-                                    user_id,
-                                    service_cost,
-                                    reserve_date,
-                                    reserve_time,
-                                    coupon_code,
-                                    transaction_code,
-                                    service_status
-                                ) 
-                                VALUES (
-                                    '$pet_center_id',
-                                    '$service_id',
-                                    '$user_id',
-                                    '$service_cost',
-                                    '$reserve_date',
-                                    '$reserve_time',
-                                    '$coupon_code',
-                                    '$transaction_code',
-                                    'For Confirmation'
-                                )");
-                    
-                                if($reserve_service->execute())
+                                
+        
+                                $sql2 = $con->query("SELECT * FROM reserve_services");
+                                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                                $sql2->execute();
+        
+                                $row = $sql->rowCount();
+                                $row_user = $sql2->fetch();
+                                $user_id = $row_user['user_id'];
+        
+                                $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                                $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                $fetch_user_username->execute();
+                        
+                                $row4 = $fetch_user_username->fetch();
+                                $receiver = $row4['user_email'];
+                                $subject = "Transaction Code";
+                                $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                $sender = "ianjohn0101@gmail.com";
+    
+                                if(mail($receiver, $subject, $body, $sender))
                                 {
-                                    echo "SUCCESSFUL"; 
+                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                        pet_center_id,
+                                        service_id,
+                                        user_id,
+                                        service_cost,
+                                        reserve_date,
+                                        reserve_time,
+                                        coupon_code,
+                                        transaction_code,
+                                        service_status
+                                    ) 
+                                    VALUES (
+                                        '$pet_center_id',
+                                        '$service_id',
+                                        '$user_id',
+                                        '$service_cost',
+                                        '$reserve_date',
+                                        '$reserve_time',
+                                        '$coupon_code',
+                                        '$transaction_code',
+                                        'For Confirmation'
+                                    )");
+                        
+                                    if($reserve_service->execute())
+                                    {
+                                        echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                    }
+                                    else
+                                    {
+                                        echo "<script>alert('UNSUCCESSFUL');</script>";
+                                    }
                                 }
-                                else
-                                {
-                                    echo "UNSUCCESSFUL";
-                                }
+                            }
+                            else
+                            {
+                                echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                             }
                         }
                         else
                         {
-                            echo "Time reserved already, chose another date or time.";
-                        }
+                            echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
+                        }        
                     }
                     else
                     {
-                        echo "Time you chose is invalid, please check the time open and time close of the service.";
-                    }        
-                }
-                else
-                {
-                    echo "INVALID DATE!";
+                        echo "<script>alert('INVALID DATE!');</script>";
+                    }
                 }
             }
         }

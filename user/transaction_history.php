@@ -94,7 +94,7 @@
     <div class = "contTable">
         <div class = "inside">
             <div class="divHead">
-                <p class = 'headers'>Transaction Id</p>
+                <p class = 'headers'>Order Id</p>
             </div>
             <div class="divHead">
                 <p class = 'headers'>Items</p>

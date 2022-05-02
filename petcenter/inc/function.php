@@ -37,7 +37,7 @@
             }
             else
             {
-                echo "Please verify your email!";
+                echo "<script>alert('Please verify your email!');</script>";
             }
         }
     }
@@ -60,12 +60,68 @@
                 $update_verification = $con->prepare("UPDATE pet_center_tbl SET verified = 1 WHERE email = '$user_email'");
                 if($update_verification->execute())
                 {
-                    echo "You can now log in!";
+                    echo "<script>alert('You can now log in!');</script>";
+                    echo "<script>window.open('login.php', '_self');</script>";
                 }
             }
             else
             {
-                echo "Email or Verification Code is incorrect!";
+                echo "<script>alert('Email or Verification Code is incorrect!');</script>";
+            }
+        }
+    }
+
+    function forgotpassword()
+    {
+        include("inc/db.php");
+        if(isset($_POST['update_password']))
+        {
+            $email = $_POST['email'];
+            $pet_center_password = $_POST['pet_center_password'];
+            $confirm_password = $_POST['confirm_password'];
+
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                if($pet_center_password == $confirm_password)
+                {
+                    if(strlen($pet_center_password) >= 8)
+                    {
+                        if(preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+                        preg_match('/[a-z]/', $pet_center_password) > 0)
+                        {
+                            $update_password = $con->prepare("UPDATE pet_center_tbl SET pet_center_password = '$pet_center_password' WHERE email = '$email'");
+                            $update_password->setFetchMode(PDO:: FETCH_ASSOC);
+                            $update_password->execute();
+
+                            if($update_password->execute())
+                            {
+                                echo "<script>alert('Succesfully Changed!');</script>";
+                                echo "<script>window.open('login.php', '_self');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Password must at least have 1 number, 1 special character and 1 uppercase letter!');</script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<script>alert('Password length must at least have 8 characters!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "<script>alert('Password doesn't match!');</script>";
+                }
+            }
+            else
+            {
+                echo "<script>alert('Email doesn't exists!');</script>";
             }
         }
     }
@@ -174,25 +230,25 @@
 
             if($row['pet_center_email']>0)
             {
-                echo "Email Exists";
+                echo "<script>alert('Email Exists');</script>";
             }
             elseif($row2['pet_cent_name']>0)
             {
-                echo "Name Exists";
+                echo "<script>alert('Name Exists');</script>";
             }
             elseif(!is_numeric($contact_number))
             {
-                echo "Only Digits Allowed!";
+                echo "<script>alert('Only Digits Allowed!');</script>";
             }
             elseif(strlen($contact_number)>=12)
             {
-                echo "Number must at least 11 digits!";
+                echo "<script>alert('Number must at least 11 digits!');</script>";
             }
             elseif(strlen($pet_center_password) >= 9 &&
             preg_match('/[A-Z]/', $pet_center_password) > 0 &&
             preg_match('/[a-z]/', $pet_center_password) > 0)
             {
-                echo "Password must at least 8 characters in length!";
+                echo "<script>alert('Password must at least 8 characters in length!');</script>";
             }
             else
             {
@@ -359,11 +415,11 @@
 
             if($query->execute())
             {
-                echo "Service Successfully Added!";
+                echo "<script>alert('Service Successfully Added!');</script>";
             }
             else
             {
-                echo "Unsuccessful!";
+                echo "<script>alert('Unsuccessful!');</script>";
             }
            
         }
@@ -821,7 +877,7 @@
                         preg_match('/[A-Z]/', $pet_center_password) > 0 &&
                         preg_match('/[a-z]/', $pet_center_password) > 0)
                         {
-                            echo "Password must at least 8 characters in length with at least 1 special character, 1 number!";
+                            echo "<script>alert('Password must at least 8 characters in length with at least 1 special character, 1 number!');</script>";
                         }
                         else
                         {
@@ -843,12 +899,12 @@
                     }
                     else
                     {
-                        echo "Contact Number must at least 11 digits only!";
+                        echo "<script>alert('Contact Number must at least 11 digits only!');</script>";
                     }
                 }
                 else
                 {
-                    echo "Only digits allowed!";
+                    echo "<script>alert('Only digits allowed!');</script>";
                 }
                 
             }
