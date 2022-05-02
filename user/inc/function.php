@@ -1026,10 +1026,15 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                   <div id = 'pro_brand'>
                     <h3>".$row_pro['pro_name']."</h3>
                     <ul>
+                        <li>
+                            Description:
+                            <br>
+                            <br>".$row_pro['pro_keyword']."
+                        </li>
                         <li>";
                             if($row_pro['pro_quantity'] > 0)
                             {
-                                echo "Availability: In Stock";
+                                echo "<br>Availability: In Stock";
                                 echo "<center>
                                 <h4>Price: ".$row_pro['pro_price']."</h4>
                                 <form method = 'POST'>
