@@ -1031,6 +1031,12 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             <br>
                             <br>".$row_pro['pro_keyword']."
                         </li>
+                        <li>
+                            <br>Product Price: ₱".$row_pro['pro_price'].".00
+                        </li>
+                        <li>
+                            <br>Product Stock: ".$row_pro['pro_quantity']."
+                        </li>
                         <li>";
                             if($row_pro['pro_quantity'] > 0)
                             {
