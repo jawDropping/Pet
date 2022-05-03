@@ -1554,7 +1554,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     {
             echo 
             "<form method = 'POST'>
-                <label class = 'hh'>Please verify your coupon to get the exact amount!</label>
+                <center class = 'hh'>Please verify your coupon to get the exact amount!</center>
                 <div class = 'maines'>
                 
                     <p class = 'lebs'>Book Appointment: </p>

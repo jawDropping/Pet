@@ -14,11 +14,21 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
-            echo "<div id='bodyleft'><ul>";
-                timeline(); echo"</ul>
-                  </div>";
-           
-        ?>
+            ?>
+            <div id='bodyleft'>
+                <div class="mainer">
+      
+                <?php timeline(); ?>
+
+                </div>
+                
+            </div>
+
     </body>
+    <style>
+        .mainer{
+            margin-top: 7vh;
+        }
+    </style>
 </html>
 
