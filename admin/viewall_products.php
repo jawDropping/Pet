@@ -47,6 +47,23 @@
         </div>
 </div>
 <div id="bodyright">
+<?php
+
+include("inc/db.php");
+$viewall_ords = $con->prepare("SELECT * FROM delivery_tbl");
+$viewall_ords->setFetchMode(PDO:: FETCH_ASSOC);
+$viewall_ords->execute();
+
+$row = $viewall_ords->fetch();
+
+if($row == 0)
+{
+    echo "NO DELIVERIES";
+}
+else
+{
+
+?>
 <p class = 'hed'>View All Deliveries</p>
 <div class = "body">
     
@@ -116,9 +133,7 @@
         document.getElementById("currentDate").innerHTML = date2;
     </script>
 </html>
-
-
-
+<?php } ?>
 
 
 
