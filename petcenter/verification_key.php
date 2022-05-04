@@ -22,11 +22,34 @@
                     </div>
               
                 
-                       <?php 
-    include("inc/function.php");
-    echo forgotpassword();
+                    <?php
+    include("inc/db.php");
+
+    if(isset($_POST['next']))
+    {
+        
+        $verification_code = $_POST['verification_code'];
+        $v_code = $_POST['v_code'];
+        $user_email = $_POST['user_email'];
+
+
+        if($v_code == $verification_code)
+        {
+            echo 
+            "<form method = 'POST' action = 'forgot_user_password.php' enctype = 'multipart/form-data'>
+                <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
+                <input type = 'password' class = 'input' name = 'user_pass' placeholder = 'New Password..' />
+                <input type = 'password' class = 'input' name = 'confirm_pass' placeholder = 'Confirm Password..' />
+                <button name = 'update_my_password' class = 'button'>Update Password</button>
+            </form> ";
+        }
+        else
+        {
+            echo "<script>alert('Verification Code is incorrect, we'll sent another code!');</script>";
+            echo "<script>window.open('forgotpassword.php', '_self');</script>";
+        }
+    }
 ?>
-                     
                 </div>
            
             </div>
