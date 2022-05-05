@@ -35,6 +35,7 @@
             $pet_id = $row['id'];
             $user_id = $row['user_id'];
             $likes = $row['likes'];
+            $date_time_posted = $row['date_time_posted'];
     
             $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                     $user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -60,7 +61,9 @@
                     <div id = 'userHead'>
                     <img class='profileImg2' src = '../uploads/user_profile/".$row_user['user_profilephoto']."'>
                     <p class = 'postName'>".$user_username."</p>
+
                     </div>
+                        <p id = 'caption'>  ".date('F d', strtotime($date_time_posted))." at ".date("H:i A", strtotime($date_time_posted))."</p>
                         <img src ='../uploads/pets/".$row['pet_photo']."' class = 'imagePost'/>
                        
                         
