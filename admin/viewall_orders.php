@@ -83,6 +83,8 @@ else
      
             <th>ITEMS</th>
 
+            <th>ORDER PLACED</th>
+
             <th>TOTAL AMOUNT</th>
 
             <th>Delivery Date</th>
