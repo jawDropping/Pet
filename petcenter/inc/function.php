@@ -10,34 +10,28 @@
             $pet_center_password = $_POST['pet_center_password'];
 
             
-            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email'");
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
             $check_email->setFetchMode(PDO::FETCH_ASSOC);
             $check_email->execute();
 
-            $verified = $check_email->fetch();
-            $isVerified = $verified['verified'];
-
-            if($isVerified == 1)
+            $row = $check_email->rowCount();
+            $rows = $check_email->fetch();
+            if($row>0)
             {
-                $fetchuser = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND pet_center_password = '$pet_center_password'");
-                $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
-                $fetchuser->execute();
-                
-                $row = $fetchuser->fetch();
-                $countUser = $fetchuser->rowCount();
-                if($countUser>0)
+                $verified = $rows['verified'];
+                if($verified == 1)
                 {
-                    $_SESSION['pet_center_id'] = $row['pet_center_id'];
+                    $_SESSION['pet_center_id'] = $rows['pet_center_id'];
                     echo "<script>window.open('index.php?login_user=".$_SESSION['pet_center_id']."','_self');</script>";
                 }
                 else
                 {
-                    echo "<script>alert('Username or Password is incorrect!');</script>";
+                    echo "<script>alert('Please verify your email!');</script>";
                 }
             }
             else
             {
-                echo "<script>alert('Please verify your email!');</script>";
+                echo "<script>alert('Email or Password is incorrect!');</script>";
             }
         }
     }
@@ -45,30 +39,12 @@
     function verify()
     {
         include("inc/db.php");
-        if(isset($_POST['verify_key']))
-        {
-            $user_email = $_POST['email'];
-            $v_key = $_POST['v_key'];
-
-            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$user_email' AND v_key = '$v_key'");
-            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
-            $check_email->execute();
-
-            $row = $check_email->rowCount();
-            if($row>0)
-            {
-                $update_verification = $con->prepare("UPDATE pet_center_tbl SET verified = 1 WHERE email = '$user_email'");
-                if($update_verification->execute())
-                {
-                    echo "<script>alert('You can now log in!');</script>";
-                    echo "<script>window.open('login.php', '_self');</script>";
-                }
-            }
-            else
-            {
-                echo "<script>alert('Email or Verification Code is incorrect!');</script>";
-            }
-        }
+        echo
+        "<form method = 'POST' action = 'verify_mail.php' enctype = 'multipart/form-data'>
+            <h3>Verify Email</h3>
+            <input type = 'email' class = 'input' name = 'user_email' placeholder = 'Email..'/>
+            <button name = 'continue' class = 'button'>Continue</button>
+        </form>";
     }
 
     function forgotpassword()

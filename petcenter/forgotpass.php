@@ -51,7 +51,7 @@
             $subject = "Verification Code";
             $body = "Your Verification Code: $verification_code";
             $sender = "ianjohn0101@gmail.com";
-
+ 
             mail($receiver, $subject, $body, $sender);
             
         }

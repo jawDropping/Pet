@@ -13,30 +13,24 @@
             $check_email->setFetchMode(PDO::FETCH_ASSOC);
             $check_email->execute();
 
-            $verified = $check_email->fetch();
-            $isVerified = $verified['verified'];
-
-            if($isVerified == 1)
+            $row = $check_email->rowCount();
+            $rows = $check_email->fetch();
+            if($row>0)
             {
-                $fetchuser = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
-                $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
-                $fetchuser->execute();
-
-                $row = $fetchuser->fetch();
-                $countUser = $fetchuser->rowCount();
-                if($countUser>0)
+                $verified = $rows['verified'];
+                if($verified == 1)
                 {
-                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['user_id'] = $rows['user_id'];
                     echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."','_self');</script>";
                 }
                 else
                 {
-                    echo "<script>alert('Email or Password is incorrect!');</script>";
+                    echo "<script>alert('Please verify your email!');</script>";
                 }
-            }   
+            }
             else
             {
-                echo "<script>alert('Please verify your email!');</script>";
+                echo "<script>alert('Email or Password is incorrect!');</script>";
             }
         }
     }
@@ -56,30 +50,43 @@
     function verify()
     {
         include("inc/db.php");
-        if(isset($_POST['verify_key']))
-        {
-            $user_email = $_POST['user_email'];
-            $v_key = $_POST['v_key'];
+        echo
+        "<form method = 'POST' action = 'verify_mail.php' enctype = 'multipart/form-data'>
+            <h3>Verify Email</h3>
+            <input type = 'email' class = 'input' name = 'user_email' placeholder = 'Email..'/>
+            <button name = 'continue' class = 'button'>Continue</button>
+        </form>";
+        // include("inc/db.php");
+        // if(isset($_POST['verify_email']))
+        // {
+        //     $user_email = $_POST['user_email'];
+        //     $v_key = generateRandomString();
+        //     // $v_key = $_POST['v_key'];
 
-            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND v_key = '$v_key'");
-            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
-            $check_email->execute();
+        //     $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+        //     $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+        //     $check_email->execute();
 
-            $row = $check_email->rowCount();
-            if($row>0)
-            {
-                $update_verification = $con->prepare("UPDATE users_table SET verified = 1 WHERE user_email = '$user_email'");
-                if($update_verification->execute())
-                {
-                    echo "<script>alert('You can now log in!');</script>";
-                    echo "<script>window.open('login.php' ,'_self');</script>";
-                }
-            }
-            else
-            {
-                echo "Email or Verification Code is incorrect!";
-            }
-        }
+        //     $row = $check_email->rowCount();
+        //     if($row>0)
+        //     {
+        //         $receiver = $user_email;
+        //         $subject = "Email Verification";
+        //         $body = "Verification Key: $v_key";
+        //         $sender = "ianjohn0101@gmail.com";
+        //         echo
+        //         "<form method = 'POST' action = 'verify_mail.php'>
+        //             <input type = 'text' class = 'input' name = 'user_email' value = '".$user_email."' />
+        //             <input type = 'text' class = 'input' name = 'v_code' placeholder = 'Verification Code' />
+        //             <button name = 'verify_mail' class = 'button'>Continue</button>
+        //         </form>";
+        //         mail($receiver, $subject, $body, $sender);
+        //     }
+        //     else
+        //     {
+        //         echo "<script>alert('Email not registered!');</script>";
+        //     }
+        // }
     }
 
     
@@ -1782,7 +1789,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         <input class = 'inet' type = 'time' name = 'reserve_time'  required/>
                         <p class = 'lebs'>Service Cost: </p>
                         <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
-                  
+                        <input type = 'hidden' name = 'coupon_code' value = '".$empty_coupon."' />
            
                         <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
                         <div>
