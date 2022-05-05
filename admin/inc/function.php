@@ -346,12 +346,12 @@
 
         $net_total = 0;
         $q = $con->query("
-            SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
-            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
+            SELECT od.order_id, od.order_date, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
+            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status, o.order_date
             from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
             WHERE o.user_id = o.user_id
-            group by o.order_id, p.pro_name, o.delivery_status) od
-            group by od.order_id, od.delivery_status
+            group by o.order_id, p.pro_name, o.delivery_status, o.order_date) od
+            group by od.order_id, od.delivery_status, od.order_date    
             ");
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
@@ -362,7 +362,7 @@
                 "<form method = 'POST' enctype = 'multipart/form-data'>
                     <tr>
                         <input type = 'hidden' name = 'order_id' value = '".$order['order_id']."' />
-                        <td>".$order_id."</td>";
+                        <td style = 'color:white'>".$order_id."</td>";
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
@@ -377,12 +377,13 @@
                         $row_username = $fetch_username->fetch();
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
-                        <td>".$row_username['user_username']."</td>";
+                        <td style = 'color:white'>".$row_username['user_username']."</td>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
                     <td style = 'color:white'>".$order['items']."</td>
+                    <td style = 'color:white'>".$order['order_date']."</td>
                     <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <td>".$net_total."</td>
+                    <td style = 'color:white'>".$net_total."</td>
                     <td><input type = 'date' name = 'delivery_date' required/></td>
                     <td><button name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a></td>
