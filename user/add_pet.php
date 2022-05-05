@@ -53,6 +53,9 @@
             $pet_breed = $_POST['pet_breed'];
             $pet_gender = $_POST['pet_gender'];
             $pet_details = $_POST['pet_details'];
+
+            date_default_timezone_set('Singapore');
+            $date = date('m/d/Y h:i:s a', time());
             
             $pet_photo = $_FILES['pet_photo']['name'];
             $pet_photo_tmp = $_FILES['pet_photo']['tmp_name'];
@@ -67,7 +70,8 @@
                         pet_gender,
                         pet_details,
                         pet_photo,
-                        likes
+                        likes,
+                        date_time_posted
             )
             VALUES (
                 '$user_id',
@@ -77,7 +81,8 @@
                 '$pet_gender',
                 '$pet_details',
                 '$pet_photo',
-                '0'
+                '0',
+                '$date'
 
             )");
             if($add_pet->execute())
