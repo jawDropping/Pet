@@ -13,30 +13,24 @@
             $check_email->setFetchMode(PDO::FETCH_ASSOC);
             $check_email->execute();
 
-            $verified = $check_email->fetch();
-            $isVerified = $verified['verified'];
-
-            if($isVerified == 1)
+            $row = $check_email->rowCount();
+            $rows = $check_email->fetch();
+            if($row>0)
             {
-                $fetchuser = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
-                $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
-                $fetchuser->execute();
-
-                $row = $fetchuser->fetch();
-                $countUser = $fetchuser->rowCount();
-                if($countUser>0)
+                $verified = $rows['verified'];
+                if($verified == 1)
                 {
-                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['user_id'] = $rows['user_id'];
                     echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."','_self');</script>";
                 }
                 else
                 {
-                    echo "<script>alert('Email or Password is incorrect!');</script>";
+                    echo "<script>alert('Please verify your email!');</script>";
                 }
-            }   
+            }
             else
             {
-                echo "<script>alert('Please verify your email!');</script>";
+                echo "<script>alert('Email or Password is incorrect!');</script>";
             }
         }
     }
@@ -44,85 +38,55 @@
     function forgotpassword()
     {
         include("inc/db.php");
-        if(isset($_POST['update_password']))
-        {
-            $user_email = $_POST['user_email'];
-            $user_password = $_POST['user_password'];
-            $confirm_password = $_POST['confirm_password'];
+        echo
+        "<form method = 'POST' action = 'forgotpass.php' enctype = 'multipart/form-data'>
+            <h3>Forgot Password</h3>
+            <input type = 'email' class = 'input' name = 'user_email' placeholder = 'Email..'/>
+            <button name = 'continue' class = 'button'>Continue</button>
+        </form>";
 
-            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
-            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
-            $check_email->execute();
-
-            $row = $check_email->rowCount();
-            if($row>0)
-            {
-                if($user_password == $confirm_password)
-                {
-                    if(strlen($user_password) >= 8)
-                    {
-                        if(preg_match('/[A-Z]/', $user_password) > 0 &&
-                        preg_match('/[a-z]/', $user_password) > 0)
-                        {
-                            $update_password = $con->prepare("UPDATE users_table SET user_password = '$user_password' WHERE user_email = '$user_email'");
-                            $update_password->setFetchMode(PDO:: FETCH_ASSOC);
-                            $update_password->execute();
-
-                            if($update_password->execute())
-                            {
-                                echo "<script>alert('Succesfully Changed!');</script>";
-                                echo "<script>window.open('login.php', '_self');</script>";
-                            }
-                        }
-                        else
-                        {
-                            echo "<script>alert('Password must at least have 1 number, 1 special character and 1 uppercase letter!');</script>";
-                        }
-                    }
-                    else
-                    {
-                        echo "<script>alert('Password length must at least have 8 characters!');</script>";
-                    }
-                }
-                else
-                {
-                    echo "<script>alert('Password doesn't match!');</script>";
-                }
-            }
-            else
-            {
-                echo "<script>alert('Email doesn't exists!');</script>";
-            }
-        }
     }
 
     function verify()
     {
         include("inc/db.php");
-        if(isset($_POST['verify_key']))
-        {
-            $user_email = $_POST['user_email'];
-            $v_key = $_POST['v_key'];
+        echo
+        "<form method = 'POST' action = 'verify_mail.php' enctype = 'multipart/form-data'>
+            <h3>Verify Email</h3>
+            <input type = 'email' class = 'input' name = 'user_email' placeholder = 'Email..'/>
+            <button name = 'continue' class = 'button'>Continue</button>
+        </form>";
+        // include("inc/db.php");
+        // if(isset($_POST['verify_email']))
+        // {
+        //     $user_email = $_POST['user_email'];
+        //     $v_key = generateRandomString();
+        //     // $v_key = $_POST['v_key'];
 
-            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND v_key = '$v_key'");
-            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
-            $check_email->execute();
+        //     $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+        //     $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+        //     $check_email->execute();
 
-            $row = $check_email->rowCount();
-            if($row>0)
-            {
-                $update_verification = $con->prepare("UPDATE users_table SET verified = 1 WHERE user_email = '$user_email'");
-                if($update_verification->execute())
-                {
-                    echo "<script>alert('You can now log in!');</script>";
-                    echo "<script>window.open('login.php' ,'_self');</script>";
-                }
-            }
-            else
-            {
-                echo "Email or Verification Code is incorrect!";
-            }
-        }
+        //     $row = $check_email->rowCount();
+        //     if($row>0)
+        //     {
+        //         $receiver = $user_email;
+        //         $subject = "Email Verification";
+        //         $body = "Verification Key: $v_key";
+        //         $sender = "ianjohn0101@gmail.com";
+        //         echo
+        //         "<form method = 'POST' action = 'verify_mail.php'>
+        //             <input type = 'text' class = 'input' name = 'user_email' value = '".$user_email."' />
+        //             <input type = 'text' class = 'input' name = 'v_code' placeholder = 'Verification Code' />
+        //             <button name = 'verify_mail' class = 'button'>Continue</button>
+        //         </form>";
+        //         mail($receiver, $subject, $body, $sender);
+        //     }
+        //     else
+        //     {
+        //         echo "<script>alert('Email not registered!');</script>";
+        //     }
+        // }
     }
 
     
@@ -1026,10 +990,21 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                   <div id = 'pro_brand'>
                     <h3>".$row_pro['pro_name']."</h3>
                     <ul>
+                        <li>
+                            Description:
+                            <br>
+                            <br>".$row_pro['pro_keyword']."
+                        </li>
+                        <li>
+                            <br>Product Price: ₱".$row_pro['pro_price'].".00
+                        </li>
+                        <li>
+                            <br>Product Stock: ".$row_pro['pro_quantity']."
+                        </li>
                         <li>";
                             if($row_pro['pro_quantity'] > 0)
                             {
-                                echo "Availability: In Stock";
+                                echo "<br>Availability: In Stock";
                                 echo "<center>
                                 <h4>Price: ".$row_pro['pro_price']."</h4>
                                 <form method = 'POST'>
@@ -1356,6 +1331,13 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                 <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
                                 <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
                                 <a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
+                            </div>
+                            <br>
+                            <br>
+                            <div>
+                                <br>
+                                <p class = 'loc'>Location</p>
+                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
                             </div>
                         </div>  
                     </div>
@@ -1814,7 +1796,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         <input class = 'inet' type = 'time' name = 'reserve_time'  required/>
                         <p class = 'lebs'>Service Cost: </p>
                         <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
-                  
+                        <input type = 'hidden' name = 'coupon_code' value = '".$empty_coupon."' />
            
                         <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
                         <div>

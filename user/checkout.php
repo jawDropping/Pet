@@ -99,7 +99,7 @@
                     <div class = 'group'>
                     <input class = 'useless' style = 'display:none;' type = 'hidden' name = 'pro_id' value = ".$row['pro_id']." />
                     <p class = 'tag'>Product Name: <p/>
-                    <input class = 'inputed' type = 'text' name = 'pro_id' value = ".$row['pro_name']." disabled/>
+                    <input class = 'inputed' type = 'text' name = 'pro_id' value = '".$row['pro_name']."' disabled/>
                     </div>
                     <div class = 'group'>
                     <p class = 'tag'>Qty: </p>

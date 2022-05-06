@@ -1,7 +1,4 @@
-<?php 
-    include("inc/function.php");
-    echo forgotpassword();
-?>
+
 <html>
     <head>
     <title>Forgot Password</title>
@@ -24,17 +21,12 @@
                     <img src="../uploads/logo2.png" class="logo"> <p class="petsociety">Pet Society</p>
                     </div>
               
-                <h3>Forgot Password</h3>
-                <form method = "POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"; enctype = "multipart/form-data">
-                 
-                       
-                        <input class = "input" type="email" name = "email" placeholder = "Email"/> 
-                        <input class = "input" type="password" name = "pet_center_password" placeholder = "New Password"/> 
-                        <input class = "input" type="password" name = "confirm_password" placeholder = "Confirm Password"/>          
-                            <button  class = "button" name = "update_password" id = "login_user" >Update</button>
-                        </br>
+                
+                       <?php 
+    include("inc/function.php");
+    echo forgotpassword();
+?>
                      
-                    </form>
                 </div>
            
             </div>

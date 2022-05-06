@@ -28,11 +28,14 @@ if($row)
     $order_id = intval($row['MAX(order_id)']+1); 
 }
 
+date_default_timezone_set('Singapore');
+$date = date('m/d/Y h:i:s a', time());
+
 if($row_user['municipality'] == "mandaue" || $row_user['municipality'] == "cebu" || $row_user['municipality'] == "consolacion" || $row_user['municipality'] == "talisay")
 {
     foreach($_SESSION['cart'] as $prodID)
     { 
-        $query = $con->prepare("INSERT INTO orders_tbl(order_id, user_id, pro_id, qty, delivery_status) VALUES($order_id, $userID, $prodID, $qty, 'PENDING')");
+        $query = $con->prepare("INSERT INTO orders_tbl(order_id, user_id, pro_id, qty, order_date, delivery_status) VALUES($order_id, $userID, $prodID, $qty, '$date', 'PENDING')");
         try{
             if($query->execute())
             {

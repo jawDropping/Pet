@@ -1,7 +1,7 @@
 
 <html>
     <head>
-    <title>Verify Email</title>
+    <title>Forgot Password</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,9 +21,44 @@
                     <img src="../uploads/logo2.png" class="logo"> <p class="petsociety">Pet Society</p>
                     </div>
               
-                    <?php 
-    include("inc/function.php");
-    echo verify();
+                
+                    <?php
+    include("inc/db.php");
+
+    if(isset($_POST['next']))
+    {
+        
+        $verification_code = $_POST['verification_code'];
+        $v_code = $_POST['v_code'];
+        $user_email = $_POST['user_email'];
+
+        if($row['verified'] == 1)
+        {
+            echo 
+            "<script>alert('Your account is already verified');</script>
+            <script>window.open('login.php', '_self');</script>";
+        }
+        else
+        {
+            if($v_code == $verification_code)
+            {
+                $update_stat = $con->prepare("UPDATE pet_center_tbl SET verified = "1" WHERE email = '$user_email'");
+                $update_stat->setFetchMode(PDO::FETCH_ASSOC);
+                $update_stat->execute();
+    
+                if($update_stat->execute())
+                {
+                    echo "<script>alert('You can now log in!');</script>";
+                    echo "<script>window.open('login.php', '_self');</script>";
+                }
+            }
+            else
+            {
+                echo "<script>alert('Verification Code is incorrect, we'll sent another code!');</script>";
+                echo "<script>window.open('verify_email.php', '_self');</script>";
+            }
+        }
+    }
 ?>
                 </div>
            
