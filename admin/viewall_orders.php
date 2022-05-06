@@ -34,7 +34,7 @@
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
         <li><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
-        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Product Management</a></li>
+        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li class = 'selection' ><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
@@ -68,36 +68,34 @@ else
 
 ?>
 <p class ='hed'>View All Orders</p>
-<div class = "scroll">
 
-
+<div class = "body">
     
-    <form method = "POST" enctype = "multipart/form-data">
-    <table>
-        
-        <tr>
+   
+    <div>
+        <div class = 'hedGrid'>
     
-            <th>ORDER ID </th>
+            <p>ORDER ID </p>
 
-            <th>USER</th>
+            <p>USER</p>
      
-            <th>ITEMS</th>
+            <p>ITEMS</p>
 
-            <th>ORDER PLACED</th>
 
-            <th>TOTAL AMOUNT</th>
+            <p>TOTAL AMOUNT</p>
 
-            <th>Delivery Date</th>
+
+            <p>Delivery Date</p>
            
-            <th>Action</th>
-        </tr>
 
-        <tr>
+            <p>Action</p>
+        </div>
+
             <?php
                 echo viewall_orders();
             ?>
-        </tr>
-        </table>
+       
+ 
     </form>
 </div>
                 </div>
@@ -115,14 +113,63 @@ else
         padding: 10px;
     }
     .selection {
-  background: #28287774;
-}
-.hed{
+    background: #28287774;
+    }
+    .hed{
         font-size: 22px;
         font-weight: bold;
         color: white;
     }
-    
+    .bots{
+        text-align: center;
+    }
+    .body{
+        margin-top: 7vh;
+        background: #fff;
+        width: 95%;
+        border-radius: 5px;
+        padding: 10px;
+        margin-left: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+    }
+    .hedGrid{
+        display: grid;
+        grid-template-columns: 15% 15% 15% 15% 15% 15%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+    }
+    #forming{
+        display: grid;
+        grid-template-columns: 15% 15% 15% 15% 15% 15%;
+        font-size: 14px;
+        margin-top: 20px;
+        background: #eee;
+        padding: 5px;
+    }
+    .dets{
+        height: 30px;
+    }
+    .buto{
+        color: #fff;
+        border-radius: 3px;
+         width: 40%;
+         height: 32px;
+        background: #5a5bf3;
+        border: 1px solid  #5a5bf3;
+        text-decoration: none;
+    }
+    .busog{
+        height: 30px;
+    color: #5a5bf3;
+    border-radius: 3px;
+    width: 100px;
+    background: white;
+    border: 1px solid #5a5bf3;
+    text-decoration: none;
+    padding: 5px 5px 5px 5px;
+    }
 </style>
 
 

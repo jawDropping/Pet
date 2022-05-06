@@ -30,7 +30,7 @@
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
         <li class = 'selection' ><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
-        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Product Management</a></li>
+        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
@@ -47,50 +47,92 @@
                 </div>
                 <div id="bodyright">
                 <p class = 'hed'>View All Products</p>
-                <div class = "scroll">
+                <div class = "body">
     
     <form method = "POST" enctype = "multipart/form-data">
-    <table>
-        <tr>
-    
-            <th>PRODUCT NAME </th>
-
-            <th>PRODUCT PRICE</th>
-     
-            <th>SAMPLE IMAGE #1</th>
-
-            <th>SAMPLE IMAGE #2</th>
-
-            <th>SAMPLE IMAGE #3</th>
-           
-
-            <th>PRODUCT QUANTITY</th>
-
-            <th>Action</th>
-        </tr>
-        <tr>
+    <div class = 'tebs'>
+        <div class = 'hedGrid'>
+            <p>PRODUCT NAME </p>
+            <p>PRICE</p>
+            <p>QUANTITY</p>
+            <p>Action</p>
+        </div>
+        <div>
             <?php
                 echo view_prods();
             ?>
-        </tr>
-        </table>
+        </div>
+        </div>
     </form>
 </div>
                 </div>
     </body>
     <style>
-    .scroll{
-        width: 100%;
-        margin-top: 7vh;
-    }
+ 
     .selection {
         background: #28287774;
+    }
+    .hedGrid{
+        display: grid;
+        grid-template-columns: 45% 15% 15% 25%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+    }
+    .innerGrid{
+        display: grid;
+        grid-template-columns: 45% 15% 15% 25%;
+        text-align: center;
+        
+        margin-top: 20px;
+    }
+    .p1{
+        text-align: left;
     }
     .hed{
         font-size: 22px;
         font-weight: bold;
         color: white;
         padding: 10px;
+    }
+    .tebs{
+        width: 100%;
+    }
+    .body{
+        margin-top: 7vh;
+        background: #fff;
+        width: 95%;
+        border-radius: 5px;
+        padding: 10px;
+        margin-left: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+    }
+    .imges{
+        height: 50px;
+    }
+    p{
+        padding: 10px;
+    }
+    .edith{
+        height: 30px;
+    color: #fff;
+    border-radius: 3px;
+    width: 100px;
+    background: #5a5bf3;
+    border: 1px solid  #5a5bf3;
+    text-decoration: none;
+    padding: 5px 15px 5px 15px;
+    }
+    .byew{
+    height: 30px;
+    color: #5a5bf3;
+    border-radius: 3px;
+    width: 100px;
+    background: white;
+    border: 1px solid #5a5bf3;
+    text-decoration: none;
+    padding: 5px 5px 5px 5px;
     }
 </style>
 <script>

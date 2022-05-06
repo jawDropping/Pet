@@ -30,8 +30,8 @@
     </body>
     <style>
            .mainDiv{
-        width: 80%;
-        margin: 7vh 10% 0 10%;
+        width: 60%;
+        margin: 7vh 20% 0 20%;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         border-radius: 5px;
         padding: 20px;
