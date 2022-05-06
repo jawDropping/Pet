@@ -1332,6 +1332,13 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                 <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
                                 <a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
                             </div>
+                            <br>
+                            <br>
+                            <div>
+                                <br>
+                                <p class = 'loc'>Location</p>
+                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
+                            </div>
                         </div>  
                     </div>
                 </div>

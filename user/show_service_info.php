@@ -18,11 +18,7 @@
         <?php service_info(); ?>
         
         </div>
-        <br>
-        <div>
-            <p class = 'loc'>Location</p>
-            <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
-       </div>
+        
         <div class = 'bottomD'>
         <?php showFeeds(); ?>
         </div>
@@ -38,7 +34,7 @@
         }
         .loc{
             padding: 10px;
-            margin-left: 5%;
+            margin-left: -500px;
             margin-bottom: 2%;
             font-weight: bold;
             color: #555;
@@ -110,7 +106,7 @@
         }
         .mapGraph{
             width: 80vw;
-            margin-left: 10vw;
+            margin-left: -30vw;
             height: 50vh;
             border: none;
             border-radius: 10px;
@@ -157,7 +153,7 @@
         }
        
         .bbm{
-            padding: 5px;
+            padding: 7.5px;
            color: #555;
             margin-left: 5px;
             width: 100%;

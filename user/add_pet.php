@@ -54,8 +54,8 @@
             $pet_gender = $_POST['pet_gender'];
             $pet_details = $_POST['pet_details'];
 
-            date_default_timezone_set('Singapore');
-            $date = date('m/d/Y h:i:s a', time());
+            $currentDate = new DateTime();
+            $today = $currentDate->format('Y-m-d H:i:s');
             
             $pet_photo = $_FILES['pet_photo']['name'];
             $pet_photo_tmp = $_FILES['pet_photo']['tmp_name'];
@@ -82,12 +82,13 @@
                 '$pet_details',
                 '$pet_photo',
                 '0',
-                '$date'
+                '$today'
 
             )");
             if($add_pet->execute())
             {
                 echo "<script>alert('Pet Successfully Added');</script>";
+                echo "<script>window.open('viewall_pets.php', '_self');</script>";
             }
         }
     }
