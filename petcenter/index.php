@@ -13,21 +13,51 @@
             include ("inc/db.php");
             include ("inc/function.php");
             include ("inc/header.php"); 
-            include ("inc/navbar.php"); 
             ?>
+            
+            
+            <div class = "ko">
+        <div class="inners">
+        <a class = 'lengkong' href = 'index.php'>My services</a>
+        <a class = 'lengk' href = 'addService.php'>Add services</a>
+        <a class = 'lengk' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
+        </div>
+       
+        </div>
             <div id='bodyleft'>
-                <div class="mainer">
-      
-                <?php timeline(); ?>
-
+                <div class="kapo">
+                <div class = 'mainer'>    
+                    <?php timeline(); ?>
+                    
                 </div>
+               
+                </div>
+               
                 
             </div>
+            <br>
+            <div class="haha">
+                    <p>jdhsakj</p>
+                </div>
 
     </body>
     <style>
         .mainer{
-            margin-top: 7vh;
+           margin-top: 3%; 
+        }
+        
+        .kapo{
+            display: flex;
+            flex-direction: column;
+        }
+        .haha{
+            width: 100vw;
+            background: rgb(0, 86, 157);
+            height: 52px;
+        }
+        body{
+            background: rgb(0,114,210);
+            background: linear-gradient(90deg, rgba(0,114,210,1) 0%, rgba(0,182,194,1) 100%);
         }
     </style>
 </html>

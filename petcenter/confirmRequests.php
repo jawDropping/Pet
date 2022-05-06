@@ -13,36 +13,75 @@
             include ("inc/db.php");
             include ("inc/function.php");
             include ("inc/header.php"); 
-            include ("inc/navbar.php"); 
-            echo "<div class = 'scroll' id = 'bodyright'>
-            <h3>Requests</h3>
-    <form method = 'POST' enctype = 'multipart/form-data'>
-    <table>
-        <tr>
-       
-
-            <th>Name</th>
-            
-
-            <th>Time</th>
+            ?>
+             <div class = "ko">
+        <div class="inners">
+        <a class = 'lengk' href = 'index.php'>My services</a>
+        <a class = 'lengk' href = 'addService.php'>Add services</a>
+        <a class = 'lengkong' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
+        </div>
+            <div id = 'bodyleft'>
            
-
-            <th>Coupon Code</th>
-
-            
-            <th>Trnsaction Code</th>
-            
-            
-            <th>Action</th>
-        </tr>
-        <tr>";
+                <div class="maine">
+                <p class = 'ttl'>Requests</p>
+            <form method = 'POST' enctype = 'multipart/form-data' id = 'porm'>
+            <div>
+            <div class = 'hed'>
+            <p class = 'he' >NAME</p>
+            <p class = 'he' >TIME</p>
+            <p class = 'he' >COUPON CODE</p>
+            <p class = 'he' >TRANSACTION CODE</p>
+            <p class = 'he' >ACTION</p>
+        </div>
+        <div>
+            <?php
         view_requests();
-        echo"</tr>
-        </table>
-    </form>";
-            
-                  echo"</div>";
-           
         ?>
+        </div>
+        </div>
+    </form>
+            
+              </div>
+           
+
+                </div>
+           
     </body>
+    <style>
+        .maine{
+            margin-top: 3%;
+            
+           
+        }
+        #porm{
+            padding: 20px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-radius: 8px;
+        }
+        .hed{
+            display: grid;
+            grid-template-columns: 20% 20% 20% 20% 20%;
+        }
+        P{
+            padding: 10px;
+        }
+        .he{
+            font-size: 18px;
+            background: #efefef;
+        }
+        .oks{
+            text-align: center;
+            width: 40%;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background:#5a5bf3;
+            color: white;
+        }
+        .ttl{
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #5a5bf3;
+        }
+    </style>
 </html>
