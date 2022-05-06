@@ -359,10 +359,11 @@
                 $net_total += $order['sum(od.qty * od.price)'];
                 $order_id = $order['order_id'];
                 echo
-                "<form method = 'POST' enctype = 'multipart/form-data'>
-                    <tr>
+                "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+                    
                         <input type = 'hidden' name = 'order_id' value = '".$order['order_id']."' />
-                        <td style = 'color:white'>".$order_id."</td>";
+
+                        <p>".$order_id."</p>";
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
@@ -377,17 +378,20 @@
                         $row_username = $fetch_username->fetch();
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
-                        <td style = 'color:white'>".$row_username['user_username']."</td>";
+
+                        <p>".$row_username['user_username']."</p>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
-                    <td style = 'color:white'>".$order['items']."</td>
-                    <td style = 'color:white'>".$order['order_date']."</td>
+                    <p>".$order['items']."</p>
+                    <p>".$order['order_date']."</p>
                     <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <td style = 'color:white'>".$net_total."</td>
-                    <td><input type = 'date' name = 'delivery_date' required/></td>
-                    <td><button name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
-                     <a href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a></td>
-                    </tr>
+                    <p>".$net_total."</p>
+                    <input class = 'dets' type = 'date' name = 'delivery_date' required/>
+                    <div class ='bots'>
+                    <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
+                     <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
+                     </div>
+        
                 </form>";
             }
         if(isset($_POST['confirm_order']))
@@ -395,95 +399,107 @@
             $order_id = $_POST['confirm_order'];
 
             
-            $items = $_POST['items'];
-            $total_amount = $_POST['total_amount'];
-            $user_username = $_POST['user_username'];
-            $delivery_date = $_POST['delivery_date'];
-            $delivery_status = 'FOR DELIVERY';
+            $view_status = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+            $view_status->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_status->execute();
 
-            $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
-            $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetch_user->execute();
-        
-            $row_username = $fetch_user->fetch();
-
-            $receiver = $row_username['user_email'];
-            $subject = "Order Confirmation Mail";
-            $body = "
-            Greetings!
-
-            Your Order has been confirmed and will be delivered on $delivery_date 
-
-            Order Number: $order_id
-            Items: $items
-
-            Please do keep your lines open because your items will be arrived to your
-            destination according to the delivery date.
-            Thank you for purchasing to our store hopefully you're 
-            happy with those items you purchased. 
-
-            Lovely store,
-            Pet Society
-            ";
-            $sender = "ianjohn0101@gmail.com";
-
-            $datenow = getdate();
-
-            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-
-
-            if($delivery_date > $today)
+            $rows = $view_status->fetch();
+            if($rows['delivery_status'] == 'FOR DELIVERY')
             {
-                echo "INVALID DATE!";
+                echo "<script>alert('Already in FOR DELIVERY STATUS!');</script>";
             }
             else
             {
-                $add_delivery = $con->prepare("INSERT INTO delivery_tbl
-                (
-                    order_id, 
-                    items, 
-                    total_amount,
-                    user_username, 
-                    delivery_date, 
-                    delivery_status
-                ) 
-                VALUES
-                (
-                    $order_id,
-                    '$items',
-                    '$total_amount',
-                    '$user_username',
-                    '$delivery_date',
-                    '$delivery_status'
-                )");
+                $items = $_POST['items'];
+                $total_amount = $_POST['total_amount'];
+                $user_username = $_POST['user_username'];
+                $delivery_date = $_POST['delivery_date'];
+                $delivery_status = 'FOR DELIVERY';
     
-                if(!$add_delivery->execute())
+                $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+                $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetch_user->execute();
+            
+                $row_username = $fetch_user->fetch();
+    
+                $receiver = $row_username['user_email'];
+                $subject = "Order Confirmation Mail";
+                $body = "
+                Greetings!
+    
+                Your Order has been confirmed and will be delivered on $delivery_date 
+    
+                Order Number: $order_id
+                Items: $items
+    
+                Please do keep your lines open because your items will be arrived to your
+                destination according to the delivery date.
+                Thank you for purchasing to our store hopefully you're 
+                happy with those items you purchased. 
+    
+                Lovely store,
+                Pet Society
+                ";
+                $sender = "ianjohn0101@gmail.com";
+    
+                $datenow = getdate();
+    
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    
+    
+                if($delivery_date > $today)
                 {
-                    return;
+                    echo "INVALID DATE!";
                 }
-                
-                mail($receiver, $subject, $body, $sender);
-    
-                $view_details = $con->query("SELECT pro_id, qty FROM orders_tbl WHERE order_id = '$order_id'");
-                $view_details->setFetchMode(PDO:: FETCH_ASSOC);
-                $view_details->execute(); 
-                
-                while($row = $view_details->fetch()):
-                    $pro_id = $row['pro_id'];
-                    $qty = $row['qty'];
-    
-                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
-                    $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
-                    $update_qty->execute();
-                endwhile;
-    
-                $delete_ord = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
-                if(!$delete_ord->execute())
+                else
                 {
-                    return;  
-                } 
-                echo "<script>alert('Successfully Confirmed!');</script>";
-                echo "<script>window.open('viewall_orders.php', '_self');</script>";
+                    $add_delivery = $con->prepare("INSERT INTO delivery_tbl
+                    (
+                        order_id, 
+                        items, 
+                        total_amount,
+                        user_username, 
+                        delivery_date, 
+                        delivery_status
+                    ) 
+                    VALUES
+                    (
+                        $order_id,
+                        '$items',
+                        '$total_amount',
+                        '$user_username',
+                        '$delivery_date',
+                        '$delivery_status'
+                    )");
+        
+                    if(!$add_delivery->execute())
+                    {
+                        return;
+                    }
+                    
+                    mail($receiver, $subject, $body, $sender);
+        
+                    $view_details = $con->query("SELECT pro_id, qty FROM orders_tbl WHERE order_id = '$order_id'");
+                    $view_details->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_details->execute(); 
+                    
+                    while($row = $view_details->fetch()):
+                        $pro_id = $row['pro_id'];
+                        $qty = $row['qty'];
+        
+                        $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
+                        $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
+                        $update_qty->execute();
+                    endwhile;
+        
+                    $delete_ord = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
+                    if(!$delete_ord->execute())
+                    {
+                        return;  
+                    } 
+                    echo "<script>alert('Successfully Confirmed!');</script>";
+                    echo "<script>window.open('viewall_orders.php', '_self');</script>";
+                }
             }
         }
     }
@@ -497,24 +513,15 @@
 
         while($row = $sql->fetch()):
             echo
-            "<tr>
-                <td>".$row['pro_name']."</td>
-                <td>".$row['pro_price']."</td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img']."'/>
-                </td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img2']."'/>
-                </td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img3']."'/>
-                </td>
-                
-              
-                <td style = 'color:white'>".$row['pro_quantity']."</td>
-                <td><a href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
-                <a href = 'delete_cat.php?delete_prod=".$row['pro_id']."'>Delete</button></td>
-            </tr>";
+            "<div class = 'innerGrid'>
+                <p class = 'p1'>".$row['pro_name']."</p>
+                <p class = 'p2'>".$row['pro_price']."</p>
+                <p class = 'p2'>".$row['pro_quantity']."</p>
+                <div>
+                <a class = 'edith' href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
+                <a class = 'byew' href = 'delete_cat.php?delete_prod=".$row['pro_id']."'>Delete</a>
+                </div>
+            </div>";
         endwhile;
     }
 
@@ -546,6 +553,7 @@
             <td></td>
             <td></td>
             <td>Amount Collected: ₱".$row2['SUM(total_amount)']."</td>
+            <button class = 'buto' onClick = 'window.print()'>PRINT</button>
         </tr>";
     }
 
@@ -567,15 +575,15 @@
             $row_user = $view_user->fetch();
             $user_address = $row_user['user_address'];
             echo 
-            "<tr>
-                <td>".$row['order_id']."</td>
-                <td>".$row['items']."</td>
-                <td>".$row['total_amount']."</td>
-                <td>".$row['user_username']."</td>
-                <td>".$user_address."</td>
-                <td>".$row['delivery_date']."</td>
-                <td><a href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Confirm</td>
-            </tr>";
+            "<div class = 'innerGrid'>
+                <p>".$row['order_id']."</p>
+                <p>".$row['items']."</p>
+                <p>".$row['total_amount']."</p>
+                <p>".$row['user_username']."</p>
+                <p>".$user_address."</p>
+                <p>".$row['delivery_date']."</p>
+                <a class = 'btnssih' href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Delivered</a>
+            </div>";
             
         endwhile;
     }
@@ -637,8 +645,18 @@
 
                         if($update_status->execute())
                         {
+                            $delete_order = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
+                            $delete_order->setFetchMode(PDO:: FETCH_ASSOC);
+                             $delete_order->execute();
+
+                             if($delete_order->execute())
+                             {
+
                             echo "<script>alert('Item Delivered');</script>";
                             echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
+                             }
+
+
                         }
                    
                 }
@@ -984,11 +1002,11 @@
 
         while($row = $view_coupons->fetch()):
             echo 
-            "<tr>
-                <td>".$row['full_name']."</td>
-                <td>".$row['email']."</td>
-                <td>".$row['coupon_code']."</td>
-            </tr>"; 
+            "<div class = 'inners'>
+                <p>".$row['full_name']."</p>
+                <p class = 'okss'>".$row['email']."</p>
+                <p class = 'okss'>".$row['coupon_code']."</p>
+            </div>"; 
         endwhile;
     }
 
@@ -1038,18 +1056,18 @@
         $i=1;
 
         while($row=$fetch_pro->fetch()):
-            echo "<tr>
-                <td>".$i++."</td>
-                <td style = 'min-width:200px'>".$row['user_username']."</td>
-                <td>".$row['user_email']."</td>
-                <td>".$row['user_contactnumber']."</td>
-                <td>".$row['user_address']."</td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
-                </td>
-                <td><a href='#'>Edit</a></td>
-                <td><a href='#'>Delete</a></td>
-         </tr>";
+            echo "<div class = 'innerGrid'>
+                <p>".$i++."</p>
+                <p>".$row['user_username']."</p>
+                <p>".$row['user_email']."</p>
+                <p>".$row['user_contactnumber']."</p>
+                <p>".$row['user_address']."</p>
+                <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+                <div style = 'display: flex'>
+                <a class = 'btn1' href='#'>Edit</a>
+                <a class = 'btn2' href='#'>Delete</a>
+                </div>
+         </div>";
         endwhile;
     }
 
@@ -1070,73 +1088,79 @@
             $fetch_cat->execute();
             $row_cat = $fetch_cat->fetch();
 
-            echo "<h3>Edit Product</h3>
+            echo "
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <table>
-                    <tr>
-                        <td>Update Category Name: </td>
-                        <td>
-                            <select name = 'cat_name'>
+                <div class = 'body'>
+                <div class = 'seconds'>
+                    <div class = 'holders'>
+                        <p class = 'lebs'>Update Category Name: </p>
+                      
+                            <select class = 'oks' name = 'cat_name'>
                                 <option value = '".$row_cat['prod_id']."'>".$row_cat['cat_name']."</option>
                                 ";echo viewall_cat(); echo"
                             </select>
-                        </td>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <td>Product Name: </td>
-                        <td><input type='text' name = 'pro_name' value = '".$row['pro_name']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Brand: </td>
-                        <td><input type='text' name = 'pro_brand' value = '".$row['pro_brand']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Price: </td>
-                        <td><input type='text' name = 'pro_price' value = '".$row['pro_price']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Quantity: </td>
-                        <td><input type='text' name = 'pro_quantity' value = '".$row['pro_quantity']."'/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Keyword: </td>
-                        <td><input type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/></td>
-                    </tr>
-                   
-                </table>
-                <button name = 'update_prod'>Update Product</button>
+                       
+                    </div>
+                    
+                    <div class = 'holders'>
+                        <p class = 'lebs'>Product Name: </p>
+                        <input class = 'oks' type='text' name = 'pro_name' value = '".$row['pro_name']."'/>
+                    </div>
+                    <div class = 'holders'>
+                        <p class = 'lebs'>Product Brand: </p>
+                        <input class = 'oks' type='text' name = 'pro_brand' value = '".$row['pro_brand']."'/>
+                    </div>
+                    <div class = 'holders' >
+                        <p class = 'lebs'>Product Price: </p>
+                        <input class = 'oks' type='text' name = 'pro_price' value = '".$row['pro_price']."'/>
+                    </div>
+                    <div class ='holders'>
+                        <p class = 'lebs'>Product Quantity: </p>
+                        <input class = 'oks' type='text' name = 'pro_quantity' value = '".$row['pro_quantity']."'/>
+                    </div>
+                    <div class = 'holders'>
+                        <p class = 'lebs' >Product Keyword: </p>
+                        <input class = 'oks' type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/>
+                    </di>
+                    
+                </div>
+                <div></div>
+                <button class='btns' name = 'update_prod'>Update Product Details</button>
+                </div>
+                <br>
             </form>
+            <div class = 'bodies'>
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #1</label>
-                        <img src = '../uploads/products/".$row['pro_img']."'  style = 'height:50px;width:50px;' />
+                <div class = 'body2'>
+                    <div>
+                        <p class = 'lebs'>Sample Image #1</p>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
                         <br><input type = 'file' name = 'sample_img1' value = ".$row['pro_img']." required/><br>
-                    </td>
-                </tr><br>
+                    </div>
+                </div><br>
                 <button name = 'update_first_image'>Update First Image</button>
             </form>
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #2</label>
-                        <img src = '../uploads/products/".$row['pro_img2']."'  style = 'height:50px;width:50px;' />
+                <div class = 'body2'>
+                    <div>
+                        <p class = 'lebs'>Sample Image #2</p>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img2']."'/>
                         <br><input type = 'file' name = 'sample_img2' value = ".$row['pro_img2']." required/><br>
-                    </td>
-                </tr><br>
+                    </div>
+                </div><br>
                 <button name = 'update_second_image'>Update Second Image</button>
             </form>
             <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #1</label>
-                        <img src = '../uploads/products/".$row['pro_img3']."'  style = 'height:50px;width:50px;' />
+                <div class = 'body2'>
+                    <div>
+                        <p class = 'lebs'>Sample Image #1</p>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img3']."'/>
                         <br><input type = 'file' name = 'sample_img3' value = ".$row['pro_img3']." required/><br>
-                    </td>
-                </tr><br>
+                    </div>
+                </div><br>
                 <button name = 'update_third_image'>Update Third Image</button>
-            </form>";
+            </form>
+            </div>";
             if(isset($_POST['update_prod']))
             {
                 $cat_name = $_POST['cat_name'];
