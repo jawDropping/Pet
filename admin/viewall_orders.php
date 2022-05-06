@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -47,7 +50,25 @@
         </div>
 </div>
 <div id="bodyright">
+<?php
+
+include("inc/db.php");
+$viewall_ords = $con->prepare("SELECT * FROM orders_tbl");
+$viewall_ords->setFetchMode(PDO:: FETCH_ASSOC);
+$viewall_ords->execute();
+
+$row = $viewall_ords->fetch();
+
+if($row == 0)
+{
+    echo "NO ORDERS";
+}
+else
+{
+
+?>
 <p class ='hed'>View All Orders</p>
+
 <div class = "body">
     
    
@@ -60,13 +81,16 @@
      
             <p>ITEMS</p>
 
+
             <p>TOTAL AMOUNT</p>
+
 
             <p>Delivery Date</p>
            
+
             <p>Action</p>
         </div>
-       
+
             <?php
                 echo viewall_orders();
             ?>
@@ -158,7 +182,7 @@
         document.getElementById("currentDate").innerHTML = date2;
     </script>
 </html>
-
+<?php } ?>
 
 
 

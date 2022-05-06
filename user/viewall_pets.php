@@ -35,6 +35,12 @@
             $pet_id = $row['id'];
             $user_id = $row['user_id'];
             $likes = $row['likes'];
+            $date_time_posted = $row['date_time_posted'];
+
+            
+
+            $current_time = date("m/d/Y H:i A", strtotime($date_time_posted));
+            $time_ago = strtotime($current_time);
     
             $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                     $user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -60,7 +66,9 @@
                     <div id = 'userHead'>
                     <img class='profileImg2' src = '../uploads/user_profile/".$row_user['user_profilephoto']."'>
                     <p class = 'postName'>".$user_username."</p>
+
                     </div>
+                        <p id = 'caption'>  ".date('F d', strtotime($date_time_posted))." at ".date('h:i A', strtotime($date_time_posted))."</p>
                         <img src ='../uploads/pets/".$row['pet_photo']."' class = 'imagePost'/>
                        
                         
@@ -143,9 +151,63 @@
                  echo"</div>
                   </div>";
 
-                  ///////////////////////////////
-        
-
+                  date_default_timezone_set("Singapore");
+                
+                  function Time_Convert($time){
+                      $time_in_seconds = strtotime($time);
+                      $current_time = time();
+                      $difference_in_seconds = $current_time - $time_in_seconds;
+                      $seconds = $difference_in_seconds;
+                      $minutes = round($seconds/60);
+                      $hours = round($seconds/3600);
+                      $days = round($seconds/86400);
+                      $weeks = round($seconds/604800);
+                      $months = round($seconds/2629440);
+                      $years = round($seconds/31553280);
+               
+                      if($seconds <= 60){
+                          return "Just Now";
+               
+                      }else if($minutes <= 60){
+                          if($minutes == 1){
+                              return "1 min";
+                          }else{
+                              return "$minutes mins";
+                          }
+               
+                      }else if($hours <=24){
+                          if($hours == 1){
+                              return "1 hr";
+                          }else{
+                              return "$hours hrs";
+                          }
+                      }else if($days <= 7){
+                          if($days == 1){
+                              return "yesterday";
+                          }else{
+                              return "$days days";
+                          }
+                      }else if($weeks <= 4.3){
+                          if($weeks == 1){
+                              return "a week";
+                          }else{
+                              return "$weeks weeks";
+                          }
+                      }else if($months <= 12){
+                          if($months == 1){
+                              return "1 month";
+                          }else{
+                              return "$months months";
+                          }
+                      }else{
+                          if($years == 1){
+                              return "1 yr";
+                          }else{
+                              return "$years yrs";
+                          }
+                      }
+               
+                  }
         ?>
         </div>
         
