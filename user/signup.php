@@ -315,21 +315,50 @@ include("inc/db.php");
             $municipality = $_POST['municipality'];
             $barangay = $_POST['barangays'];
             $user_address = $_POST['user_address'];
+            $verification_key = generateRandomString();
 
-            $view_emails = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
-            $view_emails->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_emails->execute();
+            $view_email = $con->prepare("SELECT COUNT(*) AS all_emails FROM users_table WHERE user_email = '$user_email'");
+            $view_email->setFetchMode(PDO::FETCH_ASSOC);
+            $view_email->execute();
 
-            $row = $view_emails->rowCount();
-            if($row>0)
+            $row = $view_email->fetch();
+
+            $view_name = $con->prepare("SELECT COUNT(*) AS all_usernames FROM users_table WHERE user_username = '$user_username'");
+            $view_name->setFetchMode(PDO::FETCH_ASSOC);
+            $view_name->execute();
+
+            $row2 = $view_name->fetch();
+
+            $receiver = $user_email;
+            $subject = "Email Verification";
+            $body = "Use this Verification Code: $verification_key to verify your email!";
+            $sender = "ianjohn0101@gmail.com";
+
+            if($row['all_emails']>0)
             {
-               echo "Email already existed!";
+                echo "<script>alert('Email Exists');</script>";
+            }
+            elseif($row2['all_usernames']>0)
+            {
+                echo "<script>alert('Name Exists');</script>";
+            }
+            elseif(!is_numeric($user_contactnumber))
+            {
+                echo "<script>alert('Only Digits Allowed!');</script>";
+            }
+            elseif(strlen($user_contactnumber)>=12)
+            {
+                echo "<script>alert('Number must at least 11 digits!');</script>";
+            }
+            elseif(strlen($user_password) >= 9 &&
+            preg_match('/[A-Z]/', $user_password) > 0 &&
+            preg_match('/[a-z]/', $user_password) > 0)
+            {
+                echo "<script>alert('Password must at least 8 characters in length!');</script>";
             }
             else
             {
-                if(strlen($user_password) >= 8 &&
-                preg_match('/[A-Z]/', $user_password) > 0 &&
-                preg_match('/[a-z]/', $user_password) > 0)
+                if(mail($receiver, $subject, $body, $sender))
                 {
                     $add_user = $con->prepare("INSERT INTO users_table(
                         user_username,
@@ -340,6 +369,8 @@ include("inc/db.php");
                         barangay,
                         user_address,
                         user_profilephoto
+                        verified,
+                        verification_key
                     ) 
                     VALUES (
                         '$user_username',
@@ -349,7 +380,9 @@ include("inc/db.php");
                         '$municipality',
                         '$barangay',
                         '$user_address',
-                        'userIcon.svg'
+                        'userIcon.svg',
+                        0,
+                        '$verification_key'
                     )");
         
                     if($add_user->execute())
@@ -366,12 +399,16 @@ include("inc/db.php");
                         echo "<script>alert('Registration Unsuccessfull!');</script>";
                     }
                 }
-                else
-                {
-                    echo "Password must have 8 characters long, an uppercase and at least 1 special character!";
-                }
             }
         }
-?>
 
-    
+        function generateRandomString($length = 8) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
+        }
+?>

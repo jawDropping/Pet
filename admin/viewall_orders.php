@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -47,11 +50,31 @@
         </div>
 </div>
 <div id="bodyright">
+<?php
 
+include("inc/db.php");
+$viewall_ords = $con->prepare("SELECT * FROM orders_tbl");
+$viewall_ords->setFetchMode(PDO:: FETCH_ASSOC);
+$viewall_ords->execute();
+
+$row = $viewall_ords->fetch();
+
+if($row == 0)
+{
+    echo "NO ORDERS";
+}
+else
+{
+
+?>
+<p class ='hed'>View All Orders</p>
 <div class = "scroll">
-    <h3>View All Orders</h3>
+
+
+    
     <form method = "POST" enctype = "multipart/form-data">
     <table>
+        
         <tr>
     
             <th>ORDER ID </th>
@@ -60,12 +83,15 @@
      
             <th>ITEMS</th>
 
+            <th>ORDER PLACED</th>
+
             <th>TOTAL AMOUNT</th>
 
             <th>Delivery Date</th>
            
             <th>Action</th>
         </tr>
+
         <tr>
             <?php
                 echo viewall_orders();
@@ -91,6 +117,11 @@
     .selection {
   background: #28287774;
 }
+.hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
     
 </style>
 
@@ -104,7 +135,7 @@
         document.getElementById("currentDate").innerHTML = date2;
     </script>
 </html>
-
+<?php } ?>
 
 
 

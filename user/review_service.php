@@ -2,14 +2,14 @@
     session_start();
     include("inc/db.php");
     
-    if(!isset($_SESSION['user_username']))
+    if(!isset($_SESSION['user_id']))
     {
         echo "<script>window.open('login.php','_self');</script>";
     }   
     else
     {
-        $user_username = $_SESSION['user_username'];
-        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+        $users_id = $_SESSION['user_id'];
+        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
         $view_user->setFetchMode(PDO:: FETCH_ASSOC);
         $view_user->execute();
         
@@ -45,7 +45,7 @@
                     <input type = 'text' name = 'service_name' value = '".$row_service['services_name']."' disabled />
                     <textarea name = 'comment' placeholder = 'Write a comment..' required></textarea>
                     <button name = 'submit'  >Submit</button>
-                    <a href = 'services_detail.php' style = 'position:absolute;text-decoration:none;background: #86b0b6;margin: 0 20 0 5;padding: 10.5px 14px 9.7px 20px;border-radius:5px;color: #fff;font-family: Arial, Helvetica, sans-serif;font-size: 18px;'>Go Back</a>
+                    <a href = 'services.php' style = 'position:absolute;text-decoration:none;background: #86b0b6;margin: 0 20 0 5;padding: 10.5px 14px 9.7px 20px;border-radius:5px;color: #fff;font-family: Arial, Helvetica, sans-serif;font-size: 18px;'>Go Back</a>
                 </form>
             </div>";
     

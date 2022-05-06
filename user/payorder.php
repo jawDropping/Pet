@@ -1,9 +1,9 @@
 <?php
 session_start();
 include("inc/db.php");
-$user_username = $_SESSION['user_username'];
+$users_id = $_SESSION['user_id'];
 
-$sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+$sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
 $sql->setFetchMode(PDO:: FETCH_ASSOC);
 $sql->execute();
 
@@ -18,29 +18,30 @@ $display_cart->execute();
 $row = $display_cart->fetch();
 $qty = array_count_values($_SESSION['cart'])[$row['pro_id']];
 
-$sql = $con->query("SELECT * FROM orders_tbl");
+$sql = $con->query("SELECT MAX(order_id) FROM orders_tbl");
 $sql->setFetchMode(PDO:: FETCH_ASSOC);
 
 $row = $sql->fetch();
 $order_id = 1;
 if($row)
 {
-    $order_id = intval($row['order_id']+1);
+    $order_id = intval($row['MAX(order_id)']+1); 
 }
-// var_dump($row);
-// die($order_id);
 
+date_default_timezone_set('Singapore');
+$date = date('m/d/Y h:i:s a', time());
 
 if($row_user['municipality'] == "mandaue" || $row_user['municipality'] == "cebu" || $row_user['municipality'] == "consolacion" || $row_user['municipality'] == "talisay")
 {
     foreach($_SESSION['cart'] as $prodID)
     { 
-        $query = $con->prepare("INSERT INTO orders_tbl(order_id, user_id, pro_id, qty, delivery_status) VALUES($order_id, $userID, $prodID, $qty, 'PENDING')");
+        $query = $con->prepare("INSERT INTO orders_tbl(order_id, user_id, pro_id, qty, order_date, delivery_status) VALUES($order_id, $userID, $prodID, $qty, '$date', 'PENDING')");
         try{
             if($query->execute())
             {
                 header("Location: index.php");
                 unset($_SESSION['cart']);
+            
             }  
         }
         catch(PDOException $e)

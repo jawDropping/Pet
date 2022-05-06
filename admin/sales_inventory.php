@@ -35,7 +35,7 @@
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
         <li><a href= "/Pet/admin/viewall_users.php"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
-        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Delivered Items</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -46,8 +46,9 @@
         </div>
                 </div>
                 <div id="bodyright">
+                <p class = 'hed'>View All Products</p>
                 <div class = "scroll">
-    <h3>View All Products</h3>
+    
     <form method = "POST" enctype = "multipart/form-data">
     <table>
         <tr>
@@ -62,7 +63,6 @@
 
             <th>SAMPLE IMAGE #3</th>
            
-            <th>SAMPLE IMAGE #4</th>
 
             <th>PRODUCT QUANTITY</th>
 
@@ -84,8 +84,14 @@
         margin-top: 7vh;
     }
     .selection {
-  background: #28287774;
-}
+        background: #28287774;
+    }
+    .hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        padding: 10px;
+    }
 </style>
 <script>
         var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];

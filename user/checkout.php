@@ -15,15 +15,15 @@
         <div class="mainDiv">
 
         <?php
-    if(!isset($_SESSION['user_username']))
+    if(!isset($_SESSION['user_id']))
     {
         header("Location: login.php");
     }
     else
     {
         include("inc/db.php");
-        $user_username = $_SESSION['user_username'];
-        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+        $users_id = $_SESSION['user_id'];
+        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
         $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
         $fetch_user_username->execute();
 
@@ -99,7 +99,7 @@
                     <div class = 'group'>
                     <input class = 'useless' style = 'display:none;' type = 'hidden' name = 'pro_id' value = ".$row['pro_id']." />
                     <p class = 'tag'>Product Name: <p/>
-                    <input class = 'inputed' type = 'text' name = 'pro_id' value = ".$row['pro_name']." disabled/>
+                    <input class = 'inputed' type = 'text' name = 'pro_id' value = '".$row['pro_name']."' disabled/>
                     </div>
                     <div class = 'group'>
                     <p class = 'tag'>Qty: </p>

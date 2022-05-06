@@ -1,11 +1,6 @@
 <?php
     session_start();
 
-    function signUp()
-    {
-        
-    }
-
     function LogIn()
     {
         include("inc/db.php");
@@ -14,16 +9,24 @@
             $user_email = $_POST['user_email'];
             $user_password = $_POST['user_password'];
 
-            $fetchuser = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
-            $fetchuser->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetchuser->execute();
+            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+            $check_email->setFetchMode(PDO::FETCH_ASSOC);
+            $check_email->execute();
 
-            $row = $fetchuser->fetch();
-            $countUser = $fetchuser->rowCount();
-            if($countUser>0)
+            $row = $check_email->rowCount();
+            $rows = $check_email->fetch();
+            if($row>0)
             {
-                $_SESSION['user_username'] = $row['user_username'];
-                echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."','_self');</script>";
+                $verified = $rows['verified'];
+                if($verified == 1)
+                {
+                    $_SESSION['user_id'] = $rows['user_id'];
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."','_self');</script>";
+                }
+                else
+                {
+                    echo "<script>alert('Please verify your email!');</script>";
+                }
             }
             else
             {
@@ -32,14 +35,68 @@
         }
     }
 
+    function forgotpassword()
+    {
+        include("inc/db.php");
+        echo
+        "<form method = 'POST' action = 'forgotpass.php' enctype = 'multipart/form-data'>
+            <h3>Forgot Password</h3>
+            <input type = 'email' class = 'input' name = 'user_email' placeholder = 'Email..'/>
+            <button name = 'continue' class = 'button'>Continue</button>
+        </form>";
+
+    }
+
+    function verify()
+    {
+        include("inc/db.php");
+        echo
+        "<form method = 'POST' action = 'verify_mail.php' enctype = 'multipart/form-data'>
+            <h3>Verify Email</h3>
+            <input type = 'email' class = 'input' name = 'user_email' placeholder = 'Email..'/>
+            <button name = 'continue' class = 'button'>Continue</button>
+        </form>";
+        // include("inc/db.php");
+        // if(isset($_POST['verify_email']))
+        // {
+        //     $user_email = $_POST['user_email'];
+        //     $v_key = generateRandomString();
+        //     // $v_key = $_POST['v_key'];
+
+        //     $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+        //     $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+        //     $check_email->execute();
+
+        //     $row = $check_email->rowCount();
+        //     if($row>0)
+        //     {
+        //         $receiver = $user_email;
+        //         $subject = "Email Verification";
+        //         $body = "Verification Key: $v_key";
+        //         $sender = "ianjohn0101@gmail.com";
+        //         echo
+        //         "<form method = 'POST' action = 'verify_mail.php'>
+        //             <input type = 'text' class = 'input' name = 'user_email' value = '".$user_email."' />
+        //             <input type = 'text' class = 'input' name = 'v_code' placeholder = 'Verification Code' />
+        //             <button name = 'verify_mail' class = 'button'>Continue</button>
+        //         </form>";
+        //         mail($receiver, $subject, $body, $sender);
+        //     }
+        //     else
+        //     {
+        //         echo "<script>alert('Email not registered!');</script>";
+        //     }
+        // }
+    }
+
     
     function myProfile()
     {
         include("inc/db.php");
-        if(isset($_SESSION['user_username']))
+        if(isset($_SESSION['user_id']))
         {
-            $user_id = $_SESSION['user_username'];
-            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_id'");
+            $user_id = $_SESSION['user_id'];
+            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user_username->execute();
     
@@ -113,7 +170,7 @@
                 if($update_user->execute())
                 {
                     echo "<script>alert('Your Information Successfully Updated!');</script>";
-                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_username']."', '_self');</script>";
+                    echo "<script>window.open('index.php?login_user=".$_SESSION['user_id']."', '_self');</script>";
                 }
             }
         }
@@ -581,7 +638,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-        echo"<h3>".$row_cat['cat_name']."</h3>";
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id' LIMIT 0,3");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -589,26 +645,30 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
+            
+                <div class = 'idNiSha'>
                     <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                            
-                        echo"</center>
+                    <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                        <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                        
+                        <div class = 'prodDet'>
+                        <p class = 'head4' >".$row_pro['pro_name']."</p>
+                        <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                            <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>";
+                        if($row_pro['pro_quantity'] != 0)
+                        {
+
+                            echo"<input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                            <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>";
+                        }
+                        else
+                        {
+                            echo "<a>Out of Stock</a>";
+                        }
+                       echo" </div>
                     </a>
                     </form>
-                </li>
-                ";
+                </div>";
         endwhile;
     }
 
@@ -629,25 +689,21 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                            
-                        echo"</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
                 ";
         endwhile;
         if(isset($_POST['cart_btn']))
@@ -667,7 +723,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-     
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id'");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -675,24 +730,21 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                        echo "</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
                 ";
         endwhile;
         if(isset($_POST['cart_btn']))
@@ -712,7 +764,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         $row_cat=$fetch_cat->fetch();
         $cat_id = $row_cat['prod_id'];
-     
 
         $fetch_pro = $con->prepare("select * from product_tbl where cat_id='$cat_id' LIMIT 0,3");
         $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
@@ -720,29 +771,26 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
         while($row_pro = $fetch_pro->fetch()):
             echo"
-                <li>
-                    <form method = 'post' enctype='multipart/form-data'>
-                    <a href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
-                        <h4>".$row_pro['pro_name']."</h4>
-                        <img src ='/uploads/products/".$row_pro['pro_img']."' />
-                        <center>
-                            <button id = 'pro_btn'>
-                                <a href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
-                            </button>
-                            <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                            <button name = 'cart_btn'>
-                            Add to Cart
-                            </button>";
-                            
-                        echo "</center>
-                    </a>
-                    </form>
-                </li>
+            <div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='pro_detail.php?pro_id=".$row_pro['pro_id']."'>
+                <img class = 'fikture' src ='../uploads/products/".$row_pro['pro_img']."' />
+                
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['pro_name']."</p>
+                <p class = 'prays'>₱".$row_pro['pro_price']."<p>
+                    <a  class = 'btnLinkView' href = 'pro_detail.php?pro_id=".$row_pro['pro_id']."'>View</a>
+                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                    <button class = 'btnLinkCart'  name = 'cart_btn'> Add to Cart</button>
+                </div>
+            </a>
+            </form>
+        </div>
                 ";
         endwhile;
     }
 
-    //wala pa
+   
     function featured_cat_food_products()
     {
         include("inc/db.php");
@@ -937,18 +985,26 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         <li>
                             <img src ='../uploads/products/".$row_pro['pro_img3']."'/>
                         </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img4']."'/>
-                        </li>
                     </ul>
                   </div>
                   <div id = 'pro_brand'>
                     <h3>".$row_pro['pro_name']."</h3>
                     <ul>
+                        <li>
+                            Description:
+                            <br>
+                            <br>".$row_pro['pro_keyword']."
+                        </li>
+                        <li>
+                            <br>Product Price: ₱".$row_pro['pro_price'].".00
+                        </li>
+                        <li>
+                            <br>Product Stock: ".$row_pro['pro_quantity']."
+                        </li>
                         <li>";
                             if($row_pro['pro_quantity'] > 0)
                             {
-                                echo "Availability: In Stock";
+                                echo "<br>Availability: In Stock";
                                 echo "<center>
                                 <h4>Price: ".$row_pro['pro_price']."</h4>
                                 <form method = 'POST'>
@@ -1236,42 +1292,98 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $close_time = date('g:i A', strtotime($time_close));
             $open_time = date('g:i A', strtotime($time_open));
             echo 
-                "<div id = 'pro_img'>
-                    <img src ='../uploads/user_profile/".$row_services['service_photo']."'/>
-                    
-                  </div>
-                  <div id = 'pro_brand'>
-                    <h3>".$row_services['services_name']."</h3>
-                    <ul>
-                        <li>
-                            Service Category: ".$cat_name."
-                        </li>
-                        <li>
-                            Contact Number: ".$row_services['services_contact_number']."
-                        </li>
-                        <li>
-                         Email Address: ".$row_services['services_email']."
-                        </li>
-                        <li>
-                            Time Open: ".$open_time."
-                        </li>
-                        <li>
-                            Time Close: ".$close_time."
-                        </li>
-                        <li>
-                            Service Cost: ".$row_services['service_cost']."
-                        </li>
-                        <li>
-                            <a href = 'avail_service.php?avail_service=".$row_services['id']."' style='margin: 20% 0% 0% 50%;text-decoration:none;color:#fff;background-color:#0000ff;padding:13px;border-radius:4px;font-size:14px;'>Avail Service</a>
-                            <td><a href = 'review_service.php?review_service=".$row_services['id']."' style='text-decoration:none;color:#fff;background-color:#0000ff;padding:13px;border-radius:4px;font-size:14px;'>Give Feedback</a></td>
-                        </li>
-                        Location:
-                        <iframe style = 'width:640px;height:500px;margin: 20px 20% 0% 0%;' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
-                    </ul>
-                </div>";   
+                "
+                <div class = 'pckman'>
+                    <div id = 'pic'>
+                    <img id = 'okpic' src ='../uploads/user_profile/".$row_services['service_photo']."'/>
+                    </div>
+                    <div class = 'secondBody'>
+                        <p class = 'hed'>".$row_services['services_name']."</p>
+                        <div class = 'mainHoldest'>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'> Service Category: </p>
+                                <p class = 'conts' >".$cat_name."</p>
+                            </div>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'> Contact Number: </p>
+                                <p class = 'conts'>".$row_services['services_contact_number']." </p>
+                            </div>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'>Email Address:</p>
+                                <p class = 'conts'> ".$row_services['services_email']."</p>
+                            </div>
+                            <div class = 'holderister'>
+                                <div class = 'holdest2'>
+                                    <p class = 'lebs' >Time Open:</p>
+                                    <p class = 'conts'>".$open_time." </p>
+                                </div>
+                                <div class = 'holdest3'>
+                                    <p class = 'lebs'> Time Close:</p>
+                                    <p class = 'conts' > ".$close_time." </p>
+                                </div>
+                            </div>
+                            <div class = 'holdest'>
+                                <p class = 'lebs'>Service Cost: </p>
+                                <p class = 'conts'>".$row_services['service_cost']."</p>
+                            </div>
+                            <div></div>
+                            <div class = 'btnss' >
+                                <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
+                                <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
+                                <a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
+                            </div>
+                            <br>
+                            <br>
+                            <div>
+                                <br>
+                                <p class = 'loc'>Location</p>
+                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+                   ";   
                 
-            echo 
-            "Services Feedbacks: ";
+       
+           
+        }
+
+    }
+    function showFeeds(){
+        include("inc/db.php");
+        if(isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+            $fetch_services=$con->prepare("SELECT * FROM services WHERE id = '$id'");
+            $fetch_services->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_services->execute();
+
+            $row_services = $fetch_services->fetch();
+            $pet_center_id = $row_services['pet_center_id'];
+
+            $query = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row_pet_center = $query->fetch();
+            $pet_center_location = $row_pet_center['location'];
+            $location = str_replace(" ", "+", $pet_center_location);
+
+            $service_cat = $row_services['service_id'];
+
+            $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '$service_cat'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row = $sql->fetch();
+            $cat_name = $row['cat_name'];
+
+            $time_open = $row_services['time_open'];
+            $time_close = $row_services['time_close'];
+            $close_time = date('g:i A', strtotime($time_close));
+            $open_time = date('g:i A', strtotime($time_open));
+
+            echo "<p class = 'loc2'>REVIEWS</p>";
             $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");
             $sql2->setFetchMode(PDO:: FETCH_ASSOC);
             $sql2->execute();
@@ -1285,9 +1397,12 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
                 while($row_user = $view_user->fetch()):
                     echo 
-                    "<br><tr>
-                        <td>".$row_user['user_username'].": ".$row_feedbacks['comment']."</td>
-                    </tr>"; 
+                    "
+                    <div class = 'comss'>
+                        <p class = 'revNem'>".$row_user['user_username']."</p>
+                        <p class = 'rev'> ".$row_feedbacks['comment']."</p>
+                        </div>
+                    "; 
                 endwhile;
             endwhile;
         }
@@ -1383,6 +1498,422 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             endwhile;
         }
     }
+
+    function avail_service()
+    {
+        if(isset($_GET['avail_service']))
+        {
+            include("inc/db.php");
+            $service_id = $_GET['avail_service'];
+            $query = $con->prepare("SELECT * FROM services WHERE id = '".$service_id."'");
+            $query->setFetchMode(PDO:: FETCH_ASSOC);
+            $query->execute();
+
+            $row = $query->fetch(); 
+            $service_cost = $row['service_cost'];
+            $pet_center_id = $row['pet_center_id'];
+            $service_time_open = strtotime($row['time_open']);
+            $service_time_close = strtotime($row['time_close']);
+
+     
+
+            $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
+            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql2->execute();
+
+            $row3 = $sql2->fetch();
+            
+            $users_id = $_SESSION['user_id'];
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row2 = $sql->fetch();
+
+            $user_id = $row2['user_id'];
+
+  if($row3['active_coupon'] == 'yes')
+                    {
+            echo 
+            "<form method = 'POST'>
+                <label class = 'hh'>Please verify your coupon to get the exact amount!</label>
+                <div class = 'maines'>
+                
+                    <p class = 'lebs'>Book Appointment: </p>
+                    <input class = 'inet' type = 'date' name = 'reserve_date'  required/>
+                
+                    <p class = 'lebs'>Time: </p></td>
+                    <input class = 'inet' type = 'time' name = 'reserve_time'  required/></td>
+                    <p class = 'lebs'>Coupon Code: </p>
+                    <input class = 'inet' type = 'text' name = 'coupon_code'/>
+                    <p class = 'lebs'>Service Cost: </p>
+                    <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
+                   "; 
+                echo "
+       
+                    <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
+                    <div>
+                    <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
+                    <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
+                    </div>
+                    
+                </div>
+            </form>";
+                    }else
+            {
+                echo "This service provides no coupon, Click here to avail the service without any coupon used!<a href = 'avail_service_nocoupon.php?avail_service=".$row['id']."'>Avail Service(without coupon)</a>";
+            }
+
+
+    
+            if(!isset($_SESSION['user_id']))
+            {
+                echo "<script>window.open('login.php', '_self');</script>";
+            }
+            else
+            {
+                if(isset($_POST['reserve_service']))
+                {
+                    $service_cost = $_POST['service_cost'];
+                    $reserve_date = $_POST['reserve_date'];
+                    $coupon_code = $_POST['coupon_code'];
+                    $reserve_time = $_POST['reserve_time'];
+                    $transaction_code = generateRandomString();
+    
+                    $datenow = getdate();
+    
+                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    
+                    $dateTimestamp = strtotime($reserve_date);
+                    $dateTimestamp2 = strtotime($today);
+                    $dateTimestamp3 = strtotime($reserve_time);
+    
+    
+                    $view_time = $con->prepare("SELECT * FROM reserve_services");
+                    $view_time->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_time->execute();
+    
+                    // $row_time = $view_time->rowCount();
+                    $row_date_and_time = $view_time->fetch();
+                    $reserved_date = $row_date_and_time['reserve_date'];
+                    $reserved_time = $row_date_and_time['reserve_time'];
+                    
+                    if($dateTimestamp > $dateTimestamp2)
+                    {
+                        if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
+                        {
+                            if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
+                            {
+                                $sql = $con->query("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
+                                $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                                $sql->execute();
+        
+                                $sql2 = $con->query("SELECT * FROM reserve_services");
+                                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                                $sql2->execute();
+        
+                                $row = $sql->rowCount();
+                                $row_user = $sql2->fetch();
+                                $user_id = $row_user['user_id'];
+        
+                                $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                                $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                $fetch_user_username->execute();
+                        
+                                $row4 = $fetch_user_username->fetch();
+                                if($row>0)
+                                {
+                                    echo "<script>alert('Code Exist!');</script>";
+                                }
+                                else
+                                {
+                                    $view_coupon = $con->prepare("SELECT * FROM donations WHERE coupon_code = '$coupon_code'");
+                                    $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
+                                    $view_coupon->execute();
+        
+                                    $row2 = $view_coupon->rowCount();
+                                    if($row2>0)
+                                    {
+                                        $discount = "0.02";
+        
+                                        $total = $service_cost * $discount;
+                                        $convertfloat = floatval($total);
+        
+                                        $service_total_cost = $service_cost - $convertfloat;
+        
+                                        $receiver = $row4['user_email'];
+                                        $subject = "Transaction Code";
+                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                        $sender = "ianjohn0101@gmail.com";
+        
+                                        if(mail($receiver, $subject, $body, $sender))
+                                        {
+                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                pet_center_id,
+                                                service_id,
+                                                user_id,
+                                                service_cost,
+                                                reserve_date,
+                                                reserve_time,
+                                                coupon_code,
+                                                transaction_code,
+                                                service_status
+                                            ) 
+                                            VALUES (
+                                                '$pet_center_id',
+                                                '$service_id',
+                                                '$user_id',
+                                                '$service_total_cost',
+                                                '$reserve_date',
+                                                '$reserve_time',
+                                                '$coupon_code',
+                                                '$transaction_code',
+                                                'For Confirmation'
+                                            )");
+                                
+                                            if($reserve_service->execute())
+                                            {
+                                                echo "SUCCESSFUL"; 
+                                            }
+                                            else
+                                            {
+                                                echo "UNSUCCESSFUL";
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        $receiver = $row4['user_email'];
+                                        $subject = "Transaction Code";
+                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                        $sender = "ianjohn0101@gmail.com";
+        
+                                        if(mail($receiver, $subject, $body, $sender))
+                                        {
+                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                pet_center_id,
+                                                service_id,
+                                                user_id,
+                                                service_cost,
+                                                reserve_date,
+                                                reserve_time,
+                                                coupon_code,
+                                                transaction_code,
+                                                service_status
+                                            ) 
+                                            VALUES (
+                                                '$pet_center_id',
+                                                '$service_id',
+                                                '$user_id',
+                                                '$service_cost',
+                                                '$reserve_date',
+                                                '$reserve_time',
+                                                '$coupon_code',
+                                                '$transaction_code',
+                                                'For Confirmation'
+                                            )");
+                                
+                                            if($reserve_service->execute())
+                                            {
+                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                            }
+                                            else
+                                            {
+                                                echo "<script>alert('UNSUCCESSFUL');</script>";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                echo "<script>alert('Time reserved already, chose another date or time.');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
+                        }        
+                    }
+                    else
+                    {
+                        echo "<script>alert('INVALID DATE!');</script>";
+                    }
+                }
+            }
+        }
+    }
+
+    function avail_service_nocoupon()
+    {
+        if(!isset($_SESSION['user_id']))
+        {
+            echo "<script>window.open('login.php', '_self');</script>";
+        }
+        else
+        {
+            if(isset($_GET['avail_service']))
+            {
+                include("inc/db.php");
+                $service_id = $_GET['avail_service'];
+                $query = $con->prepare("SELECT * FROM services WHERE id = '".$service_id."'");
+                $query->setFetchMode(PDO:: FETCH_ASSOC);
+                $query->execute();
+    
+                $row = $query->fetch(); 
+                $service_cost = $row['service_cost'];
+                $pet_center_id = $row['pet_center_id'];
+                $service_time_open = strtotime($row['time_open']);
+                $service_time_close = strtotime($row['time_close']);
+                
+         
+    
+                $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+    
+                $row3 = $sql2->fetch();
+                
+                $users_id = $_SESSION['user_id'];
+                $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
+                $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql->execute();
+    
+                $row2 = $sql->fetch();
+    
+                $user_id = $row2['user_id'];
+                $empty_coupon = '';
+    
+                echo 
+                "<form method = 'POST'>
+                   
+                    <div class = 'maines'>
+                    
+                        <p class = 'lebs'>Book Appointment: </p>
+                        <input class = 'inet' type = 'date' name = 'reserve_date'  required/>
+                    
+                        <p class = 'lebs'>Time: </p></td>
+                        <input class = 'inet' type = 'time' name = 'reserve_time'  required/>
+                        <p class = 'lebs'>Service Cost: </p>
+                        <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
+                        <input type = 'hidden' name = 'coupon_code' value = '".$empty_coupon."' />
+           
+                        <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
+                        <div>
+                        <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
+                        <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
+                        </div>
+                        
+                    </div>
+                </form>";
+    
+        
+                if(isset($_POST['reserve_service']))
+                {
+                    $service_cost = $_POST['service_cost'];
+                    $reserve_date = $_POST['reserve_date'];
+                    $coupon_code = $_POST['coupon_code'];
+                    $reserve_time = $_POST['reserve_time'];
+                    $transaction_code = generateRandomString();
+    
+                    $datenow = getdate();
+    
+                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    
+                    $dateTimestamp = strtotime($reserve_date);
+                    $dateTimestamp2 = strtotime($today);
+                    $dateTimestamp3 = strtotime($reserve_time);
+    
+    
+                    $view_time = $con->prepare("SELECT * FROM reserve_services");
+                    $view_time->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_time->execute();
+    
+                    // $row_time = $view_time->rowCount();
+                    $row_date_and_time = $view_time->fetch();
+                    $reserved_date = $row_date_and_time['reserve_date'];
+                    $reserved_time = $row_date_and_time['reserve_time'];
+                    
+                    if($dateTimestamp > $dateTimestamp2)
+                    {
+                        if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
+                        {
+                            if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
+                            {
+                                
+        
+                                $sql2 = $con->query("SELECT * FROM reserve_services");
+                                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                                $sql2->execute();
+        
+                                $row = $sql->rowCount();
+                                $row_user = $sql2->fetch();
+                                $user_id = $row_user['user_id'];
+        
+                                $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                                $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                $fetch_user_username->execute();
+                        
+                                $row4 = $fetch_user_username->fetch();
+                                $receiver = $row4['user_email'];
+                                $subject = "Transaction Code";
+                                $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                $sender = "ianjohn0101@gmail.com";
+    
+                                if(mail($receiver, $subject, $body, $sender))
+                                {
+                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                        pet_center_id,
+                                        service_id,
+                                        user_id,
+                                        service_cost,
+                                        reserve_date,
+                                        reserve_time,
+                                        coupon_code,
+                                        transaction_code,
+                                        service_status
+                                    ) 
+                                    VALUES (
+                                        '$pet_center_id',
+                                        '$service_id',
+                                        '$user_id',
+                                        '$service_cost',
+                                        '$reserve_date',
+                                        '$reserve_time',
+                                        '$coupon_code',
+                                        '$transaction_code',
+                                        'For Confirmation'
+                                    )");
+                        
+                                    if($reserve_service->execute())
+                                    {
+                                        echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                    }
+                                    else
+                                    {
+                                        echo "<script>alert('UNSUCCESSFUL');</script>";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                echo "<script>alert('Time reserved already, chose another date or time.');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
+                        }        
+                    }
+                    else
+                    {
+                        echo "<script>alert('INVALID DATE!');</script>";
+                    }
+                }
+            }
+        }
+    }
+
     function service_cat_detail()
     {
         include("inc/db.php");
@@ -1483,7 +2014,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     if($rowCount2 > 0)
                     {
                         echo 
-                        "<a href='service_detail.php?cat_id=".$row_service['service_id']."'>
+                        "<a href='show_service_info.php?id=".$row_service['id']."'>
                             <h4>".$row_service['services_name']."</h4>
                             <img src ='../uploads/user_profile/".$row_service['service_photo']."' />
                                 <center>

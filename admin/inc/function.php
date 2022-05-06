@@ -17,8 +17,8 @@
             $row = $fetchuser->fetch();
             if($countUser>0)
             {
-                $_SESSION['admin_name'] = $_POST['admin_name'];
-                echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."','_self');</script>";
+                $_SESSION['id'] = $row['id'];
+                echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['id']."','_self');</script>";
             }
             else
             {
@@ -30,10 +30,10 @@
     function AdminProfile()
     {
         include("inc/db.php");
-        if(isset($_SESSION['admin_name']))
+        if(isset($_SESSION['id']))
         {
-            $user_id = $_SESSION['admin_name'];
-            $fetch_user_username = $con->prepare("SELECT * FROM admintbl WHERE admin_name = '$user_id'");
+            $user_id = $_SESSION['id'];
+            $fetch_user_username = $con->prepare("SELECT * FROM admintbl WHERE id = '$user_id'");
             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user_username->execute();
     
@@ -64,19 +64,28 @@
                 $admin_name = $_POST['admin_name'];
                 $admin_password =  $_POST['admin_password'];
                 $admin_email = $_POST['admin_email'];
-            
-                $update_user = $con->prepare("UPDATE admintbl 
-                SET 
-                    admin_name='$admin_name',
-                    admin_password = '$admin_password',
-                    admin_email = '$admin_email'
-                WHERE 
-                    id = '$id'");
-    
-                if($update_user->execute())
+
+                if(strlen($admin_password) >= 9 &&
+                preg_match('/[A-Z]/', $admin_password) > 0 &&
+                preg_match('/[a-z]/', $admin_password) > 0)
                 {
-                    echo "<script>alert('Your Information Successfully Updated!');</script>";
-                    echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['admin_name']."', '_self');</script>";
+                    echo "Password must at least 8 characters in length with at least 1 special character, 1 number!";
+                }
+                else
+                {
+                    $update_user = $con->prepare("UPDATE admintbl 
+                    SET 
+                        admin_name='$admin_name',
+                        admin_password = '$admin_password',
+                        admin_email = '$admin_email'
+                    WHERE 
+                        id = '$id'");
+        
+                    if($update_user->execute())
+                    {
+                        echo "<script>alert('Your Information Successfully Updated!');</script>";
+                        echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['id']."', '_self');</script>";
+                    }
                 }
             }
         }
@@ -229,16 +238,16 @@
            $pro_img3 = $_FILES['pro_img3']['name'];
            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
            
-           $pro_img4 = $_FILES['pro_img4']['name'];
-           $pro_img4_tmp = $_FILES['pro_img4']['tmp_name'];
+
         
            move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
            move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
            move_uploaded_file($pro_img3_tmp,"../uploads/products/$pro_img3");
-           move_uploaded_file($pro_img4_tmp,"../uploads/products/$pro_img4");
            
            $pro_price = $_POST['pro_price'];
            $pro_quantity = $_POST['pro_quantity'];
+
+    
            $add_pro = $con->prepare("insert into product_tbl
            (
                pro_name, 
@@ -246,8 +255,7 @@
                pro_brand, 
                pro_img, 
                pro_img2, 
-               pro_img3, 
-               pro_img4, 
+               pro_img3,
                pro_price, 
                pro_quantity,
                pro_keyword
@@ -259,7 +267,6 @@
                 '$pro_img',
                 '$pro_img2',
                 '$pro_img3',
-                '$pro_img4',
                 '$pro_price',
                 '$pro_quantity',
                 '$pro_keyword'
@@ -309,7 +316,12 @@
     function count_orders()
     {
         include("inc/db.php");
-        $count_orders = $con->prepare("SELECT * FROM orders_tbl");
+        $count_orders = $con->prepare("SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
+        (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
+        from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
+        WHERE o.user_id = o.user_id
+        group by o.order_id, p.pro_name, o.delivery_status) od
+        group by od.order_id, od.delivery_status");
         $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
         $count_orders->execute();
 
@@ -334,12 +346,12 @@
 
         $net_total = 0;
         $q = $con->query("
-            SELECT od.order_id, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
-            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status 
+            SELECT od.order_id, od.order_date, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
+            (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status, o.order_date
             from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
-            WHERE o.user_id = 1
-            group by o.order_id, p.pro_name, o.delivery_status) od
-            group by od.order_id, od.delivery_status
+            WHERE o.user_id = o.user_id
+            group by o.order_id, p.pro_name, o.delivery_status, o.order_date) od
+            group by od.order_id, od.delivery_status, od.order_date    
             ");
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
@@ -350,7 +362,7 @@
                 "<form method = 'POST' enctype = 'multipart/form-data'>
                     <tr>
                         <input type = 'hidden' name = 'order_id' value = '".$order['order_id']."' />
-                        <td>".$order_id."</td>";
+                        <td style = 'color:white'>".$order_id."</td>";
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
@@ -365,263 +377,115 @@
                         $row_username = $fetch_username->fetch();
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
-                        <td>".$row_username['user_username']."</td>";
+                        <td style = 'color:white'>".$row_username['user_username']."</td>";
                     echo" 
-                    <input type = 'hidden' name = 'items' value = '".$order['items']."' />
-                    <td>".$order['items']."</td>
+                    <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
+                    <td style = 'color:white'>".$order['items']."</td>
+                    <td style = 'color:white'>".$order['order_date']."</td>
                     <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <td>".$net_total."</td>
+                    <td style = 'color:white'>".$net_total."</td>
                     <td><input type = 'date' name = 'delivery_date' required/></td>
                     <td><button name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a></td>
                     </tr>
                 </form>";
             }
-            if(isset($_POST['confirm_order']))
+        if(isset($_POST['confirm_order']))
+        {
+            $order_id = $_POST['confirm_order'];
+
+            
+            $items = $_POST['items'];
+            $total_amount = $_POST['total_amount'];
+            $user_username = $_POST['user_username'];
+            $delivery_date = $_POST['delivery_date'];
+            $delivery_status = 'FOR DELIVERY';
+
+            $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
+            $fetch_user->execute();
+        
+            $row_username = $fetch_user->fetch();
+
+            $receiver = $row_username['user_email'];
+            $subject = "Order Confirmation Mail";
+            $body = "
+            Greetings!
+
+            Your Order has been confirmed and will be delivered on $delivery_date 
+
+            Order Number: $order_id
+            Items: $items
+
+            Please do keep your lines open because your items will be arrived to your
+            destination according to the delivery date.
+            Thank you for purchasing to our store hopefully you're 
+            happy with those items you purchased. 
+
+            Lovely store,
+            Pet Society
+            ";
+            $sender = "ianjohn0101@gmail.com";
+
+            $datenow = getdate();
+
+            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
+
+            if($delivery_date > $today)
             {
-                $order_id = $_POST['order_id'];
-                $items = $_POST['items'];
-                $total_amount = $_POST['total_amount'];
-                $user_username = $_POST['user_username'];
-                $delivery_date = $_POST['delivery_date'];
-
-                $datenow = getdate();
-
-                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-                
-                if($delivery_date < $today)
-                {
-                    echo "INVALID DATE!";
-                }
-                else
-                {
-                    $delivery_status = "FOR DELIVERY!";
-
-                    $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
-                    $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
-                    $fetch_user->execute();
-                
-                    $row_username = $fetch_user->fetch();
-    
-                    $receiver = $row_username['user_email'];
-                    $subject = "Order Confirmation Mail";
-                    $body = "
-                    Greetings!
-        
-                    Your Order has been confirmed and will be delivered on $delivery_date 
-        
-                    Order Number: $order_id
-                    Items: $items
-        
-                    Please do keep your lines open because your items will be arrived to your
-                    destination according to the delivery date.
-                    Thank you for purchasing to our store hopefully you're 
-                    happy with those items you purchased. 
-        
-                    Lovely store,
-                    Pet Society
-                    ";
-                    $sender = "ianjohn0101@gmail.com";
-    
-                    if(mail($receiver, $subject, $body, $sender))
-                    {
-                        $add_delivery = $con->prepare("INSERT INTO delivery_tbl
-                        (
-                            order_id, 
-                            items, 
-                            total_amount,
-                            user_username, 
-                            delivery_date, 
-                            delivery_status
-                        ) 
-                        VALUES
-                        (
-                            $order_id,
-                            '$items',
-                            '$total_amount',
-                            '$user_username',
-                            '$delivery_date',
-                            '$delivery_status'
-                        )");
-                        if($add_delivery->execute())
-                        {
-                            $update_status = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
-                            $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-                            $update_status->execute();
-    
-                            if($update_status->execute())
-                            {
-                                echo "<script>alert('Item for delivery');</script>";
-                                echo "<script>window.open('index.php?viewall_orders.php','_self');</script>";
-                            }
-                        }
-                    }
-                }
+                echo "INVALID DATE!";
             }
-
-        // $fetch_order = $con->prepare("SELECT * FROM orders_tbl ORDER BY transac_id");
-        // $fetch_order->setFetchMode(PDO:: FETCH_ASSOC);
-        // $fetch_order->execute();
-
-        // $get_transac_id = [];
-
-        // while($row = $fetch_order->fetch())
-        // {
-        //     $transac_id = $row["transac_id"]; 
-        //     $get_transac_id[$transac_id][] = $row;  
-        // }
-
-        // foreach($get_transac_id as $id => $transac)
-        // {
-        //     $transaction_id = $id;
-        //     $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE transac_id = '$transaction_id'");
-        //     $view_details->setFetchMode(PDO:: FETCH_ASSOC);
-        //     $view_details->execute();
-
-        //     $row = $view_details->fetch();
-        //     $user_id = $row['user_id'];
-
-        //     $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-        //     $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
-        //     $fetch_username->execute();
-
-        //     $row_username = $fetch_username->fetch();
-        //     echo 
-        //     "<tr>
-        //     <td>".$id."</td>
-        //     <td>".$row_username['user_username']."</td>
-        //     <td></td>
-        //     <td></td>
-        //     <td><input type = 'date' name = 'delivery_date' /></td>
-        //     <td><button name = 'confirm_order' >Confirm</button>
-        //     </tr>";
-        
-        //     foreach($transac as $row)
-        //     {
-        //         $pro_id = $row['pro_id'];
-        //         $user_id = $row['user_id'];
-
-        //         $fetch_pro_name=$con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-        //         $fetch_pro_name->setFetchMode(PDO:: FETCH_ASSOC);
-        //         $fetch_pro_name->execute();
-
-        //         $row_pro_name = $fetch_pro_name->fetch();
-
-               
-        //         echo
-        //         "<tr>
-        //             <td></td>
-        //             <td></td>
-        //             <td>".$row_pro_name['pro_name']."</td>
-        //             <td>".$row['qty']."</td>
-        //         </tr>";
-        //     }
-        // }
-        // $fetch_order = $con->prepare("SELECT o.transac_id, o.order_id, o.user_id, o.qty, o.pro_id, o.delivery_status FROM orders_tbl o JOIN product_tbl p on o.order_id = p.pro_id GROUP BY o.transac_id, p.pro_id");
-        // $fetch_order->setFetchMode(PDO:: FETCH_ASSOC);
-        // $fetch_order->execute();
-
-        // // SELECT p.pro_id, p.pro_name, SUM(o.qty), o.delivery_status, o.user_id from orders_tbl o join product_tbl p on o.pro_id = p.pro_id group by p.pro_id, p.pro_name, o.delivery_status
-
-        // while($row=$fetch_order->fetch()):
-        //     $user_id = $row['user_id'];
-        //     $pro_id = $row['pro_id'];
-
-        //     $prod_name = $con->prepare("SELECT * FROM orders_tbl WHERE pro_id = '$pro_id'");
-        //     $prod_name->setFetchMode(PDO:: FETCH_ASSOC);
-        //     $prod_name->execute();
-        //     $row_prod = $prod_name->fetch();
-
-        //     $order_id = $row_prod['order_id'];
-
-        //     $fetch_username=$con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-        //     $fetch_username->setFetchMode(PDO:: FETCH_ASSOC);
-        //     $fetch_username->execute();
-
-        //     $row_username = $fetch_username->fetch();
-
-        //     $fetch_pro_name=$con->prepare("SELECT * FROM product_tbl WHERE pro_id = '$pro_id'");
-        //     $fetch_pro_name->setFetchMode(PDO:: FETCH_ASSOC);
-        //     $fetch_pro_name->execute();
-
-        //     $row_pro_name = $fetch_pro_name->fetch();
-        //         echo 
-        //         "<form method = 'POST' enctype = 'multipart/form-data'>
-        //            <tr>
-        //                 <td>".$row['o.transac_id']."</td>
-        //                 <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
-        //                 <td>".$row_username['user_username']."</td>
-                  
-        //                 <input type = 'hidden' name = 'pro_name' value = '".$row_pro_name['pro_name']."' />
-        //                 <td>".$row_pro_name['pro_name']."</td>
-                      
-        //                 <input type = 'hidden' name = 'qty' value = ".$row['qty']." />
-        //                 <td>".$row['qty']."</td>
-                  
-        //                 <td><input type = 'date' name = 'delivery_date' /></td>
-                  
-        //                 <input type = 'hidden' name = 'confirm_order'/>
-        //                 <td><button name = 'confirm_order' value = ".$row_prod['order_id'].">Confirm</button>
-        //                 <a href='cancel_order.php?order_id=".$row_prod['order_id']."'>Cancel</a></td>
-        //             </tr>
-        //             <tr>
-        //                 <td></td>
-        //                 <td></td>
-        //                 <td></td>     
-        //                 <td><input type = 'hidden' name = 'total_amount' value = ".$row_pro_name['pro_price']*$row['qty']." /></td>
-        //                 <td>Total: ".$row_pro_name['pro_price']*$row['qty']."</td>
-        //             </tr>
-        //         </form>";
-        // endwhile;
-        // if(isset($_POST['confirm_order']))
-        // {
-        //     $order_id = $_POST['confirm_order'];
-        //     $user_username = $_POST['user_username'];
-        //     $pro_name = $_POST['pro_name'];
-        //     $qty = $_POST['qty'];
-        //     $delivery_date = date('Y-m-d', strtotime($_POST['delivery_date']));
-        //     $total_amount = $_POST['total_amount'];
-
-        //     $view_status = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
-        //     $view_status->setFetchMode(PDO:: FETCH_ASSOC);
-        //     $view_status->execute();
-
-        //     $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
-        //     $sql->setFetchMode(PDO:: FETCH_ASSOC);
-        //     $sql->execute();
-
-        //     $row_user = $sql->fetch();
-        //     var_dump($user_id = $row_user['user_id']);
-
-        //     $receiver = $row_user['user_email'];
-        //     $subject = "Order Confirmation Mail";
-        //     $body = "Your Order has been confirmed and it will be delivered on $delivery_date ,please keep your lines open!.";
-        //     $sender = "ianjohn0101@gmail.com";
-
-        //     if(mail($receiver, $subject, $body, $sender))
-        //     {
-        //         $to_deliver = $con->prepare("INSERT INTO delivery_tbl SET 
-        //                         pro_name = '$pro_name',
-        //                         user_id = $user_id,
-        //                         qty = $qty,
-        //                         delivery_date = '$delivery_date',
-        //                         total_amount = $total_amount,
-        //                         delivery_status = 'FOR DELIVERY'
-        //                         ");
-        //         if($to_deliver->execute())
-        //         {
-        //             $update_status = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
-        //             $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-        //             $update_status->execute();
-
-        //             if($update_status->execute())
-        //             {
-        //                 echo "<script>alert('Item for delivery');</script>";
-        //                 echo "<script>window.open('index.php?viewall_orders.php','_self');</script>";
-        //             }
-        //         }
-        //     }
-        // }
+            else
+            {
+                $add_delivery = $con->prepare("INSERT INTO delivery_tbl
+                (
+                    order_id, 
+                    items, 
+                    total_amount,
+                    user_username, 
+                    delivery_date, 
+                    delivery_status
+                ) 
+                VALUES
+                (
+                    $order_id,
+                    '$items',
+                    '$total_amount',
+                    '$user_username',
+                    '$delivery_date',
+                    '$delivery_status'
+                )");
+    
+                if(!$add_delivery->execute())
+                {
+                    return;
+                }
+                
+                mail($receiver, $subject, $body, $sender);
+    
+                $view_details = $con->query("SELECT pro_id, qty FROM orders_tbl WHERE order_id = '$order_id'");
+                $view_details->setFetchMode(PDO:: FETCH_ASSOC);
+                $view_details->execute(); 
+                
+                while($row = $view_details->fetch()):
+                    $pro_id = $row['pro_id'];
+                    $qty = $row['qty'];
+    
+                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
+                    $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
+                    $update_qty->execute();
+                endwhile;
+    
+                $delete_ord = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
+                if(!$delete_ord->execute())
+                {
+                    return;  
+                } 
+                echo "<script>alert('Successfully Confirmed!');</script>";
+                echo "<script>window.open('viewall_orders.php', '_self');</script>";
+            }
+        }
     }
 
     function view_prods()
@@ -645,11 +509,9 @@
                 <td style = 'min-width:200px'>
                     <img src = '../uploads/products/".$row['pro_img3']."'/>
                 </td>
-                <td style = 'min-width:200px'>
-                    <img src = '../uploads/products/".$row['pro_img4']."'/>
-                </td>
+                
               
-                <td>".$row['pro_quantity']."</td>
+                <td style = 'color:white'>".$row['pro_quantity']."</td>
                 <td><a href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
                 <a href = 'delete_cat.php?delete_prod=".$row['pro_id']."'>Delete</button></td>
             </tr>";
@@ -676,13 +538,14 @@
                 <td>".$row['items']."</td>
                 <td>".$row['user_username']."</td>
                 <td>".$row['date_delivered']."</td>
+                <td>₱".$row['total_amount']."</td>
             </tr>";
         endwhile;
         echo
         "<tr>
             <td></td>
             <td></td>
-            <td>Amount Collected: ".$row2['SUM(total_amount)']."</td>
+            <td>Amount Collected: ₱".$row2['SUM(total_amount)']."</td>
         </tr>";
     }
 
@@ -852,6 +715,7 @@
 
         while($row = $get_donations->fetch()):
             $org_id = $row['org_id'];
+            $donator_email = $row['email'];
 
             $sql = $con->prepare("SELECT * FROM organizations WHERE id = '$org_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -861,131 +725,185 @@
             $org_name = $row_org['org_name'];
             echo 
             "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
-        
-
+                    <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
                     
                     <div class = 'holdest'>
+                    <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
                     <p  name = 'transaction_number'>".$row['transaction_number']."</p>
                     </div>
                     <div class = 'holdest'>
+                    <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
                     <p>".$row['full_name']."</p>
                     </div>
+                    <input type = 'hidden' name = 'org_name' value = '".$org_name."' />
                     <div class = 'holdest'>
                     <p>".$org_name."</p>
                     </div>
                     <div class = 'holdest'>
+                    <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
                     <p>".$row['contact_number']."</p>
                     </div>
                     <div class = 'holdest'>
                     <p>".$row['amount']."</p>
                     </div>
                     <div class = 'holdest'>
-                    <p>".$row['proof_photo']."</p>
+                    <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
                     </div>
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
                     <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
-                    <button id = 'views'  name = 'confirm_donation' value = ".$row['id'].">View</button>
+                    <a  id = 'viewok' href = view_donation.php?view_donation=".$row['id'].">View</a>
                     </div>
                     </div>
-  
+                    
             </form>";
+       
         endwhile;
+        
+
+
         if(isset($_POST['confirm_donation']))
         {
             $id = $_POST['confirm_donation'];
+            
+            $transaction_number = $_POST['transaction_number'];
+            $org_name = $_POST['org_name'];
+            $contact_number = $_POST['contact_number'];
+            $full_name = $_POST['full_name'];
+            $donator_email = $_POST['donator_email'];
+          
+            $datenow = getdate();
 
-            $view_donation = $con->prepare("SELECT * FROM donations WHERE id = $id");
-            $view_donation->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_donation->execute();
+            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
-            $row = $view_donation->fetch();
-            $receiver = $row['email_address'];
-            $subject = "Coupon Code";
-            $coupon_code = generateRandomString();
-            $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
+            $receiver = $donator_email;
+            $subject = "Donation Confirmed";
+            $body = "Your donation has been confirmed!";
             $sender = "ianjohn0101@gmail.com";
-
-            if($row['donation_status'] == 'CONFIRMED')
+           
+            if(mail($receiver, $body, $sender, $sender))
             {
-                echo "<script>alert('Donation Already Confirmed!');</script>";
-                echo "<script>window.open('manage_donation.php','_self');</script>";
-            }
-            else
-            {
-                if(mail($receiver, $subject, $body, $sender))
+                $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+                SET 
+                transaction_number = '$transaction_number',
+                org_name = '$org_name',
+                full_name = '$full_name',
+                contact_number = '$contact_number',
+                date_confirmed = '$today'
+                ");
+                if($add_ledger->execute())
                 {
-                    $transaction_number = $_POST['transaction_number'];
-                    $full_name = $_POST['full_name'];
-                    $last_name = $_POST['last_name'];
-                    $amount = $_POST['amount'];
-                    $org_name = $_POST['org_name'];
-                    $contact_number = $_POST['contact_number'];
-        
-                    $datenow = getdate();
-                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-        
-                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl
-                    (
-                        transaction_number,
-                        org_name,
-                        full_name,
-                        contact_number,
-                        date_confirmed
-                    ) 
-                    VALUES(
-                        '$transaction_number',
-                        '$org_name',
-                        '$first_name',
-                        '$last_name',
-                        '$contact_number',
-                        '$today'
-                    )");
+                    $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+                    $del_donation->execute();
+                    if($del_donation->execute())
+                    {
+                        echo "SUCCESS!";
+                    }
+                }    
+            }
+        }
+    }
+
+    // function date_today()
+    // {
+    //     $datenow = getdate();
+
+    //     $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    // }
+
+    function view_detail()
+    {
+        include("inc/db.php");
+        if(isset($_GET['view_donation']))
+        {
+            $id = $_GET['view_donation'];
+            $sql = $con->prepare("SELECT * FROM donations WHERE id = $id");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            while($row = $sql->fetch()):
+                $org_id = $row['org_id'];
+                $donator_email = $row['email'];
+
+                $sql2 = $con->prepare("SELECT * FROM organizations WHERE id = '$org_id'");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+
+                $row_org = $sql2->fetch();
+                $org_name = $row_org['org_name'];
+                echo 
+                "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+                        <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
+                        
+                        <div class = 'holdest'>
+                        <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
+                        <p  name = 'transaction_number'>".$row['transaction_number']."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
+                        <p>".$row['full_name']."</p>
+                        </div>
+                        <input type = 'hidden' name = 'org_name' value = '".$org_name."' />
+                        <div class = 'holdest'>
+                        <p>".$org_name."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
+                        <p>".$row['contact_number']."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <p>".$row['amount']."</p>
+                        </div>
+                        <div class = 'holdest'>
+                        <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
+                        </div>
+                        <div class = 'holdest'>
+                        <div id = 'aksyon'>
+                        <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
+                        </div>
+                        </div>
+                </form>";
+            endwhile;
+            if(isset($_POST['confirm_donation']))
+            {
+                $id = $_POST['confirm_donation'];
+                
+                $transaction_number = $_POST['transaction_number'];
+                $org_name = $_POST['org_name'];
+                $contact_number = $_POST['contact_number'];
+                $full_name = $_POST['full_name'];
+                $donator_email = $_POST['donator_email'];
+              
+                $datenow = getdate();
+    
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    
+                $receiver = $donator_email;
+                $subject = "Donation Confirmed";
+                $body = "Your donation has been confirmed!";
+                $sender = "ianjohn0101@gmail.com";
+               
+                if(mail($receiver, $body, $sender, $sender))
+                {
+                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+                    SET 
+                    transaction_number = '$transaction_number',
+                    org_name = '$org_name',
+                    full_name = '$full_name',
+                    contact_number = '$contact_number',
+                    date_confirmed = '$today'
+                    ");
                     if($add_ledger->execute())
                     {
-                        $update_status = $con->prepare("UPDATE donations SET donation_status = 'CONFIRMED', coupon_code = '$coupon_code' WHERE id = $id");
-                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-                        $update_status->execute();
-                        if($update_status->execute())
+                        $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+                        $del_donation->execute();
+                        if($del_donation->execute())
                         {
-                            echo "<script>alert('Donation Confirmed!');</script>";
-                            echo "<script>window.open('index.php?manage_donation','_self');</script>";
+                            echo "SUCCESS!";
                         }
-                    }
+                    }    
                 }
             }
-
-            // $view_email = $con->prepare("SELECT * FROM donations WHERE id = '$id'");
-            // $view_email->setFetchMode(PDO:: FETCH_ASSOC);
-            // $view_email->execute();
-
-            //ledger db
-            //transac number 
-            //date confirmed
-            //first name, last name
-            //amount
-            //org name
-
-            // $row = $view_email->fetch();
-            // $coupon_code = generateRandomString();
-            
-            // $receiver = $row['email_address'];
-            // $subject = "Coupon Code";
-            // $body = "Thanks for donating, as a gratitude of kindess we will give you a coupon code that will use as a discount to avail discount to the selected services. Your Coupon Code: $coupon_code";
-            // $sender = "ianjohn0101@gmail.com";
-
-            // if(mail($reciever, $subject, $body, $sender))
-            // {
-            //     $update_tbl = $con->prepare("UPDATE donations SET coupon_code = '$coupon_code', SET donation_status = 'Confirmed' WHERE id = '$id'");
-            //     $update_tbl->setFetchMode(PDO:: FETCH_ASSOC);
-            //     $update_tbl->execute();
-
-            //     if($update_tbl->fetch())
-            //     {
-            //         echo "<script>alert('Donation Confirmed!');</script>";
-            //         echo "<script>window.open('index.php?manage_donation','_self');</script>";
-            //     }
-            // }
         }
     }
 
@@ -1001,11 +919,7 @@
 
     function showledger()
     {
-        echo
-        "<form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
-           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
-           <button id = 'search_btn' name = 'search'>Search</button><br>
-        </form>";
+       
 
         include("inc/db.php");
         $show_ledger = $con->prepare("SELECT * FROM ledger_tbl");
@@ -1015,16 +929,15 @@
         while($row = $show_ledger->fetch()):
           
             echo
-            "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data'>
-            <tr>
-                <td>".$row['transaction_number']."</td>
-                <td>".$row['org_name']."</td>
-                <td>".$row['last_name'].", ".$row['first_name']."</td>
-                <td>".$row['contact_number']."</td>
-                <td>".$row['date_confirmed']."</td>
-            </tr>
-            <button name = 'sort_asc'>Sort Asc by Org</button>
-            <button name = 'sort_desc'>Desc Asc by Org</button>
+            "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
+            
+                <p>".$row['transaction_number']."</p>
+                <p>".$row['full_name']."</p>
+                <p>".$row['org_name']."</p>
+                <p>".$row['contact_number']."</p>
+                <p>".$row['date_confirmed']."</p>
+       
+           
         </form>";
         endwhile;
     }
@@ -1047,8 +960,8 @@
                     echo 
                     "<tr>
                         <td>".$row['transaction_number']."</td>
+                        <td>".$row['full_name']."</td>
                         <td>".$row['org_name']."</td>
-                        <td>".$row['last_name'].", ".$row['first_name']."</td>
                         <td>".$row['contact_number']."</td>
                         <td>".$row['date_confirmed']."</td>
                     </tr>";
@@ -1072,8 +985,8 @@
         while($row = $view_coupons->fetch()):
             echo 
             "<tr>
-                <td>".$row['last_name'].", ".$row['first_name']."</td>
-                <td>".$row['email_address']."</td>
+                <td>".$row['full_name']."</td>
+                <td>".$row['email']."</td>
                 <td>".$row['coupon_code']."</td>
             </tr>"; 
         endwhile;
@@ -1223,16 +1136,6 @@
                     </td>
                 </tr><br>
                 <button name = 'update_third_image'>Update Third Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>
-                        <label>Sample Image #4</label>
-                        <img src = '../uploads/products/".$row['pro_img4']."'  style = 'height:50px;width:50px;' />
-                        <br><input type = 'file' name = 'sample_img4' value = ".$row['pro_img4']." required/><br>
-                    </td>
-                </tr><br>
-                <button name = 'update_fourth_image'>Update Fourth Image</button>
             </form>";
             if(isset($_POST['update_prod']))
             {
@@ -1306,23 +1209,6 @@
                 WHERE
                 pro_id = '$pro_id'");
                 if($update_third_img->execute())
-                {
-                    echo "<script>alert('Product Updated Successfully!');</script>";
-                    echo "<script>window.open('sales_inventory.php','_self');</script>";
-                }
-            }
-            if(isset($_POST['update_fourth_image']))
-            {
-                $pro_img4 = $_FILES['sample_img4']['name'];
-                $pro_img4_tmp = $_FILES['sample_img4']['tmp_name'];
-
-                move_uploaded_file($pro_img4_tmp,"../uploads/products/$pro_img4");
-
-                $update_fourth_img = $con->prepare("UPDATE product_tbl SET 
-                pro_img4 = '$pro_img4'
-                WHERE
-                pro_id = '$pro_id'");
-                if($update_fourth_img->execute())
                 {
                     echo "<script>alert('Product Updated Successfully!');</script>";
                     echo "<script>window.open('sales_inventory.php','_self');</script>";

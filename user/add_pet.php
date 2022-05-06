@@ -32,7 +32,7 @@
     session_start();
     include("inc/db.php");
 
-    if(!isset($_SESSION['user_username']))
+    if(!isset($_SESSION['user_id']))
     {
         echo "<script>window.open('login.php', '_self');</script>";
     }
@@ -40,8 +40,8 @@
     {
         if(isset($_POST['add_pet']))
         {
-            $user_username = $_SESSION['user_username'];
-            $user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $users_id = $_SESSION['user_id'];
+            $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
             $user->setFetchMode(PDO:: FETCH_ASSOC);
             $user->execute();
         
@@ -53,9 +53,12 @@
             $pet_breed = $_POST['pet_breed'];
             $pet_gender = $_POST['pet_gender'];
             $pet_details = $_POST['pet_details'];
+
+            $currentDate = new DateTime();
+            $today = $currentDate->format('Y-m-d H:i:s');
             
             $pet_photo = $_FILES['pet_photo']['name'];
-            $pet_photo_tmp = $_FILES['pet_photo_tmp']['tmp_name'];
+            $pet_photo_tmp = $_FILES['pet_photo']['tmp_name'];
     
             move_uploaded_file($pet_photo_tmp,"../uploads/pets/$pet_photo");
     
@@ -67,7 +70,8 @@
                         pet_gender,
                         pet_details,
                         pet_photo,
-                        likes
+                        likes,
+                        date_time_posted
             )
             VALUES (
                 '$user_id',
@@ -77,12 +81,14 @@
                 '$pet_gender',
                 '$pet_details',
                 '$pet_photo',
-                '0'
+                '0',
+                '$today'
 
             )");
             if($add_pet->execute())
             {
-                echo "Pet Successfully Added";
+                echo "<script>alert('Pet Successfully Added');</script>";
+                echo "<script>window.open('viewall_pets.php', '_self');</script>";
             }
         }
     }
