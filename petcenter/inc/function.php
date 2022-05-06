@@ -37,7 +37,7 @@
             }
             else
             {
-                echo "Please verify your email!";
+                echo "<script>alert('Please verify your email!');</script>";
             }
         }
     }
@@ -60,12 +60,68 @@
                 $update_verification = $con->prepare("UPDATE pet_center_tbl SET verified = 1 WHERE email = '$user_email'");
                 if($update_verification->execute())
                 {
-                    echo "You can now log in!";
+                    echo "<script>alert('You can now log in!');</script>";
+                    echo "<script>window.open('login.php', '_self');</script>";
                 }
             }
             else
             {
-                echo "Email or Verification Code is incorrect!";
+                echo "<script>alert('Email or Verification Code is incorrect!');</script>";
+            }
+        }
+    }
+
+    function forgotpassword()
+    {
+        include("inc/db.php");
+        if(isset($_POST['update_password']))
+        {
+            $email = $_POST['email'];
+            $pet_center_password = $_POST['pet_center_password'];
+            $confirm_password = $_POST['confirm_password'];
+
+            $check_email = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email'");
+            $check_email->setFetchMode(PDO:: FETCH_ASSOC);
+            $check_email->execute();
+
+            $row = $check_email->rowCount();
+            if($row>0)
+            {
+                if($pet_center_password == $confirm_password)
+                {
+                    if(strlen($pet_center_password) >= 8)
+                    {
+                        if(preg_match('/[A-Z]/', $pet_center_password) > 0 &&
+                        preg_match('/[a-z]/', $pet_center_password) > 0)
+                        {
+                            $update_password = $con->prepare("UPDATE pet_center_tbl SET pet_center_password = '$pet_center_password' WHERE email = '$email'");
+                            $update_password->setFetchMode(PDO:: FETCH_ASSOC);
+                            $update_password->execute();
+
+                            if($update_password->execute())
+                            {
+                                echo "<script>alert('Succesfully Changed!');</script>";
+                                echo "<script>window.open('login.php', '_self');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Password must at least have 1 number, 1 special character and 1 uppercase letter!');</script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<script>alert('Password length must at least have 8 characters!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "<script>alert('Password doesn't match!');</script>";
+                }
+            }
+            else
+            {
+                echo "<script>alert('Email doesn't exists!');</script>";
             }
         }
     }
@@ -94,20 +150,19 @@
     
             while($row = $view_user_service->fetch()): 
                 echo
-                "<li>
+                "<div class = 'idNiSha'>
                     <form method = 'post' enctype='multipart/form-data'>
-                    <a href='show_service_info.php?id=".$row['id']."'>
-                        <h4>".$row['services_name']."</h4>
-                        <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                        <center>
-                            <button id = 'pro_btnView'>
-                                <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                            </button>
+                    <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                        
+                        <img class = 'fikture' src ='../uploads/user_profile/".$row['service_photo']."' />
+                        <div class = 'prodDet'>
+                        <p class = 'head4'>".$row['services_name']."</p><br>
+                            <a id = 'pro_btnView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                             <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                        </center>
+                        </div>
                     </a>
                     </form>
-                </li>";
+                </div>";
             endwhile;
         }
        
@@ -174,25 +229,25 @@
 
             if($row['pet_center_email']>0)
             {
-                echo "Email Exists";
+                echo "<script>alert('Email Exists');</script>";
             }
             elseif($row2['pet_cent_name']>0)
             {
-                echo "Name Exists";
+                echo "<script>alert('Name Exists');</script>";
             }
             elseif(!is_numeric($contact_number))
             {
-                echo "Only Digits Allowed!";
+                echo "<script>alert('Only Digits Allowed!');</script>";
             }
             elseif(strlen($contact_number)>=12)
             {
-                echo "Number must at least 11 digits!";
+                echo "<script>alert('Number must at least 11 digits!');</script>";
             }
             elseif(strlen($pet_center_password) >= 9 &&
             preg_match('/[A-Z]/', $pet_center_password) > 0 &&
             preg_match('/[a-z]/', $pet_center_password) > 0)
             {
-                echo "Password must at least 8 characters in length!";
+                echo "<script>alert('Password must at least 8 characters in length!');</script>";
             }
             else
             {
@@ -246,55 +301,59 @@
     {   
         echo
         "<form method = 'POST' enctype = 'multipart/form-data'>
-        <table>
-        <tr>
-            <td>Name: </td>
-            <td><input type='text' name = 'services_name' required /></td>
-        </tr>
-        <tr>
-            <td>Service Day From: </td>
-            <td>
-                <select name = 'day_open' required>";
+        <div class = 'mainCont'>
+        <div class = 'cont'>
+            <p class = 'lbes' >Name: </p>
+            <input class = 'ints' type='text' name = 'services_name' required />
+        </div>
+    <div class = 'open'>
+        <div class = 'conts' >
+            <p class = lbes>Service Day From: </p>
+     
+                <select class = 'ints' name = 'day_open' required>";
                     echo days();
                 echo "</select>
-            </td>
-        </tr>
-        <tr>
-            <td>Service Day To: </td>
-            <td>
-                <select name = 'day_close' required>";
+
+        </div>
+        <div class = 'conts'>
+            <p class = 'lbes'>Service Day To: </p>
+           
+                <select class = 'ints' name = 'day_close' required>";
                     echo days();
                 echo "</select>
-            </td>
-        </tr>
-        <tr>
-            <td>Time Open: </td>
-            <td><input type='time' name =  'time_open' required/></td>
-        </tr>
-        <tr>
-            <td>Time Close: </td>
-            <td><input type='time' name =  'time_close' required/></td>
-        </tr>
-        <tr>
-            <td>Service Cost: </td>
-            <td><input type='text' name =  'service_cost' required/></td>
-        </tr>
-        <tr>
-            <td>Photo: </td>
-            <td><input type='file' name =  'service_photo' required/></td>
-        </tr>
        
-        <tr>
-            <td>Select Category:</td>
-            <td>
-                <select name = 'service_cat' required>";
+        </div>
+    </div>
+    <div class = 'open'>
+        <div class = 'conts'>
+            <p class = 'lbes'>Time Open: </p>
+            <input class = 'ints' type='time' name =  'time_open' required/>
+        </div>
+        <div class = 'conts' >
+            <p class = 'lbes'>Time Close: </p>
+            <input class = 'ints' type='time' name =  'time_close' required/>
+        </div>
+    </div>
+        <div class = 'cont' >
+            <p class = 'lbes' >Service Cost: </p>
+            <input class = 'ints' type='text' name =  'service_cost' required/></td>
+        </div>
+        <div class = 'cont'>
+            <p class = 'lbes'>Photo: </p>
+            <input class = 'ints' type='file' name =  'service_photo' required/>
+        </div>
+       
+        <div class = 'cont'>
+            <p class = 'lbes' >Select Category:</p>
+      
+                <select class = 'ints'  name = 'service_cat' required>";
                     echo viewall_cat();
                 echo"</select>
-            </td>
-        </tr>
+          
+        </div>
     
-    </table>
-    <button name = 'add_service'>Add Service</button>
+    </div>
+    <button  class = 'btnss' name = 'add_service'>Add Service</button>
         </form>";
         include ("inc/db.php");
         if(isset($_POST['add_service']))
@@ -359,11 +418,11 @@
 
             if($query->execute())
             {
-                echo "Service Successfully Added!";
+                echo "<script>alert('Service Successfully Added!');</script>";
             }
             else
             {
-                echo "Unsuccessful!";
+                echo "<script>alert('Unsuccessful!');</script>";
             }
            
         }
@@ -467,27 +526,27 @@
             $empty_coupon = "N/A";
             echo
             "<form method = 'POST'>
-                <tr>
-                    <td><input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' /></td>
-                    <td><input type = 'hidden' name = 'service_id' value = '".$service_id."' /></td>
-                    <td><input type = 'hidden' name = 'user_id' value = '".$user_id."' /></td>
-                    <td><input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' /></td>
-                    <td><input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' /></td>
-                    <td><input type = 'hidden' name = 'date_confirmed' value = '".$today."' /></td>
-                    <td><input type = 'hidden' name = 'service_cost' value = '".$service_cost."' /></td>
-                    <td>".$user_username."</td>
-                    <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>";
+                <div class = 'hed'>
+                    <input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' />
+                    <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
+                    <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
+                    <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
+                    <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
+                    <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
+                    <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
+                    <p>".$user_username."</p>
+                    <p>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
                     if($row2['coupon_code'] == '')
                     {
-                        echo "<td>".$empty_coupon."</td>";
+                        echo "<p>".$empty_coupon."</p>";
                     }
                     else
                     {
-                        echo "<td>".$coupon_code."</td>";
+                        echo "<p>".$coupon_code."</p>";
                     }
-                    echo "<td>".$transaction_code."</td> 
-                    <td><button name = 'confirm_request' value = ".$reserve_id.">Confirm</button></td>
-                </tr>
+                    echo "<p>".$transaction_code."</p> 
+                    <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                </div>
             </form>";
         endwhile;
         
@@ -821,7 +880,7 @@
                         preg_match('/[A-Z]/', $pet_center_password) > 0 &&
                         preg_match('/[a-z]/', $pet_center_password) > 0)
                         {
-                            echo "Password must at least 8 characters in length with at least 1 special character, 1 number!";
+                            echo "<script>alert('Password must at least 8 characters in length with at least 1 special character, 1 number!');</script>";
                         }
                         else
                         {
@@ -843,12 +902,12 @@
                     }
                     else
                     {
-                        echo "Contact Number must at least 11 digits only!";
+                        echo "<script>alert('Contact Number must at least 11 digits only!');</script>";
                     }
                 }
                 else
                 {
-                    echo "Only digits allowed!";
+                    echo "<script>alert('Only digits allowed!');</script>";
                 }
                 
             }

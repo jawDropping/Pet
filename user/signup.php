@@ -336,25 +336,25 @@ include("inc/db.php");
 
             if($row['all_emails']>0)
             {
-                echo "Email Exists";
+                echo "<script>alert('Email Exists');</script>";
             }
             elseif($row2['all_usernames']>0)
             {
-                echo "Name Exists";
+                echo "<script>alert('Name Exists');</script>";
             }
             elseif(!is_numeric($user_contactnumber))
             {
-                echo "Only Digits Allowed!";
+                echo "<script>alert('Only Digits Allowed!');</script>";
             }
             elseif(strlen($user_contactnumber)>=12)
             {
-                echo "Number must at least 11 digits!";
+                echo "<script>alert('Number must at least 11 digits!');</script>";
             }
             elseif(strlen($user_password) >= 9 &&
             preg_match('/[A-Z]/', $user_password) > 0 &&
             preg_match('/[a-z]/', $user_password) > 0)
             {
-                echo "Password must at least 8 characters in length!";
+                echo "<script>alert('Password must at least 8 characters in length!');</script>";
             }
             else
             {

@@ -31,7 +31,7 @@
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
         <li><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
-        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Product Management</a></li>
+        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li  class = 'selection'  ><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
@@ -47,21 +47,22 @@
         </div>
 </div>
 <div id="bodyright">
+<p class = 'hed'>Coupons: </p>
 <div class = "body">
-    <p class = 'hed'>Coupons: </p>
+    
     <form method = "POST" enctype = "multipart/form-data">
-    <table>
-        <tr>
-            <th>Full Name</th>
-            <th>Email Address</th>
-            <th>Coupon</th>
-        </tr>
+    <div class = 'tebs'>
+        <div class = 'yopak'>
+            <p>Full Name</p>
+            <p>Email Address</p>
+            <p>Coupon</p>
+        </div>
         <tr>
             <?php
                 echo viewall_coupons();
             ?>
         </tr>
-        </table>
+        </div>
     </form>
 </div>
 
@@ -86,6 +87,37 @@
         font-size: 22px;
         font-weight: bold;
         color: white;
+    }
+    .body{
+        margin-top: 7vh;
+        background: #fff;
+
+        width: 95%;
+        border-radius: 5px;
+        padding: 10px;
+        margin-left: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+    }
+    .tebs{
+        width: 100%;
+    }
+    .yopak{
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+        
+        
+    }
+    .inners{
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+
+    }
+    .okss{
+        text-align:center;
     }
     
 </style>

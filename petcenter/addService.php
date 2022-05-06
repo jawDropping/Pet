@@ -14,23 +14,77 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
            ?>
-            <div id = "navbar">
-    <ul>
-    <li>
-            <a id = 'choice' href = 'index.php'>My services</a>
-        </li>
-        <li>
-            <a id = 'choice2' href = 'addService.php'>Add Service</a>
-        </li>
-        <li>
-            <a id = 'choice' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
-        </li>
-    </ul>
-</div>
+             <div class = "ko">
+        <div class="inners">
+        <a class = 'lengk' href = 'index.php'>My services</a>
+        <a class = 'lengkong' href = 'addService.php'>Add services</a>
+        <a class = 'lengk' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
+        </div>
          
-           
-<?php
+        <div id='bodyleft'>
+            <div class="maines">
+            <?php
     call_user_func('add_service');
-?>
+    ?>
+            </div>
+   
+    </div>
     </body>
+    <style>
+        .maines{
+            margin-top: 3%;
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+           
+        }
+        .cont{
+            width: 89%;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-left: 5%;
+        }
+        .conts{
+            width: 40%;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-left: 5%;
+        }
+        .ints{
+            border: none;
+            outline: none;
+            width: 95%;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #777;
+        }
+        .lbes{
+            font-size: 12px;
+            color: #888;
+        }
+        .mainCont{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            padding-bottom: 3%;
+        }
+        .open{
+            display: flex;
+        }
+        .btnss{
+            float: right;
+            margin-top: 5%;
+            border: none;
+            padding: 10px;
+            width: 20vw;
+            height: 52px;
+            border-radius: 7px;
+            color: white;
+            background: #5a5bf3;
+        }
+    </style>
 </html>

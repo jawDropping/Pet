@@ -18,18 +18,15 @@ $display_cart->execute();
 $row = $display_cart->fetch();
 $qty = array_count_values($_SESSION['cart'])[$row['pro_id']];
 
-$sql = $con->query("SELECT * FROM orders_tbl");
+$sql = $con->query("SELECT MAX(order_id) FROM orders_tbl");
 $sql->setFetchMode(PDO:: FETCH_ASSOC);
 
 $row = $sql->fetch();
 $order_id = 1;
 if($row)
 {
-    $order_id = intval($row['order_id']+2);
+    $order_id = intval($row['MAX(order_id)']+1); 
 }
-// var_dump($row);
-// die($order_id);
-
 
 if($row_user['municipality'] == "mandaue" || $row_user['municipality'] == "cebu" || $row_user['municipality'] == "consolacion" || $row_user['municipality'] == "talisay")
 {
