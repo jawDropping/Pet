@@ -83,20 +83,19 @@
     
             while($row = $view_user_service->fetch()): 
                 echo
-                "<li>
+                "<div class = 'idNiSha'>
                     <form method = 'post' enctype='multipart/form-data'>
-                    <a href='show_service_info.php?id=".$row['id']."'>
-                        <h4>".$row['services_name']."</h4>
-                        <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                        <center>
-                            <button id = 'pro_btnView'>
-                                <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                            </button>
+                    <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                        
+                        <img class = 'fikture' src ='../uploads/user_profile/".$row['service_photo']."' />
+                        <div class = 'prodDet'>
+                        <p class = 'head4'>".$row['services_name']."</p><br>
+                            <a id = 'pro_btnView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                             <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                        </center>
+                        </div>
                     </a>
                     </form>
-                </li>";
+                </div>";
             endwhile;
         }
        
@@ -235,55 +234,59 @@
     {   
         echo
         "<form method = 'POST' enctype = 'multipart/form-data'>
-        <table>
-        <tr>
-            <td>Name: </td>
-            <td><input type='text' name = 'services_name' required /></td>
-        </tr>
-        <tr>
-            <td>Service Day From: </td>
-            <td>
-                <select name = 'day_open' required>";
+        <div class = 'mainCont'>
+        <div class = 'cont'>
+            <p class = 'lbes' >Name: </p>
+            <input class = 'ints' type='text' name = 'services_name' required />
+        </div>
+    <div class = 'open'>
+        <div class = 'conts' >
+            <p class = lbes>Service Day From: </p>
+     
+                <select class = 'ints' name = 'day_open' required>";
                     echo days();
                 echo "</select>
-            </td>
-        </tr>
-        <tr>
-            <td>Service Day To: </td>
-            <td>
-                <select name = 'day_close' required>";
+
+        </div>
+        <div class = 'conts'>
+            <p class = 'lbes'>Service Day To: </p>
+           
+                <select class = 'ints' name = 'day_close' required>";
                     echo days();
                 echo "</select>
-            </td>
-        </tr>
-        <tr>
-            <td>Time Open: </td>
-            <td><input type='time' name =  'time_open' required/></td>
-        </tr>
-        <tr>
-            <td>Time Close: </td>
-            <td><input type='time' name =  'time_close' required/></td>
-        </tr>
-        <tr>
-            <td>Service Cost: </td>
-            <td><input type='text' name =  'service_cost' required/></td>
-        </tr>
-        <tr>
-            <td>Photo: </td>
-            <td><input type='file' name =  'service_photo' required/></td>
-        </tr>
        
-        <tr>
-            <td>Select Category:</td>
-            <td>
-                <select name = 'service_cat' required>";
+        </div>
+    </div>
+    <div class = 'open'>
+        <div class = 'conts'>
+            <p class = 'lbes'>Time Open: </p>
+            <input class = 'ints' type='time' name =  'time_open' required/>
+        </div>
+        <div class = 'conts' >
+            <p class = 'lbes'>Time Close: </p>
+            <input class = 'ints' type='time' name =  'time_close' required/>
+        </div>
+    </div>
+        <div class = 'cont' >
+            <p class = 'lbes' >Service Cost: </p>
+            <input class = 'ints' type='text' name =  'service_cost' required/></td>
+        </div>
+        <div class = 'cont'>
+            <p class = 'lbes'>Photo: </p>
+            <input class = 'ints' type='file' name =  'service_photo' required/>
+        </div>
+       
+        <div class = 'cont'>
+            <p class = 'lbes' >Select Category:</p>
+      
+                <select class = 'ints'  name = 'service_cat' required>";
                     echo viewall_cat();
                 echo"</select>
-            </td>
-        </tr>
+          
+        </div>
     
-    </table>
-    <button name = 'add_service'>Add Service</button>
+    </div>
+    <button  class = 'btnss' name = 'add_service'>Add Service</button>
         </form>";
         include ("inc/db.php");
         if(isset($_POST['add_service']))
@@ -456,27 +459,27 @@
             $empty_coupon = "N/A";
             echo
             "<form method = 'POST'>
-                <tr>
-                    <td><input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' /></td>
-                    <td><input type = 'hidden' name = 'service_id' value = '".$service_id."' /></td>
-                    <td><input type = 'hidden' name = 'user_id' value = '".$user_id."' /></td>
-                    <td><input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' /></td>
-                    <td><input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' /></td>
-                    <td><input type = 'hidden' name = 'date_confirmed' value = '".$today."' /></td>
-                    <td><input type = 'hidden' name = 'service_cost' value = '".$service_cost."' /></td>
-                    <td>".$user_username."</td>
-                    <td>".date('g:i A', strtotime($row2['reserve_time']))."</td>";
+                <div class = 'hed'>
+                    <input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' />
+                    <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
+                    <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
+                    <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
+                    <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
+                    <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
+                    <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
+                    <p>".$user_username."</p>
+                    <p>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
                     if($row2['coupon_code'] == '')
                     {
-                        echo "<td>".$empty_coupon."</td>";
+                        echo "<p>".$empty_coupon."</p>";
                     }
                     else
                     {
-                        echo "<td>".$coupon_code."</td>";
+                        echo "<p>".$coupon_code."</p>";
                     }
-                    echo "<td>".$transaction_code."</td> 
-                    <td><button name = 'confirm_request' value = ".$reserve_id.">Confirm</button></td>
-                </tr>
+                    echo "<p>".$transaction_code."</p> 
+                    <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                </div>
             </form>";
         endwhile;
         

@@ -31,7 +31,7 @@
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
         <li><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
-        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Product Management</a></li>
+        <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
@@ -48,25 +48,25 @@
 </div>
 <div id="bodyright">
 <p class = 'hed'>View All Users</p>
-<div class = "scroll">
+<div class = "body">
     
     <form method = "POST" enctype = "multipart/form-data">
-    <table>
-        <tr>
-            <th>User Id</th>
-            <th>User Name</th>
-            <th>User Password</th>
-            <th>Contact Info</th>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Action</th>
-        </tr>
-        <tr>
+    <div>
+        <div class = 'hedGrid'>
+            <p>User Id</p>
+            <p>User Name</p>
+            <p>User Password</p>
+            <p>Contact Info</p>
+            <p>Name</p>
+            <p>Image</p>
+            <p>Action</p>
+        </div>
+        <div>
             <?php
                 echo viewall_users();
             ?>
-        </tr>
-        </table>
+        </div>
+        </div>
     </form>
 </div>
 
@@ -92,6 +92,54 @@
         font-size: 22px;
         font-weight: bold;
         color: white;
+    }
+    .hedGrid{
+        display: grid;
+        grid-template-columns:  8% 14% 14% 14% 14% 20% 14%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+    }
+    .body{
+        margin-top: 7vh;
+        background: #fff;
+        width: 95%;
+        border-radius: 5px;
+        padding: 10px;
+        margin-left: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+    }
+    .innerGrid{
+        display: grid;
+        grid-template-columns: 8% 14% 14% 14% 14% 20% 14%;
+        text-align: center;
+        
+        margin-top: 20px;
+    }
+    .imgg{
+        width: 70%;
+        margin-left: 15%;
+    }
+    .btn1{
+        height: 30px;
+    color: #fff;
+    border-radius: 3px;
+    width: 30%;
+    background: #5a5bf3;
+    border: 1px solid  #5a5bf3;
+    text-decoration: none;
+    margin-left: 20%;
+    }
+    .btn2{
+        height: 30px;
+    color: #5a5bf3;
+    border-radius: 3px;
+    width:30%;
+    background: white;
+    border: 1px solid #5a5bf3;
+    text-decoration: none;
+    margin-left: 5%;
     }
 </style>
 
