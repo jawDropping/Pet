@@ -545,16 +545,16 @@
                 <td>".$row['items']."</td>
                 <td>".$row['user_username']."</td>
                 <td>".$row['date_delivered']."</td>
-                <td>₱".$row['total_amount']."</td>
+                <td>P".$row['total_amount'].".00</td>
             </tr>";
         endwhile;
         echo
         "<tr>
             <td></td>
             <td></td>
-            <td>Amount Collected: ₱".$row2['SUM(total_amount)']."</td>
-            <button class = 'buto' onClick = 'window.print()'>PRINT</button>
+            <td>Amount Collected: P".$row2['SUM(total_amount)'].".00</td>
         </tr>";
+        
     }
 
     
