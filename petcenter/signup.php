@@ -31,6 +31,9 @@
                             <input class = 'inputer' type='text' name = 'pet_center_password' placeholder = 'Password' size = '50' required />
                         </div>
                         <div>
+                            <input class = 'inputer' type='text' name = 'location' placeholder = 'Location' size = '50' required />
+                        </div>
+                        <div>
                             <br>
                             <p>Will you accept coupons? <a class = 'ask'>Learn more about coupons</a></p> 
                            <br>
