@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "css/signup.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -288,8 +289,14 @@
                 
                 </div>
                 <div class="leftSide">
-                
-                        <img src="../uploads/signGirl.svg" alt="" id="imgLeft">
+                <p class = 'oneS'>Your FURever companion for your pet necessities</p>
+               
+                <p class = 'welss'>Welcome to Pet Society</p>
+                    <div class="imgCont">
+                       
+                     <img src="../uploads/signGirl.svg" id="imgLeft">
+                    </div>
+                       
                 </div>
             </div>
               

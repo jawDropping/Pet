@@ -16,7 +16,11 @@
     <body>
         <div id ="LoginForm">
             <div class="container">
+                <div class="colorSide">
+                <img class = 'hello' src="../uploads/petS.svg">
+                </div>
                 <div class="inside">
+                    <div class="insider">
                     <div class="logoSide">
                     <img src="../uploads/logo2.png" class="logo"> <p class="petsociety">Pet Society</p>
                     </div>
@@ -35,6 +39,8 @@
                     </form>
                     <a href = 'verify_email.php'>Verify My Email</a>
                     <a href = 'forgotpassword.php'>Forgot Password?</a>
+                    </div>
+                   
                 </div>
            
             </div>
@@ -55,20 +61,18 @@
             display: flex;
             justify-content: center;
             width: 100vw;
-            
-            
-            
-        }
+           }
         p{
             text-align: center;
             margin-top: 10px;
             color: #666;
         }
         .container{
-            display: flex;
+            display: grid;
+            grid-template-columns: 30% 70%;
             justify-content: center;
             border-radius: 5px;
-            margin-top: 5vh;
+            margin-top:  7vh;
             margin-left: 15%;
             margin-right: 15%;
             background: white;
@@ -77,9 +81,15 @@
             box-shadow:4px 6px 16px 0px rgba(0, 0, 0, 0.2);
         }
         .inside{
+           
+        }
+        .insider{
             height: 100%;
-            width: 50%;
-            padding-top: 20px; 
+            width: 80%;
+             margin-left: 10%;
+        }
+        .colorSide{
+            background: #ffb830;
         }
         .input{
            width: 100%;
@@ -117,9 +127,12 @@
              display: block;
         }
         .signup:hover{
-            background:  #91e7d9;
+            background: #0080fe;
            transition: .5s;
            color: white;
+        }
+        .signup:hover a{
+            color: white;
         }
         .logo{
             width: 25px;
@@ -130,10 +143,15 @@
         border-bottom: .9px solid black;
         padding-bottom: 10px;
         margin-bottom: 20px;
+        margin-top: 5%;
        }
        .petsociety{
            margin-left: 10px;
            color: #444;
+       }
+       .hello{
+           margin-top: 70%;
+           width: 80%;
        }
        @media (max-width: 800px){
            .container{
@@ -154,7 +172,10 @@
 
             }
        }
-
+       a{
+           text-decoration: none;
+       }
+       
     </style>
     <script>
             let input = document.querySelector(".input");
