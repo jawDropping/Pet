@@ -428,7 +428,7 @@ body {
 .idNiSha:hover {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-.fDogs{
+.fDogs {
   display: grid;
   grid-template-columns: 32% 32% 32%;
   width: 100%;
@@ -453,7 +453,6 @@ body {
   padding: 10px;
   width: 95%;
   height: 250px;
-
 }
 .btnLinkView {
   padding: 5px 10px 5px 10px;
@@ -569,11 +568,10 @@ h4 {
   margin-bottom: 10px;
 }
 
-.mainImage{
+.mainImage {
   height: 450px;
   width: 100%;
 }
-
 
 #pro_img ul li img {
   width: 80px;
@@ -765,24 +763,24 @@ h4 {
   font-size: 12px;
 }
 
-@media(max-width: 540px){
-  .fDogs{
+@media (max-width: 780px) {
+  .fDogs {
     margin-left: 5%;
-  grid-template-columns: 45% 45%;
-  column-gap: 5%;
+    grid-template-columns: 45% 45%;
+    column-gap: 5%;
   }
-  .fikture{
+  .fikture {
     height: 150px;
     width: 80%;
   }
-  .idNiSha{
+  .idNiSha {
     height: 280px;
     margin-bottom: 5%;
   }
 }
 
-@media(min-width: 1440px){
-  .fikture{
+@media (min-width: 1440px) {
+  .fikture {
     width: 80%;
     margin-left: 10%;
   }
