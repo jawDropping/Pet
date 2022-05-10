@@ -1058,7 +1058,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
-        echo "<h3>Services Available </h3>";
         while($row = $sql->fetch()):
             
             echo

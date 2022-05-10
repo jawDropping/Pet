@@ -27,8 +27,8 @@
         <div class = 'hed' ><img src = '../uploads/oct.gif' id = 'imgTop'><p class = 'ttlHead' >crep</p>
         </div><br>
             <?php
-            echo "<ul>";
-                   other_food_products(); echo"</ul>
+            echo "<div class = 'fDogs'>";
+                   other_food_products(); echo"</div>
                   </div>";
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 

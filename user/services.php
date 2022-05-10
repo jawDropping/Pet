@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Pet Society</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
         <link rel = "stylesheet" href="css/services.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,9 +25,11 @@
             <a class = 'servDiv' href = "service_other.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/otherService.png" alt="">others</a>
         </div>
         <br>
-              <ul>
+        <h3>Services Available </h3>
+              <div class = 'fDogs'>
+             
                    <?php viewall_services(); ?>
-                   </ul>
+                   </div>
           </div>
             <?php
             include ("inc/bodyright.php"); 
