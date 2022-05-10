@@ -399,95 +399,107 @@
             $order_id = $_POST['confirm_order'];
 
             
-            $items = $_POST['items'];
-            $total_amount = $_POST['total_amount'];
-            $user_username = $_POST['user_username'];
-            $delivery_date = $_POST['delivery_date'];
-            $delivery_status = 'FOR DELIVERY';
+            $view_status = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
+            $view_status->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_status->execute();
 
-            $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
-            $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
-            $fetch_user->execute();
-        
-            $row_username = $fetch_user->fetch();
-
-            $receiver = $row_username['user_email'];
-            $subject = "Order Confirmation Mail";
-            $body = "
-            Greetings!
-
-            Your Order has been confirmed and will be delivered on $delivery_date 
-
-            Order Number: $order_id
-            Items: $items
-
-            Please do keep your lines open because your items will be arrived to your
-            destination according to the delivery date.
-            Thank you for purchasing to our store hopefully you're 
-            happy with those items you purchased. 
-
-            Lovely store,
-            Pet Society
-            ";
-            $sender = "ianjohn0101@gmail.com";
-
-            $datenow = getdate();
-
-            $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-
-
-            if($delivery_date > $today)
+            $rows = $view_status->fetch();
+            if($rows['delivery_status'] == 'FOR DELIVERY')
             {
-                echo "INVALID DATE!";
+                echo "<script>alert('Already in FOR DELIVERY STATUS!');</script>";
             }
             else
             {
-                $add_delivery = $con->prepare("INSERT INTO delivery_tbl
-                (
-                    order_id, 
-                    items, 
-                    total_amount,
-                    user_username, 
-                    delivery_date, 
-                    delivery_status
-                ) 
-                VALUES
-                (
-                    $order_id,
-                    '$items',
-                    '$total_amount',
-                    '$user_username',
-                    '$delivery_date',
-                    '$delivery_status'
-                )");
+                $items = $_POST['items'];
+                $total_amount = $_POST['total_amount'];
+                $user_username = $_POST['user_username'];
+                $delivery_date = $_POST['delivery_date'];
+                $delivery_status = 'FOR DELIVERY';
     
-                if(!$add_delivery->execute())
+                $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+                $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetch_user->execute();
+            
+                $row_username = $fetch_user->fetch();
+    
+                $receiver = $row_username['user_email'];
+                $subject = "Order Confirmation Mail";
+                $body = "
+                Greetings!
+    
+                Your Order has been confirmed and will be delivered on $delivery_date 
+    
+                Order Number: $order_id
+                Items: $items
+    
+                Please do keep your lines open because your items will be arrived to your
+                destination according to the delivery date.
+                Thank you for purchasing to our store hopefully you're 
+                happy with those items you purchased. 
+    
+                Lovely store,
+                Pet Society
+                ";
+                $sender = "ianjohn0101@gmail.com";
+    
+                $datenow = getdate();
+    
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+    
+    
+                if($delivery_date > $today)
                 {
-                    return;
+                    echo "INVALID DATE!";
                 }
-                
-                mail($receiver, $subject, $body, $sender);
-    
-                $view_details = $con->query("SELECT pro_id, qty FROM orders_tbl WHERE order_id = '$order_id'");
-                $view_details->setFetchMode(PDO:: FETCH_ASSOC);
-                $view_details->execute(); 
-                
-                while($row = $view_details->fetch()):
-                    $pro_id = $row['pro_id'];
-                    $qty = $row['qty'];
-    
-                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
-                    $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
-                    $update_qty->execute();
-                endwhile;
-    
-                $delete_ord = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
-                if(!$delete_ord->execute())
+                else
                 {
-                    return;  
-                } 
-                echo "<script>alert('Successfully Confirmed!');</script>";
-                echo "<script>window.open('viewall_orders.php', '_self');</script>";
+                    $add_delivery = $con->prepare("INSERT INTO delivery_tbl
+                    (
+                        order_id, 
+                        items, 
+                        total_amount,
+                        user_username, 
+                        delivery_date, 
+                        delivery_status
+                    ) 
+                    VALUES
+                    (
+                        $order_id,
+                        '$items',
+                        '$total_amount',
+                        '$user_username',
+                        '$delivery_date',
+                        '$delivery_status'
+                    )");
+        
+                    if(!$add_delivery->execute())
+                    {
+                        return;
+                    }
+                    
+                    mail($receiver, $subject, $body, $sender);
+        
+                    $view_details = $con->query("SELECT pro_id, qty FROM orders_tbl WHERE order_id = '$order_id'");
+                    $view_details->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_details->execute(); 
+                    
+                    while($row = $view_details->fetch()):
+                        $pro_id = $row['pro_id'];
+                        $qty = $row['qty'];
+        
+                        $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
+                        $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
+                        $update_qty->execute();
+                    endwhile;
+        
+                    $delete_ord = $con->prepare("UPDATE orders_tbl SET delivery_status = 'FOR DELIVERY' WHERE order_id = '$order_id'");
+                    if(!$delete_ord->execute())
+                    {
+                        return;  
+                    } 
+                    echo "<script>alert('Successfully Confirmed!');</script>";
+                    echo "<script>window.open('viewall_orders.php', '_self');</script>";
+                }
             }
         }
     }
@@ -533,15 +545,16 @@
                 <td>".$row['items']."</td>
                 <td>".$row['user_username']."</td>
                 <td>".$row['date_delivered']."</td>
-                <td>₱".$row['total_amount']."</td>
+                <td>P".$row['total_amount'].".00</td>
             </tr>";
         endwhile;
         echo
         "<tr>
             <td></td>
             <td></td>
-            <td>Amount Collected: ₱".$row2['SUM(total_amount)']."</td>
+            <td>Amount Collected: P".$row2['SUM(total_amount)'].".00</td>
         </tr>";
+        
     }
 
     
@@ -632,8 +645,18 @@
 
                         if($update_status->execute())
                         {
+                            $delete_order = $con->prepare("DELETE FROM orders_tbl WHERE order_id = '$order_id'");
+                            $delete_order->setFetchMode(PDO:: FETCH_ASSOC);
+                             $delete_order->execute();
+
+                             if($delete_order->execute())
+                             {
+
                             echo "<script>alert('Item Delivered');</script>";
                             echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
+                             }
+
+
                         }
                    
                 }

@@ -144,9 +144,12 @@
             $pet_center_name = $_POST['pet_center_name'];
             $pet_center_password = $_POST['pet_center_password'];
             $email = $_POST['email'];
+            $location = $_POST['location'];
             $contact_number = $_POST['contact_number'];
             $accept_coupons = $_POST['accept_coupons'];
+            $pet_center_photo = "userIcon.svg";
             $verification_key = generateRandomString();
+            $verified = 0;
 
             $view_email = $con->prepare("SELECT COUNT(*) AS pet_center_email FROM pet_center_tbl WHERE email = '$email'");
             $view_email->setFetchMode(PDO::FETCH_ASSOC);
@@ -184,52 +187,55 @@
             }
             else
             {
-                $receiver = $user_email;
+                $receiver = $email;
                 $subject = "Email Verification";
                 $body = "Use this Verification Code: $verification_key to verify your email!";
                 $sender = "ianjohn0101@gmail.com";
 
-                if(mail($receiver, $subject, $body, $sender))
+                $add_service = $con->prepare("INSERT INTO pet_center_tbl 
+                SET
+                pet_center_name = '$pet_center_name',
+                pet_center_password = '$pet_center_password',
+                email = '$email',
+                location = '$location',
+                contact_number = '$contact_number',
+                pet_center_photo = '$pet_center_photo',
+                active_coupon = '$accept_coupons',
+                v_key = '$verification_key',
+                verified = $verified
+                ");
+    
+                if($add_service->execute())
                 {
-                    $add_service = $con->prepare("INSERT INTO pet_center_tbl (
-                        pet_center_name,
-                        pet_center_password,
-                        email,
-                        contact_number,
-                        pet_center_photo,
-                        active_coupon,
-                        v_key,
-                        verified
-                    ) 
-                    VALUES (
-                        '$pet_center_name',
-                        '$pet_center_password',
-                        '$email',
-                        '$contact_number',
-                        'userIcon.svg',
-                        '$accept_coupons'
-                        '$verification_key',
-                        0
-                    )");
-        
-                    if($add_service->execute())
-                    {
-                        echo "
-                        <script>
-                        alert('Registered Successful!');
-                        if ( window.history.replaceState ) {
-                        window.history.replaceState( null, null, window.location.href );
-                    }            
-                        </script>"; 
-                    }
-                    else
-                    {
-                        echo "<script>alert('Registered Unsuccessful!');</script>";
-                    }
-                } 
+                    echo "
+                    <script>
+                    alert('Registered Successful!');
+                    if ( window.history.replaceState ) {
+                    window.history.replaceState( null, null, window.location.href );
+                }            
+                    </script>"; 
+                    mail($receiver, $subject, $body, $sender);
+                    echo "<script>window.open('login.php', '_self');</script>";
+                    
+                }
+                else
+                {
+                    echo "<script>alert('Registered Unsuccessful!');</script>";
+                }
             }
         }
     }
+
+    function generateRandomString($length = 8) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     function add_service()
     {   
         echo

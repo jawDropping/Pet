@@ -44,7 +44,7 @@
             <div class = 'intpus'>
             <div id = 'arden'>
                 <p class ='uss'>Change Profile Picture</p>
-                <input type = 'file'  name = 'user_profilephoto' id = 'checks' class = 'fileUpload' value = '".$row['user_profilephoto']."'/><br>
+                <input type = 'file'  name = 'user_profilephoto' id = 'checks' class = 'fileUpload' value = '".$row['user_profilephoto']."' required/><br>
                 </div>
                 <button id = 'regss' name = 'update_profile'>Update Profile Picture</button>
             </div>

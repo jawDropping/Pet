@@ -145,12 +145,11 @@ else
      
             <p>ITEMS</p>
 
+            <p>ORDER PLACED</p>
 
             <p>TOTAL AMOUNT</p>
 
-
             <p>Delivery Date</p>
-           
 
             <p>Action</p>
         </div>

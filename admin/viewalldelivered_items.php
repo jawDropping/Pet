@@ -120,24 +120,30 @@
 <div id="bodyright">
 <p class = 'hed'>Transaction History</p>
 <div class = "body">
-    
+
     <form method = "POST" enctype = "multipart/form-data">
-    <table>
-        <tr>
-  
-            <th>ORDER ID</th>
-            <th>ITEMS</th>
-            <th>CUSTOMER</th>
-            <th>Date Delivered</th>
-            <th>Amount Collected</th>
-        </tr>
-        <tr>
-            <?php
-                echo viewalldelivered_items();
-            ?>
-        </tr>
+    <table id = "table" cellspacing ="0" cellpadding ="0">
+       <thead>
+        <th>ORDER ID</th>
+        <th>ITEMS</th>
+        <th>CUSTOMER</th>
+        <th>Date Delivered</th>
+        <th>Amount Collected</th>
+       </thead>
+       <tbody>
+       <tr>
+       <?php
+            echo viewalldelivered_items();
+        ?>
+       </tr>
+
+       </tbody>
+                  
         </table>
     </form>
+    <input type = "button" id = "btnExport" value = "PRINT" />
+    <button id = "pdf">Export to PDF</button>
+    <button id = "csv">Export to EXCEL</button>
 </div>
 </div>
            </div>
@@ -150,6 +156,41 @@
         var date2 = month[(today.getMonth())]+' '+today.getDate()+' '+today.getFullYear();
         document.getElementById("currentDate").innerHTML = date2;
     </script>
+    <script src="src/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="src/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="src/jspdf.min.js"></script>
+    <script type="text/javascript" src="src/jspdf.plugin.autotable.min.js"></script>
+    <script type="text/javascript" src="src/tableHTMLExport.js"></script>
+  
+    <script>
+        $("body").on("click", "#btnExport", function(){
+            var printme = document.getElementById('table');
+            var wme = window.open("","","width=900,height=700");
+            wme.document.write(printme.outerHTML);
+            wme.document.close();
+            wwe.focus();
+            wwe.print();
+            wme.close();
+        })
+    </script>
+
+    <script>
+        $("#pdf").on("click", function(){
+            $("#table").tableHTMLExport({
+                type: 'pdf',
+                filename: 'report.pdf'
+            });
+        });
+
+        $("#csv").on("click", function(){
+            $("#table").tableHTMLExport({
+                type: 'csv',
+                filename: 'report.csv'
+            });
+        });
+    </script>
+    
 </html>
 
 
