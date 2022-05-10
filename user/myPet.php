@@ -62,6 +62,8 @@
                     <div id = 'userHead'>
                     <img class='profileImg2' src = '../uploads/user_profile/".$row_user['user_profilephoto']."'>
                     <p class = 'postName'>".$user_username."</p>
+                    <a href = 'edit_post.php?edit=".$pet_id."'>Edit Post</a>
+                    <a href = 'delete_post.php?delete=".$pet_id."'>Delete Post</a>
                     </div>
                         <img src ='../uploads/pets/".$row['pet_photo']."' class = 'imagePost'/>
                        
