@@ -14,7 +14,71 @@
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&family=Nunito:wght@200&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
+    <style>
 
+
+p{
+    padding: 10px;
+}
+.selection {
+background: #28287774;
+}
+.hed{
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+.bots{
+    text-align: center;
+}
+.body{
+    margin-top: 7vh;
+    background: #fff;
+    width: 95%;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+}
+.hedGrid{
+    display: grid;
+    grid-template-columns: 15% 15% 15% 15% 15% 15%;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+#forming{
+    display: grid;
+    grid-template-columns: 15% 15% 15% 15% 15% 15%;
+    font-size: 14px;
+    margin-top: 20px;
+    background: #eee;
+    padding: 5px;
+}
+.dets{
+    height: 30px;
+}
+.buto{
+    color: #fff;
+    border-radius: 3px;
+     width: 40%;
+     height: 32px;
+    background: #5a5bf3;
+    border: 1px solid  #5a5bf3;
+    text-decoration: none;
+}
+.busog{
+    height: 30px;
+color: #5a5bf3;
+border-radius: 3px;
+width: 100px;
+background: white;
+border: 1px solid #5a5bf3;
+text-decoration: none;
+padding: 5px 5px 5px 5px;
+}
+</style>
     <body>
     <?php 
            
@@ -81,12 +145,11 @@ else
      
             <p>ITEMS</p>
 
+            <p>ORDER PLACED</p>
 
             <p>TOTAL AMOUNT</p>
 
-
             <p>Delivery Date</p>
-           
 
             <p>Action</p>
         </div>
@@ -106,71 +169,7 @@ else
             
         ?>
     </body>
-    <style>
-
-
-    p{
-        padding: 10px;
-    }
-    .selection {
-    background: #28287774;
-    }
-    .hed{
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-    }
-    .bots{
-        text-align: center;
-    }
-    .body{
-        margin-top: 7vh;
-        background: #fff;
-        width: 95%;
-        border-radius: 5px;
-        padding: 10px;
-        margin-left: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
-    }
-    .hedGrid{
-        display: grid;
-        grid-template-columns: 15% 15% 15% 15% 15% 15%;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 1px solid black;
-    }
-    #forming{
-        display: grid;
-        grid-template-columns: 15% 15% 15% 15% 15% 15%;
-        font-size: 14px;
-        margin-top: 20px;
-        background: #eee;
-        padding: 5px;
-    }
-    .dets{
-        height: 30px;
-    }
-    .buto{
-        color: #fff;
-        border-radius: 3px;
-         width: 40%;
-         height: 32px;
-        background: #5a5bf3;
-        border: 1px solid  #5a5bf3;
-        text-decoration: none;
-    }
-    .busog{
-        height: 30px;
-    color: #5a5bf3;
-    border-radius: 3px;
-    width: 100px;
-    background: white;
-    border: 1px solid #5a5bf3;
-    text-decoration: none;
-    padding: 5px 5px 5px 5px;
-    }
-</style>
+ 
 
 
 

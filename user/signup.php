@@ -316,6 +316,8 @@ include("inc/db.php");
             $barangay = $_POST['barangays'];
             $user_address = $_POST['user_address'];
             $verification_key = generateRandomString();
+            $verified = 0;
+            $user_profilephoto = "userIcon.svg";
 
             $view_email = $con->prepare("SELECT COUNT(*) AS all_emails FROM users_table WHERE user_email = '$user_email'");
             $view_email->setFetchMode(PDO::FETCH_ASSOC);
@@ -358,46 +360,34 @@ include("inc/db.php");
             }
             else
             {
-                if(mail($receiver, $subject, $body, $sender))
+                $add_user = $con->prepare("INSERT INTO users_table 
+                SET
+                user_username = '$user_username',
+                user_password = '$user_password',
+                user_contactnumber = '$user_contactnumber',
+                user_address = '$user_address',
+                municipality = '$municipality',
+                barangay = '$barangay',
+                user_email = '$user_email',
+                v_key = '$verification_key',
+                verified = $verified,
+                user_profilephoto = '$user_profilephoto'
+                ");
+    
+                if($add_user->execute())
                 {
-                    $add_user = $con->prepare("INSERT INTO users_table(
-                        user_username,
-                        user_email,
-                        user_contactnumber,
-                        user_password,
-                        municipality,
-                        barangay,
-                        user_address,
-                        user_profilephoto
-                        verified,
-                        verification_key
-                    ) 
-                    VALUES (
-                        '$user_username',
-                        '$user_email',
-                        '$user_contactnumber',
-                        '$user_password',
-                        '$municipality',
-                        '$barangay',
-                        '$user_address',
-                        'userIcon.svg',
-                        0,
-                        '$verification_key'
-                    )");
-        
-                    if($add_user->execute())
-                    {
-                        echo "<script>alert('Registration Successfull!');</script>"; 
-                        echo "<script>
-                        if ( window.history.replaceState ) {
-                           window.history.replaceState( null, null, window.location.href );
-                       }            
-                        </script>";
-                    }
-                    else
-                    {
-                        echo "<script>alert('Registration Unsuccessfull!');</script>";
-                    }
+                    echo "<script>alert('Registration Successfull!');</script>"; 
+                    echo "<script>
+                    if ( window.history.replaceState ) {
+                       window.history.replaceState( null, null, window.location.href );
+                   }            
+                    </script>";
+                    mail($receiver, $subject, $body, $sender);
+                    echo "<script>window.open('login.php', '_self');</script>";
+                }
+                else
+                {
+                    echo "<script>alert('Registration Unsuccessfull!');</script>";
                 }
             }
         }
