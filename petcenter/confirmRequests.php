@@ -21,7 +21,10 @@
         <a class = 'lengkong' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
         </div>
             <div id = 'bodyleft'>
-           
+            <form method = "get" action = "search.php" enctype="multipart/form-data">
+                <input type="text" name = 'user_query' placeholder = "Search here..">
+                <button id = "search_btn" name = "search"><img src = "../uploads/search.svg" class = "searchIcon"></button>
+            </form>
                 <div class="maine">
                 <p class = 'ttl'>Requests</p>
             <form method = 'POST' enctype = 'multipart/form-data' id = 'porm'>
