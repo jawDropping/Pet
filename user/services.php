@@ -39,5 +39,14 @@
             width: 90%;
             margin-left: 5%;
         }
+        .aLink{
+            text-decoration: none;
+            color: #777;
+            padding: 5px;
+            border: 1px solid black;
+            border-radius: 5px;
+            
+
+        }
     </style>
 </html>

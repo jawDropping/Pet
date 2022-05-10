@@ -106,17 +106,25 @@
                     <input class = 'inputed' type = 'text' name = 'qty' value = ".array_count_values($_SESSION['cart'])[$row['pro_id']]." disabled/></td>
                     </div>
                 ";
-                if($row_user['municipality'] == "mandaue")
+                if($row_user['municipality'] == "Mandaue City")
                 {  
                     $net_total = $net_total + 10 + $sub_total;
                 }
-                elseif($row_user['municipality'] == "cebu")
+                elseif($row_user['municipality'] == "Cebu")
+                {
+                    $net_total = $net_total + 12 + $sub_total;
+                }
+                elseif($row_user['municipality'] == "Consolacion")
+                {
+                    $net_total = $net_total + 12 + $sub_total;
+                }
+                elseif($row_user['municipality'] == "Lapu-Lapu City")
                 {
                     $net_total = $net_total + 12 + $sub_total;
                 }
                
         endwhile;
-                if($row_user['municipality'] == "mandaue")
+                if($row_user['municipality'] == "Mandaue City")
                 {  
                     echo 
                     "<div class = 'group'>
@@ -124,12 +132,28 @@
                     <input class = 'inputed' type= 'text' value= 'P10.00' disabled>
                     </div>";
                 }
-                elseif($row_user['municipality'] == "cebu")
+                elseif($row_user['municipality'] == "Cebu City")
                 {
                     echo
                     "<div class = 'group'>
                     <p class = 'tag'>Delivery Fee:</p>
                     <input class = 'inputed' type= 'text' value= 'P12.00' disabled>
+                    </div>";
+                }
+                elseif($row_user['municipality'] == "Consolacion")
+                {
+                    echo
+                    "<div class = 'group'>
+                    <p class = 'tag'>Delivery Fee:</p>
+                    <input class = 'inputed' type= 'text' value= 'P12.00' disabled>
+                    </div>";
+                }
+                elseif($row_user['municipality'] == "Lapu-Lapu City")
+                {
+                    echo
+                    "<div class = 'group'>
+                    <p class = 'tag'>Delivery Fee:</p>
+                    <input class = 'inputed' type= 'text' value= 'P13.00' disabled>
                     </div>";
                 }
                 else
