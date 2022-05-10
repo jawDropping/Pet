@@ -34,15 +34,15 @@
     ?>
     <div class="bottomDiv">
     <h3>Dog Products</h3>
-    <ul><?php echo featured_dog_food_products(); ?></ul><br clear='all' />
+    <div class = 'fDogs'><?php echo featured_dog_food_products(); ?></div><br clear='all' />
     <h3>Cat Products</h3>
-    <ul><?php echo featured_cat_food_products(); ?></ul><br clear='all' />
+    <div  class = 'fDogs'><?php echo featured_cat_food_products(); ?></div><br clear='all' />
     <h3>Fish Products</h3>
-    <ul><?php echo featured_fish_food_products(); ?></ul><br clear='all' />
+    <div  class = 'fDogs' ><?php echo featured_fish_food_products(); ?></div><br clear='all' />
     <h3>Bird Products</h3>
-    <ul><?php echo featured_bird_food_products(); ?></ul><br clear='all' />
+    <div  class = 'fDogs' ><?php echo featured_bird_food_products(); ?></div><br clear='all' />
     <h3>Other Products</h3>
-    <ul><?php echo featured_other_food_products(); ?></ul><br clear='all' />
+    <div  class = 'fDogs'><?php echo featured_other_food_products(); ?></div><br clear='all' />
     </div>
    
 </div><!-- <End of Bodyleft> -->

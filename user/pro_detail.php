@@ -12,11 +12,43 @@
         <?php 
             include ("inc/function.php");
             include ("inc/header.php"); 
-            include ("inc/navbar.php");  
+            include ("inc/navbar.php");
             echo pro_details();
             include ("inc/footer.php");
             
         ?>
 
     </body>
+    <style>
+        .dets{
+            display: grid;
+            grid-template-columns: 20% 80%;
+            width: 70%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .conts{
+            padding: 10px;
+            display: flex;
+            border-top:1px solid #aaa;
+            margin-top: 10px;
+  
+        }
+        .lebes{
+            font-weight: bold;
+            font-size: 20px;
+            color: #888;
+        }
+        .prodName{
+            font-weight: bold;
+            font-size: 24px;
+            padding: 10px;
+        }
+        .prodBrand{
+            font-size: 18px;
+            margin-left: 10px;
+            color: #888;
+        }
+        
+    </style>
 </html>

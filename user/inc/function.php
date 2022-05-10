@@ -971,6 +971,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $cat_id = $row_pro['cat_id'];
             echo 
                 "<div id = 'pro_img'>
+
                     <img src ='../uploads/products/".$row_pro['pro_img']."'/>
                     <ul>
                         <li>
@@ -983,40 +984,39 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             <img src ='../uploads/products/".$row_pro['pro_img3']."'/>
                         </li>
                     </ul>
+
+
                   </div>
                   <div id = 'pro_brand'>
-                    <h3>".$row_pro['pro_name']."</h3>
-                    <ul>
-                        <li>
-                            Description:
-                            <br>
-                            <br>".$row_pro['pro_keyword']."
-                        </li>
-                        <li>
-                            <br>Product Price: ₱".$row_pro['pro_price'].".00
-                        </li>
-                        <li>
-                            <br>Product Stock: ".$row_pro['pro_quantity']."
-                        </li>
-                        <li>";
+                    <p class = 'prodName' >".$row_pro['pro_name']."</p>
+                    <p class = 'prodBrand' >".$row_pro['pro_brand']."</p>
+                    <div class = 'conts'>
+                    <div class = 'dets' >
+                        <p class = 'lebes'>Product Price:</p>
+                        <p>₱".$row_pro['pro_price'].".00</p>
+                        <p class = 'lebes'>Product Stock:</p>
+                        <p> ".$row_pro['pro_quantity']."</p>";
                             if($row_pro['pro_quantity'] > 0)
                             {
-                                echo "<br>Availability: In Stock";
-                                echo "<center>
+                                echo "<p class = 'lebes'>Availability:</p><p> In Stock</p>";
+                            }
+                            else
+                            {
+                                echo "<label style = 'color:red'>OUT OF STOCKS!</label>";
+                            }
+                        echo"
+                        <p class = 'lebes'>Description:</p>
+                        <p>".$row_pro['pro_keyword']."</p>
+                    </div>
+                    </div>
+                    <center>
                                 <h4>Price: ".$row_pro['pro_price']."</h4>
                                 <form method = 'POST'>
                                     <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                                     <button name = 'buy_now' id = 'buy_now' style = color:#000>Buy Now</button>
                                     <button name = 'cart_btn'>Add to Cart</button>
                                 </form>
-                            </center>";
-                            }
-                            else
-                            {
-                                echo "<label style = 'color:red'>NO STOCKS!</label>";
-                            }
-                        echo"</li>
-                    </ul>
+                            </center>
                     <ul>
 
                     </ul><br clear = 'all'>
