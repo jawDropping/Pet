@@ -970,35 +970,36 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $row_pro = $pro_fetch->fetch();
             $cat_id = $row_pro['cat_id'];
             echo 
-                "<div id = 'pro_img'>
+                "<div class = 'mainest'>
+                <div id = 'pro_img'>
 
-                    <img src ='../uploads/products/".$row_pro['pro_img']."'/>
-                    <ul>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img']."'/>
-                        </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img2']."'/>
-                        </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img3']."'/>
-                        </li>
-                    </ul>
+                    <img id= 'mainPik' class = 'mainImage' src ='../uploads/products/".$row_pro['pro_img']."'/>
+                    <div class = 'images'>
+                        <div class = 'imgDiv' id = 'dems' onclick = 'myFunc()'  >
+                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img']."'/>
+                        </div>
+                        <div class = 'imgDiv'>
+                    
+                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img2']."'/>
+                        </div>
+                        <div class = 'imgDiv'>
+                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img3']."'/>
+                        </div>
+                </div>
 
 
                   </div>
                   <div id = 'pro_brand'>
-                    <p class = 'prodName' >".$row_pro['pro_name']."</p>
+                    <p id= 'nems' class = 'prodName' >".$row_pro['pro_name']."</p>
                     <p class = 'prodBrand' >".$row_pro['pro_brand']."</p>
                     <div class = 'conts'>
                     <div class = 'dets' >
-                        <p class = 'lebes'>Product Price:</p>
-                        <p>₱".$row_pro['pro_price'].".00</p>
-                        <p class = 'lebes'>Product Stock:</p>
-                        <p> ".$row_pro['pro_quantity']."</p>";
+                        <p class = 'lebes'>Price:</p>
+                        <p class = 'datea'>₱".$row_pro['pro_price'].".00</p>
+                        ";
                             if($row_pro['pro_quantity'] > 0)
                             {
-                                echo "<p class = 'lebes'>Availability:</p><p> In Stock</p>";
+                                echo "<p class = 'lebes'>Availability:</p><p class = 'datea'> In Stock</p>";
                             }
                             else
                             {
@@ -1006,11 +1007,11 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             }
                         echo"
                         <p class = 'lebes'>Description:</p>
-                        <p>".$row_pro['pro_keyword']."</p>
+                        <p class = 'datea' >".$row_pro['pro_keyword']."</p>
                     </div>
                     </div>
                     <center>
-                                <h4>Price: ".$row_pro['pro_price']."</h4>
+                              
                                 <form method = 'POST'>
                                     <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                                     <button name = 'buy_now' id = 'buy_now' style = color:#000>Buy Now</button>
@@ -1022,25 +1023,31 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     </ul><br clear = 'all'>
                     
                 </div><br clear = 'all'>    
-                <div id = 'sim_pro'>
-                    <h3>Related Products</h3>
-                    <ul>";
+
+                   
+                    <div class = 'cons'>
+                    <p class = 'prodName2'>Discover similar items</p>
+                    <div class = 'fDogs'>";
                         echo add_cart();
                         $sim_pro = $con->prepare("SELECT * from product_tbl WHERE pro_id!=$pro_id AND cat_id='$cat_id' LIMIT 0,5");
                         $sim_pro->setFetchMode(PDO:: FETCH_ASSOC);
                         $sim_pro->execute();
 
                         while($row=$sim_pro->fetch()):
-                            echo "<li>
-                                    <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>
-                                        <img src ='../uploads/products/".$row['pro_img']."'/>
-                                        <p>Product Name: ".$row['pro_name']."</p>
-                                        <p>Price: ".$row['pro_price']."</p>
+                            echo "<div class = 'idNiSha' >
+                                    <a class = 'aTag' href = 'pro_detail.php?pro_id=".$row['pro_id']."'>
+                                        <img class = 'fikture' src ='../uploads/products/".$row['pro_img']."'/>
+                                        <div class = 'prodDet'>
+                                        <p class = 'head4' >Product Name: ".$row['pro_name']."</p>
+                                        <p class = 'prays' >Price: ".$row['pro_price']."</p>
+                                        </div>
                                     </a>
-                                  </li>";
+                                  </div>";
                         endwhile;
-                    echo "</ul>";
-                "</div>";
+                    echo "</div>
+                    </div>
+                    </div>";
+       
             ;            
         }
     }

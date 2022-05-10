@@ -28,8 +28,8 @@
         <div class = 'hed' ><img src = '../uploads/cat.gif' id = 'imgTop'><p class = 'ttlHead' >meow</p>
         </div><br>
             <?php
-            echo "<ul>";
-                   cat_food_products(); echo"</ul>
+            echo "<div class = 'fDogs'>";
+                   cat_food_products(); echo"</div>
                   </div>";
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 
