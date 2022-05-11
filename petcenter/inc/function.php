@@ -559,16 +559,21 @@
                         '$today',
                         '$service_cost'
                     )");
-                    if($confirm->execute())
+                    
+                    if(!$confirm->execute())
                     {
-                        mail($receiver, $subject, $body, $sender);
-                        $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
-                        if($delete_reservation->execute())
-                        {
-                            echo "<script>alert('Services Successfully Confirmed!');</script>";
-                            echo "<script>window.open('confirmRequests.php', '_self');</script>";
-                        }
+                        return;
                     }
+
+                    mail($receiver, $subject, $body, $sender);
+
+                    $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
+                    if($delete_reservation->execute())
+                    {
+                        echo "<script>alert('Services Successfully Confirmed!');</script>";
+                        echo "<script>window.open('confirmRequests.php', '_self');</script>";
+                    }
+
                 }
         }
         
