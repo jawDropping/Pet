@@ -288,7 +288,7 @@
                             <p>Yes <input type = 'checkbox' name = 'accept_coupons' value = 'yes' /> No <input type = 'checkbox' name = 'accept_coupons' value = 'no'/></p>
                         </div><br>
                         <button name = 'add_user' id = 'regs'>Register</button>
-                        <buttonon onclick="window.location.href = 'login.php';" id = 'backHome'>Back to Home</buttonon>
+                        <buttonon onclick="window.location.href = '/Pet/user/index.php';" id = 'backHome'>Back to Home</buttonon>
                     </div>
                     
                 </form>

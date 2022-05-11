@@ -44,6 +44,14 @@ body {
 #Lapulapu {
   display: none;
 }
+.label {
+  font-size: 12px;
+  font-family: "Varela Round", sans-serif;
+  margin: 0;
+  margin-top: 10px;
+  margin-left: 5px;
+  color: #888;
+}
 .fieldMain {
   display: grid;
   grid-template-columns: 50% 50%;
