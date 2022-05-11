@@ -320,7 +320,7 @@
                 background: white;
                 box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
                 width: 80%;
-                margin-top: 12vh;
+                margin-top: 7vh;
             }
             .innerist{
                 padding: 30px;
@@ -434,7 +434,7 @@
             margin-top: 20px;
             }
             .label {
-  font-size: 12px;
+  font-size: 10px;
   font-family: "Varela Round", sans-serif;
   margin: 0;
   margin-top: 10px;
