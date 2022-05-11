@@ -321,7 +321,6 @@
                 box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
                 width: 80%;
                 margin-top: 12vh;
-                height: 70vh;
             }
             .innerist{
                 padding: 30px;
