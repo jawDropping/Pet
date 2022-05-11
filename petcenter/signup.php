@@ -1,6 +1,7 @@
 <html>
     <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
         <title>Register</title>
@@ -324,7 +325,8 @@
             }
             .innerist{
                 padding: 30px;
-                display: flex;
+                display: grid;
+                grid-template-columns: 30% 70%;
             }
             #imageMain{
                 height: 30vh;
@@ -341,13 +343,10 @@
                   font-weight: bold;
             }
             .right{
-                width: 60%;
-                
+                width: 100%;
             }
             .innerRight{
-                padding-left: 30px;
-                padding-right: 30px;
-                padding-bottom: 30px;
+             
             }
             .inputer{
                 padding: 10px;
@@ -380,7 +379,7 @@
             #contInn{
                 margin-left: 30px;
                 margin-top: 2%;
-
+                width: 90%;
             }
             .innerCon{  
               
