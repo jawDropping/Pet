@@ -216,42 +216,39 @@
             $display_cart->setFetchMode(PDO:: FETCH_ASSOC);
             $display_cart->execute();
             
-            echo "<table cellpadding='0' cellspacing = '0'>
-                             <tr class='headerTitle'>
-                                 <th style='width:10%'>Image</th>
-                                 <th style='width:30%'>Product Name</th>
-                                 <th>Quantity</th>
-                                 <th>Price</th>
-                                 <th>Sub Total</th>
-                                 <th>Remove</th>
-                             </tr>";
+            echo "<div class = 'mainTebs' >
+                             <div class='heads'>
+                                 <p class ='lebss'> Image</p>
+                                 <p class ='lebss'> Product Name</p>
+                                 <p class ='lebss'> Quantity</p>
+                                 <p class ='lebss'> Price</p>
+                                 <p class ='lebss'> Sub Total</p>
+                                 <p class ='lebss'> Remove</p>
+                             </div>";
             while($row_pro = $display_cart->fetch()):
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
-                        <tr class ='data'>
-                            <td>
+                        <div class ='data'>
+                          
                             <img class = 'cartDisplayImage' src = '../uploads/products/".$row_pro['pro_img']."' />
-                            </td>
-                            <td class = 'productNem'>
+                    
+                           
                                <p> ".$row_pro['pro_name']."</p>
-                            </td>
-                            <td>
+                   
+                            <div>
                                 <input type = 'number'  class = 'quantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
                                 '/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
                                 <button id = 'pro_btn'>Update</button>
-                            </td>
-                            
-                            <td  class = 'price'>
-                                ".$row_pro['pro_price']."
-                            </td>
-                            <td class = 'sub_total'>";
+                            </div>
+                             <p  class = 'price'> ".$row_pro['pro_price']."</p>
+                            <p class = 'sub_total'>";
                                 $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
                                 $pro_price = $row_pro['pro_price'];
                                 $sub_total = $qty * $pro_price;
                                 echo $sub_total;
                                 $net_total = $net_total + $sub_total;
 
-                            echo "</td></form>
+                            echo "</p></form>
                            
                             <form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
                             <td>
@@ -259,23 +256,23 @@
                             <button id = 'pro_btndelete'><img src = '../uploads/delete 1.svg' class='delete'></button></a>
                             </td>
                             </form>    
-                        </tr>
+                        </div>
                     </form>";
 
             endwhile;
 
 
             echo 
-            "<tr style='height: 70px; box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
-                <td colspan = '4' style='border: none;'></td>
-                <td style='color:#444; border: none;'>
+            "<div class = 'tots''>
+    
+                <p class = 'ito''>
                     Total Amount: ".$net_total."
                         <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                    </td>
-                    <td style='border: none;'>
-                    <a href = 'checkout.php' id = 'pro_btn' style='text-decoration:none; padding: 5px; width: 90%;margin-top: 15px;' name = 'place_order'>Place Order</a>
-                </td>
-            </tr>";
+                    </p>
+                    <a class = 'btnn' href = 'checkout.php'  name = 'place_order'>Place Order</a>             
+                    
+                    
+                    </div>";
 
                  if(isset($_GET['orders']))
                  {
@@ -973,77 +970,84 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $row_pro = $pro_fetch->fetch();
             $cat_id = $row_pro['cat_id'];
             echo 
-                "<div id = 'pro_img'>
-                    <img src ='../uploads/products/".$row_pro['pro_img']."'/>
-                    <ul>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img']."'/>
-                        </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img2']."'/>
-                        </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img3']."'/>
-                        </li>
-                    </ul>
+                "<div class = 'mainest'>
+                <div id = 'pro_img'>
+
+                    <img id= 'mainPik' class = 'mainImage' src ='../uploads/products/".$row_pro['pro_img']."'/>
+                    <div class = 'images'>
+                        <div class = 'imgDiv' id = 'dems' onclick = 'myFunc()'  >
+                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img']."'/>
+                        </div>
+                        <div class = 'imgDiv'>
+                    
+                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img2']."'/>
+                        </div>
+                        <div class = 'imgDiv'>
+                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img3']."'/>
+                        </div>
+                </div>
+
+
                   </div>
                   <div id = 'pro_brand'>
-                    <h3>".$row_pro['pro_name']."</h3>
-                    <ul>
-                        <li>
-                            Description:
-                            <br>
-                            <br>".$row_pro['pro_keyword']."
-                        </li>
-                        <li>
-                            <br>Product Price: ₱".$row_pro['pro_price'].".00
-                        </li>
-                        <li>
-                            <br>Product Stock: ".$row_pro['pro_quantity']."
-                        </li>
-                        <li>";
+                    <p id= 'nems' class = 'prodName' >".$row_pro['pro_name']."</p>
+                    <p class = 'prodBrand' >".$row_pro['pro_brand']."</p>
+                    <div class = 'conts'>
+                    <div class = 'dets' >
+                        <p class = 'lebes'>Price:</p>
+                        <p class = 'datea'>₱".$row_pro['pro_price'].".00</p>
+                        ";
                             if($row_pro['pro_quantity'] > 0)
                             {
-                                echo "<br>Availability: In Stock";
-                                echo "<center>
-                                <h4>Price: ".$row_pro['pro_price']."</h4>
+                                echo "<p class = 'lebes'>Availability:</p><p class = 'datea'> In Stock</p>";
+                            }
+                            else
+                            {
+                                echo "<label style = 'color:red'>OUT OF STOCKS!</label>";
+                            }
+                        echo"
+                        <p class = 'lebes'>Description:</p>
+                        <p class = 'datea' >".$row_pro['pro_keyword']."</p>
+                    </div>
+                    </div>
+                    <center>
+                              
                                 <form method = 'POST'>
                                     <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                                     <button name = 'buy_now' id = 'buy_now' style = color:#000>Buy Now</button>
                                     <button name = 'cart_btn'>Add to Cart</button>
                                 </form>
-                            </center>";
-                            }
-                            else
-                            {
-                                echo "<label style = 'color:red'>NO STOCKS!</label>";
-                            }
-                        echo"</li>
-                    </ul>
+                            </center>
                     <ul>
 
                     </ul><br clear = 'all'>
                     
                 </div><br clear = 'all'>    
-                <div id = 'sim_pro'>
-                    <h3>Related Products</h3>
-                    <ul>";
+
+                   
+                    <div class = 'cons'>
+                    <p class = 'prodName2'>Discover similar items</p>
+                    <div class = 'fDogs'>";
                         echo add_cart();
                         $sim_pro = $con->prepare("SELECT * from product_tbl WHERE pro_id!=$pro_id AND cat_id='$cat_id' LIMIT 0,5");
                         $sim_pro->setFetchMode(PDO:: FETCH_ASSOC);
                         $sim_pro->execute();
 
                         while($row=$sim_pro->fetch()):
-                            echo "<li>
-                                    <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>
-                                        <img src ='../uploads/products/".$row['pro_img']."'/>
-                                        <p>Product Name: ".$row['pro_name']."</p>
-                                        <p>Price: ".$row['pro_price']."</p>
+                            echo "<div class = 'idNiSha' >
+                                    <a class = 'aTag' href = 'pro_detail.php?pro_id=".$row['pro_id']."'>
+                                        <img class = 'fikture' src ='../uploads/products/".$row['pro_img']."'/>
+                                        <div class = 'prodDet'>
+                                        <p class = 'head4' >Product Name: ".$row['pro_name']."</p>
+                                        <p class = 'prays' >Price: ".$row['pro_price']."</p>
+                                        </div>
                                     </a>
-                                  </li>";
+                                  </div>";
                         endwhile;
-                    echo "</ul>";
-                "</div>";
+                    echo "</div>
+                    </div>
+                    </div>";
+       
             ;            
         }
     }
@@ -1054,7 +1058,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
-        echo "<h3>Services Available </h3>";
         while($row = $sql->fetch()):
             
             echo
@@ -1064,10 +1067,8 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <h4>".$row['services_name']."</h4>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                <h4>".$row['services_name']."</h4><br>
+                        <a class = 'aLink' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                 </div>
             </a>

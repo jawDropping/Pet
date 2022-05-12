@@ -27,8 +27,8 @@
         <div class = 'hed' ><img src = '../uploads/fish.gif' id = 'imgTop'><p class = 'ttlHead' >i'm fish</p>
         </div><br>
             <?php
-            echo "<ul>";
-                   fish_food_products(); echo"</ul>
+            echo "<div class = 'fDogs'>";
+                   fish_food_products(); echo"</div>
                   </div>";
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 

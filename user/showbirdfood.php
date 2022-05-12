@@ -27,8 +27,8 @@
         <div class = 'hed' ><img src = '../uploads/bird.gif' id = 'imgTop'><p class = 'ttlHead' >twit</p>
         </div><br>
             <?php
-            echo "<ul>";
-                   bird_food_products(); echo"</ul>
+            echo "<div class = 'fDogs'>";
+                   bird_food_products(); echo"</div>
                   </div>";
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 

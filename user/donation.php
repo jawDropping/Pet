@@ -81,9 +81,9 @@
             </a>
             <div class="orgs">
                 <h3 class="headister">Our Selected Organizations</h3><br>
-            <ul>
+            <div class = 'fDogs'>
                   <?php donate(); ?>
-                </ul>
+                </div>
             </div>
                
                

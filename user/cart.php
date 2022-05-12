@@ -13,14 +13,15 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
+            call_user_func('cart_display');
+            include ("inc/footer.php"); 
         ?>
-
-            
-                <?php 
-                    call_user_func('cart_display');
-                ?>
-
-       
+        
+           
+               
+     
+           
+      
         
 
     </body>
@@ -38,14 +39,9 @@
             width: 100vw;
         }
         .data{
-            background: white;
-            padding-top: 10px;
-            
-            margin-bottom: 10px;
-        }
-        .data td{
-            
-            padding-top: 10px;
+           display: grid;
+           grid-template-columns: 14% 18% 26% 16% 12% 10%;
+           margin-top: 2%;
         }
         .cart{
             padding: 0;
@@ -80,6 +76,52 @@
        }
        .productNem p{
         transform: translate(0, -30px);
+       }
+       .mainTebs{
+           width: 90%;
+           margin-left: 4%;
+           margin-top: 3%;
+           padding: 10px;
+           border-radius: 5px;
+           box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+           min-height: 70vh;
+       }
+       .heads{
+           display: grid;
+           grid-template-columns: 14% 18% 26% 16% 12% 10%;
+           border-bottom: .8px solid #777;
+           padding: 5px;
+       }
+       .lebss{
+           font-weight: bold;
+           color: #777;
+           font-size: 18px;
+       }
+       .tots{
+  
+           float: right;
+           width: 30%;
+           margin-top: 3%;
+           border-radius: 5px;
+           margin-bottom: 40vh;
+       }
+       .ito{
+        float: left;
+     
+       
+       }
+       .btnn{
+          color: white;
+           background: blue;
+           padding: 10px;
+           text-decoration: none;
+           margin-left: 10px;
+           border-radius: 5px;
+       }
+       
+       .fotter{
+           width: 100%;
+           background: red;
        }
     </style>
 </html>
