@@ -33,7 +33,6 @@
                                         <p class = 'he' >NAME</p>
                                         <p class = 'he' >TIME</p>
                                         <p class = 'he' >COUPON CODE</p>
-                                        <p class = 'he' >TRANSACTION CODE</p>
                                         <p class = 'he' >ACTION</p>
                                     </div>
                                     <div>

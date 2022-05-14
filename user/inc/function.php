@@ -1276,7 +1276,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $query->execute();
 
             $row_pet_center = $query->fetch();
-            $pet_center_location = $row_pet_center['location'];
+            $pet_center_location = $row_services['services_loc'];
             $location = str_replace(" ", "+", $pet_center_location);
 
             $service_cat = $row_services['service_id'];
@@ -1338,7 +1338,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             <div>
                                 <br>
                                 <p class = 'loc'>Location</p>
-                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
+                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."".$row_services['services_name']."&output=embed'></iframe>
                             </div>
                         </div>  
                     </div>
@@ -1367,7 +1367,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $query->execute();
 
             $row_pet_center = $query->fetch();
-            $pet_center_location = $row_pet_center['location'];
+            $pet_center_location = $row_services['services_loc'];
             $location = str_replace(" ", "+", $pet_center_location);
 
             $service_cat = $row_services['service_id'];
