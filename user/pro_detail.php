@@ -95,7 +95,7 @@
         }
     </style>
     <script>
-        var pic1 = document.getElementsByClassName("fkc").value;
+        var pic1 = document.getElementsByClassName("underImg")[0].value;
         var pic1Address = pic1;
         function myFunc(){
             document.getElementById("mainPik").src = pic1;
