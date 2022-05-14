@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Pet Society</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,6 +55,14 @@
             margin-top: 10px;
             margin-left: 5%;
         }
+        .contss{
+            width: 89%;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-left: 5%;
+        }
         .ints{
             border: none;
             outline: none;
@@ -75,9 +84,12 @@
         .open{
             display: flex;
         }
+        .opens{
+            display: block;
+        }
         .btnss{
             float: right;
-            margin-top: 5%;
+            margin-top: 1%;
             border: none;
             padding: 10px;
             width: 20vw;
