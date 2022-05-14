@@ -270,7 +270,7 @@
         </div>
     <div class = 'cont' >
             <p class = 'lbes' >Service Discount: </p>
-            <input class = 'ints' type='text' name =  'service_cost' required/></td>
+            <input class = 'ints' type='text' name =  'service_discount' required/></td>
         </div>
         
     <div class = 'opens'>
@@ -290,7 +290,7 @@
             <p class = 'lbes'>Photo: </p>
             <div class='drop-zone'>
             <span class='drop-zone__prompt'>Drop file here or click to upload</span>
-            <input type='file' name='proof_photo' class='drop-zone__input'>
+            <input type='file' name='service_photo' class='drop-zone__input'>
           </div>
         </div>
        
@@ -302,9 +302,15 @@
                 echo"</select>
           
         </div>
+        <div class = 'cont'>
+            <p class = 'lbes' >Description:</p>
+      
+            <input class = 'ints' type='text' name =  'service_details' required/>
+          
+        </div>
         
         <div class = 'cont'>
-            <p class = 'lbes' >Municiplaity</p>";
+            <p class = 'lbes' >Municipality</p>";
             ?>
                 <select onchange = "myFuction();" type="text" name = "municipality" class = "inputs" id = 'municipal' >
                             <option value=""></option> 
@@ -482,7 +488,7 @@
     </div>
     <div class = 'cont'>
         <p class = "lbes">Street</p>
-        <input class = 'ints' type='text' name =  'service_photo' required/>
+        <input class = 'ints' type='text' name =  'st' required/>
        
     </div>
                     <script>
@@ -643,7 +649,11 @@ function updateThumbnail(dropZoneElement, file) {
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];
-            $services_loc = "PAKN-AN";
+            $st = $_POST['st'];
+            $barangay = $_POST['barangays'];
+            $municipality = $_POST['municipality'];
+            $service_discount = $_POST['service_discount'];
+            $description = $_POST['service_details'];
             $services_email = $row['email'];
             $services_contact_number = $row['contact_number'];
             $day_open = $_POST['day_open'];
@@ -656,37 +666,42 @@ function updateThumbnail(dropZoneElement, file) {
             $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
             move_uploaded_file($service_photo_tmp,"../uploads/user_profile/$service_photo");
 
-
-            $query = $con->prepare("INSERT INTO services
-            (
-                service_id,
-                pet_center_id,
-                services_name,
-                services_loc,
-                services_email,
-                services_contact_number,
-                day_open,
-                day_close,
-                time_open,
-                time_close,
-                service_cost,
-                service_photo
-            ) 
-            VALUES
-            (
-                $service_id,
-                $pet_center_id,
-                '$services_name',
-                '$services_loc',
-                '$services_email',
-                '$services_contact_number',
-                '$day_open',
-                '$day_close',
-                '$time_open',
-                '$time_close',
-                '$service_cost',
-                '$service_photo'
-            )");
+            // var_dump($barangay);
+            // var_dump($st);
+            // var_dump($pet_center_id);
+            // var_dump($municipality);
+            // var_dump($service_photo);
+            // var_dump($service_id);
+            // var_dump($description);
+            // var_dump($services_email);
+            // var_dump($services_contact_number);
+            // var_dump($day_open);
+            // var_dump($day_close);
+            // var_dump($time_open);
+            // var_dump($time_close);
+            // var_dump($service_cost);
+            // var_dump($service_discount);
+          
+            $query = $con->prepare("INSERT INTO services 
+            SET 
+            service_id = $service_id,
+            pet_center_id = $pet_center_id,
+            services_name = '$services_name',
+            st = '$st',
+            barangay = '$barangay',
+            municipality = '$municipality',
+            description = '$description',
+            services_email = '$services_email',
+            services_contact_number = '$services_contact_number',
+            day_open = '$day_open',
+            day_close = '$day_close',
+            time_open = '$time_open',
+            time_close = '$time_close',
+            service_cost = '$service_cost',
+            discount = $service_discount,
+            service_photo = '$service_photo'
+            ");
+                
 
             if($query->execute())
             {
@@ -778,7 +793,6 @@ function updateThumbnail(dropZoneElement, file) {
                 $reserve_id = $row2['reserve_id'];
                 $user_id = $row2['user_id'];
                 $date = $row2['reserve_date'];
-                $transaction_code = $row2['transaction_code'];
                 $service_id = $row2['service_id'];
                 $service_cost = $row2['service_cost'];
                 $coupon_code = $row2['coupon_code'];
@@ -806,7 +820,6 @@ function updateThumbnail(dropZoneElement, file) {
                         <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
                         <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
                         <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
-                        <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
                         <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
                         <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
                         <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
@@ -824,6 +837,7 @@ function updateThumbnail(dropZoneElement, file) {
                         }
                         echo
                         "<button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                        <a href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
                     </div>
                 </form>";
                 
@@ -1335,8 +1349,8 @@ function updateThumbnail(dropZoneElement, file) {
                                 {
                                     echo "<p>".$coupon_code."</p>";
                                 }
-                                echo "<p>".$transaction_code."</p> 
-                                <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                                
+                               echo" <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
                             </div>
                         </form>";
                     }

@@ -20,7 +20,7 @@
         <div id ="LoginForm">
             <div class="container">
                 <div class="rights">
-                    <img class = 'hello' src="../uploads/login.svg">
+                    <img class = 'hello' src="../uploads/flog.svg">
                 </div>
                 <div class="inside">
                     <div class="insider">
