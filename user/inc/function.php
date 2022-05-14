@@ -1092,25 +1092,24 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Grooming Services</h3>";
+       
         while($row = $sql2->fetch()):
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4'>".$row['services_name']."</p>
+                    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 

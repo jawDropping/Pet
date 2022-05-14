@@ -26,9 +26,10 @@
         </div>
         <div class = 'hed' ><img src = '../uploads/grooming.gif' id = 'imgTop'><p class = 'ttlHead' ></p>
         </div><br>
-              <ul>
+            <h3>Grooming Services</h3>
+              <div class = 'fDogs'>
                    <?php grooming_service(); ?>
-                   </ul>
+                   </div>
           </div>
          
             <?php
