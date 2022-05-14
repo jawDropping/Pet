@@ -14,38 +14,36 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
             ?>
-             <div class = "ko">
-        <div class="inners">
-        <a class = 'lengk' href = 'index.php'>My services</a>
-        <a class = 'lengk' href = 'addService.php'>Add services</a>
-        <a class = 'lengkong' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
-        </div>
-            <div id = 'bodyleft'>
-           
-                <div class="maine">
-                <p class = 'ttl'>Requests</p>
-            <form method = 'POST' enctype = 'multipart/form-data' id = 'porm'>
-            <div>
-            <div class = 'hed'>
-            <p class = 'he' >NAME</p>
-            <p class = 'he' >TIME</p>
-            <p class = 'he' >COUPON CODE</p>
-            <p class = 'he' >TRANSACTION CODE</p>
-            <p class = 'he' >ACTION</p>
-        </div>
-        <div>
-            <?php
-        view_requests();
-        ?>
-        </div>
-        </div>
-    </form>
-            
-              </div>
-           
-
+            <div class = "ko">
+                <div class="inners">
+                    <a class = 'lengk' href = 'index.php'>My services</a>
+                    <a class = 'lengk' href = 'addService.php'>Add services</a>
+                    <a class = 'lengkong' href = 'confirmRequests.php'>Requests(<?php echo count_requests();?>)</a>
                 </div>
-           
+                    <div id = 'bodyleft'>
+                        <form method = "get" action = "search.php" enctype="multipart/form-data">
+                            <input type="text" name = 'user_query' placeholder = "Search here..">
+                            <button id = "search_btn" name = "search"><img src = "../uploads/search.svg" class = "searchIcon"></button>
+                        </form>
+                                <div class="maine">
+                                    <p class = 'ttl'>Requests</p>
+                                    <form method = 'POST' enctype = 'multipart/form-data' id = 'porm'>
+                                <div>
+                                    <div class = 'hed'>
+                                        <p class = 'he' >NAME</p>
+                                        <p class = 'he' >TIME</p>
+                                        <p class = 'he' >COUPON CODE</p>
+                                        <p class = 'he' >ACTION</p>
+                                    </div>
+                                    <div>
+                                        <?php
+                                            view_requests();
+                                        ?>
+                                    </div>
+                                </div>
+                                </form>
+                    
+                    </div>   
     </body>
     <style>
         .maine{

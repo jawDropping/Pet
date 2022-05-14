@@ -8,13 +8,13 @@
                     <a href = "/Pet/user/services.php">Services</a>
                 </li>
                 <li> <a href = "/Pet/user/donation.php">Donate</a></li>
-                <li>
+                <!-- <li>
                     <a href="/Pet/user/viewall_pets.php">Discover</a>
-                </li>
+                </li> -->
                 <?php
                     if(isset($_SESSION['user_id']))
                     {
-                        echo "<li> <a href = '/Pet/user/myPet.php'>My Pet</a></li>";
+                        echo "<li> <a href = '/Pet/user/add_pet.php'>Add a Pet</a></li>";
                     }
                 ?>
             </ul>

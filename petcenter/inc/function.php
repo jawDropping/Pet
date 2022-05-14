@@ -63,6 +63,7 @@
     {
         include("inc/db.php");
         
+        
         if(!isset($_SESSION['pet_center_id']))
         {
             header('Location: login.php');
@@ -642,7 +643,7 @@ function updateThumbnail(dropZoneElement, file) {
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];
-            $services_loc = $row['location'];
+            $services_loc = "PAKN-AN";
             $services_email = $row['email'];
             $services_contact_number = $row['contact_number'];
             $day_open = $_POST['day_open'];
@@ -771,113 +772,146 @@ function updateThumbnail(dropZoneElement, file) {
 
         $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
-        while($row2 = $sql2->fetch()):
-            $reserve_id = $row2['reserve_id'];
-            $user_id = $row2['user_id'];
-            $date = $row2['reserve_date'];
-            $transaction_code = $row2['transaction_code'];
-            $service_id = $row2['service_id'];
-            $service_cost = $row2['service_cost'];
-            $coupon_code = $row2['coupon_code'];
-
-            $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
-            $view_service->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_service->execute();
-
-            $row_service = $view_service->fetch();
-            $service_name = $row_service['services_name'];
-
-
-            $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-            $view_user->setFetchMode(PDO:: FETCH_ASSOC);
-            $view_user->execute();
-
-            $row_user = $view_user->fetch();
-            $user_username = $row_user['user_username'];
-            $empty_coupon = "N/A";
-            echo
-            "<form method = 'POST'>
-                <div class = 'hed'>
-                    <input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' />
-                    <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
-                    <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
-                    <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
-                    <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
-                    <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
-                    <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
-                    <p>".$user_username."</p>
-                    <p>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
-                    if($row2['coupon_code'] == '')
-                    {
-                        echo "<p>".$empty_coupon."</p>";
-                    }
-                    else
-                    {
-                        echo "<p>".$coupon_code."</p>";
-                    }
-                    echo "<p>".$transaction_code."</p> 
-                    <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
-                </div>
-            </form>";
-        endwhile;
-        
-        $receiver = $row_user['user_email'];
-        $subject = "Reserve Confirmation";
-        $body = 
-        "
-        Greetings! 
-
-        This is from $service_name we are hoping for your best experience for the service we provide. 
-        Please come with the respective date $date, with the Transacton Code: $transaction_code
-        
-        Respecfully yours,
-        $service_name";
-        $sender = "ianjohn0101@gmail.com";
-
-        if(isset($_POST['confirm_request']))
+        if($pet_cent_id == $pet_center_id)
         {
-            $reserve_id = $_POST['confirm_request'];
-            $pet_center_id = $_POST['pet_center_id'];
-            $service_id = $_POST['service_id'];
-            $user_id = $_POST['user_id'];
-            $coupon_code = $_POST['coupon_code'];
-            $transaction_code = $_POST['transaction_code'];
-            $date_confirmed = $_POST['date_confirmed'];
-            $amount = $_POST['service_cost'];
-            
-            if(mail($receiver, $subject, $body, $sender))
-            {
-                $confirm = $con->prepare("INSERT INTO confirmed_services
-                (
-                    pet_center_id,
-                    service_id,
-                    user_id,
-                    coupon_code,
-                    transaction_code,
-                    date_confirmed,
-                    amount
-                ) 
-                VALUES
-                (
-                    '$pet_center_id',
-                    '$service_id',
-                    '$user_id',
-                    '$coupon_code',
-                    '$transaction_code',
-                    '$today',
-                    '$service_cost'
-                )");
-                if($confirm->execute())
+            while($row2 = $sql2->fetch()):
+                $reserve_id = $row2['reserve_id'];
+                $user_id = $row2['user_id'];
+                $date = $row2['reserve_date'];
+                $transaction_code = $row2['transaction_code'];
+                $service_id = $row2['service_id'];
+                $service_cost = $row2['service_cost'];
+                $coupon_code = $row2['coupon_code'];
+    
+                $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+                $view_service->execute();
+    
+                $row_service = $view_service->fetch();
+                $service_name = $row_service['services_name'];
+    
+    
+                $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+                $view_user->execute();
+    
+                $row_user = $view_user->fetch();
+                $user_email = $row_user['user_email'];
+                $user_username = $row_user['user_username'];
+                $empty_coupon = "N/A";
+                echo
+                "<form method = 'POST'>
+                    <div class = 'hed'>
+                        <input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' />
+                        <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
+                        <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
+                        <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
+                        <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
+                        <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
+                        <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
+                        <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
+                        <input type = 'hidden' name = 'service_name' value = '".$service_name."' />
+                        <input type = 'hidden' name = 'date' value = '".$date."' />
+                        <p>".$user_username."</p>
+                        <p>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
+                        if($row2['coupon_code'] == '')
+                        {
+                            echo "<p>".$empty_coupon."</p>";
+                        }
+                        else
+                        {
+                            echo "<p>".$coupon_code."</p>";
+                        }
+                        echo
+                        "<button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                    </div>
+                </form>";
+                
+            endwhile;
+                // $receiver = $row_user['user_email'];
+                // $subject = "Reserve Confirmation";
+                // $body = 
+                // "
+                // Greetings! 
+        
+                // This is from $service_name we are hoping for your best experience for the service we provide. 
+                // Please come with the respective date $date, with the Transacton Code: $transaction_code
+                
+                // Respecfully yours,
+                // $service_name";
+                // $sender = "ianjohn0101@gmail.com";
+        
+                if(isset($_POST['confirm_request']))
                 {
+                    $reserve_id = $_POST['confirm_request'];
+                    $pet_center_id = $_POST['pet_center_id'];
+                    $service_id = $_POST['service_id'];
+                    $user_id = $_POST['user_id'];
+                    $coupon_code = $_POST['coupon_code'];
+                    $transaction_code = $_POST['transaction_code'];
+                    $date_confirmed = $_POST['date_confirmed'];
+                    $amount = $_POST['service_cost'];
+                    $transaction_code = generateRandomString();
+
+                    //get everything
+                    //to email user 
+                    $user_email = $_POST['user_email'];
+                    $service_name = $_POST['service_name'];
+                    $date = $_POST['date'];
+                    
+                    $receiver = $user_email;
+                    $subject = "Reserve Confirmation";
+                    $body = 
+                    "
+                    Greetings! 
+            
+                    This is from $service_name we are hoping for your best experience for the service we provide. 
+                    Please come with the respective date $date, with the Transacton Code: $transaction_code
+                    
+                    Respecfully yours,
+                    $service_name";
+                    $sender = "ianjohn0101@gmail.com";
+
+
+                    $confirm = $con->prepare("INSERT INTO confirmed_services
+                    (
+                        pet_center_id,
+                        service_id,
+                        user_id,
+                        coupon_code,
+                        transaction_code,
+                        date_confirmed,
+                        amount
+                        
+                    ) 
+                    VALUES
+                    (
+                        '$pet_center_id',
+                        '$service_id',
+                        '$user_id',
+                        '$coupon_code',
+                        '$transaction_code',
+                        '$today',
+                        '$service_cost'
+                    )");
+                    
+                    if(!$confirm->execute())
+                    {
+                        return;
+                    }
+
+                    mail($receiver, $subject, $body, $sender);
+
                     $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
                     if($delete_reservation->execute())
                     {
                         echo "<script>alert('Services Successfully Confirmed!');</script>";
                         echo "<script>window.open('confirmRequests.php', '_self');</script>";
                     }
+
                 }
-            }
         }
+        
     }
 
     function viewHistory()
@@ -1067,12 +1101,25 @@ function updateThumbnail(dropZoneElement, file) {
     function count_requests()
     {
         include("inc/db.php");
-        $count_orders = $con->prepare("SELECT * FROM reserve_services");
-        $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
-        $count_orders->execute();
+       
+        $current_user = $_SESSION['pet_center_id'];
+        $fetch_user_username = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$current_user'");
+        $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_user_username->execute();
 
-        $count = $count_orders->rowCount();
-        echo $count;
+        $row = $fetch_user_username->fetch();
+        $pet_center_id = $row['pet_center_id'];
+
+        if($current_user == $pet_center_id)
+        {
+            $count_orders = $con->prepare("SELECT * FROM reserve_services WHERE pet_center_id = '$current_user'");
+            $count_orders->setFetchMode(PDO:: FETCH_ASSOC);
+            $count_orders->execute();
+
+            $count = $count_orders->rowCount();
+            echo $count;
+        }
+
     }
 
     function myProfile()
@@ -1219,7 +1266,7 @@ function updateThumbnail(dropZoneElement, file) {
         {
             $user_query = $_GET['user_query'];
 
-            $search = $con->query("SELECT * FROM confirmed_services WHERE transaction_code LIKE '%$user_query%'");
+            $search = $con->query("SELECT * FROM reserve_services WHERE coupon_code LIKE '%$user_query%' or transaction_code LIKE '%$user_query%'");
             $search->setFetchMode(PDO:: FETCH_ASSOC);
             $search->execute();
 
@@ -1229,8 +1276,11 @@ function updateThumbnail(dropZoneElement, file) {
             }
             else
             {
-                while($row = $search->fetch()):
-                    $pet_center_id = $row['pet_center_id'];
+                $datenow = getdate();
+
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+                while($row2 = $search->fetch()):
+                    $pet_center_id = $row2['pet_center_id'];
                     $current_user = $_SESSION['pet_center_id'];
 
                     $view_user = $con->query("SELECT * FROM pet_center_tbl");
@@ -1240,42 +1290,101 @@ function updateThumbnail(dropZoneElement, file) {
                     $row_user = $view_user->fetch();
                     $pet_center_name = $row_user['pet_center_name'];
                     
-                    if($current_user == $pet_center_name)
+                    if($current_user == $pet_center_id)
                     {
-                        $service_id = $row['service_id'];
-                        $user_id = $row['user_id'];
-                        $coupon_code = $row['coupon_code'];
-                        $transaction_code = $row['transaction_code'];
-                        $date_confirmed = $row['date_confirmed'];
-                        $amount = $row['amount'];
-        
+                        $reserve_id = $row2['reserve_id'];
+                        $user_id = $row2['user_id'];
+                        $date = $row2['reserve_date'];
+                        $transaction_code = $row2['transaction_code'];
+                        $service_id = $row2['service_id'];
+                        $service_cost = $row2['service_cost'];
+                        $coupon_code = $row2['coupon_code'];
+            
                         $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
                         $view_service->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_service->execute();
-        
+            
                         $row_service = $view_service->fetch();
                         $service_name = $row_service['services_name'];
-        
-        
+            
+            
                         $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                         $view_user->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_user->execute();
-        
+            
                         $row_user = $view_user->fetch();
                         $user_username = $row_user['user_username'];
-        
+                        $empty_coupon = "N/A";
                         echo
-                        "<tr>
-                            <td>".$service_name."</td>
-                            <td>".$user_username."</td>
-                            <td>".$coupon_code."</td>
-                            <td>".$transaction_code."</td>
-                            <td>".$date_confirmed."</td>
-                            <td>".$amount."</td>
-                        </tr>";
+                        "<form method = 'POST'>
+                            <div class = 'hed'>
+                                <input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' />
+                                <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
+                                <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
+                                <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
+                                <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
+                                <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
+                                <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
+                                <p>".$user_username."</p>
+                                <p>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
+                                if($row2['coupon_code'] == '')
+                                {
+                                    echo "<p>".$empty_coupon."</p>";
+                                }
+                                else
+                                {
+                                    echo "<p>".$coupon_code."</p>";
+                                }
+                                echo "<p>".$transaction_code."</p> 
+                                <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                            </div>
+                        </form>";
                     }
-                    
                 endwhile;
+                if(isset($_POST['confirm_request']))
+                {
+                    $reserve_id = $_POST['confirm_request'];
+                    $pet_center_id = $_POST['pet_center_id'];
+                    $service_id = $_POST['service_id'];
+                    $user_id = $_POST['user_id'];
+                    $coupon_code = $_POST['coupon_code'];
+                    $transaction_code = $_POST['transaction_code'];
+                    $date_confirmed = $_POST['date_confirmed'];
+                    $amount = $_POST['service_cost'];
+                    
+                    if(mail($receiver, $subject, $body, $sender))
+                    {
+                        $confirm = $con->prepare("INSERT INTO confirmed_services
+                        (
+                            pet_center_id,
+                            service_id,
+                            user_id,
+                            coupon_code,
+                            transaction_code,
+                            date_confirmed,
+                            amount
+                        ) 
+                        VALUES
+                        (
+                            '$pet_center_id',
+                            '$service_id',
+                            '$user_id',
+                            '$coupon_code',
+                            '$transaction_code',
+                            '$today',
+                            '$service_cost'
+                        )");
+                        if($confirm->execute())
+                        {
+                            $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
+                            if($delete_reservation->execute())
+                            {
+                                echo "<script>alert('Services Successfully Confirmed!');</script>";
+                                echo "<script>window.open('confirmRequests.php', '_self');</script>";
+                            }
+                        }
+                    }
+                }
             }
         }
     }

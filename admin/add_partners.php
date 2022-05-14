@@ -97,7 +97,6 @@ background: #28287774;
 </div>
 
 <?php
-    include("inc/function.php");
     echo add_partners();
 ?>
 

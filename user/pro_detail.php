@@ -22,6 +22,7 @@
             
         ?>
         <p class="fkc">adsas</p>
+        <input type="text" class = 'oka' value = 'asd'>
     </body>
     <style>
         .dets{
@@ -95,7 +96,6 @@
         }
     </style>
     <script>
-        var pic1 = document.getElementsByClassName("underImg")[0].value;
         var pic1Address = pic1;
         function myFunc(){
             document.getElementById("mainPik").src = pic1;
