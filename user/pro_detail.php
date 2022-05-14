@@ -21,8 +21,6 @@
             include ("inc/footer.php");
             
         ?>
-        <p class="fkc">adsas</p>
-        <input type="text" class = 'oka' value = 'asd'>
     </body>
     <style>
         .dets{

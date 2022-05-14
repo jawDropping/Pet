@@ -18,12 +18,19 @@
             ?>
 
 <div class = 'main'>
-    <!-- <div class="left">
-        <img class = 'imgs' src="../uploads/addPet.svg">
-    </div> -->
+    <div class="left">
+    <div class = cont>
+            <p class = "lebs">Pet Photo:</p>
+            <div class='drop-zone'>
+            <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+            <input type='file' name='proof_photo' class='drop-zone__input'>
+            </div>
+        </div>
+    </div>
     <div class="right">
     <form method = "POST" enctype = "multipart/form-data">
         <div class="fills">
+          <br>
             <p class="heads">Pet Information</p>
         
         <div class = 'cont'>
@@ -62,13 +69,7 @@
             <p class = "lebs">Pet Details:</p>
             <input class =  'ints' type = "text" name = "pet_details" placeholder = "Small Details of your pet" />
         </div>
-        <div class = cont>
-            <p class = "lebs">Pet Photo:</p>
-            <div class='drop-zone'>
-            <span class='drop-zone__prompt'>Drop file here or click to upload</span>
-            <input type='file' name='proof_photo' class='drop-zone__input'>
-            </div>
-        </div>
+       
         <div class="cont">
         <button name = 'add_pet' class = "btn">Save</button>
         </div>
@@ -145,6 +146,11 @@
         }
     }
 ?>
+<div class="fot">
+  <?php
+     include ("inc/footer.php");
+  ?>
+</div>
 </body>
 <script>
                         function myFuction(){

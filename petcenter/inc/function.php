@@ -91,7 +91,8 @@
                         <img class = 'fikture' src ='../uploads/user_profile/".$row['service_photo']."' />
                         <div class = 'prodDet'>
                         <p class = 'head4'>".$row['services_name']."</p><br>
-                            <a id = 'pro_btnView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
+                            <a id = 'pro_btnView' href = 'show_service_info.php?id=".$row['id']."'>Edit</a>
+                            <a id = 'pro_btnViewDelete' href = 'show_service_info.php?id=".$row['id']."'>Delete</a>
                             <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                         </div>
                     </a>
