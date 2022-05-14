@@ -1521,6 +1521,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
             $row = $query->fetch(); 
             $service_cost = $row['service_cost'];
+            $service_discount = $row['discount'];
             $pet_center_id = $row['pet_center_id'];
             $service_time_open = strtotime($row['time_open']);
             $service_time_close = strtotime($row['time_close']);
@@ -1558,6 +1559,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     <input class = 'inet' type = 'text' name = 'coupon_code'/>
                     <p class = 'lebs'>Service Cost: </p>
                     <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
+                    <input type = 'hidden' name = 'service_discount' value = '".$service_discount."' />
                    "; 
                 echo "
        
@@ -1588,6 +1590,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     $reserve_date = $_POST['reserve_date'];
                     $coupon_code = $_POST['coupon_code'];
                     $reserve_time = $_POST['reserve_time'];
+                    $serv_discount = $_POST['service_discount'];
                     $transaction_code = generateRandomString();
     
                     $datenow = getdate();
@@ -1644,9 +1647,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                     $row2 = $view_coupon->rowCount();
                                     if($row2>0)
                                     {
-                                        $discount = "0.02";
-        
-                                        $total = $service_cost * $discount;
+                                        $total = $service_cost * $serv_discount;
                                         $convertfloat = floatval($total);
         
                                         $service_total_cost = $service_cost - $convertfloat;
