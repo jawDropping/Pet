@@ -60,9 +60,7 @@
             display: grid;
             grid-template-columns: 20% 20% 20% 20% 20%;
         }
-        P{
-            padding: 10px;
-        }
+        
         .he{
             font-size: 18px;
             background: #efefef;

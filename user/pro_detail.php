@@ -96,7 +96,6 @@
         }
     </style>
     <script>
-        var pic1 = document.getElementsByClassName("oka").value;
         var pic1Address = pic1;
         function myFunc(){
             document.getElementById("mainPik").src = pic1;
