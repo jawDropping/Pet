@@ -63,6 +63,7 @@
     {
         include("inc/db.php");
         
+        
         if(!isset($_SESSION['pet_center_id']))
         {
             header('Location: login.php');
@@ -310,7 +311,7 @@
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];
-            $services_loc = $row['location'];
+            $services_loc = "PAKN-AN";
             $services_email = $row['email'];
             $services_contact_number = $row['contact_number'];
             $day_open = $_POST['day_open'];
@@ -489,8 +490,8 @@
                         {
                             echo "<p>".$coupon_code."</p>";
                         }
-                        echo "<p>".$transaction_code."</p> 
-                        <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                        echo
+                        "<button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
                     </div>
                 </form>";
                 
@@ -518,6 +519,7 @@
                     $transaction_code = $_POST['transaction_code'];
                     $date_confirmed = $_POST['date_confirmed'];
                     $amount = $_POST['service_cost'];
+                    $transaction_code = generateRandomString();
 
                     //get everything
                     //to email user 
@@ -548,6 +550,7 @@
                         transaction_code,
                         date_confirmed,
                         amount
+                        
                     ) 
                     VALUES
                     (

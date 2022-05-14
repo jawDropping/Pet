@@ -7,6 +7,8 @@
     <div id = "logo">
         <a href = "index.php"><img src = "../uploads/logo2.png" class="logo"/></a>
         <p>Dashboard</p>
+
+        
     </div><!-- <End of Logo> -->
    
    

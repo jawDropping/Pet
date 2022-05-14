@@ -15,7 +15,7 @@
             include ("inc/header.php"); 
             ?>
             
-            
+           
             <div class = "ko">
         <div class="inners">
         <a class = 'lengkong' href = 'index.php'>My services</a>
@@ -26,6 +26,10 @@
         </div>
             <div id='bodyleft'>
                 <div class="kapo">
+                <form method = "GET" action = "search.php"  enctype="multipart/form-data">
+            search: <input type = "text" name = "user_query" />
+            <button name = "search">Search</button>
+        </form>
                 <div class = 'mainer'>    
                     <?php timeline(); ?>
                     
