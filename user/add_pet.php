@@ -42,34 +42,38 @@
             <input class = 'ints' type = "text" name = "pet_age" placeholder = "Age" />
         </div>
         <div class="conts">
-            <input type="radio" id="Dog" name="cat" value="Dog">
+        <p class = "lebs">Your Pet:</p>
+            <input type="radio" id="Dog" name="pet" value="Dog">
              <label class = 'ok' for="Dog">Dog</label>
-             <input type="radio" id="Cat" name="cat" value="Cat">
+             <input type="radio" id="Cat" name="pet" value="Cat">
              <label class = 'ok' for="Cat">Cat</label>
-            <input type="radio" id="Bird" name="cat" value="Bird">
+            <input type="radio" id="Bird" name="pet" value="Bird">
             <label class = 'ok' for="Bird">Bird</label>
-            <input type="radio" id="Fish" name="cat" value="Fish">
+            <input type="radio" id="Fish" name="pet" value="Fish">
             <label class = 'ok' for="Fish">Fish</label>
-            <input type="radio" id="Others" name="cat" value="Others">
+            <input type="radio" id="Others" name="pet" value="Others">
             <label class = 'ok' for="Others">Others</label>
            </div>
         <div class = cont>
             <p class = "lebs">Pet Breed:</p>
             <input class =  'ints' type = "text" name = "pet_breed" placeholder = "Breed" />
         </div>
-        <div class = cont>
-            <p class = "lebs">Pet Gender:</p>
-            <input class =  'ints' type = "text" name = "pet_gender" placeholder = "Gender" />
-        </div>
+        <div class="conts">
+        <p class = "lebs">Pet Gender:</p>
+            <input type="radio" id="Dog" name="pet_gender" value="Male">
+             <label class = 'ok' for="Male">Male</label>
+             <input type="radio" id="Cat" name="pet_gender" value="Female">
+             <label class = 'ok' for="Female">Female</label>
+           </div>
         <div class = cont>
             <p class = "lebs">Vaccination Status</p>
-            <input class =  'ints' type = "text" name = "pet_gender" placeholder = "Vaccination" />
+            <input class =  'ints' type = "text" name = "vaccination_status" placeholder = "Vaccination" />
         </div>
         <div class = cont>
             <p class = "lebs">Pet Details:</p>
             <input class =  'ints' type = "text" name = "pet_details" placeholder = "Small Details of your pet" />
         </div>
-       
+
         <div class="cont">
         <button name = 'add_pet' class = "btn">Save</button>
         </div>
@@ -106,15 +110,15 @@
             $pet_breed = $_POST['pet_breed'];
             $pet_gender = $_POST['pet_gender'];
             $pet_details = $_POST['pet_details'];
-
-            $currentDate = new DateTime();
-            $today = $currentDate->format('Y-m-d H:i:s');
+            $vaccination_status = $_POST['vaccination_status'];
+            $pet = $_POST['pet'];
             
             $pet_photo = $_FILES['pet_photo']['name'];
             $pet_photo_tmp = $_FILES['pet_photo']['tmp_name'];
     
             move_uploaded_file($pet_photo_tmp,"../uploads/pets/$pet_photo");
-    
+
+
             $add_pet = $con->prepare("INSERT INTO pets(
                         user_id,
                         pet_name,
@@ -123,8 +127,9 @@
                         pet_gender,
                         pet_details,
                         pet_photo,
-                        likes,
-                        date_time_posted
+                        vaccination_status,
+                        pet
+                     
             )
             VALUES (
                 '$user_id',
@@ -134,14 +139,13 @@
                 '$pet_gender',
                 '$pet_details',
                 '$pet_photo',
-                '0',
-                '$today'
+                '$vaccination_status',
+                '$pet'
 
             )");
             if($add_pet->execute())
             {
                 echo "<script>alert('Pet Successfully Added');</script>";
-                echo "<script>window.open('viewall_pets.php', '_self');</script>";
             }
         }
     }

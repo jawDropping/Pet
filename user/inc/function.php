@@ -1275,8 +1275,10 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $query->execute();
 
             $row_pet_center = $query->fetch();
-            $pet_center_location = $row_services['services_loc'];
-            $location = str_replace(" ", "+", $pet_center_location);
+            $st = $row_services['st'];
+            $barangay = $row_services['barangay'];
+            $municipality = $row_services['municipality'];
+            $location = str_replace(" ", "+", $municipality);
 
             $service_cat = $row_services['service_id'];
 
@@ -1299,8 +1301,8 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     </div>
                     <div class = 'secondBody'>
                         <p class = 'hed'>".$row_services['services_name']."</p>
-                        <p>dhasgfdj</p>
-                        <p>das  </p>
+                        <p>".$row_pet_center['pet_center_name']."</p>
+                        <p>".$row_services['description']."</p>
                         <div class = 'mainHoldest'>
                             <div class = 'holdest'>
                                 <p class = 'lebs'> Service Category: </p>
@@ -1334,16 +1336,19 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         </div>
                            
                             <div class = 'btnss' >
-                                <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
-                                <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
-                                <a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
+                                <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>";
+                               if($row_pet_center['active_coupon'] == 'yes')
+                               {
+                                    echo " <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>";
+                               }
+                                echo "<a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
                             </div>
                             <br>
                             <br>
                             <div>
                                 <br>
                                 <p class = 'loc'>Location</p>
-                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."".$row_services['services_name']."&output=embed'></iframe>
+                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$row_services['services_name']."&output=embed'></iframe>
                             </div>
                         </div>  
                     </div>
@@ -1372,8 +1377,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $query->execute();
 
             $row_pet_center = $query->fetch();
-            $pet_center_location = $row_services['services_loc'];
-            $location = str_replace(" ", "+", $pet_center_location);
 
             $service_cat = $row_services['service_id'];
 
@@ -1517,6 +1520,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
             $row = $query->fetch(); 
             $service_cost = $row['service_cost'];
+            $service_discount = $row['discount'];
             $pet_center_id = $row['pet_center_id'];
             $service_time_open = strtotime($row['time_open']);
             $service_time_close = strtotime($row['time_close']);
@@ -1554,6 +1558,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     <input class = 'inet' type = 'text' name = 'coupon_code'/>
                     <p class = 'lebs'>Service Cost: </p>
                     <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
+                    <input type = 'hidden' name = 'service_discount' value = '".$service_discount."' />
                    "; 
                 echo "
        
@@ -1584,6 +1589,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     $reserve_date = $_POST['reserve_date'];
                     $coupon_code = $_POST['coupon_code'];
                     $reserve_time = $_POST['reserve_time'];
+                    $serv_discount = $_POST['service_discount'];
                     $transaction_code = generateRandomString();
     
                     $datenow = getdate();
@@ -1640,94 +1646,85 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                     $row2 = $view_coupon->rowCount();
                                     if($row2>0)
                                     {
-                                        $discount = "0.02";
-        
-                                        $total = $service_cost * $discount;
+                                        $total = $service_cost * $serv_discount;
                                         $convertfloat = floatval($total);
         
                                         $service_total_cost = $service_cost - $convertfloat;
         
                                         $receiver = $row4['user_email'];
-                                        $subject = "Transaction Code";
-                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                        $subject = "For Confirmation";
+                                        $body = "Your Reservation will be validated to the pet center";
                                         $sender = "ianjohn0101@gmail.com";
         
-                                        if(mail($receiver, $subject, $body, $sender))
+                                        $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                            pet_center_id,
+                                            service_id,
+                                            user_id,
+                                            service_cost,
+                                            reserve_date,
+                                            reserve_time,
+                                            coupon_code,
+                                            service_status
+                                        ) 
+                                        VALUES (
+                                            '$pet_center_id',
+                                            '$service_id',
+                                            '$user_id',
+                                            '$service_total_cost',
+                                            '$reserve_date',
+                                            '$reserve_time',
+                                            '$coupon_code',
+                                            'For Confirmation'
+                                        )");
+                            
+                                        if($reserve_service->execute())
                                         {
-                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                                pet_center_id,
-                                                service_id,
-                                                user_id,
-                                                service_cost,
-                                                reserve_date,
-                                                reserve_time,
-                                                coupon_code,
-                                                transaction_code,
-                                                service_status
-                                            ) 
-                                            VALUES (
-                                                '$pet_center_id',
-                                                '$service_id',
-                                                '$user_id',
-                                                '$service_total_cost',
-                                                '$reserve_date',
-                                                '$reserve_time',
-                                                '$coupon_code',
-                                                '$transaction_code',
-                                                'For Confirmation'
-                                            )");
-                                
-                                            if($reserve_service->execute())
-                                            {
-                                                echo "SUCCESSFUL"; 
-                                            }
-                                            else
-                                            {
-                                                echo "UNSUCCESSFUL";
-                                            }
+                                           
+                                            echo "SUCCESSFUL"; 
                                         }
+                                        else
+                                        {
+                                            echo "UNSUCCESSFUL";
+                                        }
+                                        mail($receiver, $subject, $body, $sender);
                                     }
                                     else
                                     {
                                         $receiver = $row4['user_email'];
-                                        $subject = "Transaction Code";
-                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                        $subject = "For Confirmation";
+                                        $body = "Your Reservation will be validated to the pet center";
                                         $sender = "ianjohn0101@gmail.com";
         
-                                        if(mail($receiver, $subject, $body, $sender))
+                                        $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                            pet_center_id,
+                                            service_id,
+                                            user_id,
+                                            service_cost,
+                                            reserve_date,
+                                            reserve_time,
+                                            coupon_code,
+                                            service_status
+                                        ) 
+                                        VALUES (
+                                            '$pet_center_id',
+                                            '$service_id',
+                                            '$user_id',
+                                            '$service_cost',
+                                            '$reserve_date',
+                                            '$reserve_time',
+                                            '$coupon_code',
+                                            'For Confirmation'
+                                        )");
+                            
+                                        if($reserve_service->execute())
                                         {
-                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                                pet_center_id,
-                                                service_id,
-                                                user_id,
-                                                service_cost,
-                                                reserve_date,
-                                                reserve_time,
-                                                coupon_code,
-                                                transaction_code,
-                                                service_status
-                                            ) 
-                                            VALUES (
-                                                '$pet_center_id',
-                                                '$service_id',
-                                                '$user_id',
-                                                '$service_cost',
-                                                '$reserve_date',
-                                                '$reserve_time',
-                                                '$coupon_code',
-                                                '$transaction_code',
-                                                'For Confirmation'
-                                            )");
-                                
-                                            if($reserve_service->execute())
-                                            {
-                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
-                                            }
-                                            else
-                                            {
-                                                echo "<script>alert('UNSUCCESSFUL');</script>";
-                                            }
+                                            echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
                                         }
+                                        else
+                                        {
+                                            echo "<script>alert('UNSUCCESSFUL');</script>";
+                                        }
+                                        mail($receiver, $subject, $body, $sender);
                                     }
                                 }
                             }
@@ -1820,7 +1817,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     $reserve_date = $_POST['reserve_date'];
                     $coupon_code = $_POST['coupon_code'];
                     $reserve_time = $_POST['reserve_time'];
-                    $transaction_code = generateRandomString();
     
                     $datenow = getdate();
     
@@ -1862,8 +1858,8 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         
                                 $row4 = $fetch_user_username->fetch();
                                 $receiver = $row4['user_email'];
-                                $subject = "Transaction Code";
-                                $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
+                                $subject = "For Confirmation";
+                                $body = "Wait for the petcenter to confirm your reservation!";
                                 $sender = "ianjohn0101@gmail.com";
     
                                 if(mail($receiver, $subject, $body, $sender))
@@ -1876,7 +1872,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                         reserve_date,
                                         reserve_time,
                                         coupon_code,
-                                        transaction_code,
                                         service_status
                                     ) 
                                     VALUES (
@@ -1887,7 +1882,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                         '$reserve_date',
                                         '$reserve_time',
                                         '$coupon_code',
-                                        '$transaction_code',
                                         'For Confirmation'
                                     )");
                         
