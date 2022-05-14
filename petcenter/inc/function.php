@@ -302,6 +302,12 @@
                 echo"</select>
           
         </div>
+        <div class = 'cont'>
+            <p class = 'lbes' >Description:</p>
+      
+            <input class = 'ints' type='text' name =  'service_details' required/>
+          
+        </div>
         
         <div class = 'cont'>
             <p class = 'lbes' >Municiplaity</p>";
@@ -639,7 +645,7 @@ function updateThumbnail(dropZoneElement, file) {
 
             $row = $fetch_name->fetch();
 
-            $pet_center_id = $row['pet_center_id'];
+            $pet_center_ = $row['pet_center_id'];
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];

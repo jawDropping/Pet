@@ -1300,6 +1300,8 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     </div>
                     <div class = 'secondBody'>
                         <p class = 'hed'>".$row_services['services_name']."</p>
+                        <p>dhasgfdj</p>
+                        <p>das  </p>
                         <div class = 'mainHoldest'>
                             <div class = 'holdest'>
                                 <p class = 'lebs'> Service Category: </p>
@@ -1327,7 +1329,11 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                 <p class = 'lebs'>Service Cost: </p>
                                 <p class = 'conts'>".$row_services['service_cost']."</p>
                             </div>
-                            <div></div>
+                            <div class = 'holdest'>
+                            <p class = 'lebs'>Discount Offer: </p>
+                            <p class = 'conts'></p>
+                        </div>
+                           
                             <div class = 'btnss' >
                                 <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
                                 <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>

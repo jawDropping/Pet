@@ -14,7 +14,7 @@
                 <?php
                     if(isset($_SESSION['user_id']))
                     {
-                        echo "<li> <a href = '/Pet/user/add_pet.php'>Add a Pet</a></li>";
+                        echo "<li> <a href = '/Pet/user/add_pet.php'>Pet Profile</a></li>";
                     }
                 ?>
             </ul>
