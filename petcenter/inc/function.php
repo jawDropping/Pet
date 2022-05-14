@@ -793,7 +793,6 @@ function updateThumbnail(dropZoneElement, file) {
                 $reserve_id = $row2['reserve_id'];
                 $user_id = $row2['user_id'];
                 $date = $row2['reserve_date'];
-                $transaction_code = $row2['transaction_code'];
                 $service_id = $row2['service_id'];
                 $service_cost = $row2['service_cost'];
                 $coupon_code = $row2['coupon_code'];
@@ -821,7 +820,6 @@ function updateThumbnail(dropZoneElement, file) {
                         <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
                         <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
                         <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
-                        <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
                         <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
                         <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
                         <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
