@@ -777,6 +777,12 @@ h4 {
     height: 280px;
     margin-bottom: 5%;
   }
+  .logo a{
+    font-size: 10px;
+  }
+  #search_btn{
+    width: 25px;
+  }
 }
 
 @media (min-width: 1440px) {

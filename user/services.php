@@ -25,14 +25,16 @@
             <a class = 'servDiv' href = "service_other.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/otherService.png" alt="">others</a>
         </div>
         <br>
-        <h3>Services Available </h3>
+        <div class="slideHead">
+        <img class = "image" src="../uploads/featureProd.gif" alt="">
+        <p>FEATURED PRODUCTS</p>
+        </div>
               <div class = 'fDogs'>
              
                    <?php viewall_services(); ?>
                    </div>
           </div>
             <?php
-            include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 
             ?>
   
@@ -44,12 +46,17 @@
         }
         .aLink{
             text-decoration: none;
-            color: #777;
-            padding: 5px;
-            border: 1px solid black;
-            border-radius: 5px;
+            color:  #0080fe;
+            padding: 10px;
+            outline:none;
+            border-radius: 4px;
+            font-family: 'Varela Round', sans-serif;
+            border: 1px solid #0080fe;
             
-
+        }
+        .aLink:hover{
+            background: #0080fe;
+            color: white;
         }
     </style>
 </html>
