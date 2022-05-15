@@ -61,12 +61,53 @@
             width: 60%;
 
         }
+        .commentF{
+            display: flex;
+            margin-top: 1%;
+            border-radius: 4px;
+            padding: 10px;
+            background: white;
+        
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+        .btnsF{
+            outline:none;
+            border: none;
+            padding: 10px;
+            border-radius: 2px;
+            background: #ffb830;
+        }
+        .comment-box{
+            width: 70vw;
+            margin-left: 14vw;
+            margin-top: 10%;
+            border-radius: 4px;
+            padding: 10px;
+           
+        }
+        .headF{
+            font-family: "Varela Round", sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .inputCom{
+            padding: 10px;
+            border: 1px solid #ffb830;
+            outline: none;
+            width: 70%;
+            height: 60px;
+            margin-left: 15%;
+            resize: none;
+            font-size: 14px;
+            font-family:  "Varela Round", sans-serif;
+
+        }
        
         .bottomD{
            margin-left: 15%;
            width: 70%;
            padding: 5px 5px 20px 5px;
-           margin-top: 5%;
+           margin-top: 3%;
            border-radius: 5px;
            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 
@@ -191,6 +232,14 @@
             color: #444;
             padding: 5px;
             margin-top: 10px;
+            font-family: 'Varela Round', sans-serif;'
+            
+        }
+        .revNemDet{
+            font-size: 12px;
+            color: #888;
+            padding: 5px;
+            margin-top: 12px;
             font-family: 'Varela Round', sans-serif;'
             
         }

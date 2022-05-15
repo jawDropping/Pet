@@ -1,0 +1,87 @@
+
+p{
+    padding: 10px;
+}
+.selection {
+background: #28287774;
+}
+.hed{
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+.bots{
+    text-align: center;
+}
+.body{
+    margin-top: 7vh;
+    background: #fff;
+    width: 95%;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+}
+.hedGrid{
+    display: grid;
+    grid-template-columns: 10% 15% 20% 15% 10% 15% 15%;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+#forming{
+    display: grid;
+    grid-template-columns: 10% 15% 20% 15% 10% 15% 15%;
+    margin-top: 1%;
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 4px;
+
+}
+.dataLebs{
+    font-family: "Varela Round", sans-serif;
+    text-align: center;
+}
+.dataLebss{
+    font-family: "Varela Round", sans-serif;
+    text-align: left;
+}
+.dets{
+    height: 30px;
+    width: 50%;
+    margin-left: 25%;
+    font-family: "Varela Round", sans-serif;
+    outline: none;
+    border: 1px solid #5a5bf3;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 12px;
+}
+.lebsH{
+    font-family: "Varela Round", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #777;
+    text-align: center;
+}
+
+.buto{
+    color: #fff;
+    border-radius: 3px;
+     width: 28%;
+     height: 32px;
+    background: #5a5bf3;
+    border: 1px solid  #5a5bf3;
+    text-decoration: none;
+}
+.busog{
+    height: 30px;
+color: #5a5bf3;
+border-radius: 3px;
+width: 100px;
+background: white;
+border: 1px solid #5a5bf3;
+text-decoration: none;
+padding: 5px 5px 5px 5px;
+}
