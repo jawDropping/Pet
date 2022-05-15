@@ -48,7 +48,7 @@
         .quantity{
             margin-top: 25px;
             padding: 5px;
-            width: 50%;
+            width: 40%;
             border: none;
             font-size: 18px;
         
@@ -60,8 +60,8 @@
         .inputss2{
             text-align: center;
             display: flex;
-            width: 70%;
-            margin-left: 15%;
+            width: 90%;
+            margin-left: 5%;
             
         }
      
@@ -139,7 +139,7 @@
         transform: translate(0, -30px);
        }
        #update {
-        width: 40%;
+        width: 70%;
         background: #0080fe;
         border-radius: 3px;
         border: 1px solid #0080fe;
@@ -236,10 +236,10 @@
            
        }
        }
-       @media(max-width: 1024px){
+       @media(max-width: 1025px){
         .tots{
            
-           width: 60%;
+           width: 40%;
            margin-top: 3%;
            border-radius: 5px;
            padding: 20px;
@@ -247,6 +247,11 @@
            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
            
        }
+       .update{
+           width: 80%;
+           font-size: 12px;
+       }
+    }
        @media(max-width: 1870px){
         .tots{
            
@@ -258,6 +263,10 @@
            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
            
        }
+       }
+
+       @media(min-width: 500px){
+       
        }
     </style>
 </html>
