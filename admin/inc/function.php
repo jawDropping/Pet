@@ -877,6 +877,7 @@
                 $contact_number = $_POST['contact_number'];
                 $full_name = $_POST['full_name'];
                 $donator_email = $_POST['donator_email'];
+                $coupon_code = generateRandomString();
               
                 $datenow = getdate();
     
@@ -887,25 +888,27 @@
                 $body = "Your donation has been confirmed!";
                 $sender = "ianjohn0101@gmail.com";
                
-                if(mail($receiver, $body, $sender, $sender))
+                $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+                SET 
+                transaction_number = '$transaction_number',
+                org_name = '$org_name',
+                full_name = '$full_name',
+                contact_number = '$contact_number',
+                date_confirmed = '$today',
+                coupon_code = '$coupon_code'
+                ");
+                if(!$add_ledger->execute())
                 {
-                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
-                    SET 
-                    transaction_number = '$transaction_number',
-                    org_name = '$org_name',
-                    full_name = '$full_name',
-                    contact_number = '$contact_number',
-                    date_confirmed = '$today'
-                    ");
-                    if($add_ledger->execute())
-                    {
-                        $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
-                        $del_donation->execute();
-                        if($del_donation->execute())
-                        {
-                            echo "SUCCESS!";
-                        }
-                    }    
+                   return;
+                }    
+                
+                mail($receiver, $subject, $body, $sender);
+
+                $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+                $del_donation->execute();
+                if($del_donation->execute())
+                {
+                    echo "SUCCESS!";
                 }
             }
         }
