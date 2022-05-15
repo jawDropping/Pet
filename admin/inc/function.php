@@ -362,10 +362,10 @@
                 $order_id = $order['order_id'];
                 echo
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
-                    
+                        
                         <input type = 'hidden' name = 'order_id' value = '".$order['order_id']."' />
 
-                        <p>".$order_id."</p>";
+                        <p class = 'dataLebs'>".$order_id."</p>";
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
@@ -381,19 +381,19 @@
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
 
-                        <p>".$row_username['user_username']."</p>";
+                        <p  class = 'dataLebs'>".$row_username['user_username']."</p>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
-                    <p>".$order['items']."</p>
-                    <p>".$order['order_date']."</p>
+                    <p  class = 'dataLebss'>".$order['items']."</p>
+                    <p  class = 'dataLebs'>".$order['order_date']."</p>
                     <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <p>".$net_total."</p>
+                    <p  class = 'dataLebs'>".$net_total."</p>
                     <input class = 'dets' type = 'date' name = 'delivery_date' required/>
                     <div class ='bots'>
                     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
                      </div>
-        
+ 
                 </form>";
             }
         if(isset($_POST['confirm_order']))
@@ -541,7 +541,7 @@
         echo
         "<div class = 'total'>
             
-            <p>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
+            <p class = 'det'>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
         </div>";
     }
 
@@ -1044,16 +1044,14 @@
 
         while($row=$fetch_pro->fetch()):
             echo "<div class = 'innerGrid'>
-                <p>".$i++."</p>
-                <p>".$row['user_username']."</p>
-                <p>".$row['user_email']."</p>
-                <p>".$row['user_contactnumber']."</p>
-                <p>".$row['user_address']."</p>
-                <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
-                <div style = 'display: flex'>
-                <a class = 'btn1' href='#'>Edit</a>
-                <a class = 'btn2' href='#'>Delete</a>
-                </div>
+                 <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+                 <p class = 'okss'>".$row['user_username']."</p>
+                 <p class = 'okss'>".$i++."</p>
+                <p class = 'okss'>".$row['user_email']."</p>
+                <p class = 'okss'>".$row['user_contactnumber']."</p>
+                <p class = 'okss'>".$row['user_address']."</p>
+                
+               
          </div>";
         endwhile;
     }

@@ -57,10 +57,7 @@
            Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
            <button id = 'search_btn' name = 'search'>Search</button><br>
         </form>
-        <form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
-        <button name = 'sort_asc'>Sort Asc by Org</button>
-            <button name = 'sort_desc'>Desc Asc by Org</button>
-        </form>
+       
         <div class = 'gridnasad'>
            <p>Transaction Number</p>
 

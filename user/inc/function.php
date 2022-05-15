@@ -1363,16 +1363,17 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     </div>
                 </div>
                 <div class = 'comment-box'>
-                <h2>Give Feedback</h2>
+                <p class ='headF' >Give Feedback</p>
                 <form method = 'POST' enctype = 'multipart/form-data'>
                    
                     <input type = 'hidden' name = 'user_id' value = ".$_SESSION['user_id']." />
                     
                     <input type = 'hidden' name = 'service_id' value = ".$row_services['service_id']." />
                     <input type = 'hidden' name = 'service_name' value = '".$row_services['services_name']."' disabled />
-                    <textarea name = 'comment' placeholder = 'Write a comment..' required></textarea>
-                    <button name = 'submit'  >Submit</button>
-                    
+                    <div class = 'commentF'>
+                    <textarea class = 'inputCom' name = 'comment' placeholder = 'Write a comment..' required></textarea>
+                    <button class = 'btnsF' name = 'submit'  >Submit</button>
+                    </div>
                 </form>
             </div>
                    ";  
@@ -1463,8 +1464,10 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     <div class = 'comss'>
                         <div class = 'useCom'>
                         <img class = 'pics' src = ../uploads/user_profile/".$row_user['user_profilephoto'].">
-                        <p class = 'revNem'>".$row_user['user_username']."</p></div>
-                        <p>".$row_feedbacks['comment_date']."</p>
+                        <p class = 'revNem'>".$row_user['user_username']."</p>
+                        <p class = 'revNemDet'>".$row_feedbacks['comment_date']."</p>
+                        </div>
+                        
          
                         <p class = 'rev'> ".$row_feedbacks['comment']."</p>
                         </div>

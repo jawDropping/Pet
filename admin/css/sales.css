@@ -145,7 +145,17 @@ border: none;
     float: right;
     margin-top: 30px;
     display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    background: white;
 }
 .figures{
     font-family:  "Varela Round", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+.det{
+    font-family:  "Varela Round", sans-serif;
+    margin-top: 5px;
+     font-size: 14px;
 }

@@ -17,8 +17,10 @@
    
     <div id = "search">
         <form method = "get" action = "search.php" enctype="multipart/form-data">
-            <input type="text" name = 'user_query' placeholder = "Search here..">
+            <div class = 'asd'>
+            <input type="text" class = 'intputs' name = 'user_query' placeholder = "Search here..">
             <button id = "search_btn" name = "search"><img src = "../uploads/search.svg" class = "searchIcon"></button>
+            </div>
             <div id = 'link'>
 
             <?php
@@ -56,16 +58,20 @@
                     </script>"; 
                 }   
                 ?>
-            </div>
+            </div> <!-- <End of Link> -->
 
-            <button id = "cart_btn"><a href = 'cart.php'>Cart (<?php echo count($_SESSION['cart']); ?>)</a></button>
+           
         </form>
+        
     </div><!-- <End of Search> -->
-
+        <div class="cartes">
+        <button id = "cart_btn"><a href = 'cart.php'>Cart (<?php echo count($_SESSION['cart']); ?>)</a></button>
+        </div>
+    
     
 
     
-   <!-- <End of Link> -->
+  
 </div><!-- <End of Header> -->
     <style>
         .imageDrop{
