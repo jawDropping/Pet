@@ -218,7 +218,7 @@
             
             echo "<div class = 'mainTebs' >
                              <div class='heads'>
-                                 <p class ='lebss'> Image</p>
+                                 <p class ='lebss' id = 'hied'> Image</p>
                                  <p class ='lebss'> Product Name</p>
                                  <p class ='lebss'> Quantity</p>
                                  <p class ='lebss'> Price</p>
@@ -228,33 +228,39 @@
             while($row_pro = $display_cart->fetch()):
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
                         <div class ='data'>
-                          
+                          <div class = 'inputss' id = 'hied'>
                             <img class = 'cartDisplayImage' src = '../uploads/products/".$row_pro['pro_img']."' />
-                    
-                           
-                               <p> ".$row_pro['pro_name']."</p>
-                   
-                            <div>
+                            </div>
+                            <div class = 'inputss1'>
+                               <p class = 'prodName'> ".$row_pro['pro_name']."</p>
+                               <p class = 'prodBrand'> ".$row_pro['pro_brand']."</p>
+                            </div>
+                            <div class = 'inputss2'>
                                 <input type = 'number'  class = 'quantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
                                 '/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <button id = 'pro_btn'>Update</button>
+                                <button id = 'update'><img class = 'delete' src = '../uploads/edittw.png'></button>
                             </div>
-                             <p  class = 'price'> ".$row_pro['pro_price']."</p>
-                            <p class = 'sub_total'>";
-                                $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
-                                $pro_price = $row_pro['pro_price'];
-                                $sub_total = $qty * $pro_price;
-                                echo $sub_total;
-                                $net_total = $net_total + $sub_total;
+                            <div class = 'inputss'>
+                            <p  class = 'prodName'> ₱".$row_pro['pro_price']."</p>
+                            </div>
+                             <div class = 'inputss'>
+                             <p class = 'prodName'>₱";
+                             $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
+                             $pro_price = $row_pro['pro_price'];
+                             $sub_total = $qty * $pro_price;
+                             echo $sub_total;
+                             $net_total = $net_total + $sub_total;
 
-                            echo "</p></form>
+                         echo "</p>
+                             </div>
+                           </form>
                            
                             <form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
-                            <td>
+                            <div class = 'inputss'>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'delete' />
                             <button id = 'pro_btndelete'><img src = '../uploads/delete 1.svg' class='delete'></button></a>
-                            </td>
+                            </div>
                             </form>    
                         </div>
                     </form>";
@@ -266,9 +272,9 @@
             "<div class = 'tots''>
     
                 <p class = 'ito''>
-                    Total Amount: ".$net_total."
+                    Total Amount:</p> <p class = 'itos'>₱".$net_total."</p>
                         <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                    </p>
+                    
                     <a class = 'btnn' href = 'checkout.php'  name = 'place_order'>Place Order</a>             
                     
                     
@@ -297,6 +303,7 @@
 
     function view_orders()
     {
+        
         include("inc/db.php");
         
         if(isset($_GET['user_id']))
@@ -1345,12 +1352,14 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                            echo" </div>
                             <br>
                             <br>
-                            <div>
-                                <br>
-                                <p class = 'loc'>Location</p>
-                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$row_services['services_name']."&output=embed'></iframe>
                             </div>
+                           </div>
                         </div>  
+                        <div class = 'loces'>
+                       <br>
+                        <p class = 'loc'>Location</p>
+                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$barangay."".$row_services['services_name']."&output=embed'></iframe>
+                    </div>
                     </div>
                 </div>
                 <div class = 'comment-box'>
@@ -1436,7 +1445,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $close_time = date('g:i A', strtotime($time_close));
             $open_time = date('g:i A', strtotime($time_open));
 
-            echo "<p class = 'loc2'>REVIEWS</p>";
+            echo "<p class = 'loc2'>Reviews</p>";
             $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");
             $sql2->setFetchMode(PDO:: FETCH_ASSOC);
             $sql2->execute();
@@ -1452,8 +1461,11 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     echo 
                     "
                     <div class = 'comss'>
-                        <p class = 'revNem'>".$row_user['user_username']."</p>
+                        <div class = 'useCom'>
+                        <img class = 'pics' src = ../uploads/user_profile/".$row_user['user_profilephoto'].">
+                        <p class = 'revNem'>".$row_user['user_username']."</p></div>
                         <p>".$row_feedbacks['comment_date']."</p>
+         
                         <p class = 'rev'> ".$row_feedbacks['comment']."</p>
                         </div>
                     "; 

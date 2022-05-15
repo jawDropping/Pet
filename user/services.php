@@ -27,13 +27,16 @@
         <br>
         <div class="slideHead">
         <img class = "image" src="../uploads/featureProd.gif" alt="">
-        <p>FEATURED PRODUCTS</p>
+        <p class = "hedss">Services Offered</p>
         </div>
+
+        <div class="bottomDiv">
+        <h3>Grooming Services</h3>
               <div class = 'fDogs'>
-             
                    <?php viewall_services(); ?>
                    </div>
-          </div>
+        </div>
+        </div>
             <?php
             include ("inc/footer.php"); 
             ?>
@@ -58,5 +61,22 @@
             background: #0080fe;
             color: white;
         }
+        .hedss{
+        font-family: 'Varela Round', sans-serif;
+        color: #444;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    h3{
+    line-height: 35px;
+    text-align: left;
+    border-radius: 3px;
+    height: 35px;
+    background: white;
+    color: #444;
+    padding-left: 5%;
+    margin-top: 30px;
+    font-family: 'Varela Round', sans-serif;
+    }
     </style>
 </html>
