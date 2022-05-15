@@ -11,17 +11,18 @@
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&family=Nunito:wght@200&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
+
     <body>
     <?php 
            
-           include ("inc/db.php");
-           include ("inc/function.php"); 
-           include ("inc/header.php"); 
-           include ("inc/navbar.php"); 
-           ?>
-           <div class="mainContainer">
+                include ("inc/db.php");
+                include ("inc/function.php"); 
+                include ("inc/header.php"); 
+                include ("inc/navbar.php"); 
+                ?>
+                <div class="mainContainer">
                 <div id = "bodyleft">
-                <div class="leftBody">
+<div class="leftBody">
       <ul class = 'mainUl'>
         <li class =  "donate"><a href = "index.php"><img src="../uploads/donation2.1.svg" class="navicons">Donations</a></li>
             <ul class="subList">
@@ -29,13 +30,13 @@
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li class = 'selection' ><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
-        <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
+        <li><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
-        <li><a href= "/Pet/admin/viewall_users.php"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
-        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Delivered Items</a></li>
+        <li  class = 'selection'><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -44,59 +45,60 @@
             <img src="../uploads/notification.svg" class="footicons">
         </div>
         </div>
-                </div>
-                <div id="bodyright">
-                <p class = 'hed'>View All Products</p>
-                <div class = "body">
+</div>
+<div id="bodyright">
+<p class = 'hed'>View All Users</p>
+<div class = "body">
     
     <form method = "POST" enctype = "multipart/form-data">
-    <div class = 'tebs'>
+    <div>
         <div class = 'hedGrid'>
-            <p>PRODUCT NAME </p>
-            <p>PRICE</p>
-            <p>QUANTITY</p>
+            <p>User Id</p>
+            <p>User Name</p>
+            <p>User Password</p>
+            <p>Contact Info</p>
+            <p>Name</p>
+            <p>Image</p>
             <p>Action</p>
         </div>
         <div>
             <?php
-                echo view_prods();
+                echo viewall_users();
             ?>
         </div>
         </div>
     </form>
 </div>
+
+
                 </div>
+                </div>
+                
+            <?php
+                include ("inc/footer.php"); 
+            
+        ?>
     </body>
     <style>
- 
+
+
+    p{
+        padding: 10px;
+    }
     .selection {
-        background: #28287774;
-    }
-    .hedGrid{
-        display: grid;
-        grid-template-columns: 45% 15% 15% 25%;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 1px solid black;
-    }
-    .innerGrid{
-        display: grid;
-        grid-template-columns: 45% 15% 15% 25%;
-        text-align: center;
-        
-        margin-top: 20px;
-    }
-    .p1{
-        text-align: left;
-    }
-    .hed{
+  background: #28287774;
+}
+.hed{
         font-size: 22px;
         font-weight: bold;
         color: white;
-        padding: 10px;
     }
-    .tebs{
-        width: 100%;
+    .hedGrid{
+        display: grid;
+        grid-template-columns:  8% 14% 14% 14% 14% 20% 14%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
     }
     .body{
         margin-top: 7vh;
@@ -108,34 +110,42 @@
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
     }
-    .imges{
-        height: 50px;
+    .innerGrid{
+        display: grid;
+        grid-template-columns: 8% 14% 14% 14% 14% 20% 14%;
+        text-align: center;
+        
+        margin-top: 20px;
     }
-    p{
-        padding: 10px;
+    .imgg{
+        width: 70%;
+        margin-left: 15%;
     }
-    .edith{
+    .btn1{
         height: 30px;
     color: #fff;
     border-radius: 3px;
-    width: 100px;
+    width: 30%;
     background: #5a5bf3;
     border: 1px solid  #5a5bf3;
     text-decoration: none;
-    padding: 5px 15px 5px 15px;
+    margin-left: 20%;
     }
-    .byew{
-    height: 30px;
+    .btn2{
+        height: 30px;
     color: #5a5bf3;
     border-radius: 3px;
-    width: 100px;
+    width:30%;
     background: white;
     border: 1px solid #5a5bf3;
     text-decoration: none;
-    padding: 5px 5px 5px 5px;
+    margin-left: 5%;
     }
 </style>
-<script>
+
+
+
+    <script>
         var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
         var today = new Date();
         var date = today.getFullYear()+'-'+month[(today.getMonth())]+'-'+today.getDate();
@@ -143,4 +153,25 @@
         document.getElementById("currentDate").innerHTML = date2;
     </script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

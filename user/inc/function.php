@@ -1352,12 +1352,14 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             </div>
                             <br>
                             <br>
-                            <div>
-                                <br>
-                                <p class = 'loc'>Location</p>
-                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$row_services['services_name']."&output=embed'></iframe>
                             </div>
+                           </div>
                         </div>  
+                        <div class = 'loces'>
+                       <br>
+                        <p class = 'loc'>Location</p>
+                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$barangay."".$row_services['services_name']."&output=embed'></iframe>
+                    </div>
                     </div>
                 </div>
                    ";   
@@ -1399,7 +1401,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $close_time = date('g:i A', strtotime($time_close));
             $open_time = date('g:i A', strtotime($time_open));
 
-            echo "<p class = 'loc2'>REVIEWS</p>";
+            echo "<p class = 'loc2'>Reviews</p>";
             $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");
             $sql2->setFetchMode(PDO:: FETCH_ASSOC);
             $sql2->execute();
@@ -1415,7 +1417,9 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     echo 
                     "
                     <div class = 'comss'>
-                        <p class = 'revNem'>".$row_user['user_username']."</p>
+                        <div class = 'useCom'>
+                        <img class = 'pics' src = ../uploads/user_profile/".$row_user['user_profilephoto'].">
+                        <p class = 'revNem'>".$row_user['user_username']."</p></div>
                         <p class = 'rev'> ".$row_feedbacks['comment']."</p>
                         </div>
                     "; 

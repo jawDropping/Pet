@@ -137,6 +137,7 @@ body {
   margin-top: 10px;
   margin-right: 10px;
   margin-left: 10px;
+  
 }
 
 #cart_btn a {
@@ -144,6 +145,7 @@ body {
   color: #777;
   font-weight: bold;
   display: block;
+  font-family:  'Varela Round', sans-serif;
 }
 .imageDrop {
   height: 10px;
@@ -315,6 +317,7 @@ body {
 
 #navbar {
   width: 100%;
+  min-width: 500px;
   height: 40px;
   background: #0080fe;
   overflow: hidden;
@@ -557,7 +560,7 @@ h4 {
   color: #444;
   padding-left: 5%;
   margin-top: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Varela Round', sans-serif;
 }
 
 #pro_img {
@@ -722,6 +725,7 @@ h4 {
 #footer {
   display: flex;
   width: 100%;
+  min-width: 500px;
   height: 100px;
   background: #0c0c57;
   border-top: 1px solid #000;
@@ -746,6 +750,7 @@ h4 {
   background: white;
   border-radius: 5px;
 }
+
 .emptyCart {
   height: 70vh;
   width: 100vw;

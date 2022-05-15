@@ -3,6 +3,7 @@
         <title>Pet Society</title>
         <link rel = "stylesheet" href="css/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
@@ -77,7 +78,7 @@
             width: 100vw;
         }
         .mainTebs{
-            min-width: 500px;
+            min-width: 480px;
            width: 80%;
            margin-left: 10%;
            margin-top: 3%;
@@ -178,7 +179,7 @@
        .tots{
             display: flex;
            float: right;
-           width: 20px;
+           width: 300px;
            margin-top: 3%;
            border-radius: 5px;
            padding: 20px;
@@ -221,8 +222,8 @@
        }
        @media(max-width: 1000px){
         .mainTebs{
-           width: 100vw;
-           margin-left: 0;
+           width: 95vw;
+           margin-left: 2;
            border-radius: 5px;
            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
        }
