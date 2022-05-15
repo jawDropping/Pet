@@ -530,13 +530,13 @@
         while($row = $sql->fetch()):
 
             echo
-            "<tr>
-                <td>".$row['order_id']."</td>
-                <td>".$row['items']."</td>
-                <td>".$row['user_username']."</td>
-                <td>".$row['date_delivered']."</td>
-                <td>₱".$row['total_amount']."</td>
-            </tr>";
+            "<div class = 'dataGrid'>
+                <p class = 'dataLebs'>".$row['order_id']."</p>
+                <p class = 'dataLebss'>".$row['items']."</p>
+                <p class = 'dataLebs'>".$row['user_username']."</p>
+                <p class = 'dataLebs'>".$row['date_delivered']."</p>
+                <p class = 'dataLebs'>₱".$row['total_amount']."</p>
+            </div>";
         endwhile;
         echo
         "<tr>

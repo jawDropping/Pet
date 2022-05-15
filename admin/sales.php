@@ -3,85 +3,12 @@
     <head>
         <title>Admin Panel</title>
         <link rel = "stylesheet" href="css/style.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+        <link rel = "stylesheet" href="css/sales.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&family=Nunito:wght@200&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
-        <style>
-        .manage_donation{
-        width: 100%;
         
-  
-    }
-    .tebs{
-        width: 100%;
-    }
-    .body{
-        margin-top: 7vh;
-        background: #fff;
-
-        width: 95%;
-        border-radius: 5px;
-        padding: 10px;
-        margin-left: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
-    }
-    p{
-        padding: 10px;
-    }
-    .selection {
-        background: #28287774;
-    }
-    .hed{
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-    }
-    #forming{
-        display: grid;
-        grid-template-columns:  15% 12% 15% 15% 12% 15% 15%;
-        font-size: 14px;
-        margin-top: 20px;
-    }
-    .yopak{
-        display: grid;
-        grid-template-columns: 15% 12% 15% 15% 12% 15% 15%;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 1px solid black;
-        
-        
-    }
-    #aksyon{
-        display: flex;
-        color: black;
-    }
-    .holdest{
-        height: 42px;
-    }
-    #views{
-        height: 30px;
-  color: #777;
-  font-weight: bold;
-  border-radius: 3px;
-  width: 100px;
-  background: white;
-  border: 1px solid #5a5bf3;
-  margin-left: 5px;
-    }
-    #views2{
-        height: 30px;
-  color: #fff;
-  border-radius: 3px;
-  width: 100px;
-  background: #5a5bf3;
-  border: none;
-    }
-    </style>
     </head>
     <body>
     <?php 
@@ -91,13 +18,15 @@
            include ("inc/header.php"); 
            include ("inc/navbar.php"); 
            ?>
+
+
            <div class="mainContainer">
            <div id = "bodyleft">
 <div class="leftBody">
       <ul class = 'mainUl'>
         <li class =  "donate"><a href = "index.php"><img src="../uploads/donation2.1.svg" class="navicons">Donations</a></li>
             <ul class="subList">
-                <li><a href="manage_donation.php">Manage Donations</a></li>
+                <li><a href="coupons.php">Coupon Application</a></li>
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
@@ -122,24 +51,20 @@
 <div class = "body">
 
     <form method = "POST" enctype = "multipart/form-data">
-    <table id = "table" cellspacing ="0" cellpadding ="0">
-       <thead>
-        <th>ORDER ID</th>
-        <th>ITEMS</th>
-        <th>CUSTOMER</th>
-        <th>Date Delivered</th>
-        <th>Amount Collected</th>
-       </thead>
-       <tbody>
-       <tr>
+    
+       <div class = 'headGrid'>
+        <p class = 'headLebs'>Order ID</p>
+        <p  class = 'headLebs'>Items</p>
+        <p class = 'headLebs'>Customer</p>
+        <p class = 'headLebs'>Date Delivered</p>
+        <p class = 'headLebs'>Amount Collected</p>
+       </div>
+    
        <?php
             echo viewalldelivered_items();
         ?>
-       </tr>
+      
 
-       </tbody>
-                  
-        </table>
     </form>
     <input type = "button" id = "btnExport" value = "PRINT" />
     <button id = "pdf">Export to PDF</button>
