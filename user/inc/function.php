@@ -228,33 +228,38 @@
             while($row_pro = $display_cart->fetch()):
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
                         <div class ='data'>
-                          
+                          <div class = 'inputss'>
                             <img class = 'cartDisplayImage' src = '../uploads/products/".$row_pro['pro_img']."' />
-                    
-                           
-                               <p> ".$row_pro['pro_name']."</p>
-                   
-                            <div>
+                            </div>
+                            <div class = 'inputss'>
+                               <p class = 'prodName'> ".$row_pro['pro_name']."</p>
+                            </div>
+                            <div class = 'inputss2'>
                                 <input type = 'number'  class = 'quantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
                                 '/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <button id = 'pro_btn'>Update</button>
+                                <button id = 'update'>Update</button>
                             </div>
-                             <p  class = 'price'> ".$row_pro['pro_price']."</p>
-                            <p class = 'sub_total'>";
-                                $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
-                                $pro_price = $row_pro['pro_price'];
-                                $sub_total = $qty * $pro_price;
-                                echo $sub_total;
-                                $net_total = $net_total + $sub_total;
+                            <div class = 'inputss'>
+                            <p  class = 'prodName'> ₱".$row_pro['pro_price']."</p>
+                            </div>
+                             <div class = 'inputss'>
+                             <p class = 'prodName'>₱";
+                             $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
+                             $pro_price = $row_pro['pro_price'];
+                             $sub_total = $qty * $pro_price;
+                             echo $sub_total;
+                             $net_total = $net_total + $sub_total;
 
-                            echo "</p></form>
+                         echo "</p>
+                             </div>
+                           </form>
                            
                             <form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
-                            <td>
+                            <div class = 'inputss'>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'delete' />
                             <button id = 'pro_btndelete'><img src = '../uploads/delete 1.svg' class='delete'></button></a>
-                            </td>
+                            </div>
                             </form>    
                         </div>
                     </form>";
@@ -266,9 +271,9 @@
             "<div class = 'tots''>
     
                 <p class = 'ito''>
-                    Total Amount: ".$net_total."
+                    Total Amount:</p> <p class = 'itos'>₱".$net_total."</p>
                         <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                    </p>
+                    
                     <a class = 'btnn' href = 'checkout.php'  name = 'place_order'>Place Order</a>             
                     
                     
@@ -297,6 +302,7 @@
 
     function view_orders()
     {
+        
         include("inc/db.php");
         
         if(isset($_GET['user_id']))

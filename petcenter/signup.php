@@ -281,12 +281,7 @@
                         </div>
                         
                         
-                        <div>
-                            <br>
-                            <p>Will you accept coupons? <a href = '#'>Learn more about coupons</a></p> 
-                           <br>
-                            <p>Yes <input type = 'checkbox' name = 'accept_coupons' value = 'yes' /> No <input type = 'checkbox' name = 'accept_coupons' value = 'no'/></p>
-                        </div><br>
+                       <br>
                         <button name = 'add_user' id = 'regs'>Register</button>
                         <buttonon onclick="window.location.href = '/Pet/user/index.php';" id = 'backHome'>Back to Home</buttonon>
                     </div>
@@ -439,6 +434,7 @@
                   margin-right: 10px;
                   color: white;
                   font-weight: bold;
+                  margin-top: 30px;
             }
             .right{
                 width: 100%;
