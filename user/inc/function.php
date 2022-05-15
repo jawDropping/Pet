@@ -1342,8 +1342,8 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                {
                                     echo " <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>";
                                }
-                                echo "<a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
-                            </div>
+                                
+                           echo" </div>
                             <br>
                             <br>
                             <div>
@@ -1354,7 +1354,50 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         </div>  
                     </div>
                 </div>
-                   ";   
+                <div class = 'comment-box'>
+                <h2>Give Feedback</h2>
+                <form method = 'POST' enctype = 'multipart/form-data'>
+                   
+                    <input type = 'hidden' name = 'user_id' value = ".$_SESSION['user_id']." />
+                    
+                    <input type = 'hidden' name = 'service_id' value = ".$row_services['service_id']." />
+                    <input type = 'hidden' name = 'service_name' value = '".$row_services['services_name']."' disabled />
+                    <textarea name = 'comment' placeholder = 'Write a comment..' required></textarea>
+                    <button name = 'submit'  >Submit</button>
+                    
+                </form>
+            </div>
+                   ";  
+            if(isset($_POST['submit']))
+            {
+                $comment = $_POST['comment'];
+                $user_id = $_POST['user_id'];
+                $service_id = $_POST['service_id'];
+                
+                $datenow = getdate();
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
+    
+                $add = $con->prepare("INSERT INTO feedback_tbl
+                (
+                    user_id, 
+                    service_id, 
+                    comment,
+                    comment_date
+                ) 
+                VALUES
+                (
+                    '$user_id',
+                    '$service_id',
+                    '$comment',
+                    '$today'
+                )");
+    
+                if($add->execute())
+                {
+                    echo "<script>alert('Thanks for the feedback');</script>";
+                }
+            } 
                 
        
            
@@ -1363,6 +1406,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
     }
     function showFeeds(){
         include("inc/db.php");
+
         if(isset($_GET['id']))
         {
             $id = $_GET['id'];
@@ -1410,6 +1454,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     "
                     <div class = 'comss'>
                         <p class = 'revNem'>".$row_user['user_username']."</p>
+                        <p>".$row_feedbacks['comment_date']."</p>
                         <p class = 'rev'> ".$row_feedbacks['comment']."</p>
                         </div>
                     "; 
