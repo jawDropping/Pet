@@ -54,7 +54,6 @@
     <div class = 'tebs'>
         <div class = 'yopak'>
             <p>Full Name</p>
-            <p>Email Address</p>
             <p>Coupon</p>
         </div>
         <tr>
