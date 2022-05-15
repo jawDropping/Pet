@@ -1640,7 +1640,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                 }
                                 else
                                 {
-                                    $view_coupon = $con->prepare("SELECT * FROM donations WHERE coupon_code = '$coupon_code'");
+                                    $view_coupon = $con->prepare("SELECT * FROM ledger_tbl WHERE coupon_code = '$coupon_code'");
                                     $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
                                     $view_coupon->execute();
         

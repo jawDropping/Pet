@@ -353,6 +353,8 @@
             group by o.order_id, p.pro_name, o.delivery_status, o.order_date) od
             group by od.order_id, od.delivery_status, od.order_date    
             ");
+
+            
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
             {
@@ -766,6 +768,7 @@
             $contact_number = $_POST['contact_number'];
             $full_name = $_POST['full_name'];
             $donator_email = $_POST['donator_email'];
+            $coupon_code = generateRandomString();
           
             $datenow = getdate();
 
@@ -776,25 +779,31 @@
             $body = "Your donation has been confirmed!";
             $sender = "ianjohn0101@gmail.com";
            
-            if(mail($receiver, $body, $sender, $sender))
+            // if(mail($receiver, $body, $sender, $sender))
+            // {
+               
+            // }
+            $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+            SET 
+            transaction_number = '$transaction_number',
+            org_name = '$org_name',
+            full_name = '$full_name',
+            contact_number = '$contact_number',
+            date_confirmed = '$today',
+            coupon_code = '$coupon_code'
+            ");
+            if(!$add_ledger->execute())
             {
-                $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
-                SET 
-                transaction_number = '$transaction_number',
-                org_name = '$org_name',
-                full_name = '$full_name',
-                contact_number = '$contact_number',
-                date_confirmed = '$today'
-                ");
-                if($add_ledger->execute())
-                {
-                    $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
-                    $del_donation->execute();
-                    if($del_donation->execute())
-                    {
-                        echo "SUCCESS!";
-                    }
-                }    
+               return; 
+            }    
+
+            mail($receiver, $subject, $body, $sender);
+
+            $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+            $del_donation->execute();
+            if($del_donation->execute())
+            {
+                echo "SUCCESS!";
             }
         }
     }
@@ -973,7 +982,7 @@
     function viewall_coupons()
     {
         include("inc/db.php");
-        $view_coupons = $con->prepare("SELECT * FROM donations");
+        $view_coupons = $con->prepare("SELECT * FROM ledger_tbl");
         $view_coupons->setFetchMode(PDO:: FETCH_ASSOC);
         $view_coupons->execute();
 
@@ -981,7 +990,6 @@
             echo 
             "<div class = 'inners'>
                 <p>".$row['full_name']."</p>
-                <p class = 'okss'>".$row['email']."</p>
                 <p class = 'okss'>".$row['coupon_code']."</p>
             </div>"; 
         endwhile;
