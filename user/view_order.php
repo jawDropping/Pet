@@ -13,11 +13,23 @@
             include ("inc/navbar.php"); 
         ?>
     <div class="containersest">
+          
+    <?php
+        $current_user = $_SESSION['user_id'];
+        $sql = $con->prepare("SELECT * FROM orders_tbl WHERE user_id = '$current_user'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        $row = $sql->fetch();
+        if($row>0)
+        {
+            
+    ?>
 
     <div class="ttl">
     <img src="../uploads/orderist.png" id = 'orderIc' > <h3>Orders</h3>
     </div>
-    
+  
     <div class="contTable">
     <div class = 'inside'>
         
@@ -42,6 +54,14 @@
         </div>
     </div>
     </div>
+
+    <?php
+        }
+        else
+        {
+            echo "You don't have any orders yet Click this link to buy products from our store!<a id = 'linkEmpty'href='/Pet/user/index.php'>Click Me!</a>";
+        }
+    ?>
     
     
     </div>
