@@ -541,7 +541,7 @@
         echo
         "<div class = 'total'>
             
-            <p>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
+            <p class = 'det'>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
         </div>";
     }
 
@@ -1044,16 +1044,14 @@
 
         while($row=$fetch_pro->fetch()):
             echo "<div class = 'innerGrid'>
-                <p>".$i++."</p>
-                <p>".$row['user_username']."</p>
-                <p>".$row['user_email']."</p>
-                <p>".$row['user_contactnumber']."</p>
-                <p>".$row['user_address']."</p>
-                <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
-                <div style = 'display: flex'>
-                <a class = 'btn1' href='#'>Edit</a>
-                <a class = 'btn2' href='#'>Delete</a>
-                </div>
+                 <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+                 <p class = 'okss'>".$row['user_username']."</p>
+                 <p class = 'okss'>".$i++."</p>
+                <p class = 'okss'>".$row['user_email']."</p>
+                <p class = 'okss'>".$row['user_contactnumber']."</p>
+                <p class = 'okss'>".$row['user_address']."</p>
+                
+               
          </div>";
         endwhile;
     }

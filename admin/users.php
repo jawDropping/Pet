@@ -3,6 +3,7 @@
     <head>
         <title>Admin Panel</title>
         <link rel = "stylesheet" href="css/style.css" />
+        <link rel = "stylesheet" href="css/users.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
@@ -53,13 +54,12 @@
     <form method = "POST" enctype = "multipart/form-data">
     <div>
         <div class = 'hedGrid'>
-            <p>User Id</p>
-            <p>User Name</p>
-            <p>User Password</p>
-            <p>Contact Info</p>
-            <p>Name</p>
-            <p>Image</p>
-            <p>Action</p>
+            <p class = 'lebs'>Image</p>
+            <p class = 'lebs'>Name</p>  
+            <p class = 'lebs'>User Id</p>
+            <p class = 'lebs'>Email</p>
+            <p class = 'lebs'>Contact No.</p>
+            <p class = 'lebs'>Location</p>
         </div>
         <div>
             <?php
@@ -79,69 +79,7 @@
             
         ?>
     </body>
-    <style>
 
-
-    p{
-        padding: 10px;
-    }
-    .selection {
-  background: #28287774;
-}
-.hed{
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-    }
-    .hedGrid{
-        display: grid;
-        grid-template-columns:  8% 14% 14% 14% 14% 20% 14%;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 1px solid black;
-    }
-    .body{
-        margin-top: 7vh;
-        background: #fff;
-        width: 95%;
-        border-radius: 5px;
-        padding: 10px;
-        margin-left: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
-    }
-    .innerGrid{
-        display: grid;
-        grid-template-columns: 8% 14% 14% 14% 14% 20% 14%;
-        text-align: center;
-        
-        margin-top: 20px;
-    }
-    .imgg{
-        width: 70%;
-        margin-left: 15%;
-    }
-    .btn1{
-        height: 30px;
-    color: #fff;
-    border-radius: 3px;
-    width: 30%;
-    background: #5a5bf3;
-    border: 1px solid  #5a5bf3;
-    text-decoration: none;
-    margin-left: 20%;
-    }
-    .btn2{
-        height: 30px;
-    color: #5a5bf3;
-    border-radius: 3px;
-    width:30%;
-    background: white;
-    border: 1px solid #5a5bf3;
-    text-decoration: none;
-    margin-left: 5%;
-    }
-</style>
 
 
 
