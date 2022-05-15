@@ -51,18 +51,24 @@
             width: 40%;
             border: none;
             font-size: 18px;
-        
+            
             height: 30px;
         }
         .inputss{
             text-align: center;
+        }
+        .inputss1{
+            text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
         .inputss2{
             text-align: center;
             display: flex;
             width: 90%;
             margin-left: 5%;
-            
+            justify-content: center;
         }
      
         table{
@@ -71,6 +77,7 @@
             width: 100vw;
         }
         .mainTebs{
+            min-width: 500px;
            width: 80%;
            margin-left: 10%;
            margin-top: 3%;
@@ -80,7 +87,7 @@
        }
         .data{
            display: grid;
-           grid-template-columns: 25% 22% 14% 8% 12% 8%;
+           grid-template-columns: 15% 30% 14% 8% 12% 8%;
            margin-top: 1%;
            padding: 10px;
            background: #f4f4f4;
@@ -93,7 +100,7 @@
         }
         .heads{
            display: grid;
-           grid-template-columns: 25% 22% 14% 8% 12% 8%;
+           grid-template-columns: 15% 30% 14% 8% 12% 8%;
            border-bottom: .8px solid #777;
            padding: 5px;
            margin-bottom: 2%;
@@ -103,7 +110,8 @@
         }
         .cartDisplayImage{
             height: 100%;
-            width: 25%;
+            width: 50%;
+            margin-right: 20px;
 
         }
         .headerTitle{
@@ -116,6 +124,10 @@
             font-size: 16px;
             font-family:  "Varela Round", sans-serif;
             padding-top: 25px;
+        }
+        .prodBrand{
+            color: #888;
+            font-size: 12px;
         }
         
         .delete{
@@ -139,10 +151,11 @@
         transform: translate(0, -30px);
        }
        #update {
-        width: 70%;
+        min-width: 30%;
         background: #0080fe;
         border-radius: 3px;
-        border: 1px solid #0080fe;
+        outline: none;
+        border: none;
         padding: 5px;
         color: white;
         height: 30px;
@@ -165,7 +178,7 @@
        .tots{
             display: flex;
            float: right;
-           width: 20%;
+           width: 20px;
            margin-top: 3%;
            border-radius: 5px;
            padding: 20px;
@@ -255,7 +268,7 @@
        @media(max-width: 1870px){
         .tots{
            
-           width: 30%;
+           width: 300px;
            margin-top: 3%;
            border-radius: 5px;
            padding: 20px;
@@ -264,9 +277,44 @@
            
        }
        }
+       @media(max-width: 670px){
+        .heads{
+           display: grid;
+           grid-template-columns: 35% 14% 25% 20% 8%;
+          
+       }
+       .data{
+           display: grid;
+           grid-template-columns: 35% 14% 25% 20% 8%;
+           
 
-       @media(min-width: 500px){
-       
+        }
+        
+
+       }
+       @media(max-width: 780px){
+        #hied{
+            display: none;
+        }
+        .data{
+           display: grid;
+           grid-template-columns: 35% 14% 12% 15% 8%;
+           
+
+        }
+        .inputss2{
+            text-align: center;
+            display: flex;
+            width: 90%;
+            margin-left: 10%;
+            
+        }
+        .heads{
+           display: grid;
+           grid-template-columns: 35% 14% 12% 15% 8%;
+          
+       }
+
        }
     </style>
 </html>

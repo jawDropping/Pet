@@ -218,7 +218,7 @@
             
             echo "<div class = 'mainTebs' >
                              <div class='heads'>
-                                 <p class ='lebss'> Image</p>
+                                 <p class ='lebss' id = 'hied'> Image</p>
                                  <p class ='lebss'> Product Name</p>
                                  <p class ='lebss'> Quantity</p>
                                  <p class ='lebss'> Price</p>
@@ -228,17 +228,18 @@
             while($row_pro = $display_cart->fetch()):
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
                         <div class ='data'>
-                          <div class = 'inputss'>
+                          <div class = 'inputss' id = 'hied'>
                             <img class = 'cartDisplayImage' src = '../uploads/products/".$row_pro['pro_img']."' />
                             </div>
-                            <div class = 'inputss'>
+                            <div class = 'inputss1'>
                                <p class = 'prodName'> ".$row_pro['pro_name']."</p>
+                               <p class = 'prodBrand'> ".$row_pro['pro_brand']."</p>
                             </div>
                             <div class = 'inputss2'>
                                 <input type = 'number'  class = 'quantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
                                 '/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <button id = 'update'>Update</button>
+                                <button id = 'update'><img class = 'delete' src = '../uploads/edittw.png'></button>
                             </div>
                             <div class = 'inputss'>
                             <p  class = 'prodName'> ₱".$row_pro['pro_price']."</p>
