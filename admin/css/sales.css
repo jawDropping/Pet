@@ -6,6 +6,11 @@
 .tebs{
     width: 100%;
 }
+.buttons{
+    margin-top: 2%;
+    float: right;
+    margin-right: 3%;
+}
 .body{
     margin-top: 7vh;
     background: #fff;
@@ -28,21 +33,7 @@ p{
     font-weight: bold;
     color: white;
 }
-#forming{
-    display: grid;
-    grid-template-columns:  15% 12% 15% 15% 12% 15% 15%;
-    font-size: 14px;
-    margin-top: 20px;
-}
-.yopak{
-    display: grid;
-    grid-template-columns: 15% 12% 15% 15% 12% 15% 15%;
-    text-align: center;
-    font-weight: bold;
-    border-bottom: 1px solid black;
-    
-    
-}
+
 #aksyon{
     display: flex;
     color: black;
@@ -111,4 +102,50 @@ border: none;
 .dataGrid:hover{
     background: #ebebeb;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+#btnExport{
+    padding: 5px;
+    background: #ffb7309f;
+    outline: none;
+    border: none;
+    color: black;
+    border-radius: 4px;
+}
+#btnExport:hover{
+    background: #ffb730;
+}
+.printPic{
+    width: 20px;
+    height: 20px;
+    
+}
+#pdf{
+    padding: 5px;
+    outline: none;
+    border: none;
+    color: black;
+    border-radius: 4px;
+    background: #e33d1c83;
+}
+#pdf:hover{
+    background: #e33d1c;
+}
+#csv{
+    padding: 5px;
+    outline: none;
+    border: none;
+    color: black;
+    border-radius: 4px;
+    background: #1ce37588;
+}
+#csv:hover{
+    background: #1ce375;
+}
+.total{
+    float: right;
+    margin-top: 30px;
+    display: flex;
+}
+.figures{
+    font-family:  "Varela Round", sans-serif;
 }

@@ -539,11 +539,10 @@
             </div>";
         endwhile;
         echo
-        "<tr>
-            <td></td>
-            <td></td>
-            <td>Amount Collected: ₱".$row2['SUM(total_amount)']."</td>
-        </tr>";
+        "<div class = 'total'>
+            
+            <p>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
+        </div>";
     }
 
     

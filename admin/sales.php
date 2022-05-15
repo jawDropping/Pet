@@ -48,6 +48,14 @@
 </div>
 <div id="bodyright">
 <p class = 'hed'>Transaction History</p>
+<div class="buttons">
+<button id = "btnExport" value = "PRINT"><img class ='printPic' src = '../uploads/print.png'> PRINT</button>
+<button id = "csv"><img class ='printPic' src = '../uploads/excel.png'>EXPORT TO EXCEL</button>
+    <button id = "pdf"><img class ='printPic' src = '../uploads/pdf.png'>EXPORT TO PDF</button>
+    
+</div>
+   
+    <br>
 <div class = "body">
 
     <form method = "POST" enctype = "multipart/form-data">
@@ -66,10 +74,9 @@
       
 
     </form>
-    <input type = "button" id = "btnExport" value = "PRINT" />
-    <button id = "pdf">Export to PDF</button>
-    <button id = "csv">Export to EXCEL</button>
 </div>
+
+    
 </div>
            </div>
     </body>
