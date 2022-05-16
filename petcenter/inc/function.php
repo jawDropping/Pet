@@ -654,7 +654,7 @@ function updateThumbnail(dropZoneElement, file) {
 
             $row = $fetch_name->fetch();
 
-            $pet_center_id = $row['pet_center_id'];
+            $pet_center_name = $row['pet_center_name'];
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];
@@ -694,7 +694,7 @@ function updateThumbnail(dropZoneElement, file) {
             $query = $con->prepare("INSERT INTO services 
             SET 
             service_id = $service_id,
-            pet_center_id = $pet_center_id,
+            pet_center_name = $pet_center_name,
             services_name = '$services_name',
             st = '$st',
             barangay = '$barangay',
