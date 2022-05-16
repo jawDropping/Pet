@@ -381,7 +381,7 @@
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
 
-                        <p  class = 'dataLebs'>".$row_username['user_username']."</p>";
+                        <a href = 'user.php?user=".$row_username['user_id']."'><p  class = 'dataLebs'>".$row_username['user_username']."</p></a>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
                     <p  class = 'dataLebss'>".$order['items']."</p>

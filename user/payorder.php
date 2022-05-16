@@ -31,7 +31,7 @@ if($row)
 date_default_timezone_set('Singapore');
 $date = date('m/d/Y h:i:s a', time());
 
-if($row_user['municipality'] == "mandaue" || $row_user['municipality'] == "cebu" || $row_user['municipality'] == "consolacion" || $row_user['municipality'] == "talisay")
+if($row_user['municipality'] == "Mandaue City" || $row_user['municipality'] == "Cebu City" || $row_user['municipality'] == "Consolacion City" || $row_user['municipality'] == "Talisay City")
 {
     foreach($_SESSION['cart'] as $prodID)
     { 
@@ -57,5 +57,3 @@ else
 }
 
 ?>
-
-

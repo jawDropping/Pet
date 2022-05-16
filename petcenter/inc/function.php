@@ -91,8 +91,8 @@
                         <img class = 'fikture' src ='../uploads/user_profile/".$row['service_photo']."' />
                         <div class = 'prodDet'>
                         <p class = 'head4'>".$row['services_name']."</p><br>
-                            <a id = 'pro_btnView' href = 'show_service_info.php?id=".$row['id']."'>Edit</a>
-                            <a id = 'pro_btnViewDelete' href = 'show_service_info.php?id=".$row['id']."'>Delete</a>
+                            <a id = 'pro_btnView' href = 'edit_service.php?edit_service=".$row['id']."'>Edit</a>
+                            <a id = 'pro_btnViewDelete' href = 'delete_service.php?delete_service=".$row['id']."'>Delete</a>
                             <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                         </div>
                     </a>
@@ -638,8 +638,6 @@ function updateThumbnail(dropZoneElement, file) {
 }
                     </script>
             <?php
-           
-
         echo "</div>
     </div>
     <button  class = 'btnss' name = 'add_service'>Add Service</button>

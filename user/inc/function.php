@@ -9,7 +9,7 @@
             $user_email = $_POST['user_email'];
             $user_password = $_POST['user_password'];
 
-            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
             $check_email->setFetchMode(PDO::FETCH_ASSOC);
             $check_email->execute();
 
