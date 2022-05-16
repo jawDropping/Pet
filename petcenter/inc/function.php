@@ -492,6 +492,16 @@
         <input class = 'ints' type='text' name =  'st' required/>
        
     </div>
+    <div class = 'cont'>
+        <p class = "lbes">Accept Coupon</p>
+            <input type="radio" id="Yes" name="pet" value="Yes">
+             <label class = 'ok' for="Yes">Yes</label>
+             <input type="radio" id="No" name="pet" value="No">
+             <label class = 'ok' for="No">No</label>
+            
+            
+       
+    </div>
                     <script>
                         function myFuction(){
             varOne = document.getElementById('municipal').value;
