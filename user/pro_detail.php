@@ -92,6 +92,15 @@
             text-align: center;
             border-radius: 4px;
         }
+        .btnLinkCart {
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 12px;
+  border: 1px solid #0080fe;
+  color: blue;
+  background: #0080fe;
+}
     </style>
     <script>
         var pic1Address = pic1;
