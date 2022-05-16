@@ -51,13 +51,14 @@
 
 <p class = 'hed'>Donation Records</p>
 <div class="ledger">
-    <div class="body">
-        
-       <div>
-       <form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
+<form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
            Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
            <button id = 'search_btn' name = 'search'>Search</button><br>
         </form>
+    <div class="body">
+        
+       <div>
+       
        
         <div class = 'gridnasad'>
            <p>Transaction Number</p>
