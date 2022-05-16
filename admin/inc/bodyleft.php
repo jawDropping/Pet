@@ -3,7 +3,7 @@
       <ul class = 'mainUl'>
         <li class =  "donate"><a href = "index.php"><img src="../uploads/donation2.1.svg" class="navicons">Donations</a></li>
             <ul class="subList">
-                <li><a href="manage_donation.php">Manage Donations</a></li>
+                <li><a href="coupons.php">Coupon Application</a></li>
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>

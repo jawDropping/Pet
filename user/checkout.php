@@ -35,6 +35,11 @@
     
         $row_user = $fetch_user_username->fetch();
         $net_total = 0;
+        $mandaue_fee = 10;
+        $cebu_fee = 12;
+        $consolacion_fee = 12;
+        $lapu_lapu_fee = 12;
+            
 
         echo "<div class = checkoutTab>
         ";
@@ -92,6 +97,7 @@
             $qty = array_count_values($_SESSION['cart'])[$row['pro_id']];
             $pro_price = $row['pro_price'];
             $sub_total = $qty * $pro_price; 
+            
         echo 
         "<form method = 'POST'  enctype = 'multipart/form-data'>
         ";
@@ -112,19 +118,19 @@
                 ";
                 if($row_user['municipality'] == "Mandaue City")
                 {  
-                    $net_total = $net_total + 10 + $sub_total;
+                    $net_total = $net_total+15 + ($mandaue_fee-10) + $sub_total-10;
                 }
                 elseif($row_user['municipality'] == "Cebu")
                 {
-                    $net_total = $net_total + 12 + $sub_total;
+                    $net_total = $net_total+15 + ($cebu_fee-12) + $sub_total-12;
                 }
                 elseif($row_user['municipality'] == "Consolacion")
                 {
-                    $net_total = $net_total + 12 + $sub_total;
+                    $net_total = $net_total+15 + ($consolacion_fee-12) + $sub_total-12;
                 }
                 elseif($row_user['municipality'] == "Lapu-Lapu City")
                 {
-                    $net_total = $net_total + 12 + $sub_total;
+                    $net_total = $net_total+15 + ($lapu_lapu_fee-12) + $sub_total-12;
                 }
                
         endwhile;

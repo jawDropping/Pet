@@ -277,9 +277,12 @@
                         <div>
                             <input class = 'inputer' type='text' name = 'st' placeholder = 'Street' size = '50' required />
                         </div>
-                        
+                        <div>
+                            <input class = 'inputer' type='text' name = 'full_location' placeholder = 'Location' size = '50' required />
                         </div>
                         
+                        </div>
+                        Business Permit: <input type = 'file' name = 'proof_photo' placeholder = />
                         
                        <br>
                         <button name = 'add_user' id = 'regs'>Register</button>
@@ -304,13 +307,19 @@
               $email = $_POST['email'];
               $st = $_POST['st'];
               $contact_number = $_POST['contact_number'];
-              $accept_coupons = $_POST['accept_coupons'];
               $pet_center_photo = "userIcon.svg";
               $barangay = $_POST['barangays'];
               $municipality = $_POST['municipality'];
+              $full_location = $_POST['full_location'];
               $verification_key = generateRandomString();
               $verified = 0;
-  
+
+              $proof_photo = $_FILES['proof_photo']['name'];
+              $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
+              
+              move_uploaded_file($proof_photo_tmp,"../uploads/business_permits/$proof_photo");
+
+              
               $view_email = $con->prepare("SELECT COUNT(*) AS pet_center_email FROM pet_center_tbl WHERE email = '$email'");
               $view_email->setFetchMode(PDO::FETCH_ASSOC);
               $view_email->execute();
@@ -347,11 +356,7 @@
               }
               else
               {
-                  $receiver = $email;
-                  $subject = "Email Verification";
-                  $body = "Use this Verification Code: $verification_key to verify your email!";
-                  $sender = "ianjohn0101@gmail.com";
-  
+                  
                   $add_service = $con->prepare("INSERT INTO pet_center_tbl 
                   SET
                   pet_center_name = '$pet_center_name',
@@ -360,23 +365,22 @@
                   st = '$st',
                   municipality = '$municipality',
                   barangay = '$barangay',
+                  full_location = '$full_location',
                   contact_number = '$contact_number',
                   pet_center_photo = '$pet_center_photo',
-                  active_coupon = '$accept_coupons',
-                  v_key = '$verification_key',
-                  verified = $verified
+                  verified = $verified,
+                  business_permit = '$proof_photo'
                   ");
       
                   if($add_service->execute())
                   {
                       echo "
                       <script>
-                      alert('Registered Successful!');
+                      alert('Registered Successful, Please wait for the confirmation!');
                       if ( window.history.replaceState ) {
                       window.history.replaceState( null, null, window.location.href );
                   }            
                       </script>"; 
-                      mail($receiver, $subject, $body, $sender);
                       echo "<script>window.open('login.php', '_self');</script>";
                       
                   }

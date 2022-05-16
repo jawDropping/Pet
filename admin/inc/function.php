@@ -18,7 +18,7 @@
             if($countUser>0)
             {
                 $_SESSION['id'] = $row['id'];
-                echo "<script>window.open('/Pet/admin/manage_donation.php?login_user=".$_SESSION['id']."','_self');</script>";
+                echo "<script>window.open('/Pet/admin/coupons.php?login_user=".$_SESSION['id']."','_self');</script>";
             }
             else
             {
@@ -381,7 +381,7 @@
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
 
-                        <p  class = 'dataLebs'>".$row_username['user_username']."</p>";
+                        <a href = 'user.php?user=".$row_username['user_id']."'><p  class = 'dataLebs'>".$row_username['user_username']."</p></a>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
                     <p  class = 'dataLebss'>".$order['items']."</p>

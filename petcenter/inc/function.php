@@ -91,8 +91,8 @@
                         <img class = 'fikture' src ='../uploads/user_profile/".$row['service_photo']."' />
                         <div class = 'prodDet'>
                         <p class = 'head4'>".$row['services_name']."</p><br>
-                            <a id = 'pro_btnView' href = 'show_service_info.php?id=".$row['id']."'>Edit</a>
-                            <a id = 'pro_btnViewDelete' href = 'show_service_info.php?id=".$row['id']."'>Delete</a>
+                            <a id = 'pro_btnView' href = 'edit_service.php?edit_service=".$row['id']."'>Edit</a>
+                            <a id = 'pro_btnViewDelete' href = 'delete_service.php?delete_service=".$row['id']."'>Delete</a>
                             <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                         </div>
                     </a>
@@ -267,7 +267,7 @@
     </div>
     <div class = 'cont' >
             <p class = 'lbes' >Service Cost: </p>
-            <input class = 'ints' type='text' name =  'service_cost' required/></td>
+            <input class = 'ints' type='number' name =  'service_cost' required/></td>
         </div>
     <div class = 'cont' >
             <p class = 'lbes' >Service Discount: </p>
@@ -492,6 +492,16 @@
         <input class = 'ints' type='text' name =  'st' required/>
        
     </div>
+    <div class = 'cont'>
+        <p class = "lbes">Accept Coupon</p>
+            <input type="radio" id="Yes" name="pet" value="Yes">
+             <label class = 'ok' for="Yes">Yes</label>
+             <input type="radio" id="No" name="pet" value="No">
+             <label class = 'ok' for="No">No</label>
+            
+            
+       
+    </div>
                     <script>
                         function myFuction(){
             varOne = document.getElementById('municipal').value;
@@ -628,8 +638,6 @@ function updateThumbnail(dropZoneElement, file) {
 }
                     </script>
             <?php
-           
-
         echo "</div>
     </div>
     <button  class = 'btnss' name = 'add_service'>Add Service</button>
