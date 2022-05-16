@@ -493,10 +493,15 @@
        
     </div>
     <div class = 'cont'>
+        <p class = "lbes">Full Location</p>
+        <input class = 'ints' type='text' name =  'full_location' required/>
+       
+    </div>
+    <div class = 'cont'>
         <p class = "lbes">Accept Coupon</p>
-            <input type="radio" id="Yes" name="pet" value="Yes">
+            <input type="radio" id="Yes" name="accept_coupon" value="Yes">
              <label class = 'ok' for="Yes">Yes</label>
-             <input type="radio" id="No" name="pet" value="No">
+             <input type="radio" id="No" name="accept_coupon" value="No">
              <label class = 'ok' for="No">No</label>
             
             
@@ -670,6 +675,8 @@ function updateThumbnail(dropZoneElement, file) {
             $time_open = $_POST['time_open'];
             $time_close = $_POST['time_close'];
             $service_cost = $_POST['service_cost'];
+            $accept_coupon = $_POST['accept_coupon'];
+            $full_location = $_POST['full_location'];
 
             $service_photo = $_FILES['service_photo']['name'];
             $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
@@ -708,7 +715,9 @@ function updateThumbnail(dropZoneElement, file) {
             time_close = '$time_close',
             service_cost = '$service_cost',
             discount = $service_discount,
-            service_photo = '$service_photo'
+            service_photo = '$service_photo',
+            accept_coupon = '$accept_coupon',
+            full_location = '$full_location'
             ");
                 
 
@@ -1048,6 +1057,18 @@ function updateThumbnail(dropZoneElement, file) {
                         echo days();
                     echo" </select>
                 </div>
+                <div>
+                    <input type = 'text' name = 'st' value = '".$row['st']."' />
+                </div>
+                <div>
+                    <input type = 'text' name = 'municipality' value = '".$row['municipality']."' />
+                </div>
+                <div>
+                    <input type = 'text' name = 'barangay' value = '".$row['barangay']."' />
+                </div>
+                <div>
+                    <input type = 'text' name = 'full_location' value = '".$row['full_location']."' />
+                </div>
               
                 <div>
                     <button name = 'update_service'>Update Service</button>
@@ -1068,6 +1089,10 @@ function updateThumbnail(dropZoneElement, file) {
                 $time_open = $_POST['time_open'];
                 $time_close = $_POST['time_close'];
                 $service_cost = $_POST['service_cost'];
+                $st = $_POST['st'];
+                $municipality = $_POST['municipality'];
+                $barangay = $_POST['barangay'];
+                $full_location = $_POST['full_location'];
                 
                 $update_service = $con->prepare("UPDATE services 
                 SET 
@@ -1076,7 +1101,11 @@ function updateThumbnail(dropZoneElement, file) {
                     day_close = '$day_close',
                     time_open = '$time_open',
                     time_close = '$time_close',
-                    service_cost = '$service_cost'
+                    service_cost = '$service_cost',
+                    st = '$st',
+                    municipality = '$municipality',
+                    barangay = '$barangay',
+                    full_location = '$full_location'
                 WHERE 
                     id = '$service_id'");
     
