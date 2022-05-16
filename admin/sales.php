@@ -49,6 +49,10 @@
 </div>
 <div id="bodyright">
 <p class = 'hed'>Transaction History</p>
+<form method = 'GET' action = 'date_sales.php' enctpye = 'multipart/form-data'>
+    <input type = 'date'  name = 'date' />
+    <button name = 'get_date'>Search date</button>
+</form>
 <div class="buttons">
 <button id = "btnExport" value = "PRINT"><img class ='printPic' src = '../uploads/print.png'> PRINT</button>
 <button id = "csv"><img class ='printPic' src = '../uploads/excel.png'>EXPORT TO EXCEL</button>
