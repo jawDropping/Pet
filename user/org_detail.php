@@ -61,32 +61,40 @@
             padding: 10px;
             background: #ffb830;
             text-decoration: none;
-            
             color: white;
             border-radius: 5px;
             text-align: center;
+           margin-right: 5%;
+            float: right;
         }
         .mainInfos{
             display: flex;
-            border-radius: 8px;
-            width: 80%;
             
-            margin-left: 10%;
+            width: 90%;
+            margin-left: 5%;
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         }
         .infoss{
             display: grid;
-            grid-template-columns: 20% 50%;
+            grid-template-columns: 50% 50%;
             row-gap: 5px;
             width:80%;
             padding: 20px;
            
         }
+        .miniLeft{
+            display: grid;
+            grid-template-columns: 30% 50%;
+        }
+        .miniRights{
+            display: grid;
+            grid-template-columns: 30% 50%;
+        }
         .donsite{
-         height: 300px;
+         height: 250px;
         }
         .rightInfo{
-            width: 30%;
+            width: 20%;
           
          
         }
@@ -94,13 +102,16 @@
             padding: 10px;
             text-align: right;
             color: #777;
-            font-size: 14px;
-           
+            font-size: 12px;
+            font-family: "Varela Round", sans-serif;
             border-radius: 3px;
         }
         .dates{
             padding: 10px;
-           
+            font-family: "Varela Round", sans-serif;
+            margin-bottom: 7px;
+            border-radius: 4px;
+            border: 1px solid #007ffe9f;
         }
     </style>
 </html>

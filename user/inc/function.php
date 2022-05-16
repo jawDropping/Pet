@@ -513,25 +513,40 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         <img class = 'donsite' src = '../uploads/donateBy.png' >
                         </div>
                         <div class = 'infoss'>
-                    
+                        <div class = 'miniLeft'>
+                        <p class = 'lebels'>Location</p>
+                        <p class = 'dates'> ".$row_org['org_location']."</p>
+                        <p class = 'lebels'>GCash Number</p><p class = 'dates'> ".$row_org['org_contact_number']."</p>
+                        <p class = 'lebels'>Email Address </p>
+                       <p class = 'dates'>".$row_org['org_email_address']."</p>
                         <p class = 'lebels'>
-                            Location:
-                            </p>
-                            <p class = 'dates'> ".$row_org['org_location']."
-                        </p>
-                        <p class = 'lebels'>
-                        GCash Number:</p><p class = 'dates'> ".$row_org['org_contact_number']."
+                        Bank Details  </p>
+                        <p class = 'dates'>".$row_org['']."
+                         </p>
+                        </div>
+
+                        <div class = 'miniRights'>
+                        <p class = 'lebels'>Website</p>
+                        <p class = 'dates'> ".$row_org['']."</p>
                        
-                        </p>
+                        <p class = 'lebels'>Paymaya</p><p class = 'dates'> ".$row_org['']."</p>
+                        <p class = 'lebels'>Organization Manager</p>
+                       <p class = 'dates'>".$row_org['']."</p>
                         <p class = 'lebels'>
-                       Email Address: </p>
-                       <p class = 'dates'>".$row_org['org_email_address']."
-                        </p>
+                        Facebook  </p>
+                        <p class = 'dates'>".$row_org['']."
+                         </p>
+                        </div>
+                        
                         <div></div>
-                        <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'> Apply for Coupon</a>
+                        
                         </div>
+                        
                         </div>
+                       
+                       
                     </div>
+                    <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'> Apply for Coupon</a>
                    
                     
                 </div>
@@ -1020,9 +1035,9 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     <center>
                               
                                 <form method = 'POST'>
-                                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                                    <button name = 'buy_now' id = 'buy_now' style = color:#000>Buy Now</button>
-                                    <button name = 'cart_btn'>Add to Cart</button>
+                                    <input type = 'hidden' value = '".$row_pro['pytro_id']."' name = 'pro_id' />
+                                    
+                                    <button class = 'btnLinkCart' name = 'cart_btn'>Add to Cart</button>
                                 </form>
                             </center>
                     <ul>

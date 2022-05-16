@@ -18,7 +18,7 @@
             if($countUser>0)
             {
                 $_SESSION['id'] = $row['id'];
-                echo "<script>window.open('/Pet/admin/manage_donation.php?login_user=".$_SESSION['id']."','_self');</script>";
+                echo "<script>window.open('/Pet/admin/coupons.php?login_user=".$_SESSION['id']."','_self');</script>";
             }
             else
             {
