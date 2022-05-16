@@ -9,8 +9,9 @@
     .innerFoot{
         padding: 30px;
         display: flex;
-        color: gray;
+        color: white;
         font-size: 14px;
+        
     }
     #aboutUs{
         margin-right: 20px;

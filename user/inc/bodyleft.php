@@ -15,7 +15,7 @@
         <div id = "slider">
         <div class="slideHead">
         <img class = "image" src="../uploads/featureProd.gif" alt="">
-        <p>FEATURED PRODUCTS</p>
+        <p class = "hedss">Pet Products</p>
         </div>
        
       
@@ -47,3 +47,11 @@
    
 </div><!-- <End of Bodyleft> -->
 <?php }}}?>
+
+<style>
+    .hedss{
+  font-family: 'Varela Round', sans-serif;
+  color: #444;
+  font-size: 16px;
+}
+</style>

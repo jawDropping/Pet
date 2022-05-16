@@ -10,12 +10,18 @@ body {
   background: #0080fe;
   /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);*/
   height: 60px;
-  width: 100vw;
+  width: 98%;
+  min-width: 500px;
   position: fixed;
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
   z-index: 20;
+  padding-left: 2%;
+  padding-right: 2%;
 }
-
+.cartes{
+ 
+}
 #logo {
   width: 10%;
   height: 70px;
@@ -46,7 +52,6 @@ body {
 #link {
   width: 4%;
   height: 80%;
-  margin-left: 30px;
 }
 .dropcontent {
   list-style-type: none;
@@ -79,11 +84,11 @@ body {
 }
 .profileImg {
   border-radius: 30px;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   color: #333;
   float: center;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 #search {
   width: 100%;
@@ -97,22 +102,25 @@ body {
 }
 
 #search form input {
-  border: 0.8px solid #555;
-  border-radius: 5px;
-  width: 60%;
+  border:none;
+  font-family: "Varela Round", sans-serif;
+  font-size: 14px;
+  width: 90%;
   height: 35px;
   padding-left: 2%;
   outline: none;
   margin-top: 10px;
-  padding-top: 6px;
   margin-left: 35px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
 }
+
 
 #search_btn {
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
-  border: 0.8px solid #444;
-  margin-left: -10px;
+  outline: none;
+  border: none;
   width: 50px;
   height: 35px;
   font-weight: bold;
@@ -127,15 +135,15 @@ body {
 #cart_btn {
   border-radius: 3px;
   border-width: 0px;
-  width: 8%;
+  width: 60%;
   height: 36px;
   background: white;
   font-weight: bold;
   color: #444;
-  float: right;
   margin-top: 10px;
   margin-right: 10px;
   margin-left: 10px;
+  
 }
 
 #cart_btn a {
@@ -143,6 +151,7 @@ body {
   color: #777;
   font-weight: bold;
   display: block;
+  font-family:  'Varela Round', sans-serif;
 }
 .imageDrop {
   height: 10px;
@@ -314,6 +323,7 @@ body {
 
 #navbar {
   width: 100%;
+  min-width: 500px;
   height: 40px;
   background: #0080fe;
   overflow: hidden;
@@ -556,7 +566,7 @@ h4 {
   color: #444;
   padding-left: 5%;
   margin-top: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Varela Round', sans-serif;
 }
 
 #pro_img {
@@ -721,10 +731,12 @@ h4 {
 #footer {
   display: flex;
   width: 100%;
+  min-width: 500px;
   height: 100px;
-  background: white;
-  border-top: 1px solid #f8f8f8;
+  background: #0c0c57;
+  border-top: 1px solid #000;
   justify-content: center;
+  margin-top: 50vh;
 }
 
 /* #footer h2 {
@@ -744,6 +756,7 @@ h4 {
   background: white;
   border-radius: 5px;
 }
+
 .emptyCart {
   height: 70vh;
   width: 100vw;
@@ -777,6 +790,12 @@ h4 {
     height: 280px;
     margin-bottom: 5%;
   }
+  .logo a {
+    font-size: 10px;
+  }
+  #search_btn {
+    width: 25px;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -784,4 +803,27 @@ h4 {
     width: 80%;
     margin-left: 10%;
   }
+}
+@media (max-width: 600px) {
+  #search{
+    width: 80%;
+  }
+  #logo a{
+    display: none;
+  }
+  #logo{
+    padding-left: 20px;
+  }
+  #cart_btn{
+    width: 100%;
+    margin-left: 0;
+    float: left;
+  }
+  #header{
+    grid-template-columns:8% 70% 20% ;
+  }
+}
+.asd{
+  display: flex;
+  width: 100%;
 }

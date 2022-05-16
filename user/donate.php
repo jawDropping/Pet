@@ -138,6 +138,7 @@
             color: #fff;
             text-align: right;
             margin-top: 10%;
+            font-family: 'Varela Round', sans-serif;
         }
         .sulod{
             padding: 20px;

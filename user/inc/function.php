@@ -218,7 +218,7 @@
             
             echo "<div class = 'mainTebs' >
                              <div class='heads'>
-                                 <p class ='lebss'> Image</p>
+                                 <p class ='lebss' id = 'hied'> Image</p>
                                  <p class ='lebss'> Product Name</p>
                                  <p class ='lebss'> Quantity</p>
                                  <p class ='lebss'> Price</p>
@@ -228,33 +228,39 @@
             while($row_pro = $display_cart->fetch()):
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
                         <div class ='data'>
-                          
+                          <div class = 'inputss' id = 'hied'>
                             <img class = 'cartDisplayImage' src = '../uploads/products/".$row_pro['pro_img']."' />
-                    
-                           
-                               <p> ".$row_pro['pro_name']."</p>
-                   
-                            <div>
+                            </div>
+                            <div class = 'inputss1'>
+                               <p class = 'prodName'> ".$row_pro['pro_name']."</p>
+                               <p class = 'prodBrand'> ".$row_pro['pro_brand']."</p>
+                            </div>
+                            <div class = 'inputss2'>
                                 <input type = 'number'  class = 'quantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
                                 '/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <button id = 'pro_btn'>Update</button>
+                                <button id = 'update'><img class = 'delete' src = '../uploads/edittw.png'></button>
                             </div>
-                             <p  class = 'price'> ".$row_pro['pro_price']."</p>
-                            <p class = 'sub_total'>";
-                                $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
-                                $pro_price = $row_pro['pro_price'];
-                                $sub_total = $qty * $pro_price;
-                                echo $sub_total;
-                                $net_total = $net_total + $sub_total;
+                            <div class = 'inputss'>
+                            <p  class = 'prodName'> ₱".$row_pro['pro_price']."</p>
+                            </div>
+                             <div class = 'inputss'>
+                             <p class = 'prodName'>₱";
+                             $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
+                             $pro_price = $row_pro['pro_price'];
+                             $sub_total = $qty * $pro_price;
+                             echo $sub_total;
+                             $net_total = $net_total + $sub_total;
 
-                            echo "</p></form>
+                         echo "</p>
+                             </div>
+                           </form>
                            
                             <form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
-                            <td>
+                            <div class = 'inputss'>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'delete' />
                             <button id = 'pro_btndelete'><img src = '../uploads/delete 1.svg' class='delete'></button></a>
-                            </td>
+                            </div>
                             </form>    
                         </div>
                     </form>";
@@ -266,9 +272,9 @@
             "<div class = 'tots''>
     
                 <p class = 'ito''>
-                    Total Amount: ".$net_total."
+                    Total Amount:</p> <p class = 'itos'>₱".$net_total."</p>
                         <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                    </p>
+                    
                     <a class = 'btnn' href = 'checkout.php'  name = 'place_order'>Place Order</a>             
                     
                     
@@ -297,6 +303,7 @@
 
     function view_orders()
     {
+        
         include("inc/db.php");
         
         if(isset($_GET['user_id']))
@@ -1067,7 +1074,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <h4>".$row['services_name']."</h4><br>
+                <h4>".$row['services_name']."</h4><br><br>
                         <a class = 'aLink' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                 </div>
@@ -1092,25 +1099,24 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Grooming Services</h3>";
+       
         while($row = $sql2->fetch()):
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4'>".$row['services_name']."</p>
+                    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1346,25 +1352,28 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                            echo" </div>
                             <br>
                             <br>
-                            <div>
-                                <br>
-                                <p class = 'loc'>Location</p>
-                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$row_services['services_name']."&output=embed'></iframe>
                             </div>
+                           </div>
                         </div>  
+                        <div class = 'loces'>
+                       <br>
+                        <p class = 'loc'>Location</p>
+                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$barangay."".$row_services['services_name']."&output=embed'></iframe>
+                    </div>
                     </div>
                 </div>
                 <div class = 'comment-box'>
-                <h2>Give Feedback</h2>
+                <p class ='headF' >Give Feedback</p>
                 <form method = 'POST' enctype = 'multipart/form-data'>
                    
                     <input type = 'hidden' name = 'user_id' value = ".$_SESSION['user_id']." />
                     
                     <input type = 'hidden' name = 'service_id' value = ".$row_services['service_id']." />
                     <input type = 'hidden' name = 'service_name' value = '".$row_services['services_name']."' disabled />
-                    <textarea name = 'comment' placeholder = 'Write a comment..' required></textarea>
-                    <button name = 'submit'  >Submit</button>
-                    
+                    <div class = 'commentF'>
+                    <textarea class = 'inputCom' name = 'comment' placeholder = 'Write a comment..' required></textarea>
+                    <button class = 'btnsF' name = 'submit'  >Submit</button>
+                    </div>
                 </form>
             </div>
                    ";  
@@ -1437,7 +1446,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $close_time = date('g:i A', strtotime($time_close));
             $open_time = date('g:i A', strtotime($time_open));
 
-            echo "<p class = 'loc2'>REVIEWS</p>";
+            echo "<p class = 'loc2'>Reviews</p>";
             $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");
             $sql2->setFetchMode(PDO:: FETCH_ASSOC);
             $sql2->execute();
@@ -1453,8 +1462,13 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     echo 
                     "
                     <div class = 'comss'>
+                        <div class = 'useCom'>
+                        <img class = 'pics' src = ../uploads/user_profile/".$row_user['user_profilephoto'].">
                         <p class = 'revNem'>".$row_user['user_username']."</p>
-                        <p>".$row_feedbacks['comment_date']."</p>
+                        <p class = 'revNemDet'>".$row_feedbacks['comment_date']."</p>
+                        </div>
+                        
+         
                         <p class = 'rev'> ".$row_feedbacks['comment']."</p>
                         </div>
                     "; 
