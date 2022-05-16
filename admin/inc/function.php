@@ -698,6 +698,7 @@
             echo "<option value = '".$row['sub_cat_id']."'>".$row['sub_cat_name']."</option>";
         endwhile;
     }
+    
 
     function view_all_products()
     {
@@ -840,6 +841,68 @@
 
     //     $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
     // }
+
+    function registered_petcenters()
+    {
+        include("inc/db.php");
+        $view_petcenters = $con->prepare("SELECT * FROM pet_center_tbl");
+        $view_petcenters->setFetchMode(PDO:: FETCH_ASSOC);
+        $view_petcenters->execute();
+
+        while($row = $view_petcenters->fetch()):
+            echo
+            "<form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>".$row['pet_center_name']."</td>
+                    <td>".$row['contact_number']."</td>
+                    <td>".$row['email']."</td>
+                    <td>".$row['municipality']."</td>
+                    <td>".$row['barangay']."</td>
+                    <td>".$row['st']."</td>
+                    <td>".$row['business_permit']."</td>
+                    <input type = 'hidden' name = 'email' value = '".$row['email']."' />
+                    <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
+                    <button name = 'confirm'>Confirm</button>
+                </tr>
+            </form>";
+        endwhile;
+
+            if(isset($_POST['confirm']))
+            {
+                $pet_center_id = $_POST['pet_center_id'];
+
+                $sql2 = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+
+                $row = $sql2->fetch();
+                
+                if($row['verified'] == 1)
+                {
+                    echo "<script>alert('This account has been confirmed!');</script>";
+                }
+                else
+                {
+                    $receiver = $row['email'];
+                    $subject = "Account Confirmation!";
+                    $body = "Your account has been confirmed!";
+                    $sender = "ianjohn0101@gmail.com";
+    
+                    $sql = $con->prepare("UPDATE pet_center_tbl SET verified = '1' WHERE pet_center_id = '$pet_center_id'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+                    
+                    if(!$sql->execute())
+                    {
+                        return;
+                    }
+    
+                    mail($receiver, $subject, $body, $sender);
+                    echo "<script>alert('Confirmed!');</script>";
+                    
+                }
+            }
+    }
 
     function view_detail()
     {
