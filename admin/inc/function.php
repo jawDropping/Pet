@@ -874,6 +874,8 @@
                 $sql2 = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
                 $sql2->setFetchMode(PDO:: FETCH_ASSOC);
                 $sql2->execute();
+                
+                $v_key = generateRandomString();
 
                 $row = $sql2->fetch();
                 
@@ -885,10 +887,10 @@
                 {
                     $receiver = $row['email'];
                     $subject = "Account Confirmation!";
-                    $body = "Your account has been confirmed!";
+                    $body = "Your account has been confirmed, please use this OTP Code: $v_key to validate your account!";
                     $sender = "ianjohn0101@gmail.com";
     
-                    $sql = $con->prepare("UPDATE pet_center_tbl SET verified = '1' WHERE pet_center_id = '$pet_center_id'");
+                    $sql = $con->prepare("UPDATE pet_center_tbl SET v_key = '$v_key' WHERE pet_center_id = '$pet_center_id'");
                     $sql->setFetchMode(PDO:: FETCH_ASSOC);
                     $sql->execute();
                     

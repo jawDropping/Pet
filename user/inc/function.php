@@ -1284,6 +1284,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         include("inc/db.php");
         if(isset($_GET['id']))
         {
+            
             $id = $_GET['id'];
             $fetch_services=$con->prepare("SELECT * FROM services WHERE id = '$id'");
             $fetch_services->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1300,7 +1301,9 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $st = $row_services['st'];
             $barangay = $row_services['barangay'];
             $municipality = $row_services['municipality'];
-            $location = str_replace(" ", "+", $municipality);
+            $full_location = $row_services['full_location'];
+            $services_name = $row_services['services_name'];
+            $location = str_replace(" ", "+", $full_location);
 
             $service_cat = $row_services['service_id'];
 
@@ -1357,9 +1360,12 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             <p class = 'conts'></p>
                         </div>
                            
-                            <div class = 'btnss' >
-                                <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>";
-                               if($row_pet_center['active_coupon'] == 'yes')
+                            <div class = 'btnss' >";
+                                if($row_services['accept_coupon'] == 'No')
+                                {
+                                    echo "<a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>";
+                                }
+                               if($row_services['accept_coupon'] == 'Yes')
                                {
                                     echo " <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>";
                                }
@@ -1373,25 +1379,29 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                         <div class = 'loces'>
                        <br>
                         <p class = 'loc'>Location</p>
-                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$municipality."".$barangay."".$row_services['services_name']."&output=embed'></iframe>
+                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
                     </div>
                     </div>
                 </div>
-                <div class = 'comment-box'>
-                <p class ='headF' >Give Feedback</p>
-                <form method = 'POST' enctype = 'multipart/form-data'>
-                   
-                    <input type = 'hidden' name = 'user_id' value = ".$_SESSION['user_id']." />
+                <div class = 'comment-box'>";
+                if(isset($_SESSION['user_id']))
+                {
+                    echo "<p class ='headF' >Give Feedback</p>
+                    <form method = 'POST' enctype = 'multipart/form-data'>
+                      
+                        <input type = 'hidden' name = 'user_id' value = ".$_SESSION['user_id']." />";
+                       
                     
-                    <input type = 'hidden' name = 'service_id' value = ".$row_services['service_id']." />
-                    <input type = 'hidden' name = 'service_name' value = '".$row_services['services_name']."' disabled />
-                    <div class = 'commentF'>
-                    <textarea class = 'inputCom' name = 'comment' placeholder = 'Write a comment..' required></textarea>
-                    <button class = 'btnsF' name = 'submit'  >Submit</button>
-                    </div>
-                </form>
-            </div>
-                   ";  
+                        echo "<input type = 'hidden' name = 'service_id' value = ".$row_services['service_id']." />
+                        <input type = 'hidden' name = 'service_name' value = '".$row_services['services_name']."' disabled />
+                        <div class = 'commentF'>
+                        <textarea class = 'inputCom' name = 'comment' placeholder = 'Write a comment..' required></textarea>
+                        <button class = 'btnsF' name = 'submit'  >Submit</button>
+                        </div>
+                    </form>
+                </div>";
+                }
+                
             if(isset($_POST['submit']))
             {
                 $comment = $_POST['comment'];
@@ -1617,7 +1627,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
             $user_id = $row2['user_id'];
 
-  if($row3['active_coupon'] == 'yes')
+  if($row['accept_coupon'] == 'Yes')
                     {
             echo 
             "<form method = 'POST'>
