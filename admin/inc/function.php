@@ -358,8 +358,12 @@
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
             {
-                $net_total += $order['sum(od.qty * od.price)'];
+                // $net_total += $order['sum(od.qty * od.price)'];
                 $order_id = $order['order_id'];
+                $mandaue = $order['sum(od.qty * od.price)']+10;
+                $cebu = $order['sum(od.qty * od.price)']+12;
+                $concolacion = $order['sum(od.qty * od.price)']+12;
+                $lapulapu = $order['sum(od.qty * od.price)']+12;
                 echo
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
                         
@@ -385,10 +389,33 @@
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
                     <p  class = 'dataLebss'>".$order['items']."</p>
-                    <p  class = 'dataLebs'>".$order['order_date']."</p>
-                    <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <p  class = 'dataLebs'>".$net_total."</p>
-                    <input class = 'dets' type = 'date' name = 'delivery_date' required/>
+                    <p  class = 'dataLebs'>".$order['order_date']."</p>";
+                    if($row_username['municipality'] == "Mandaue City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$mandaue."' />
+                        <p  class = 'dataLebs'>".$mandaue."</p>";
+                    }
+                    if($row_username['municipality'] == "Cebu City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$cebu."' />
+                        <p  class = 'dataLebs'>".$cebu."</p>";
+                    }
+                    if($row_username['municipality'] == "Consolacion")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$concolacion."' />
+                        <p  class = 'dataLebs'>".$consolacion."</p>";
+                    }
+                    if($row_username['municipality'] == "Lapu-lapu")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$lapulapu."' />
+                        <p  class = 'dataLebs'>".$lapulapu."</p>";
+                    }
+                    
+                   echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>
                     <div class ='bots'>
                     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
