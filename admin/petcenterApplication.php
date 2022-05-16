@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Admin Panel</title>
+    <title>Admin Panel</title>
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,16 +11,14 @@
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&family=Nunito:wght@200&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
-
     <body>
     <?php 
-           
-                include ("inc/db.php");
-                include ("inc/function.php"); 
-                include ("inc/header.php"); 
-                include ("inc/navbar.php"); 
-                ?>
-                <div class="mainContainer">
+            include ("inc/db.php");
+            include ("inc/function.php");
+            include ("inc/header.php"); 
+            include ("inc/navbar.php"); 
+            ?>
+            <div class="mainContainer">
                 <div id = "bodyleft">
 <div class="leftBody">
       <ul class = 'mainUl'>
@@ -28,7 +26,7 @@
             <ul class="subList">
                 <li><a href="coupons.php">Coupon Application</a></li>
                 <li><a href="manage_partner.php">Manage Partners</a></li>
-                <li class = 'selection' ><a href="ledger.php">Ledger</a></li>
+                <li ><a href="ledger.php">Ledger</a></li>
             </ul>
         <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
@@ -37,7 +35,7 @@
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
         <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
-        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
+        <li class = 'selection' ><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -49,7 +47,7 @@
 </div>
 <div id="bodyright">
 
-<p class = 'hed'>Donation Records</p>
+<p class = 'hed'>Pet Center Application</p>
 <div class="ledger">
     <div class="body">
         
@@ -60,15 +58,13 @@
         </form>
        
         <div class = 'gridnasad'>
-           <p>Transaction Number</p>
-
-            <p>Full Name</p>
-
-            <p>Selected Organization</p>
-
+           <p>Pet Center Name</p>
             <p>Contact Number</p>
-
-            <p>Date Confirmed</p>
+            <p>Email</p>
+            <p>Municipality</p>
+            <p>Brgy</p>
+            <p>Street</p>
+            <p>Business Permit</p>
             <div></div>
         </div>
         <tr>
@@ -90,7 +86,7 @@
         ?>
     </body>
     <style>
-    .ledger{
+        .ledger{
         height: 100vh;
         width: 100%;
   
@@ -117,29 +113,14 @@
     }
     .gridnasad{
         display: grid;
-        grid-template-columns:  20% 20% 20% 20% 20%;
+        grid-template-columns:  12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
         border-bottom: 1px solid #aaa;
     }
     #forming{
         display: grid;
-        grid-template-columns: 20% 20% 20% 20% 20%;
+        grid-template-columns:  12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
         font-size: 14px;
         margin-top: 20px;
     }
-</style>
-
-
-
-    <script>
-        var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-        var today = new Date();
-        var date = today.getFullYear()+'-'+month[(today.getMonth())]+'-'+today.getDate();
-        var date2 = month[(today.getMonth())]+' '+today.getDate()+' '+today.getFullYear();
-        document.getElementById("currentDate").innerHTML = date2;
-    </script>
+    </style>
 </html>
-
-
-
-
-

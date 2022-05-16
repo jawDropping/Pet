@@ -267,7 +267,7 @@
     </div>
     <div class = 'cont' >
             <p class = 'lbes' >Service Cost: </p>
-            <input class = 'ints' type='text' name =  'service_cost' required/></td>
+            <input class = 'ints' type='number' name =  'service_cost' required/></td>
         </div>
     <div class = 'cont' >
             <p class = 'lbes' >Service Discount: </p>

@@ -34,7 +34,7 @@
     <style>
         .maines{
             margin-top: 3%;
-            background: #eee;
+            background: #fff;
             padding: 10px;
             border-radius: 5px;
            
@@ -46,6 +46,7 @@
             border-radius: 8px;
             margin-top: 10px;
             margin-left: 5%;
+            border: 1px solid black;
         }
         .conts{
             width: 40%;
@@ -54,6 +55,7 @@
             border-radius: 8px;
             margin-top: 10px;
             margin-left: 5%;
+            border: 1px solid black;
         }
         .contss{
             width: 89%;
@@ -62,6 +64,7 @@
             border-radius: 8px;
             margin-top: 10px;
             margin-left: 5%;
+            border: 1px solid black;
         }
         .ints{
             border: none;
