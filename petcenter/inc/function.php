@@ -684,7 +684,7 @@ function updateThumbnail(dropZoneElement, file) {
 
             // var_dump($barangay);
             // var_dump($st);
-            // var_dump($pet_center_id);
+            // var_dump($pet_cent_id);
             // var_dump($municipality);
             // var_dump($service_photo);
             // var_dump($service_id);
@@ -697,11 +697,12 @@ function updateThumbnail(dropZoneElement, file) {
             // var_dump($time_close);
             // var_dump($service_cost);
             // var_dump($service_discount);
+            // var_dump($accept_coupon);
           
             $query = $con->prepare("INSERT INTO services 
             SET 
             service_id = $service_id,
-            pet_center_name = $pet_center_name,
+            pet_center_id = $pet_cent_id,
             services_name = '$services_name',
             st = '$st',
             barangay = '$barangay',
