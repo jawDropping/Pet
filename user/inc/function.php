@@ -1089,8 +1089,9 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <h4>".$row['services_name']."</h4><br><br>
-                        <a class = 'aLink' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <p class = 'head4' >".$row['services_name']."</p>
+                 
+                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                 </div>
             </a>

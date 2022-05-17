@@ -659,7 +659,7 @@ function updateThumbnail(dropZoneElement, file) {
 
             $row = $fetch_name->fetch();
 
-            $pet_center_id = $row['pet_center_id'];
+            $pet_center_name = $row['pet_center_name'];
 
             $service_id = $_POST['service_cat'];
             $services_name = $_POST['services_name'];
@@ -701,7 +701,7 @@ function updateThumbnail(dropZoneElement, file) {
             $query = $con->prepare("INSERT INTO services 
             SET 
             service_id = $service_id,
-            pet_center_id = $pet_center_id,
+            pet_center_name = $pet_center_name,
             services_name = '$services_name',
             st = '$st',
             barangay = '$barangay',
@@ -843,21 +843,21 @@ function updateThumbnail(dropZoneElement, file) {
                         <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
                         <input type = 'hidden' name = 'service_name' value = '".$service_name."' />
                         <input type = 'hidden' name = 'date' value = '".$date."' />
-                        <p>".$user_username."</p>
-                        <p>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
+                        <p class = 'asds'>".$user_username."</p>
+                        <p  class = 'asd'>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
                         if($row2['coupon_code'] == '')
                         {
-                            echo "<p>".$empty_coupon."</p>";
+                            echo "<p  class = 'asd'>".$empty_coupon."</p>";
                         }
                         else
                         {
-                            echo "<p>".$coupon_code."</p>";
+                            echo "<p  class = 'asd'>".$coupon_code."</p>";
                         }
-                    echo "</div><div>";
-                    echo
-                    "
-                    <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
-                    <a href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
+
+                        echo
+                        "<div class = 'divsha'><button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                        <a class = 'views' href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
+                        </div>
                     </div>
                 </form>";
                 
