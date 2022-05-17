@@ -805,7 +805,7 @@ function updateThumbnail(dropZoneElement, file) {
 
         $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
-        if($pet_cent_id == $pet_center_id)
+        if($pet_center_id == $pet_cent_id)
         {
             while($row2 = $sql2->fetch()):
                 $reserve_id = $row2['reserve_id'];
@@ -853,9 +853,11 @@ function updateThumbnail(dropZoneElement, file) {
                         {
                             echo "<p>".$coupon_code."</p>";
                         }
-                        echo
-                        "<button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
-                        <a href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
+                    echo "</div><div>";
+                    echo
+                    "
+                    <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                    <a href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
                     </div>
                 </form>";
                 
@@ -880,7 +882,6 @@ function updateThumbnail(dropZoneElement, file) {
                     $service_id = $_POST['service_id'];
                     $user_id = $_POST['user_id'];
                     $coupon_code = $_POST['coupon_code'];
-                    $transaction_code = $_POST['transaction_code'];
                     $date_confirmed = $_POST['date_confirmed'];
                     $amount = $_POST['service_cost'];
                     $transaction_code = generateRandomString();
