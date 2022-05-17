@@ -61,14 +61,14 @@
         }
         .heds{
         display: grid;
-        grid-template-columns: 30% 20% 20% 20%;
+        grid-template-columns: 30% 20% 20% 30%;
         border-bottom: .8px solid #777;
            padding: 5px;
            margin-bottom: 2%; 
         }
         .hed{
             display: grid;
-            grid-template-columns: 30% 20% 20% 20%;
+            grid-template-columns: 30% 20% 20% 30%;
             margin-top: 1%;
            padding: 10px;
            background: #f4f4f4;
