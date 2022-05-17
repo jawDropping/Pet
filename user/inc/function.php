@@ -521,20 +521,20 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                        <p class = 'dates'>".$row_org['org_email_address']."</p>
                         <p class = 'lebels'>
                         Bank Details  </p>
-                        <p class = 'dates'>".$row_org['']."
+                        <p class = 'dates'>".$row_org['bank_details']."
                          </p>
                         </div>
 
                         <div class = 'miniRights'>
                         <p class = 'lebels'>Website</p>
-                        <p class = 'dates'> ".$row_org['']."</p>
+                        <p class = 'dates'> ".$row_org['website']."</p>
                        
-                        <p class = 'lebels'>Paymaya</p><p class = 'dates'> ".$row_org['']."</p>
+                        <p class = 'lebels'>Paymaya</p><p class = 'dates'> ".$row_org['paymaya']."</p>
                         <p class = 'lebels'>Organization Manager</p>
-                       <p class = 'dates'>".$row_org['']."</p>
+                       <p class = 'dates'>".$row_org['org_manager']."</p>
                         <p class = 'lebels'>
                         Facebook  </p>
-                        <p class = 'dates'>".$row_org['']."
+                        <p class = 'dates'>".$row_org['facebook']."
                          </p>
                         </div>
                         
@@ -1654,6 +1654,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
                 $row_pent = $sql->fetch();
                 $pet_center_id = $row_pent['pet_center_id'];
+                $serv_discount = $row_pent['discount'];
                 
 
                 $datenow = getdate();
@@ -1729,7 +1730,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                     VALUES (
                                         '$pet_center_id',
                                         '$service_id',
-                                        '$user_id',
+                                        '$current_user',
                                         '$service_total_cost',
                                         '$reserve_date',
                                         '$reserve_time',

@@ -1,3 +1,4 @@
+
 <html>
 <head>
         <title>Pet Society</title>
@@ -67,53 +68,60 @@
 
 <?php
     include("inc/db.php");
-    if(isset($_POST['donate']))
+    if(isset($_SESSION['user_id']))
     {
-        $transaction_number = $_POST['transaction_number'];
-        $org_id = $_GET['donate'];
-        $full_name = $_POST['full_name'];
-        $contact_number = $_POST['contact_number'];
-        $amount = $_POST['amount'];
-        $email = $_POST['email'];
-        $donation_status = "FOR CONFIRMATION";
-
-        $proof_photo = $_FILES['proof_photo']['name'];
-        $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
-
-        move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
-
-        $add_donation = $con->prepare("INSERT INTO donations
-        (
-            transaction_number,
-            org_id,
-            full_name,
-            email,
-            contact_number,
-            proof_photo,
-            donation_status,
-            coupon_code,
-            amount
-        ) 
-        VALUES
-        (
-            '$transaction_number',
-            '$org_id',
-            '$full_name',
-            '$email',
-            '$contact_number',
-            '$proof_photo',
-            '$donation_status',
-            'N/A',
-            '$amount'
-        )
-         ");
-
-        if($add_donation->execute())
-        {
-            echo "<script>alert('Please wait for the us to confirm your donation!');</script>";
-            echo "<script>window.open('donation.php' ,'_self');</script>";
-        }
+      if(isset($_POST['donate']))
+      {
+          $transaction_number = $_POST['transaction_number'];
+          $org_id = $_GET['donate'];
+          $full_name = $_POST['full_name'];
+          $contact_number = $_POST['contact_number'];
+          $amount = $_POST['amount'];
+          $email = $_POST['email'];
+          $donation_status = "FOR CONFIRMATION";
+  
+          $proof_photo = $_FILES['proof_photo']['name'];
+          $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
+  
+          move_uploaded_file($proof_photo_tmp,"../uploads/donations/$proof_photo");
+  
+          $add_donation = $con->prepare("INSERT INTO donations
+          (
+              transaction_number,
+              org_id,
+              full_name,
+              email,
+              contact_number,
+              proof_photo,
+              donation_status,
+              coupon_code,
+              amount
+          ) 
+          VALUES
+          (
+              '$transaction_number',
+              '$org_id',
+              '$full_name',
+              '$email',
+              '$contact_number',
+              '$proof_photo',
+              '$donation_status',
+              'N/A',
+              '$amount'
+          )
+           ");
+  
+          if($add_donation->execute())
+          {
+              echo "<script>alert('Please wait for the us to confirm your donation!');</script>";
+          }
+      }
     }
+    else
+    {
+      echo "<script>window.open('login.php', '_self');</script>";
+    }
+   
 ?>
 <?php 
             include ("inc/footer.php");
