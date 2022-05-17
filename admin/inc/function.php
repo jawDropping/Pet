@@ -1142,6 +1142,7 @@
                 <p class = 'okss'>".$row['user_email']."</p>
                 <p class = 'okss'>".$row['user_contactnumber']."</p>
                 <p class = 'okss'>".$row['user_address']."</p>
+                <a href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
                 
                
          </div>";
