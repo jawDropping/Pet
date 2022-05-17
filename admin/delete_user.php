@@ -10,7 +10,7 @@
         if($sql->execute())
         {
             echo "<script>alert('Deleted!');</script>";
-            echo "<script>window.open('viewall_users.php', '_self');</script>";
+            echo "<script>window.open('users.php', '_self');</script>";
         }
     }
 ?>
