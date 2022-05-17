@@ -358,8 +358,12 @@
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
             {
-                $net_total += $order['sum(od.qty * od.price)'];
+                // $net_total += $order['sum(od.qty * od.price)'];
                 $order_id = $order['order_id'];
+                $mandaue = $order['sum(od.qty * od.price)']+10;
+                $cebu = $order['sum(od.qty * od.price)']+12;
+                $concolacion = $order['sum(od.qty * od.price)']+12;
+                $lapulapu = $order['sum(od.qty * od.price)']+12;
                 echo
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
                         
@@ -385,10 +389,33 @@
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
                     <p  class = 'dataLebss'>".$order['items']."</p>
-                    <p  class = 'dataLebs'>".$order['order_date']."</p>
-                    <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <p  class = 'dataLebs'>".$net_total."</p>
-                    <input class = 'dets' type = 'date' name = 'delivery_date' required/>
+                    <p  class = 'dataLebs'>".$order['order_date']."</p>";
+                    if($row_username['municipality'] == "Mandaue City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$mandaue."' />
+                        <p  class = 'dataLebs'>".$mandaue."</p>";
+                    }
+                    if($row_username['municipality'] == "Cebu City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$cebu."' />
+                        <p  class = 'dataLebs'>".$cebu."</p>";
+                    }
+                    if($row_username['municipality'] == "Consolacion")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$concolacion."' />
+                        <p  class = 'dataLebs'>".$consolacion."</p>";
+                    }
+                    if($row_username['municipality'] == "Lapu-lapu")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$lapulapu."' />
+                        <p  class = 'dataLebs'>".$lapulapu."</p>";
+                    }
+                    
+                   echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>
                     <div class ='bots'>
                     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
@@ -671,6 +698,7 @@
             echo "<option value = '".$row['sub_cat_id']."'>".$row['sub_cat_name']."</option>";
         endwhile;
     }
+    
 
     function view_all_products()
     {
@@ -813,6 +841,70 @@
 
     //     $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
     // }
+
+    function registered_petcenters()
+    {
+        include("inc/db.php");
+        $view_petcenters = $con->prepare("SELECT * FROM pet_center_tbl");
+        $view_petcenters->setFetchMode(PDO:: FETCH_ASSOC);
+        $view_petcenters->execute();
+
+        while($row = $view_petcenters->fetch()):
+            echo
+            "<form method = 'POST' enctype = 'multipart/form-data'>
+                <tr>
+                    <td>".$row['pet_center_name']."</td>
+                    <td>".$row['contact_number']."</td>
+                    <td>".$row['email']."</td>
+                    <td>".$row['municipality']."</td>
+                    <td>".$row['barangay']."</td>
+                    <td>".$row['st']."</td>
+                    <td>".$row['business_permit']."</td>
+                    <input type = 'hidden' name = 'email' value = '".$row['email']."' />
+                    <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
+                    <button name = 'confirm'>Confirm</button>
+                </tr>
+            </form>";
+        endwhile;
+
+            if(isset($_POST['confirm']))
+            {
+                $pet_center_id = $_POST['pet_center_id'];
+
+                $sql2 = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+                
+                $v_key = generateRandomString();
+
+                $row = $sql2->fetch();
+                
+                if($row['verified'] == 1)
+                {
+                    echo "<script>alert('This account has been confirmed!');</script>";
+                }
+                else
+                {
+                    $receiver = $row['email'];
+                    $subject = "Account Confirmation!";
+                    $body = "Your account has been confirmed, please use this OTP Code: $v_key to validate your account!";
+                    $sender = "ianjohn0101@gmail.com";
+    
+                    $sql = $con->prepare("UPDATE pet_center_tbl SET v_key = '$v_key' WHERE pet_center_id = '$pet_center_id'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+                    
+                    if(!$sql->execute())
+                    {
+                        return;
+                    }
+    
+                    mail($receiver, $subject, $body, $sender);
+                    echo "<script>alert('Confirmed!');</script>";
+                    
+                }
+            }
+    }
 
     function view_detail()
     {
@@ -1050,6 +1142,7 @@
                 <p class = 'okss'>".$row['user_email']."</p>
                 <p class = 'okss'>".$row['user_contactnumber']."</p>
                 <p class = 'okss'>".$row['user_address']."</p>
+                <a href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
                 
                
          </div>";

@@ -37,6 +37,7 @@
                         </br>
                      
                     </form>
+                    <a href = 'verify_email.php'>Verify My Email</a>
                     <a href = 'forgotpassword.php'>Forgot Password?</a>
                     </div>
                    

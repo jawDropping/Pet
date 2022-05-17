@@ -52,10 +52,6 @@
     <div class="body">
         
        <div>
-       <form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
-           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
-           <button id = 'search_btn' name = 'search'>Search</button><br>
-        </form>
        
         <div class = 'gridnasad'>
            <p>Pet Center Name</p>
@@ -65,11 +61,12 @@
             <p>Brgy</p>
             <p>Street</p>
             <p>Business Permit</p>
+            <p>Action</p>
             <div></div>
         </div>
         <tr>
             <?php
-                echo showledger();
+                echo registered_petcenters();
             ?>
         </tr>
        </div>

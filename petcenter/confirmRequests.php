@@ -30,7 +30,7 @@
                         </form>
                                 <div class="maine">
                                     <p class = 'ttl'>Requests</p>
-                                    <form method = 'POST' enctype = 'multipart/form-data' id = 'porm'>
+                                    <form method = 'POST' action="<?php echo $_SERVER['PHP_SELF'];?>" enctype = 'multipart/form-data' id = 'porm'>
                                 <div>
                                     <div class = 'heds'>
                                         <p class = 'he' >NAME</p>
