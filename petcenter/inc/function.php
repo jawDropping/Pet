@@ -815,7 +815,7 @@ function updateThumbnail(dropZoneElement, file) {
                 $service_cost = $row2['service_cost'];
                 $coupon_code = $row2['coupon_code'];
     
-                $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                $view_service = $con->prepare("SELECT * FROM services WHERE id = '$service_id'");
                 $view_service->setFetchMode(PDO:: FETCH_ASSOC);
                 $view_service->execute();
     
