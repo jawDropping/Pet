@@ -86,6 +86,26 @@ background: #28287774;
                 <td><input type = "text" name = "org_email_address" /></td>
             </tr><br>
             <tr>
+                <label>Bank Detail</label>
+                <td><input type = "text" name = "bank_details" /></td>
+            </tr><br>
+            <tr>
+                <label>Website</label>
+                <td><input type = "text" name = "website" /></td>
+            </tr><br>
+            <tr>
+                <label>Paymaya</label>
+                <td><input type = "text" name = "paymaya" /></td>
+            </tr><br>
+            <tr>
+                <label>Organization Manager</label>
+                <td><input type = "text" name = "org_manager" /></td>
+            </tr><br>
+            <tr>
+                <label>Facebook</label>
+                <td><input type = "text" name = "facebook" /></td>
+            </tr><br>
+            <tr>
                 <label>Photo</label>
                 <td><input type = "file" name = "org_photo" /></td>
             </tr><br>

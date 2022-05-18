@@ -100,6 +100,11 @@
             $org_location = $_POST['org_location'];
             $org_contact_number = $_POST['org_contact_number'];
             $org_email_address = $_POST['org_email_address'];
+            $bank_details = $_POST['bank_details'];
+            $website = $_POST['website'];
+            $paymaya = $_POST['paymaya'];
+            $org_manager = $_POST['org_manager'];
+            $facebook = $_POST['facebook'];
             
             $org_photo = $_FILES['org_photo']['name'];
             $org_photo_tmp = $_FILES['org_photo']['tmp_name'];
@@ -111,14 +116,24 @@
                 org_location,
                 org_contact_number,
                 org_email_address,
-                org_photo
+                org_photo,
+                bank_details,
+                website,
+                paymaya,
+                org_manager,
+                facebook
             ) 
             VALUES(
                 '$org_name',
                 '$org_location',
                 '$org_contact_number',
                 '$org_email_address',
-                '$org_photo'
+                '$org_photo',
+                '$bank_details',
+                '$website',
+                '$paymaya',
+                '$org_manager',
+                '$facebook'
             )");
             if($add_org->execute())
             {
@@ -853,8 +868,9 @@
                     <td>".$row['business_permit']."</td>
                     <input type = 'hidden' name = 'email' value = '".$row['email']."' />
                     <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
-                    <button name = 'confirm'>Confirm</button>
+                    
                 </tr>
+                <button name = 'confirm'>Confirm</button>
             </form>";
         endwhile;
 
@@ -1252,7 +1268,7 @@
                 if($update_prod->execute())
                 {
                     echo "<script>alert('Product Updated Successfully!');</script>";
-                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                    echo "<script>window.open('products.php','_self');</script>";
                 }
             }
             if(isset($_POST['update_first_image']))

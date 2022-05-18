@@ -17,8 +17,8 @@
         
         $row = $sql->rowCount();
         $rows = $sql->fetch();
-        $pet_center_id = $rows['pet_center_id'];
 
+        $pet_center_id = $rows['pet_center_id'];
         if($row>0)
         {
             $update = $con->prepare("UPDATE pet_center_tbl SET verified = '1' WHERE pet_center_id = '$pet_center_id'");
@@ -33,6 +33,7 @@
         else
         {
             echo "<script>alert('Email or Verification Key is invalid!');</script>";
+            echo "<script>window.open('verify_email.php', '_self');</script>";
         }
     }
 ?>
