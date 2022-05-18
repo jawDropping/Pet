@@ -844,6 +844,7 @@ function updateThumbnail(dropZoneElement, file) {
                         <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
                         <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
                         <input type = 'hidden' name = 'service_name' value = '".$service_name."' />
+                        <input type = 'hidden' name = 'reserve_id' value = ".$reserve_id." />
                         <input type = 'hidden' name = 'date' value = '".$date."' />
                         <p class = 'asds'>".$user_username."</p>
                         <p  class = 'asd'>".date('g:i A', strtotime($row2['reserve_time']))."</p>
@@ -858,11 +859,17 @@ function updateThumbnail(dropZoneElement, file) {
                             echo "<p  class = 'asd'>".$coupon_code."</p>";
                         }
 
-                        echo
-                        "<div class = 'divsha'><button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
-                        <a class = 'views' href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
-                        </div>
+                    echo"</div>";
+                    
+                    echo
+                    "
+                    <div>
+                    
+                    <button class = 'oks' name = 'confirm_request' >Confirm</button>
+                    <a class = 'views' href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
                     </div>
+                  
+                    
                 </form>";
                 
             endwhile;
@@ -881,7 +888,7 @@ function updateThumbnail(dropZoneElement, file) {
         
                 if(isset($_POST['confirm_request']))
                 {
-                    $reserve_id = $_POST['confirm_request'];
+                    $reserve_id = $_POST['reserve_id'];
                     $pet_center_id = $_POST['pet_center_id'];
                     $service_id = $_POST['service_id'];
                     $user_id = $_POST['user_id'];
