@@ -220,67 +220,58 @@
 
     function add_product() 
     {
+        include("inc/db.php");
+        if(isset($_POST['add_prod']))
+        {
+            $pro_name = $_POST['pro_name'];
+            $cat_id = $_POST['cat_name'];
+            $pro_brand = $_POST['pro_brand'];
 
+            $pro_img = $_FILES['pro_img']['name'];
+            $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
 
-       include("inc/db.php");
-       if(isset($_POST['add_prod']))
-       {
-           $pro_name = $_POST['pro_name'];
-           $cat_id = $_POST['cat_name'];
-           $pro_brand = $_POST['pro_brand'];
-           $pro_keyword = $_POST['pro_keyword'];
+            $pro_img2 = $_FILES['pro_img2']['name'];
+            $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
 
-           $pro_img = $_FILES['pro_img']['name'];
-           $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
-           $pro_img2 = $_FILES['pro_img2']['name'];
-           $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
-           
-           $pro_img3 = $_FILES['pro_img3']['name'];
-           $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
-           
+            $pro_img3 = $_FILES['pro_img3']['name'];
+            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
 
-        
-           move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
-           move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
-           move_uploaded_file($pro_img3_tmp,"../uploads/products/$pro_img3");
-           
-           $pro_price = $_POST['pro_price'];
-           $pro_quantity = $_POST['pro_quantity'];
+            $pro_price = $_POST['pro_price'];
+            $pro_quantity = $_POST['pro_quantity'];
+            $pro_keyword = $_POST['pro_keyword'];
 
-    
-           $add_pro = $con->prepare("insert into product_tbl
-           (
-               pro_name, 
-               cat_id, 
-               pro_brand, 
-               pro_img, 
-               pro_img2, 
-               pro_img3,
-               pro_price, 
-               pro_quantity,
-               pro_keyword
-            ) values
-            (
-                '$pro_name',
-                '$cat_id',
-                '$pro_brand',
-                '$pro_img',
-                '$pro_img2',
-                '$pro_img3',
-                '$pro_price',
-                '$pro_quantity',
-                '$pro_keyword'
-            )");
-            
-           if($add_pro->execute())
-           {
-                echo "<script>alert('Product Added Successfully!');</script>"; 
-           }
-           else
-           {
-                echo "<script>alert('Product Not Added Successfully!');</script>";
-           }
-        }    
+            // var_dump($pro_name);
+            // var_dump($cat_id);
+            // var_dump($pro_brand);
+            // var_dump($pro_img);
+            // var_dump($pro_img2);
+            // var_dump($pro_img3);
+            // var_dump($pro_price);
+            // var_dump($pro_quantity);
+            // var_dump($pro_keyword);
+
+            $add_prod = $con->prepare("INSERT INTO product_tbl 
+            SET
+            pro_name = '$pro_name',
+            cat_id = $cat_id,
+            pro_brand = '$pro_brand',
+            pro_img = '$pro_img',
+            pro_img2 = '$pro_img2',
+            pro_img3 = '$pro_img3',
+            pro_price = '$pro_price',
+            pro_quantity = $pro_quantity,
+            pro_keyword = '$pro_keyword'
+            ");
+
+            if($add_prod->execute())
+            {
+                echo "<script>alert('ADDED!');</script>";
+            }
+            else
+            {
+                echo "<script>alert('UNSUCCSESSFUL');</script>";
+            }
+        }
     }
 
     function viewall_cat()
@@ -1354,7 +1345,7 @@
         if($delete_prod->execute())
         {
             echo "<script>alert('Product Deleted Successfully!');</script>";
-            echo "<script>window.open('index.php?viewall_products','_self');</script>";
+            echo "<script>window.open('products.php','_self');</script>";
         }
     }
 
