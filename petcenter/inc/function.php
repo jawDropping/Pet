@@ -822,7 +822,8 @@ function updateThumbnail(dropZoneElement, file) {
     
                 $row_service = $view_service->fetch();
                 $service_name = $row_service['services_name'];
-    
+
+                
     
                 $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                 $view_user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -845,7 +846,9 @@ function updateThumbnail(dropZoneElement, file) {
                         <input type = 'hidden' name = 'service_name' value = '".$service_name."' />
                         <input type = 'hidden' name = 'date' value = '".$date."' />
                         <p class = 'asds'>".$user_username."</p>
-                        <p  class = 'asd'>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
+                        <p  class = 'asd'>".date('g:i A', strtotime($row2['reserve_time']))."</p>
+                        <p class = 'asds'>".$service_name."</p>";
+                        
                         if($row2['coupon_code'] == '')
                         {
                             echo "<p  class = 'asd'>".$empty_coupon."</p>";
