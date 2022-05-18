@@ -1440,6 +1440,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         }
 
     }
+
     function showFeeds(){
         include("inc/db.php");
 
@@ -1552,8 +1553,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         endwhile;
     }
 
-    
-
     function cat_detail()
     {
         include("inc/db.php");
@@ -1626,8 +1625,9 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                 
                     <p class = 'lebs'>Time: </p></td>
                     <input class = 'inet' type = 'time' name = 'reserve_time'  required/></td>
+                    
                     <p class = 'lebs'>Coupon Code: </p>
-                    <input class = 'inet' type = 'text' name = 'coupon_code'/>
+                    <input class = 'inet' type = 'text' name = 'coupon_code' placeholder = 'Leave blank if you don't have any coupon code!'/>
                     <p class = 'lebs'>Service Cost: </p>
                     <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
                     <input type = 'hidden' name = 'service_id' value = '".$id."' />
@@ -1680,7 +1680,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     {
                         if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
                         {
-                            $sql = $con->query("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
+                            $sql = $con->query("SELECT * FROM confirmed_services WHERE coupon_code = '$coupon_code'");
                             $sql->setFetchMode(PDO:: FETCH_ASSOC);
                             $sql->execute();
     
@@ -1689,6 +1689,13 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             $sql2->execute();
     
                             $row = $sql->rowCount();
+
+
+                            $sql3 = $con->prepare("SELECT * FROM confirmed_services WHERE coupon_code = '$coupon_code'");
+                            $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+                            $sql3->execute();
+
+                            $row5 = $sql3->rowCount();
     
                             $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
                             $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1697,10 +1704,53 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                             $row4 = $fetch_user_username->fetch();
                             if($row>0)
                             {
-                                echo "<script>alert('Code Exist!');</script>";
+                                if($coupon_code == '')
+                                {
+                                    $receiver = $row4['user_email'];
+                                    $subject = "For Confirmation";
+                                    $body = "Your Reservation will be validated to the pet center";
+                                    $sender = "ianjohn0101@gmail.com";
+    
+                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                        pet_center_id,
+                                        service_id,
+                                        user_id,
+                                        service_cost,
+                                        reserve_date,
+                                        reserve_time,
+                                        coupon_code,
+                                        service_status
+                                    ) 
+                                    VALUES (
+                                        '$pet_center_id',
+                                        '$service_id',
+                                        '$current_user',
+                                        '$service_cost',
+                                        '$reserve_date',
+                                        '$reserve_time',
+                                        '$coupon_code',
+                                        'For Confirmation'
+                                    )");
+                        
+                                    if($reserve_service->execute())
+                                    {
+                                        echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                    }
+                                    else
+                                    {
+                                        echo "<script>alert('UNSUCCESSFUL');</script>";
+                                    }
+                                    mail($receiver, $subject, $body, $sender);
+                                }
+                                else
+                                {
+                                    echo "<script>alert('Code Already Used!');</script>";
+                                }
                             }
                             else
                             {
+                                //check sa donation if naa bani nga coode
+                                //if naa discount
                                 $view_coupon = $con->prepare("SELECT * FROM ledger_tbl WHERE coupon_code = '$coupon_code'");
                                 $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
                                 $view_coupon->execute();
@@ -2172,6 +2222,42 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
     }
 
+    function view_ledger()
+    {
+        include("inc/db.php");
+        $current_user = $_SESSION['user_id'];
+        $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        $row = $sql->fetch();
+        $user_username = $row['user_username'];
+
+        $sql2 = $con->prepare("SELECT * FROM ledger_tbl WHERE full_name = '$user_username'");
+        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql2->execute();
+
+       while($row2 = $sql2->fetch()):
+        echo 
+        "
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['transaction_number']."</p>
+            </div>
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['org_name']."</p>
+            </div>
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['contact_number']."</p>
+            </div>
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['date_confirmed']."</p>
+            </div>
+            
+        ";
+       endwhile;
+
+        
+    }
     
 ?>
 
