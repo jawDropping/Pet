@@ -20,6 +20,7 @@
 <div class = 'main'>
     <div class="left">
     <div class = cont>
+    <form method = "POST" enctype = "multipart/form-data">
             <p class = "lebs">Pet Photo:</p>
             <div class='drop-zone'>
             <span class='drop-zone__prompt'>Drop file here or click to upload</span>
@@ -28,7 +29,7 @@
         </div>
     </div>
     <div class="right">
-    <form method = "POST" enctype = "multipart/form-data">
+    
         <div class="fills">
           <br>
             <p class="heads">Pet Information</p>
