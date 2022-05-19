@@ -61,7 +61,7 @@
         $row = $edit_details->fetch();
 
         echo
-        "<form method = 'POST'>
+        "<form method = 'POST' action = 'edit_org.php' enctype = 'multipart/form-data'>
             <tr>
                 <td><input type = 'text' name = 'org_name' value = '".$row['org_name']."' /></td>
             </tr><br>
@@ -74,8 +74,23 @@
             <tr>
                 <td><input type = 'text' name = 'org_email_address' value = '".$row['org_email_address']."' /></td>
             </tr><br>
+            <tr>
+                <td><input type = 'text' name = 'bank_details' value = '".$row['bank_details']."' /></td>
+            </tr><br>
+            <tr>
+                <td><input type = 'text' name = 'website' value = '".$row['website']."' /></td>
+            </tr><br>
+            <tr>
+                <td><input type = 'text' name = 'paymaya' value = '".$row['paymaya']."' /></td>
+            </tr><br>
+            <tr>
+                <td><input type = 'text' name = 'org_manager' value = '".$row['org_manager']."' /></td>
+            </tr><br>
+            <tr>
+                <td><input type = 'text' name = 'facebook' value = '".$row['facebook']."' /></td>
+            </tr><br>
             
-            <button name = 'update'>Update</button>
+            <button name = 'update' value = ".$row['id'].">Update</button>
         </form>
         <form method = 'POST' enctype = 'multipart/form-data'>
         <tr>
@@ -85,35 +100,9 @@
         </form>";
     
         
-        if(isset($_POST['update']))
-        {
-            $org_id = $_POST['update'];
-            $org_name = $_POST['org_name'];
-            $org_location = $_POST['org_location'];
-            $org_contact_number = $_POST['org_contact_number'];
-            $org_email_address = $_POST['org_email_address'];
-
-            $update_org = $con->prepare("UPDATE organizations 
-            SET 
-            org_name='$org_name',
-            org_location='$org_location',
-            org_contact_number='$org_contact_number',
-            org_email_adddress='$org_email_adddress'
-            WHERE 
-            id = '$id'");
+      
     
-            if($update_org->execute())
-            {
-                echo "<script>alert('Updated Successfully!');</script>";
-                echo "<script>window.open('index.php?manage_partner', '_self');</script>";
-            }
-            else
-            {
-                die('asdsadasdsa');
-            }
-        }
     }
-
     if(isset($_POST['delete_org']))
     {
         $id = $_POST['delete_org'];
@@ -124,7 +113,6 @@
         if($delete_org->execute())
         {
             echo "<script>alert('Deleted Successfully!');</script>";
-            echo "<script>window.open('index.php?manage_partner', '_self');</script>";
         }
     }
 
@@ -139,7 +127,7 @@
         if($upd_img->execute())
         {
             echo "<script>alert('Updated Successfully!');</script>";
-            echo "<script>window.open('index.php?manage_partner', '_self');</script>";
+            echo "<script>window.open('manage_partner.php', '_self');</script>";
         }
 
     }

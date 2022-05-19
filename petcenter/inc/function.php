@@ -493,10 +493,15 @@
        
     </div>
     <div class = 'cont'>
+        <p class = "lbes">Full Location</p>
+        <input class = 'ints' type='text' name =  'full_location' required/>
+       
+    </div>
+    <div class = 'cont'>
         <p class = "lbes">Accept Coupon</p>
-            <input type="radio" id="Yes" name="pet" value="Yes">
+            <input type="radio" id="Yes" name="accept_coupon" value="Yes">
              <label class = 'ok' for="Yes">Yes</label>
-             <input type="radio" id="No" name="pet" value="No">
+             <input type="radio" id="No" name="accept_coupon" value="No">
              <label class = 'ok' for="No">No</label>
             
             
@@ -670,6 +675,8 @@ function updateThumbnail(dropZoneElement, file) {
             $time_open = $_POST['time_open'];
             $time_close = $_POST['time_close'];
             $service_cost = $_POST['service_cost'];
+            $accept_coupon = $_POST['accept_coupon'];
+            $full_location = $_POST['full_location'];
 
             $service_photo = $_FILES['service_photo']['name'];
             $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
@@ -677,7 +684,7 @@ function updateThumbnail(dropZoneElement, file) {
 
             // var_dump($barangay);
             // var_dump($st);
-            // var_dump($pet_center_id);
+            // var_dump($pet_cent_id);
             // var_dump($municipality);
             // var_dump($service_photo);
             // var_dump($service_id);
@@ -690,11 +697,12 @@ function updateThumbnail(dropZoneElement, file) {
             // var_dump($time_close);
             // var_dump($service_cost);
             // var_dump($service_discount);
+            // var_dump($accept_coupon);
           
             $query = $con->prepare("INSERT INTO services 
             SET 
             service_id = $service_id,
-            pet_center_name = $pet_center_name,
+            pet_center_id = $pet_cent_id,
             services_name = '$services_name',
             st = '$st',
             barangay = '$barangay',
@@ -708,7 +716,9 @@ function updateThumbnail(dropZoneElement, file) {
             time_close = '$time_close',
             service_cost = '$service_cost',
             discount = $service_discount,
-            service_photo = '$service_photo'
+            service_photo = '$service_photo',
+            accept_coupon = '$accept_coupon',
+            full_location = '$full_location'
             ");
                 
 
@@ -796,7 +806,7 @@ function updateThumbnail(dropZoneElement, file) {
 
         $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
-        if($pet_cent_id == $pet_center_id)
+        if($pet_center_id == $pet_cent_id)
         {
             while($row2 = $sql2->fetch()):
                 $reserve_id = $row2['reserve_id'];
@@ -806,13 +816,14 @@ function updateThumbnail(dropZoneElement, file) {
                 $service_cost = $row2['service_cost'];
                 $coupon_code = $row2['coupon_code'];
     
-                $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                $view_service = $con->prepare("SELECT * FROM services WHERE id = '$service_id'");
                 $view_service->setFetchMode(PDO:: FETCH_ASSOC);
                 $view_service->execute();
     
                 $row_service = $view_service->fetch();
                 $service_name = $row_service['services_name'];
-    
+
+                
     
                 $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                 $view_user->setFetchMode(PDO:: FETCH_ASSOC);
@@ -833,9 +844,12 @@ function updateThumbnail(dropZoneElement, file) {
                         <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
                         <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
                         <input type = 'hidden' name = 'service_name' value = '".$service_name."' />
+                        <input type = 'hidden' name = 'reserve_id' value = ".$reserve_id." />
                         <input type = 'hidden' name = 'date' value = '".$date."' />
                         <p class = 'asds'>".$user_username."</p>
-                        <p  class = 'asd'>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
+                        <p  class = 'asd'>".date('g:i A', strtotime($row2['reserve_time']))."</p>
+                        <p class = 'asds'>".$service_name."</p>";
+                        
                         if($row2['coupon_code'] == '')
                         {
                             echo "<p  class = 'asd'>".$empty_coupon."</p>";
@@ -844,11 +858,18 @@ function updateThumbnail(dropZoneElement, file) {
                         {
                             echo "<p  class = 'asd'>".$coupon_code."</p>";
                         }
-                        echo
-                        "<div class = 'divsha'><button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
-                        <a class = 'views' href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
-                        </div>
+
+                    echo"</div>";
+                    
+                    echo
+                    "
+                    <div>
+                    
+                    <button class = 'oks' name = 'confirm_request' >Confirm</button>
+                    <a class = 'views' href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
                     </div>
+                  
+                    
                 </form>";
                 
             endwhile;
@@ -867,12 +888,11 @@ function updateThumbnail(dropZoneElement, file) {
         
                 if(isset($_POST['confirm_request']))
                 {
-                    $reserve_id = $_POST['confirm_request'];
+                    $reserve_id = $_POST['reserve_id'];
                     $pet_center_id = $_POST['pet_center_id'];
                     $service_id = $_POST['service_id'];
                     $user_id = $_POST['user_id'];
                     $coupon_code = $_POST['coupon_code'];
-                    $transaction_code = $_POST['transaction_code'];
                     $date_confirmed = $_POST['date_confirmed'];
                     $amount = $_POST['service_cost'];
                     $transaction_code = generateRandomString();
@@ -1049,6 +1069,18 @@ function updateThumbnail(dropZoneElement, file) {
                         echo days();
                     echo" </select>
                 </div>
+                <div>
+                    <input type = 'text' name = 'st' value = '".$row['st']."' />
+                </div>
+                <div>
+                    <input type = 'text' name = 'municipality' value = '".$row['municipality']."' />
+                </div>
+                <div>
+                    <input type = 'text' name = 'barangay' value = '".$row['barangay']."' />
+                </div>
+                <div>
+                    <input type = 'text' name = 'full_location' value = '".$row['full_location']."' />
+                </div>
               
                 <div>
                     <button name = 'update_service'>Update Service</button>
@@ -1069,6 +1101,10 @@ function updateThumbnail(dropZoneElement, file) {
                 $time_open = $_POST['time_open'];
                 $time_close = $_POST['time_close'];
                 $service_cost = $_POST['service_cost'];
+                $st = $_POST['st'];
+                $municipality = $_POST['municipality'];
+                $barangay = $_POST['barangay'];
+                $full_location = $_POST['full_location'];
                 
                 $update_service = $con->prepare("UPDATE services 
                 SET 
@@ -1077,7 +1113,11 @@ function updateThumbnail(dropZoneElement, file) {
                     day_close = '$day_close',
                     time_open = '$time_open',
                     time_close = '$time_close',
-                    service_cost = '$service_cost'
+                    service_cost = '$service_cost',
+                    st = '$st',
+                    municipality = '$municipality',
+                    barangay = '$barangay',
+                    full_location = '$full_location'
                 WHERE 
                     id = '$service_id'");
     
@@ -1290,8 +1330,8 @@ function updateThumbnail(dropZoneElement, file) {
         {
             $user_query = $_GET['user_query'];
 
-            $search = $con->query("SELECT * FROM reserve_services WHERE coupon_code LIKE '%$user_query%' or transaction_code LIKE '%$user_query%'");
-            $search->setFetchMode(PDO:: FETCH_ASSOC);
+            $search = $con->query("SELECT * FROM reserve_services WHERE coupon_code LIKE '%$user_query%'");
+            $search->setFetchMode(PDO::FETCH_ASSOC);
             $search->execute();
 
             echo "<div id = 'bodyleft'><ul>";
@@ -1319,7 +1359,6 @@ function updateThumbnail(dropZoneElement, file) {
                         $reserve_id = $row2['reserve_id'];
                         $user_id = $row2['user_id'];
                         $date = $row2['reserve_date'];
-                        $transaction_code = $row2['transaction_code'];
                         $service_id = $row2['service_id'];
                         $service_cost = $row2['service_cost'];
                         $coupon_code = $row2['coupon_code'];
@@ -1338,6 +1377,7 @@ function updateThumbnail(dropZoneElement, file) {
             
                         $row_user = $view_user->fetch();
                         $user_username = $row_user['user_username'];
+                        $user_email = $row_user['user_email'];
                         $empty_coupon = "N/A";
                         echo
                         "<form method = 'POST'>
@@ -1346,8 +1386,11 @@ function updateThumbnail(dropZoneElement, file) {
                                 <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
                                 <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
                                 <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
-                                <input type = 'hidden' name = 'transaction_code' value = '".$transaction_code."' />
+                                <input type = 'hidden' name = 'reserve_id' value = '".$reserve_id."' />
                                 <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
+                                <input type = 'hidden' name = 'user_email' value = '".$user_email."' />
+                                <input type = 'hidden' name = 'service_name' value = '".$service_name."' />
+                                <input type = 'hidden' name = 'date' value = '".$date."' />
                                 <input type = 'hidden' name = 'service_cost' value = '".$service_cost."' />
                                 <p>".$user_username."</p>
                                 <p>".date('g:i A', strtotime($row2['reserve_time']))."</p>";
@@ -1360,54 +1403,78 @@ function updateThumbnail(dropZoneElement, file) {
                                     echo "<p>".$coupon_code."</p>";
                                 }
                                 
-                               echo" <button class = 'oks' name = 'confirm_request' value = ".$reserve_id.">Confirm</button>
+                               echo" <button class = 'oks' name = 'confirm_request'>Confirm</button>
                             </div>
                         </form>";
                     }
                 endwhile;
                 if(isset($_POST['confirm_request']))
                 {
-                    $reserve_id = $_POST['confirm_request'];
+                    $reserve_id = $_POST['reserve_id'];
                     $pet_center_id = $_POST['pet_center_id'];
                     $service_id = $_POST['service_id'];
                     $user_id = $_POST['user_id'];
                     $coupon_code = $_POST['coupon_code'];
-                    $transaction_code = $_POST['transaction_code'];
-                    $date_confirmed = $_POST['date_confirmed'];
+                    $date_confirmed = $_POST['date'];
                     $amount = $_POST['service_cost'];
+                    $transaction_code = generateRandomString();
+
+                    //get everything
+                    //to email user 
+                    $user_email = $_POST['user_email'];
+                    $service_name = $_POST['service_name'];
+                    $date = $_POST['date'];
                     
-                    if(mail($receiver, $subject, $body, $sender))
+                    $receiver = $user_email;
+                    $subject = "Reserve Confirmation";
+                    $body = 
+                    "
+                    Greetings! 
+            
+                    This is from $service_name we are hoping for your best experience for the service we provide. 
+                    Please come with the respective date $date, with the Transacton Code: $transaction_code
+                    
+                    Respecfully yours,
+                    $service_name";
+                    $sender = "ianjohn0101@gmail.com";
+
+
+                    $confirm = $con->prepare("INSERT INTO confirmed_services
+                    (
+                        pet_center_id,
+                        service_id,
+                        user_id,
+                        coupon_code,
+                        transaction_code,
+                        date_confirmed,
+                        amount
+                        
+                    ) 
+                    VALUES
+                    (
+                        '$pet_center_id',
+                        '$service_id',
+                        '$user_id',
+                        '$coupon_code',
+                        '$transaction_code',
+                        '$today',
+                        '$service_cost'
+                    )");
+                    
+                    if(!$confirm->execute())
                     {
-                        $confirm = $con->prepare("INSERT INTO confirmed_services
-                        (
-                            pet_center_id,
-                            service_id,
-                            user_id,
-                            coupon_code,
-                            transaction_code,
-                            date_confirmed,
-                            amount
-                        ) 
-                        VALUES
-                        (
-                            '$pet_center_id',
-                            '$service_id',
-                            '$user_id',
-                            '$coupon_code',
-                            '$transaction_code',
-                            '$today',
-                            '$service_cost'
-                        )");
-                        if($confirm->execute())
-                        {
-                            $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
-                            if($delete_reservation->execute())
-                            {
-                                echo "<script>alert('Services Successfully Confirmed!');</script>";
-                                echo "<script>window.open('confirmRequests.php', '_self');</script>";
-                            }
-                        }
+                        return;
                     }
+
+                    mail($receiver, $subject, $body, $sender);
+
+                    $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
+                    if($delete_reservation->execute())
+                    {
+                        echo "<script>alert('Services Successfully Confirmed!');</script>";
+                        echo "<script>window.open('confirmRequests.php', '_self');</script>";
+                    }
+
                 }
             }
         }

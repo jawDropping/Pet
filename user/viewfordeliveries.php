@@ -11,16 +11,25 @@
     include("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
+            
+           echo 
+           "<div id = 'insideDiv'>
+           <a class = 'servDiv' href =  'view_order.php?user_id=".$_SESSION['user_id']."' style = 'text-decoration: none;color:#000;'><img class = 'image' src='./uploads/grooming.png' alt=''>View Orders</a>
+           </div>";
         ?>
 
-    <div id = "insideDiv">
-            <a class = 'servDiv' href = "viewfordeliveries.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/grooming.png" alt="">View For Deliveries</a>
-        </div>
     <div class="containersest">
           
     <?php
         $current_user = $_SESSION['user_id'];
-        $sql = $con->prepare("SELECT * FROM orders_tbl WHERE user_id = '$current_user'");
+        $sql2 = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql2->execute();
+
+        $row2 = $sql2->fetch();
+        $user_username = $row2['user_username'];
+
+        $sql = $con->prepare("SELECT * FROM delivery_tbl WHERE user_username = '$user_username'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -31,7 +40,7 @@
     ?>
 
     <div class="ttl">
-    <img src="../uploads/orderist.png" id = 'orderIc' > <h3>Orders</h3>
+    <img src="../uploads/orderist.png" id = 'orderIc' > <h3>Deliveries</h3>
     </div>
   
     <div class="contTable">
@@ -46,13 +55,42 @@
         
         <div class="divHead">
              <p class = 'headers'>ORDER STATUS</p>
-        </div>  
-        <div class="divHead">
-             <p class = 'headers'>ACTION</p>
-        </div>
+        </div> 
+        <br>
            <?php
-                 call_user_func('view_orders');
-            ?>
+
+
+        $current_user = $_SESSION['user_id'];
+        $sql2 = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql2->execute();
+
+        $row2 = $sql2->fetch();
+        $user_username = $row2['user_username'];
+
+        $sql = $con->prepare("SELECT * FROM delivery_tbl WHERE user_username = '$user_username'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        while($row = $sql->fetch()):
+        
+
+        echo
+                "<div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row['items']."</p>
+                    </div>
+                    <div class = 'dataHolders'>
+                    <p class = 'dataCont' >₱".$row['total_amount']."</p>
+                    </div>
+                    <div class = 'dataHolder'>
+                    <p class = 'dataCont'>".$row['delivery_status']."</p>
+                    </div>
+                   
+                ";
+            endwhile;
+        
+            
+    ?> 
             
     
         </div>
@@ -67,7 +105,7 @@
             <div class = 'blank'>
             <center>
             <img src = '../uploads/empty.gif'>
-            <p class = 'state'>You don't have any orders yet Click the link to buy products from our store!<a id = 'linkEmpty'href='/Pet/user/index.php'>Click Me!</a></p>
+            <p class = 'state'>You don't have any deliveries!<a id = 'linkEmpty'href='/Pet/user/index.php'>Click Me!</a></p>
             </center>
             </div>";
         }

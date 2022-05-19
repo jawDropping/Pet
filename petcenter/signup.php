@@ -311,7 +311,7 @@
               $barangay = $_POST['barangays'];
               $municipality = $_POST['municipality'];
               $full_location = $_POST['full_location'];
-              $verification_key = generateRandomString();
+            
               $verified = 0;
 
               $proof_photo = $_FILES['proof_photo']['name'];

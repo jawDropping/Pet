@@ -30,11 +30,12 @@
                         </form>
                                 <div class="maine">
                                     <p class = 'ttl'>Requests</p>
-                                    <form method = 'POST' enctype = 'multipart/form-data' id = 'porm'>
+                                    <form method = 'POST' action="<?php echo $_SERVER['PHP_SELF'];?>" enctype = 'multipart/form-data' id = 'porm'>
                                 <div>
                                     <div class = 'heds'>
                                         <p class = 'he' >NAME</p>
                                         <p class = 'he' >TIME</p>
+                                        <p class = 'he' >Service</p>
                                         <p class = 'he' >COUPON CODE</p>
                                         <p class = 'he' >ACTION</p>
                                     </div>
@@ -61,14 +62,14 @@
         }
         .heds{
         display: grid;
-        grid-template-columns: 30% 20% 20% 20%;
+        grid-template-columns: 30% 20% 20% 30%;
         border-bottom: .8px solid #777;
            padding: 5px;
            margin-bottom: 2%; 
         }
         .hed{
             display: grid;
-            grid-template-columns: 30% 20% 20% 20%;
+            grid-template-columns: 30% 20% 20% 30%;
             margin-top: 1%;
            padding: 10px;
            background: #f4f4f4;

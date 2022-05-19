@@ -13,45 +13,33 @@
             include ("inc/navbar.php"); 
         ?>
 
-    <div id = "insideDiv">
-            <a class = 'servDiv' href = "viewfordeliveries.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/grooming.png" alt="">View For Deliveries</a>
-        </div>
+
     <div class="containersest">
           
-    <?php
-        $current_user = $_SESSION['user_id'];
-        $sql = $con->prepare("SELECT * FROM orders_tbl WHERE user_id = '$current_user'");
-        $sql->setFetchMode(PDO:: FETCH_ASSOC);
-        $sql->execute();
 
-        $row = $sql->fetch();
-        if($row>0)
-        {
-            
-    ?>
 
     <div class="ttl">
-    <img src="../uploads/orderist.png" id = 'orderIc' > <h3>Orders</h3>
+    <img src="../uploads/orderist.png" id = 'orderIc' > <h3>Ledger</h3>
     </div>
   
     <div class="contTable">
     <div class = 'inside'>
         
         <div class="divHead">
-            <p class = 'headers'>ITEMS</p>
+            <p class = 'headers'>Transaction Number</p>
         </div>
         <div class = 'divHead'>
-             <p class = 'headers'>SUB-TOTAL</p>
+             <p class = 'headers'>Selected Organization</p>
         </div>
         
         <div class="divHead">
-             <p class = 'headers'>ORDER STATUS</p>
+             <p class = 'headers'>Contact Number</p>
         </div>  
         <div class="divHead">
-             <p class = 'headers'>ACTION</p>
+             <p class = 'headers'>Date Confirmed</p>
         </div>
            <?php
-                 call_user_func('view_orders');
+                 call_user_func('view_ledger');
             ?>
             
     
@@ -59,19 +47,7 @@
     </div>
     </div>
 
-    <?php
-        }
-        else
-        {
-            echo "
-            <div class = 'blank'>
-            <center>
-            <img src = '../uploads/empty.gif'>
-            <p class = 'state'>You don't have any orders yet Click the link to buy products from our store!<a id = 'linkEmpty'href='/Pet/user/index.php'>Click Me!</a></p>
-            </center>
-            </div>";
-        }
-    ?>
+  
     
     
     </div>
