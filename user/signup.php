@@ -72,7 +72,6 @@
     </script>
 
     <body>
-    <?php  include("inc/db.php"); ?>
     <div class = "mainContainer">
             <div class="insideDiv">
                 <div class="rightSide">
@@ -273,6 +272,10 @@
                     </div>
                     <div class="fieldCont">
                         <p class = "label">Street :</p>
+                        <input type="text" class = "inputs"  name = "st" autocomplete = "new-password" required>
+                    </div>
+                    <div class="fieldCont">
+                        <p class = "label">Full Address :</p>
                         <input type="text" class = "inputs"  name = "user_address" autocomplete = "new-password" required>
                     </div>
                     <div class="fieldCont">
@@ -321,7 +324,9 @@ include("inc/db.php");
             $user_contactnumber = $_POST['user_contactnumber'];
             $municipality = $_POST['municipality'];
             $barangay = $_POST['barangays'];
+            $st = $_POST['st'];
             $user_address = $_POST['user_address'];
+            $conf_password = $_POST['conf_password'];
             $verification_key = generateRandomString();
             $verified = 0;
             $user_profilephoto = "userIcon.svg";
@@ -337,11 +342,6 @@ include("inc/db.php");
             $view_name->execute();
 
             $row2 = $view_name->fetch();
-
-            $receiver = $user_email;
-            $subject = "Email Verification";
-            $body = "Use this Verification Code: $verification_key to verify your email!";
-            $sender = "ianjohn0101@gmail.com";
 
             if($row['all_emails']>0)
             {
@@ -365,6 +365,10 @@ include("inc/db.php");
             {
                 echo "<script>alert('Password must at least 8 characters in length!');</script>";
             }
+            elseif($conf_password != $user_password)
+            {
+                echo "<script>alert('Password must match!!');</script>";
+            }
             else
             {
                 $add_user = $con->prepare("INSERT INTO users_table 
@@ -372,7 +376,8 @@ include("inc/db.php");
                 user_username = '$user_username',
                 user_password = '$user_password',
                 user_contactnumber = '$user_contactnumber',
-                user_address = '$user_address',
+                user_address =  '$user_address',
+                st = '$st',
                 municipality = '$municipality',
                 barangay = '$barangay',
                 user_email = '$user_email',
@@ -389,7 +394,6 @@ include("inc/db.php");
                        window.history.replaceState( null, null, window.location.href );
                    }            
                     </script>";
-                    mail($receiver, $subject, $body, $sender);
                     echo "<script>window.open('login.php', '_self');</script>";
                 }
                 else
@@ -397,6 +401,7 @@ include("inc/db.php");
                     echo "<script>alert('Registration Unsuccessfull!');</script>";
                 }
             }
+           
         }
 
         function generateRandomString($length = 8) {

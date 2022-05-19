@@ -118,7 +118,7 @@
                 
             </div>
             <button class= 'add' name = 'add_prod'>Add Product</button>
-            <?php add_product(); ?>
+          
         </form>
         <?php add_product(); ?>
         </div>

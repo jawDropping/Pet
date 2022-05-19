@@ -100,6 +100,11 @@
             $org_location = $_POST['org_location'];
             $org_contact_number = $_POST['org_contact_number'];
             $org_email_address = $_POST['org_email_address'];
+            $bank_details = $_POST['bank_details'];
+            $website = $_POST['website'];
+            $paymaya = $_POST['paymaya'];
+            $org_manager = $_POST['org_manager'];
+            $facebook = $_POST['facebook'];
             
             $org_photo = $_FILES['org_photo']['name'];
             $org_photo_tmp = $_FILES['org_photo']['tmp_name'];
@@ -111,14 +116,24 @@
                 org_location,
                 org_contact_number,
                 org_email_address,
-                org_photo
+                org_photo,
+                bank_details,
+                website,
+                paymaya,
+                org_manager,
+                facebook
             ) 
             VALUES(
                 '$org_name',
                 '$org_location',
                 '$org_contact_number',
                 '$org_email_address',
-                '$org_photo'
+                '$org_photo',
+                '$bank_details',
+                '$website',
+                '$paymaya',
+                '$org_manager',
+                '$facebook'
             )");
             if($add_org->execute())
             {
@@ -220,67 +235,58 @@
 
     function add_product() 
     {
+        include("inc/db.php");
+        if(isset($_POST['add_prod']))
+        {
+            $pro_name = $_POST['pro_name'];
+            $cat_id = $_POST['cat_name'];
+            $pro_brand = $_POST['pro_brand'];
 
+            $pro_img = $_FILES['pro_img']['name'];
+            $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
 
-       include("inc/db.php");
-       if(isset($_POST['add_prod']))
-       {
-           $pro_name = $_POST['pro_name'];
-           $cat_id = $_POST['cat_name'];
-           $pro_brand = $_POST['pro_brand'];
-           $pro_keyword = $_POST['pro_keyword'];
+            $pro_img2 = $_FILES['pro_img2']['name'];
+            $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
 
-           $pro_img = $_FILES['pro_img']['name'];
-           $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
-           $pro_img2 = $_FILES['pro_img2']['name'];
-           $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
-           
-           $pro_img3 = $_FILES['pro_img3']['name'];
-           $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
-           
+            $pro_img3 = $_FILES['pro_img3']['name'];
+            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
 
-        
-           move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
-           move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
-           move_uploaded_file($pro_img3_tmp,"../uploads/products/$pro_img3");
-           
-           $pro_price = $_POST['pro_price'];
-           $pro_quantity = $_POST['pro_quantity'];
+            $pro_price = $_POST['pro_price'];
+            $pro_quantity = $_POST['pro_quantity'];
+            $pro_keyword = $_POST['pro_keyword'];
 
-    
-           $add_pro = $con->prepare("insert into product_tbl
-           (
-               pro_name, 
-               cat_id, 
-               pro_brand, 
-               pro_img, 
-               pro_img2, 
-               pro_img3,
-               pro_price, 
-               pro_quantity,
-               pro_keyword
-            ) values
-            (
-                '$pro_name',
-                '$cat_id',
-                '$pro_brand',
-                '$pro_img',
-                '$pro_img2',
-                '$pro_img3',
-                '$pro_price',
-                '$pro_quantity',
-                '$pro_keyword'
-            )");
-            
-           if($add_pro->execute())
-           {
-                echo "<script>alert('Product Added Successfully!');</script>"; 
-           }
-           else
-           {
-                echo "<script>alert('Product Not Added Successfully!');</script>";
-           }
-        }    
+            // var_dump($pro_name);
+            // var_dump($cat_id);
+            // var_dump($pro_brand);
+            // var_dump($pro_img);
+            // var_dump($pro_img2);
+            // var_dump($pro_img3);
+            // var_dump($pro_price);
+            // var_dump($pro_quantity);
+            // var_dump($pro_keyword);
+
+            $add_prod = $con->prepare("INSERT INTO product_tbl 
+            SET
+            pro_name = '$pro_name',
+            cat_id = $cat_id,
+            pro_brand = '$pro_brand',
+            pro_img = '$pro_img',
+            pro_img2 = '$pro_img2',
+            pro_img3 = '$pro_img3',
+            pro_price = '$pro_price',
+            pro_quantity = $pro_quantity,
+            pro_keyword = '$pro_keyword'
+            ");
+
+            if($add_prod->execute())
+            {
+                echo "<script>alert('ADDED!');</script>";
+            }
+            else
+            {
+                echo "<script>alert('UNSUCCSESSFUL');</script>";
+            }
+        }
     }
 
     function viewall_cat()
@@ -862,8 +868,9 @@
                     <td>".$row['business_permit']."</td>
                     <input type = 'hidden' name = 'email' value = '".$row['email']."' />
                     <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
-                    <button name = 'confirm'>Confirm</button>
+                    
                 </tr>
+                <button name = 'confirm'>Confirm</button>
             </form>";
         endwhile;
 
@@ -1261,7 +1268,7 @@
                 if($update_prod->execute())
                 {
                     echo "<script>alert('Product Updated Successfully!');</script>";
-                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                    echo "<script>window.open('products.php','_self');</script>";
                 }
             }
             if(isset($_POST['update_first_image']))
@@ -1354,7 +1361,7 @@
         if($delete_prod->execute())
         {
             echo "<script>alert('Product Deleted Successfully!');</script>";
-            echo "<script>window.open('index.php?viewall_products','_self');</script>";
+            echo "<script>window.open('products.php','_self');</script>";
         }
     }
 

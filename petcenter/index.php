@@ -30,7 +30,7 @@
                 <form method = "GET" action = "search.php"  enctype="multipart/form-data">
            <div class = 'search'>
 
-            <p class = 'lebs'> Transaction</p> 
+            <p class = 'lebs'> Search Coupon:</p> 
             <div class="searches">
             <input class = 'intsearch' type = "text" name = "user_query" />
             <button class = 'btns' name = "search"><img src="../uploads/searchT.png"></button>
