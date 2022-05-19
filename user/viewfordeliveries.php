@@ -14,7 +14,7 @@
             
            echo 
            "<div id = 'insideDiv'>
-           <a class = 'servDiv' href =  'view_order.php?user_id=".$_SESSION['user_id']."' style = 'text-decoration: none;color:#000;'><img class = 'image' src='./uploads/grooming.png' alt=''>View For Deliveries</a>
+           <a class = 'servDiv' href =  'view_order.php?user_id=".$_SESSION['user_id']."' style = 'text-decoration: none;color:#000;'><img class = 'image' src='./uploads/grooming.png' alt=''>View Orders</a>
            </div>";
         ?>
 

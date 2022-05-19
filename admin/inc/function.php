@@ -470,10 +470,15 @@
 
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
+            $dateTimeStamp = strtotime($delivery_date);
+            $dateTimeStamp2 = strtotime($today);
 
-            if($delivery_date > $today)
+            // var_dump($dateTimeStamp);
+            // var_dump($dateTimeStamp2);
+
+            if($dateTimeStamp < $dateTimeStamp2)
             {
-                echo "INVALID DATE!";
+                echo "<script>alert('Date Chosen Invalid!');</script>";
             }
             else
             {
