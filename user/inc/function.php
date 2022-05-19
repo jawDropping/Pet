@@ -1680,159 +1680,173 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     {
                         if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
                         {
-                            $sql = $con->query("SELECT * FROM confirmed_services WHERE coupon_code = '$coupon_code'");
-                            $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                            $sql->execute();
-    
-                            $row = $sql->rowCount();
-
-                            $sql3 = $con->prepare("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
-                            $sql3->setFetchMode(PDO:: FETCH_ASSOC);
-                            $sql3->execute();
-
-                            $row5 = $sql3->rowCount();
-    
-                            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
-                            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-                            $fetch_user_username->execute();
-                    
-                            $row4 = $fetch_user_username->fetch();
-                            if($row>0)
+                            if($coupon_code != "asdasdsadsadsadsadsa" || $coupon_code != "sakdnsakdnsakdnkas" || $coupon_code != "aslkdmaskldsakdnjasnjna" || $coupon_code != "jasndinindaisndisandi" || $coupon_code != "asmdioasmdsiandisad")
                             {
-                                if($coupon_code == '')
+                                if(strlen($coupon_code) <= 9)
                                 {
-                                    $receiver = $row4['user_email'];
-                                    $subject = "For Confirmation";
-                                    $body = "Your Reservation will be validated to the pet center";
-                                    $sender = "ianjohn0101@gmail.com";
-    
-                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                        pet_center_id,
-                                        service_id,
-                                        user_id,
-                                        service_cost,
-                                        reserve_date,
-                                        reserve_time,
-                                        coupon_code,
-                                        service_status
-                                    ) 
-                                    VALUES (
-                                        '$pet_center_id',
-                                        '$service_id',
-                                        '$current_user',
-                                        '$service_cost',
-                                        '$reserve_date',
-                                        '$reserve_time',
-                                        '$coupon_code',
-                                        'For Confirmation'
-                                    )");
-                        
-                                    if($reserve_service->execute())
+                                    $sql = $con->query("SELECT * FROM confirmed_services WHERE coupon_code = '$coupon_code'");
+                                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                                    $sql->execute();
+            
+                                    $row = $sql->rowCount();
+        
+                                    $sql3 = $con->prepare("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
+                                    $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+                                    $sql3->execute();
+        
+                                    $row5 = $sql3->rowCount();
+            
+                                    $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+                                    $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                    $fetch_user_username->execute();
+                            
+                                    $row4 = $fetch_user_username->fetch();
+                                    if($row>0)
                                     {
-                                        echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                        if($coupon_code == '')
+                                        {
+                                            $receiver = $row4['user_email'];
+                                            $subject = "For Confirmation";
+                                            $body = "Your Reservation will be validated to the pet center";
+                                            $sender = "ianjohn0101@gmail.com";
+            
+                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                pet_center_id,
+                                                service_id,
+                                                user_id,
+                                                service_cost,
+                                                reserve_date,
+                                                reserve_time,
+                                                coupon_code,
+                                                service_status
+                                            ) 
+                                            VALUES (
+                                                '$pet_center_id',
+                                                '$service_id',
+                                                '$current_user',
+                                                '$service_cost',
+                                                '$reserve_date',
+                                                '$reserve_time',
+                                                '$coupon_code',
+                                                'For Confirmation'
+                                            )");
+                                
+                                            if($reserve_service->execute())
+                                            {
+                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                            }
+                                            else
+                                            {
+                                                echo "<script>alert('UNSUCCESSFUL');</script>";
+                                            }
+                                            mail($receiver, $subject, $body, $sender);
+                                        }
+                                        else
+                                        {
+                                            echo "<script>alert('Code Already Used!');</script>";
+                                        }
                                     }
                                     else
                                     {
-                                        echo "<script>alert('UNSUCCESSFUL');</script>";
+                                        //check sa donation if naa bani nga coode
+                                        //if naa discount
+                                        $view_coupon = $con->prepare("SELECT * FROM ledger_tbl WHERE coupon_code = '$coupon_code'");
+                                        $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
+                                        $view_coupon->execute();
+            
+                                        $row2 = $view_coupon->rowCount();
+                                        if($row2>0)
+                                        {
+                                            $total = $service_cost * $serv_discount;
+                                            $convertfloat = floatval($total);
+            
+                                            $service_total_cost = $service_cost - $convertfloat;
+            
+                                            $receiver = $row4['user_email'];
+                                            $subject = "For Confirmation";
+                                            $body = "Your Reservation will be validated to the pet center";
+                                            $sender = "ianjohn0101@gmail.com";
+            
+                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                pet_center_id,
+                                                service_id,
+                                                user_id,
+                                                service_cost,
+                                                reserve_date,
+                                                reserve_time,
+                                                coupon_code,
+                                                service_status
+                                            ) 
+                                            VALUES (
+                                                '$pet_center_id',
+                                                '$service_id',
+                                                '$current_user',
+                                                '$service_total_cost',
+                                                '$reserve_date',
+                                                '$reserve_time',
+                                                '$coupon_code',
+                                                'For Confirmation'
+                                            )");
+                                
+                                            if($reserve_service->execute())
+                                            {
+                                               
+                                                echo "SUCCESSFUL"; 
+                                            }
+                                            else
+                                            {
+                                                echo "UNSUCCESSFUL";
+                                            }
+                                            mail($receiver, $subject, $body, $sender);
+                                        }
+                                        else
+                                        {
+                                            $receiver = $row4['user_email'];
+                                            $subject = "For Confirmation";
+                                            $body = "Your Reservation will be validated to the pet center";
+                                            $sender = "ianjohn0101@gmail.com";
+            
+                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                pet_center_id,
+                                                service_id,
+                                                user_id,
+                                                service_cost,
+                                                reserve_date,
+                                                reserve_time,
+                                                coupon_code,
+                                                service_status
+                                            ) 
+                                            VALUES (
+                                                '$pet_center_id',
+                                                '$service_id',
+                                                '$current_user',
+                                                '$service_cost',
+                                                '$reserve_date',
+                                                '$reserve_time',
+                                                '$coupon_code',
+                                                'For Confirmation'
+                                            )");
+                                
+                                            if($reserve_service->execute())
+                                            {
+                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                            }
+                                            else
+                                            {
+                                                echo "<script>alert('UNSUCCESSFUL');</script>";
+                                            }
+                                            mail($receiver, $subject, $body, $sender);
+                                        }
                                     }
-                                    mail($receiver, $subject, $body, $sender);
                                 }
                                 else
                                 {
-                                    echo "<script>alert('Code Already Used!');</script>";
+                                    echo "<script>alert('Coupon Invalid.');</script>";
                                 }
                             }
                             else
                             {
-                                //check sa donation if naa bani nga coode
-                                //if naa discount
-                                $view_coupon = $con->prepare("SELECT * FROM ledger_tbl WHERE coupon_code = '$coupon_code'");
-                                $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
-                                $view_coupon->execute();
-    
-                                $row2 = $view_coupon->rowCount();
-                                if($row2>0)
-                                {
-                                    $total = $service_cost * $serv_discount;
-                                    $convertfloat = floatval($total);
-    
-                                    $service_total_cost = $service_cost - $convertfloat;
-    
-                                    $receiver = $row4['user_email'];
-                                    $subject = "For Confirmation";
-                                    $body = "Your Reservation will be validated to the pet center";
-                                    $sender = "ianjohn0101@gmail.com";
-    
-                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                        pet_center_id,
-                                        service_id,
-                                        user_id,
-                                        service_cost,
-                                        reserve_date,
-                                        reserve_time,
-                                        coupon_code,
-                                        service_status
-                                    ) 
-                                    VALUES (
-                                        '$pet_center_id',
-                                        '$service_id',
-                                        '$current_user',
-                                        '$service_total_cost',
-                                        '$reserve_date',
-                                        '$reserve_time',
-                                        '$coupon_code',
-                                        'For Confirmation'
-                                    )");
-                        
-                                    if($reserve_service->execute())
-                                    {
-                                       
-                                        echo "SUCCESSFUL"; 
-                                    }
-                                    else
-                                    {
-                                        echo "UNSUCCESSFUL";
-                                    }
-                                    mail($receiver, $subject, $body, $sender);
-                                }
-                                else
-                                {
-                                    $receiver = $row4['user_email'];
-                                    $subject = "For Confirmation";
-                                    $body = "Your Reservation will be validated to the pet center";
-                                    $sender = "ianjohn0101@gmail.com";
-    
-                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                        pet_center_id,
-                                        service_id,
-                                        user_id,
-                                        service_cost,
-                                        reserve_date,
-                                        reserve_time,
-                                        coupon_code,
-                                        service_status
-                                    ) 
-                                    VALUES (
-                                        '$pet_center_id',
-                                        '$service_id',
-                                        '$current_user',
-                                        '$service_cost',
-                                        '$reserve_date',
-                                        '$reserve_time',
-                                        '$coupon_code',
-                                        'For Confirmation'
-                                    )");
-                        
-                                    if($reserve_service->execute())
-                                    {
-                                        echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
-                                    }
-                                    else
-                                    {
-                                        echo "<script>alert('UNSUCCESSFUL');</script>";
-                                    }
-                                    mail($receiver, $subject, $body, $sender);
-                                }
+                                echo "<script>alert('Coupon Invalid.');</script>";
                             }
                         }
                         else
