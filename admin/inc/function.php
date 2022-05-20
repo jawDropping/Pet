@@ -863,19 +863,17 @@
         while($row = $view_petcenters->fetch()):
             echo
             "<form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>".$row['pet_center_name']."</td>
-                    <td>".$row['contact_number']."</td>
-                    <td>".$row['email']."</td>
-                    <td>".$row['municipality']."</td>
-                    <td>".$row['barangay']."</td>
-                    <td>".$row['st']."</td>
-                    <td>".$row['business_permit']."</td>
+                <div class = 'innerGrid'>
+                <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."'/>
+                    <p class = 'asd'>".$row['pet_center_name']."</p>
+                    <p class = 'asd'>".$row['contact_number']."</p>
+                    <p class = 'asd'>".$row['email']."</p>
+                   
                     <input type = 'hidden' name = 'email' value = '".$row['email']."' />
                     <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
-                    
-                </tr>
-                <button name = 'confirm'>Confirm</button>
+                    <button class = 'btnV' name = 'view'>View</button>
+                </div>
+               
             </form>";
         endwhile;
 
@@ -943,9 +941,10 @@
                         <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
                         
                         <div class = 'holdest'>
-                        <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
+                        <p>Transaction No.</p>
+                        <input  type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
                         <p  name = 'transaction_number'>".$row['transaction_number']."</p>
-                        </div>
+                        </div><br>
                         <div class = 'holdest'>
                         <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
                         <p>".$row['full_name']."</p>

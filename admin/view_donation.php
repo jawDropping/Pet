@@ -47,9 +47,9 @@
 <div id="bodyright">
 <p class = 'hed'>Application for Coupons</p>
 
-
+<div class = 'body'>
 <?php echo view_detail(); ?>
-
+</div>
                 </div>
                 </div>
                 
@@ -76,6 +76,21 @@ background: #28287774;
         grid-template-columns: 20% 20% 20% 20% 20%;
         font-size: 14px;
         margin-top: 20px;
+}
+.body{
+    margin-top: 7vh;
+    background: #fff;
+    width: 95%;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+.holdest{
+    border-radius: 4px;
+    margin-botto: 10px;
+    width: 30%;
+    border: 1px solid blue;
 }
     </style>
 </html>

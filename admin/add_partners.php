@@ -204,6 +204,7 @@ function updateThumbnail(dropZoneElement, file) {
   }
 }
     </script>
+   
 </html>
 
 
