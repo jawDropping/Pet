@@ -404,7 +404,7 @@
 
             $userID = $row_get_user_id['user_id'];
             $user_username = $row_get_user_id['user_username'];
-            $display_order = $con->prepare("SELECT * FROM delivered_items WHERE user_username = '$user_username' ORDER BY order_id");
+            $display_order = $con->prepare("SELECT * FROM delivered_items WHERE user_username = '$user_username' ORDER BY delivery_id");
             $display_order->setFetchMode(PDO:: FETCH_ASSOC);
             $display_order->execute();
             
@@ -416,7 +416,7 @@
                 //     <td>".$row['date_delivered']."</td>
                 // </tr>";
                 "<div class = 'dataHolder'>
-                    <p class = 'dataCont'>".$row['order_id']."</p>
+                    <p class = 'dataCont'>".$row['delivery_id']."</p>
                     </div>
                     <div class = 'dataHolders'>
                     <p class = 'dataCont' >".$row['items']."</p>
@@ -1810,6 +1810,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                         }
                                     }
                                 }
+
                                 else
                                 {
                                     echo "<script>alert('Coupon Invalid.');</script>";

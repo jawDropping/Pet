@@ -68,7 +68,7 @@
       <table id = "table" class = "table">
             <thead>
                 <tr>
-                    <th  style = "background-color:black;color:white;border-top-left-radius:5px;border-bottom-left-radius:5px;">Order Id</th>
+                    <th  style = "background-color:black;color:white;border-top-left-radius:5px;border-bottom-left-radius:5px;">Transaction ID</th>
                     <th  style = "background-color:black;color:white">Items</th>
                     <th  style = "background-color:black;color:white;">Customer</th>
                     <th  style = "background-color:black;color:white;">Date Delivered</th>
