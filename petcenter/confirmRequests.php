@@ -62,14 +62,14 @@
         }
         .heds{
         display: grid;
-        grid-template-columns: 30% 20% 20% 30%;
+        grid-template-columns: 30% 10% 20% 20% 20%;
         border-bottom: .8px solid #777;
            padding: 5px;
            margin-bottom: 2%; 
         }
         .hed{
             display: grid;
-            grid-template-columns: 30% 20% 20% 30%;
+            grid-template-columns: 30% 10% 20% 20% 20%;
             margin-top: 1%;
            padding: 10px;
            background: #f4f4f4;
@@ -107,12 +107,13 @@
         }
         .oks{
             text-align: center;
-            width: 50%;
+            width: 35%;
             padding: 10px;
             border: none;
             border-radius: 5px;
             background:#5a5bf3;
             color: white;
+            margin-left: 10%;
         }
         .ttl{
             font-size: 20px;

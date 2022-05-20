@@ -858,17 +858,14 @@ function updateThumbnail(dropZoneElement, file) {
                         {
                             echo "<p  class = 'asd'>".$coupon_code."</p>";
                         }
-
-                    echo"</div>";
                     
                     echo
                     "
                     <div>
-                    
                     <button class = 'oks' name = 'confirm_request' >Confirm</button>
                     <a class = 'views' href = 'viewuserpet.php?view_pet=".$user_id."'>View Pet</a>
                     </div>
-                  
+                    </div>
                     
                 </form>";
                 

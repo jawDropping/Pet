@@ -154,7 +154,7 @@
             
             echo 
             "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data' id = 'forming'>
-                
+                <div class = 'mainH'>
             <div class = 'holdest'>
             <p>".$row['org_name']."</p>
             </div>
@@ -167,14 +167,15 @@
             <div class = 'holdest'>
             <p>".$row['org_email_address']."</p>
             </div>
+            <div class = 'btnss'>
             <div class = 'holdest'>
             <button id='views2' name = 'edit_org' value = ".$row['id'].">Edit</button>
             </div>
             <div class = 'holdest'>
             <button  id='views' name = 'delete_org' value = ".$row['id'].">Delete</button>
             </div>
-                    
-                    
+            </div>     
+            </div>
                    
                     
                     
@@ -1039,13 +1040,13 @@
           
             echo
             "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
-            
-                <p>".$row['transaction_number']."</p>
-                <p>".$row['full_name']."</p>
-                <p>".$row['org_name']."</p>
-                <p>".$row['contact_number']."</p>
-                <p>".$row['date_confirmed']."</p>
-       
+                <div class = 'inner'>
+                <p class = 'lebs'>".$row['transaction_number']."</p>
+                <p class = 'lebs'>".$row['full_name']."</p>
+                <p class = 'lebs'>".$row['org_name']."</p>
+                <p class = 'lebs'>".$row['contact_number']."</p>
+                <p class = 'lebs'>".$row['date_confirmed']."</p>
+            </div>
            
         </form>";
         endwhile;
@@ -1068,13 +1069,13 @@
                {
                     echo 
                     "<form id='forming'>
-            
-                    <p>".$row['transaction_number']."</p>
-                    <p>".$row['full_name']."</p>
-                    <p>".$row['org_name']."</p>
-                    <p>".$row['contact_number']."</p>
-                    <p>".$row['date_confirmed']."</p>
-           
+                    <div class = 'inner' >
+                    <p class = 'lebs'>".$row['transaction_number']."</p>
+                    <p class = 'lebs'>".$row['full_name']."</p>
+                    <p class = 'lebs'>".$row['org_name']."</p>
+                    <p class = 'lebs'>".$row['contact_number']."</p>
+                    <p class = 'lebs'>".$row['date_confirmed']."</p>
+                    </div>
                
             </form>";
                }
@@ -1156,7 +1157,7 @@
                 <p class = 'okss'>".$row['user_email']."</p>
                 <p class = 'okss'>".$row['user_contactnumber']."</p>
                 <p class = 'okss'>".$row['user_address']."</p>
-                <a href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
+                <a class = 'dbtn' href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
                 
                
          </div>";
