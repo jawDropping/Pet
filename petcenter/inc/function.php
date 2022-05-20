@@ -1477,7 +1477,81 @@ function updateThumbnail(dropZoneElement, file) {
         }
     }
 
+    function search_transaction_code() {
+        include("inc/db.php");
 
+        if(isset($_GET['search']) && isset($_GET['user_query']))
+        {
+            $user_query = $_GET['user_query'];
+
+            $search = $con->query("SELECT * FROM confirmed_services WHERE transaction_code LIKE '%$user_query%'");
+            $search->setFetchMode(PDO::FETCH_ASSOC);
+            $search->execute();
+
+            echo "<div id = 'bodyleft'><ul>";
+            if($search->rowCount() == 0){
+                echo "<h2>NOT FOUND!</h2>";
+            }
+            else
+            {
+                $datenow = getdate();
+
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+                while($row2 = $search->fetch()):
+                    $pet_center_id = $row2['pet_center_id'];
+                    $current_user = $_SESSION['pet_center_id'];
+
+                    $view_user = $con->query("SELECT * FROM pet_center_tbl");
+                    $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+                    $view_user->execute();
+                    
+                    $row_user = $view_user->fetch();
+                    $pet_center_name = $row_user['pet_center_name'];
+                    
+                    if($current_user == $pet_center_id)
+                    {
+                        $user_id = $row2['user_id'];
+                        $service_id = $row2['service_id'];
+                        $coupon_code = $row2['coupon_code'];
+            
+                        $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                        $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+                        $view_service->execute();
+            
+                        $row_service = $view_service->fetch();
+                        $service_name = $row_service['services_name'];
+            
+            
+                        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
+                        $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+                        $view_user->execute();
+            
+                        $row_user = $view_user->fetch();
+                        $user_username = $row_user['user_username'];
+                        $user_email = $row_user['user_email'];
+                        $empty_coupon = "N/A";
+                        echo
+                        "<form method = 'POST'>
+                            <div class = 'hed'>
+                                <p>".$row2['transaction_code']."</p>
+                                <p>".$user_username."</p>
+                                <p>".$row2['date_confirmed']."</p>";
+                                if($row2['coupon_code'] == '')
+                                {
+                                    echo "<p>".$empty_coupon."</p>";
+                                }
+                                else
+                                {
+                                    echo "<p>".$coupon_code."</p>";
+                                }
+                                
+                            echo "</div>
+                        </form>";
+                    }
+                endwhile;
+            }
+        }
+    }
     
 
     

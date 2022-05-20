@@ -557,7 +557,7 @@
     function viewalldelivered_items()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY order_id");
+        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY delivery_id");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -570,7 +570,7 @@
 
             echo
             "<tr>
-                <td>".$row['order_id']."</td>
+                <td>".$row['delivery_id']."</td>
                 <td>".$row['items']."</td>
                 <td>".$row['user_username']."</td>
                 <td>".$row['date_delivered']."</td>
@@ -661,7 +661,7 @@
             {
                 // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
                 // $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql = $con->prepare("INSERT INTO delivered_items(order_id, items, total_amount, user_username, date_delivered) VALUES('$order_id', '$items', '$total_amount', '$user_username', '$today')");
+                $sql = $con->prepare("INSERT INTO delivered_items(delivery_id, items, total_amount, user_username, date_delivered) VALUES('$delivery_id', '$items', '$total_amount', '$user_username', '$today')");
                 if($sql->execute())
                 {
                   
