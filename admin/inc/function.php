@@ -568,19 +568,18 @@
         while($row = $sql->fetch()):
 
             echo
-            "<div class = 'dataGrid'>
-                <p class = 'dataLebs'>".$row['order_id']."</p>
-                <p class = 'dataLebss'>".$row['items']."</p>
-                <p class = 'dataLebs'>".$row['user_username']."</p>
-                <p class = 'dataLebs'>".$row['date_delivered']."</p>
-                <p class = 'dataLebs'>₱".$row['total_amount']."</p>
-            </div>";
+            "<tr>
+                <td>".$row['order_id']."</td>
+                <td>".$row['items']."</td>
+                <td>".$row['user_username']."</td>
+                <td>".$row['date_delivered']."</td>
+                <td>P".$row['total_amount']."</td>
+            </tr>";
         endwhile;
         echo
-        "<div class = 'total'>
-            
-            <p class = 'det'>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
-        </div>";
+        "<td>
+            <p class = 'det' style = 'margin-left:1.5rem'>Amount Collected:</p><p class = 'figures'> P".$row2['SUM(total_amount)']."</p>
+        </td>";
     }
 
     
@@ -1068,13 +1067,16 @@
                while($row = $search_transaction_number->fetch())
                {
                     echo 
-                    "<tr>
-                        <td>".$row['transaction_number']."</td>
-                        <td>".$row['full_name']."</td>
-                        <td>".$row['org_name']."</td>
-                        <td>".$row['contact_number']."</td>
-                        <td>".$row['date_confirmed']."</td>
-                    </tr>";
+                    "<form id='forming'>
+            
+                    <p>".$row['transaction_number']."</p>
+                    <p>".$row['full_name']."</p>
+                    <p>".$row['org_name']."</p>
+                    <p>".$row['contact_number']."</p>
+                    <p>".$row['date_confirmed']."</p>
+           
+               
+            </form>";
                }
             }
             else

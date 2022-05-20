@@ -65,18 +65,24 @@
 
     <form method = "POST" enctype = "multipart/form-data">
     
-       <div class = 'headGrid'>
-        <p class = 'headLebs'>Order ID</p>
-        <p  class = 'headLebs'>Items</p>
-        <p class = 'headLebs'>Customer</p>
-        <p class = 'headLebs'>Date Delivered</p>
-        <p class = 'headLebs'>Amount Collected</p>
-       </div>
-    
-       <?php
-            echo viewalldelivered_items();
-        ?>
-      
+      <table id = "table" class = "table">
+            <thead>
+                <tr>
+                    <th  style = "background-color:black;color:white;border-top-left-radius:5px;border-bottom-left-radius:5px;">Order Id</th>
+                    <th  style = "background-color:black;color:white">Items</th>
+                    <th  style = "background-color:black;color:white;">Customer</th>
+                    <th  style = "background-color:black;color:white;">Date Delivered</th>
+                    <th  style = "background-color:black;color:white;border-top-right-radius:5px;border-bottom-right-radius:5px;">Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <?php
+                        echo viewalldelivered_items();
+                    ?>
+                </tr>
+            </tbody>
+      </table>
 
     </form>
 </div>
