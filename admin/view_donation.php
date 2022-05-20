@@ -33,8 +33,9 @@
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li ><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
-        <li><a href= "/Pet/admin/viewall_users.php"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
-        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -71,9 +72,9 @@ background: #28287774;
     font-weight: bold;
     color: white;
 }
-.forming{
+#forming{
     display: grid;
-        grid-template-columns: 20% 20% 20% 20% 20%;
+        grid-template-columns: 50% 50%;
         font-size: 14px;
         margin-top: 20px;
 }
@@ -85,12 +86,24 @@ background: #28287774;
     padding: 10px;
     margin-left: 20px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
 }
 .holdest{
     border-radius: 4px;
-    margin-botto: 10px;
-    width: 30%;
+    margin-bottom: 10px;
+    width: 90%;
     border: 1px solid blue;
+}
+.imagesP{
+    width: 90%;
+}
+.imageDiv{
+    margin-bottom: 20px;
+}
+#views2{
+    padding: 10px;
+    float: right;
+    margin-right: 10%;
 }
     </style>
 </html>

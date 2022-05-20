@@ -782,7 +782,7 @@
                     <p>".$row['amount']."</p>
                     </div>
                     <div class = 'holdest'>
-                    <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
+                    <img class = 'imagePP' src = '../uploads/donations/".$row['proof_photo']."'/>
                     </div>
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
@@ -938,14 +938,19 @@
                 $org_name = $row_org['org_name'];
                 echo 
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+
                         <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
-                        
+                        <div class = 'imageDiv'>
+                        <img class = 'imagesP' src = '../uploads/donations/".$row['proof_photo']."' '/><div></div>
+                        </div>
+                        <div>
                         <div class = 'holdest'>
                         <p>Transaction No.</p>
                         <input  type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
                         <p  name = 'transaction_number'>".$row['transaction_number']."</p>
-                        </div><br>
+                        </div>
                         <div class = 'holdest'>
+                        <p>Name</p>
                         <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
                         <p>".$row['full_name']."</p>
                         </div>
@@ -954,16 +959,17 @@
                         <p>".$org_name."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p>GCash No.</p>
                         <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
                         <p>".$row['contact_number']."</p>
                         </div>
                         <div class = 'holdest'>
                         <p>".$row['amount']."</p>
                         </div>
-                        <div class = 'holdest'>
-                        <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
-                        </div>
-                        <div class = 'holdest'>
+                       
+                       
+                     
+                        
                         <div id = 'aksyon'>
                         <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
                         </div>
