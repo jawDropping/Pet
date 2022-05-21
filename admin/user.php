@@ -63,7 +63,9 @@ if(isset($_GET['user']))
     "<div class = 'conts'>
     <p>Name</p><p>".$row['user_username']."</p>
     </div>
+    <div class = 'conts'>
     <p>Location: ".$row['user_address']."</p>
+    </div>
     <p>Email: ".$row['user_email']."</p>
     <p>Contact Number: ".$row['user_contactnumber']."</p>";
 }
