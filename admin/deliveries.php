@@ -72,7 +72,7 @@ else
     <div>
         <div class = 'hedGrid'>
   
-            <p>Order Id</p>
+            <p>Delivery Id</p>
             <p>Items</p>
             <p>Total Amount</p>
             <p>Customer</p>
