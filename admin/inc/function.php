@@ -601,7 +601,7 @@
             $user_address = $row_user['user_address'];
             echo 
             "<div class = 'innerGrid'>
-                <p>".$row['order_id']."</p>
+                <p>".$row['delivery_id']."</p>
                 <p>".$row['items']."</p>
                 <p>".$row['total_amount']."</p>
                 <p>".$row['user_username']."</p>

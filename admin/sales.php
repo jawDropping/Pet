@@ -53,6 +53,7 @@
 <form method = 'GET' action = 'date_sales.php' enctpye = 'multipart/form-data'>
 <div class = 'unity'>
     <input class = 'searchBar' type = 'date'  name = 'date' />
+    <input class = 'searchBar' type = 'date' name = 'todate' />
     <button class = 'btnS' name = 'get_date'>Search date</button>
 </div>
 </form>

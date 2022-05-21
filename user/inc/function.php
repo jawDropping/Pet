@@ -534,11 +534,7 @@
                     <p class = 'Heads' >".$row_org['org_name']."</p>
                     <div id = 'oks'>
                         <p class = 'fsTxt'>
-                        IRO cares for over 100 companion animals who are awaiting adoption into forever homes.<br>  IRO also cares for a number of animals who are receiving treatment for medical injuries or illnesses or are being rehabilitated for behavioural issues relating to their backgrounds.
-
-IRO is run entirely by a team of volunteers and as a community-focused organization; IRO not only relies on the support of the public (both local and international) for funding but also to assist with the organization’s operations.
-
-IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (3) non-profit animal rescue organization.</p>
+                        ".$row_org['org_details']."</p>
                         <div class = 'mainInfos'>
                         <div class = 'rightInfo'>
                        
