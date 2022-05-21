@@ -1546,9 +1546,26 @@ function updateThumbnail(dropZoneElement, file) {
                                 }
                                 
                             echo "</div>
-                        </form>";
+                            <p>".$row2['status']."</p>";
+                            if($row2['status'] != 'USED')
+                            {
+                                echo "<button name = 'confirm' value = ".$row2['id'].">Confirm</button>";
+                            }
+                        echo"</form>";
                     }
                 endwhile;
+                if(isset($_POST['confirm']))
+                {
+                    $id = $_POST['confirm'];
+                    $sql = $con->prepare("UPDATE confirmed_services SET status = 'USED' WHERE id = '$id'");
+                    $sql->execute();
+
+                    if($sql->execute())
+                    {
+                        echo "<script>alert('Confirmed!');</script>";
+                        echo "<script>window.open('index.php', '_self');</script>";
+                    }
+                }
             }
         }
     }
