@@ -2059,7 +2059,7 @@
                 
          
     
-                $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
+                $sql2 = $con->prepare("SELECT accept_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
                 $sql2->setFetchMode(PDO:: FETCH_ASSOC);
                 $sql2->execute();
     

@@ -62,19 +62,19 @@ if(isset($_GET['user']))
 
     echo
     "<div class = 'conts'>
-    <p>Name</p><p>".$row['user_username']."</p>
+    <p>Name</p><p class = 'data'>".$row['user_username']."</p>
     </div>
     <br>
     <div class = 'conts'>
-    <p>Location</p><p> ".$row['user_address']."</p>
+    <p>Location</p><p class = 'data'> ".$row['user_address']."</p>
     </div>
     <br>
     <div class = 'conts'>
-    <p>Email</p><p>".$row['user_email']."</p>
+    <p>Email</p><p class = 'data'>".$row['user_email']."</p>
     </div>
     <br>
     <div class = 'conts'>
-    <p>Contact Number</p><p> ".$row['user_contactnumber']."</p>
+    <p>Contact Number</p><p class = 'data'> ".$row['user_contactnumber']."</p>
     </div>";
 }
 ?>
@@ -106,12 +106,15 @@ if(isset($_GET['user']))
         padding: 10px;
         border-radius: 4px;
     }
+    .data{
+        
+    }
     .hed{
         font-size: 22px;
         font-weight: bold;
         color: white;
     }
-    p{
+      p{
         padding: 10px;
     }
 </style>
