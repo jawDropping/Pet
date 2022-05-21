@@ -154,7 +154,7 @@
             
             echo 
             "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data' id = 'forming'>
-                
+                <div class = 'mainH'>
             <div class = 'holdest'>
             <p>".$row['org_name']."</p>
             </div>
@@ -167,14 +167,15 @@
             <div class = 'holdest'>
             <p>".$row['org_email_address']."</p>
             </div>
+            <div class = 'btnss'>
             <div class = 'holdest'>
             <button id='views2' name = 'edit_org' value = ".$row['id'].">Edit</button>
             </div>
             <div class = 'holdest'>
             <button  id='views' name = 'delete_org' value = ".$row['id'].">Delete</button>
             </div>
-                    
-                    
+            </div>     
+            </div>
                    
                     
                     
@@ -470,10 +471,15 @@
 
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
+            $dateTimeStamp = strtotime($delivery_date);
+            $dateTimeStamp2 = strtotime($today);
 
-            if($delivery_date > $today)
+            // var_dump($dateTimeStamp);
+            // var_dump($dateTimeStamp2);
+
+            if($dateTimeStamp < $dateTimeStamp2)
             {
-                echo "INVALID DATE!";
+                echo "<script>alert('Date Chosen Invalid!');</script>";
             }
             else
             {
@@ -551,7 +557,7 @@
     function viewalldelivered_items()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY order_id");
+        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY delivery_id");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -563,19 +569,18 @@
         while($row = $sql->fetch()):
 
             echo
-            "<div class = 'dataGrid'>
-                <p class = 'dataLebs'>".$row['order_id']."</p>
-                <p class = 'dataLebss'>".$row['items']."</p>
-                <p class = 'dataLebs'>".$row['user_username']."</p>
-                <p class = 'dataLebs'>".$row['date_delivered']."</p>
-                <p class = 'dataLebs'>₱".$row['total_amount']."</p>
-            </div>";
+            "<tr>
+                <td>".$row['delivery_id']."</td>
+                <td>".$row['items']."</td>
+                <td>".$row['user_username']."</td>
+                <td>".$row['date_delivered']."</td>
+                <td>P".$row['total_amount']."</td>
+            </tr>";
         endwhile;
         echo
-        "<div class = 'total'>
-            
-            <p class = 'det'>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
-        </div>";
+        "<td>
+            <p class = 'det' style = 'margin-left:1.5rem'>Amount Collected:</p><p class = 'figures'> P".$row2['SUM(total_amount)']."</p>
+        </td>";
     }
 
     
@@ -656,7 +661,7 @@
             {
                 // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
                 // $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql = $con->prepare("INSERT INTO delivered_items(order_id, items, total_amount, user_username, date_delivered) VALUES('$order_id', '$items', '$total_amount', '$user_username', '$today')");
+                $sql = $con->prepare("INSERT INTO delivered_items(delivery_id, items, total_amount, user_username, date_delivered) VALUES('$delivery_id', '$items', '$total_amount', '$user_username', '$today')");
                 if($sql->execute())
                 {
                   
@@ -777,7 +782,7 @@
                     <p>".$row['amount']."</p>
                     </div>
                     <div class = 'holdest'>
-                    <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
+                    <img class = 'imagePP' src = '../uploads/donations/".$row['proof_photo']."'/>
                     </div>
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
@@ -858,19 +863,17 @@
         while($row = $view_petcenters->fetch()):
             echo
             "<form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>".$row['pet_center_name']."</td>
-                    <td>".$row['contact_number']."</td>
-                    <td>".$row['email']."</td>
-                    <td>".$row['municipality']."</td>
-                    <td>".$row['barangay']."</td>
-                    <td>".$row['st']."</td>
-                    <td>".$row['business_permit']."</td>
+                <div class = 'innerGrid'>
+                <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."'/>
+                    <p class = 'asd'>".$row['pet_center_name']."</p>
+                    <p class = 'asd'>".$row['contact_number']."</p>
+                    <p class = 'asd'>".$row['email']."</p>
+                   
                     <input type = 'hidden' name = 'email' value = '".$row['email']."' />
                     <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
-                    
-                </tr>
-                <button name = 'confirm'>Confirm</button>
+                    <button class = 'btnV' name = 'view'>View</button>
+                </div>
+               
             </form>";
         endwhile;
 
@@ -935,13 +938,19 @@
                 $org_name = $row_org['org_name'];
                 echo 
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+
                         <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
-                        
+                        <div class = 'imageDiv'>
+                        <img class = 'imagesP' src = '../uploads/donations/".$row['proof_photo']."' '/><div></div>
+                        </div>
+                        <div>
                         <div class = 'holdest'>
-                        <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
+                        <p>Transaction No.</p>
+                        <input  type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
                         <p  name = 'transaction_number'>".$row['transaction_number']."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p>Name</p>
                         <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
                         <p>".$row['full_name']."</p>
                         </div>
@@ -950,16 +959,17 @@
                         <p>".$org_name."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p>GCash No.</p>
                         <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
                         <p>".$row['contact_number']."</p>
                         </div>
                         <div class = 'holdest'>
                         <p>".$row['amount']."</p>
                         </div>
-                        <div class = 'holdest'>
-                        <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
-                        </div>
-                        <div class = 'holdest'>
+                       
+                       
+                     
+                        
                         <div id = 'aksyon'>
                         <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
                         </div>
@@ -1035,13 +1045,13 @@
           
             echo
             "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
-            
-                <p>".$row['transaction_number']."</p>
-                <p>".$row['full_name']."</p>
-                <p>".$row['org_name']."</p>
-                <p>".$row['contact_number']."</p>
-                <p>".$row['date_confirmed']."</p>
-       
+                <div class = 'inner'>
+                <p class = 'lebs'>".$row['transaction_number']."</p>
+                <p class = 'lebs'>".$row['full_name']."</p>
+                <p class = 'lebs'>".$row['org_name']."</p>
+                <p class = 'lebs'>".$row['contact_number']."</p>
+                <p class = 'lebs'>".$row['date_confirmed']."</p>
+            </div>
            
         </form>";
         endwhile;
@@ -1063,13 +1073,16 @@
                while($row = $search_transaction_number->fetch())
                {
                     echo 
-                    "<tr>
-                        <td>".$row['transaction_number']."</td>
-                        <td>".$row['full_name']."</td>
-                        <td>".$row['org_name']."</td>
-                        <td>".$row['contact_number']."</td>
-                        <td>".$row['date_confirmed']."</td>
-                    </tr>";
+                    "<form id='forming'>
+                    <div class = 'inner' >
+                    <p class = 'lebs'>".$row['transaction_number']."</p>
+                    <p class = 'lebs'>".$row['full_name']."</p>
+                    <p class = 'lebs'>".$row['org_name']."</p>
+                    <p class = 'lebs'>".$row['contact_number']."</p>
+                    <p class = 'lebs'>".$row['date_confirmed']."</p>
+                    </div>
+               
+            </form>";
                }
             }
             else
@@ -1149,7 +1162,7 @@
                 <p class = 'okss'>".$row['user_email']."</p>
                 <p class = 'okss'>".$row['user_contactnumber']."</p>
                 <p class = 'okss'>".$row['user_address']."</p>
-                <a href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
+                <a class = 'dbtn' href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
                 
                
          </div>";
