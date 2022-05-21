@@ -329,14 +329,45 @@
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) {
                 $net_total += $order['sum(od.qty * od.price)'];
+                $totalmandaue = $order['sum(od.qty * od.price)'] + (10);
+                $totallacion = $order['sum(od.qty * od.price)'] + (12);
+                $totalcebu = $order['sum(od.qty * od.price)'] + (12);
+                $totallapulapu = $order['sum(od.qty * od.price)'] + (13);
                 echo
                 "<div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['items']."</p>
-                    </div>
-                    <div class = 'dataHolders'>
-                    <p class = 'dataCont' >₱".$order['sum(od.qty * od.price)']."</p>
-                    </div>
-                    <div class = 'dataHolder'>
+                    </div>";
+                    if($row_get_user_id['municipality'] == "Mandaue City")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totalmandaue."</p>
+                        </div>";
+                    }
+                    if($row_get_user_id['municipality'] == "Cebu City")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totalcebu."</p>
+                        </div>";
+                    }
+                    if($row_get_user_id['municipality'] == "Lapu-Lapu City")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totallapulapu."</p>
+                        </div>";
+                    }
+                    if($row_get_user_id['municipality'] == "Consolacion")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totallacion."</p>
+                        </div>";
+                    }
+
+                    
+                   echo "<div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['delivery_status']."</p>
                     </div>
                     <div class = 'dataHolder'>
@@ -1036,7 +1067,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     <center>
                               
                                 <form method = 'POST'>
-                                    <input type = 'hidden' value = '".$row_pro['pytro_id']."' name = 'pro_id' />
+                                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
                                     
                                     <button class = 'btnLinkCart' name = 'cart_btn'>Add to Cart</button>
                                 </form>
