@@ -36,6 +36,7 @@
         <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
         <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div class="leftFooter">
@@ -52,21 +53,13 @@
        
        <div class = 'tebs'>
         <div class = 'yopak'>
-            <p>Transaction Number</p>
-
-            <p>Donors Name</p>
-
-            <p>Selected Organization</p>
-
-            <p>Contact Number</p>
-
-           
-
-            <p>Amount</p>
-
-            <p>Proof of Donation</p>
-
-            <p>Action</p>
+            <p class = 'heaed'>Transaction Number</p>
+               <p class = 'heaed'>Donors Name</p>
+             <p class = 'heaed'>Selected Organization</p>
+               <p  class = 'heaed'>Contact Number</p>
+             <p class = 'heaed'>Amount</p>
+                <p class = 'heaed'>Proof of Donation</p>
+              <p class = 'heaed'>Action</p>
         </div>
         <div>
             <?php
@@ -100,6 +93,16 @@
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
     }
+    .imagePP{
+        height: 100px;
+    }
+    .heaed{
+        font-family: "Varela Round", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #777;
+    text-align: center;
+    }
     p{
         padding: 10px;
     }
@@ -120,9 +123,6 @@
     .yopak{
         display: grid;
         grid-template-columns: 15% 12% 15% 15% 12% 15% 15%;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 1px solid black;
         
         
     }

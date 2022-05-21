@@ -54,14 +54,11 @@
        <div>
        
         <div class = 'gridnasad'>
-           <p>Pet Center Name</p>
-            <p>Contact Number</p>
-            <p>Email</p>
-            <p>Municipality</p>
-            <p>Brgy</p>
-            <p>Street</p>
-            <p>Business Permit</p>
-            <p>Action</p>
+        <p class = 'headlebs'>Business Permit</p>
+           <p class = 'headlebs'>Pet Center Name</p>
+            <p class = 'headlebs'>Contact Number</p>
+            <p class = 'headlebs'>Email</p>
+           
             <div></div>
         </div>
         <tr>
@@ -88,6 +85,15 @@
         width: 100%;
   
     }
+    .btnV{
+        height: 40px;
+        font-size: 14px;
+        background: #ffb830;
+        border: none;
+        outline: none;
+        border-radius: 4px;
+        width: 70%;
+    }
     .body{
         margin-top: 7vh;
         margin-left: 20px;
@@ -97,8 +103,16 @@
         padding: 10px;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
+    .asd{
+        text-align: center;
+        font-family: "Varela Round", sans-serif;
+    }
     p{
         padding: 10px;
+    }
+    .bimg{
+        width: 70%;
+        margin-left: 15%;
     }
     .selection {
   background: #28287774;
@@ -110,9 +124,28 @@
     }
     .gridnasad{
         display: grid;
-        grid-template-columns:  12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+        grid-template-columns:  10% 25% 15% 25% 10%;
         border-bottom: 1px solid #aaa;
     }
+    .innerGrid{
+        display: grid;
+        grid-template-columns:  10% 25% 15% 25% 10%;
+        margin-top: 1%;
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 4px;
+    }
+    .innerGrid:hover{
+        background: #ebebeb;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+    .headlebs{
+    font-family: "Varela Round", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #777;
+    text-align: center;
+}
     #forming{
         display: grid;
         grid-template-columns:  12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;

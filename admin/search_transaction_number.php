@@ -52,8 +52,10 @@
 <p class = 'hed'>Donation Records</p>
 <div class="ledger">
 <form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
-           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
-           <button id = 'search_btn' name = 'search'>Search</button><br>
+<div class = 'searchs'>
+    <p class = 'searchl'>Transaction:</p> <input class = 'okss' type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
+           <button id = 'search_btn' name = 'search'>Search</button>
+    </div> 
         </form>
     <div class="body">
         
@@ -96,8 +98,32 @@
         width: 100%;
   
     }
+    .searchl{
+        color: white;
+        font-family: "Varela Round", sans-serif;
+    }
+    .okss{
+        padding: 10px;
+        font-family: "Varela Round", sans-serif;
+        width: 10%;
+        border: none;
+        border-radius: 2px;
+        outline: none;
+        font-size: 12px;
+    }
+    #search_btn{
+        border: none;
+        padding: 10px;
+        margin-left: -5px;
+        border-radius: 2px;
+    }
+    .searchs{
+        display: flex;
+        margin-top: 5vh;
+        margin-left: 5%;
+    }
     .body{
-        margin-top: 7vh;
+        margin-top: 2vh;
         margin-left: 20px;
         background: #fff;
         width: 95%;
@@ -119,13 +145,28 @@
     .gridnasad{
         display: grid;
         grid-template-columns:  20% 20% 20% 20% 20%;
-        border-bottom: 1px solid #aaa;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
     }
     #forming{
-        display: grid;
-        grid-template-columns: 20% 20% 20% 20% 20%;
+       
         font-size: 14px;
         margin-top: 20px;
+    }
+    .inner{
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20% 20%;
+        margin-top: 1%;
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 4px;
+    }
+    .lebs{
+        font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    color: #777;
+    text-align: center;
     }
 </style>
 

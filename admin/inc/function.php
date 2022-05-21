@@ -154,7 +154,7 @@
             
             echo 
             "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data' id = 'forming'>
-                
+                <div class = 'mainH'>
             <div class = 'holdest'>
             <p>".$row['org_name']."</p>
             </div>
@@ -167,14 +167,15 @@
             <div class = 'holdest'>
             <p>".$row['org_email_address']."</p>
             </div>
+            <div class = 'btnss'>
             <div class = 'holdest'>
             <button id='views2' name = 'edit_org' value = ".$row['id'].">Edit</button>
             </div>
             <div class = 'holdest'>
             <button  id='views' name = 'delete_org' value = ".$row['id'].">Delete</button>
             </div>
-                    
-                    
+            </div>     
+            </div>
                    
                     
                     
@@ -781,7 +782,7 @@
                     <p>".$row['amount']."</p>
                     </div>
                     <div class = 'holdest'>
-                    <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
+                    <img class = 'imagePP' src = '../uploads/donations/".$row['proof_photo']."'/>
                     </div>
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
@@ -862,19 +863,17 @@
         while($row = $view_petcenters->fetch()):
             echo
             "<form method = 'POST' enctype = 'multipart/form-data'>
-                <tr>
-                    <td>".$row['pet_center_name']."</td>
-                    <td>".$row['contact_number']."</td>
-                    <td>".$row['email']."</td>
-                    <td>".$row['municipality']."</td>
-                    <td>".$row['barangay']."</td>
-                    <td>".$row['st']."</td>
-                    <td>".$row['business_permit']."</td>
+                <div class = 'innerGrid'>
+                <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."'/>
+                    <p class = 'asd'>".$row['pet_center_name']."</p>
+                    <p class = 'asd'>".$row['contact_number']."</p>
+                    <p class = 'asd'>".$row['email']."</p>
+                   
                     <input type = 'hidden' name = 'email' value = '".$row['email']."' />
                     <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
-                    
-                </tr>
-                <button name = 'confirm'>Confirm</button>
+                    <button class = 'btnV' name = 'view'>View</button>
+                </div>
+               
             </form>";
         endwhile;
 
@@ -939,13 +938,19 @@
                 $org_name = $row_org['org_name'];
                 echo 
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+
                         <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
-                        
+                        <div class = 'imageDiv'>
+                        <img class = 'imagesP' src = '../uploads/donations/".$row['proof_photo']."' '/><div></div>
+                        </div>
+                        <div>
                         <div class = 'holdest'>
-                        <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
+                        <p>Transaction No.</p>
+                        <input  type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
                         <p  name = 'transaction_number'>".$row['transaction_number']."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p>Name</p>
                         <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
                         <p>".$row['full_name']."</p>
                         </div>
@@ -954,16 +959,17 @@
                         <p>".$org_name."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p>GCash No.</p>
                         <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
                         <p>".$row['contact_number']."</p>
                         </div>
                         <div class = 'holdest'>
                         <p>".$row['amount']."</p>
                         </div>
-                        <div class = 'holdest'>
-                        <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
-                        </div>
-                        <div class = 'holdest'>
+                       
+                       
+                     
+                        
                         <div id = 'aksyon'>
                         <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
                         </div>
@@ -1039,13 +1045,13 @@
           
             echo
             "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
-            
-                <p>".$row['transaction_number']."</p>
-                <p>".$row['full_name']."</p>
-                <p>".$row['org_name']."</p>
-                <p>".$row['contact_number']."</p>
-                <p>".$row['date_confirmed']."</p>
-       
+                <div class = 'inner'>
+                <p class = 'lebs'>".$row['transaction_number']."</p>
+                <p class = 'lebs'>".$row['full_name']."</p>
+                <p class = 'lebs'>".$row['org_name']."</p>
+                <p class = 'lebs'>".$row['contact_number']."</p>
+                <p class = 'lebs'>".$row['date_confirmed']."</p>
+            </div>
            
         </form>";
         endwhile;
@@ -1068,13 +1074,13 @@
                {
                     echo 
                     "<form id='forming'>
-            
-                    <p>".$row['transaction_number']."</p>
-                    <p>".$row['full_name']."</p>
-                    <p>".$row['org_name']."</p>
-                    <p>".$row['contact_number']."</p>
-                    <p>".$row['date_confirmed']."</p>
-           
+                    <div class = 'inner' >
+                    <p class = 'lebs'>".$row['transaction_number']."</p>
+                    <p class = 'lebs'>".$row['full_name']."</p>
+                    <p class = 'lebs'>".$row['org_name']."</p>
+                    <p class = 'lebs'>".$row['contact_number']."</p>
+                    <p class = 'lebs'>".$row['date_confirmed']."</p>
+                    </div>
                
             </form>";
                }
@@ -1156,7 +1162,7 @@
                 <p class = 'okss'>".$row['user_email']."</p>
                 <p class = 'okss'>".$row['user_contactnumber']."</p>
                 <p class = 'okss'>".$row['user_address']."</p>
-                <a href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
+                <a class = 'dbtn' href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
                 
                
          </div>";
