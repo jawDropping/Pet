@@ -648,7 +648,7 @@
         while($row_pro = $fetch_pro->fetch()):
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
@@ -683,7 +683,7 @@
         while($row_pro = $fetch_pro->fetch()):
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
@@ -718,7 +718,7 @@
         while($row_pro = $fetch_pro->fetch()):
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
@@ -753,7 +753,7 @@
         while($row_pro = $fetch_pro->fetch()):
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
@@ -788,7 +788,7 @@
         while($row_pro = $fetch_pro->fetch()):
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
