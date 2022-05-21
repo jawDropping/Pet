@@ -869,7 +869,7 @@
                    
                     <input type = 'hidden' name = 'email' value = '".$row['email']."' />
                     <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
-                    <a href = view_application.php?view=".$row['pet_center_id'].">View</a>
+                    <a class = 'btnV' href = view_application.php?view=".$row['pet_center_id'].">View</a>
                 </div>
                
             </form>";

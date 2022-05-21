@@ -93,6 +93,10 @@
         outline: none;
         border-radius: 4px;
         width: 70%;
+        padding-top: 10px;
+        text-align: center;
+        text-decoration: none;
+        font-family:  "Varela Round", sans-serif;
     }
     .body{
         margin-top: 7vh;

@@ -46,6 +46,7 @@
         </div>
 </div>
 <div id="bodyright">
+    <p class = 'hed'>Cutomer's Information</p>
 <div class = 'body'>
 <?php
 
@@ -104,6 +105,14 @@ if(isset($_GET['user']))
         width: 30%;
         padding: 10px;
         border-radius: 4px;
+    }
+    .hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
+    p{
+        padding: 10px;
     }
 </style>
 </html>
