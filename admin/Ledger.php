@@ -73,6 +73,8 @@
             <p>Contact Number</p>
 
             <p>Date Confirmed</p>
+
+            <p>Coupon Code</p>
             <div></div>
         </div>
         <tr>

@@ -1049,6 +1049,7 @@
                 <p class = 'lebs'>".$row['org_name']."</p>
                 <p class = 'lebs'>".$row['contact_number']."</p>
                 <p class = 'lebs'>".$row['date_confirmed']."</p>
+                <p class = 'lebs'>".$row['coupon_code']."</p>
             </div>
            
         </form>";

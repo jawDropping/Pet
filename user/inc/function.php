@@ -633,6 +633,182 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         endwhile;
     }
 
+    function featured_service_grooming()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='1'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                 
+                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_hotel()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='2'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                 
+                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_training()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='3'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                 
+                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_vet_clinic()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='4'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                 
+                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_others()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='5'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['service_id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                 
+                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+
     function dog_food_products()
     {
         include("inc/db.php");
