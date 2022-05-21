@@ -922,7 +922,9 @@ function updateThumbnail(dropZoneElement, file) {
                         coupon_code,
                         transaction_code,
                         date_confirmed,
-                        amount
+                        amount,
+                        status
+
                         
                     ) 
                     VALUES
@@ -933,7 +935,8 @@ function updateThumbnail(dropZoneElement, file) {
                         '$coupon_code',
                         '$transaction_code',
                         '$today',
-                        '$service_cost'
+                        '$service_cost',
+                        'NOT USED'
                     )");
                     
                     if(!$confirm->execute())
