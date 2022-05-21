@@ -34,7 +34,7 @@
         <li><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li  class = 'selection'><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
-        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Generate Report</a></li>
         <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
@@ -61,7 +61,13 @@ if(isset($_GET['user']))
     $row = $sql->fetch();
 
     echo
-    "<div class = 'conts'>
+    "
+    <div class = 'mainConts'>
+    <div class = 'contsImages'>
+  <img src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+    </div>
+    <div class = 'right'>
+    <div class = 'conts'>
     <p>Name</p><p class = 'data'>".$row['user_username']."</p>
     </div>
     <br>
@@ -75,7 +81,10 @@ if(isset($_GET['user']))
     <br>
     <div class = 'conts'>
     <p>Contact Number</p><p class = 'data'> ".$row['user_contactnumber']."</p>
-    </div>";
+    </div>
+    </div>
+    </div>
+    ";
 }
 ?>
 </body>
@@ -89,6 +98,10 @@ if(isset($_GET['user']))
 
 </body>
 <style>
+    .mainConts{
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
     .body{
         margin-top: 7vh;
   margin-bottom: 3vh;
@@ -101,21 +114,27 @@ if(isset($_GET['user']))
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
     .conts{
-        background: red;
-        width: 30%;
+        border: .5px solid #999;
+        width: 90%;
         padding: 10px;
         border-radius: 4px;
     }
+    .contsImages{
+        width: 90%;
+        margin-left: 5%;
+    }
     .data{
-        
+        font-family: "Varela Round", sans-serif;
+        padding: 5px;
     }
     .hed{
         font-size: 22px;
         font-weight: bold;
         color: white;
-    }
-      p{
         padding: 10px;
     }
+     .right{
+         margin-top: 2vh;
+     }
 </style>
 </html>
