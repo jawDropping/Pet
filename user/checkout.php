@@ -117,22 +117,7 @@
                     </div>
                 </div>
                 ";
-                if($row_user['municipality'] == "Mandaue City")
-                {  
-                    $net_total = $net_total + $sub_total + 10;
-                }
-                elseif($row_user['municipality'] == "Cebu City")
-                {
-                    $net_total = $net_total + $sub_total + 12;
-                }
-                elseif($row_user['municipality'] == "Consolacion")
-                {
-                    $net_total = $net_total + $sub_total + 12;
-                }
-                elseif($row_user['municipality'] == "Lapu-Lapu City")
-                {
-                    $net_total = $net_total + $sub_total + 15;
-                }
+                $net_total = $net_total + $sub_total;
                
         endwhile;
                 if($row_user['municipality'] == "Mandaue City")
@@ -180,28 +165,28 @@
                 <p class = 'tag'>Total Amount:</p>";
                 if($row_user['municipality'] == "Mandaue City")
                 {
-                    $net_total-=10;
+                    $net_total+=10;
                     echo  "
                     <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
                 echo "</div>";
                 }
                 if($row_user['municipality'] == "Cebu City")
                 {
-                    $net_total-=12;
+                    $net_total+=12;
                     echo  "
                     <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
                 echo "</div>";
                 }
                 if($row_user['municipality'] == "Lapu-Lapu City")
                 {
-                    $net_total-=13;
+                    $net_total+=13;
                     echo  "
                     <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
                 echo "</div>";
                 }
-                if($row_user['municipality'] == "Consoalcion")
+                if($row_user['municipality'] == "Consolacion")
                 {
-                    $net_total-=12;
+                    $net_total+=12;
                     echo  "
                     <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
                 echo "</div>";
