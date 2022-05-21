@@ -68,19 +68,19 @@ if(isset($_GET['user']))
     </div>
     <div class = 'right'>
     <div class = 'conts'>
-    <p>Name</p><p class = 'data'>".$row['user_username']."</p>
+    <p class = 'lebs'>Name</p><p class = 'data'>".$row['user_username']."</p>
     </div>
     <br>
     <div class = 'conts'>
-    <p>Location</p><p class = 'data'> ".$row['user_address']."</p>
+    <p class = 'lebs'>Location</p><p class = 'data'> ".$row['user_address']."</p>
     </div>
     <br>
     <div class = 'conts'>
-    <p>Email</p><p class = 'data'>".$row['user_email']."</p>
+    <p class = 'lebs'>Email</p><p class = 'data'>".$row['user_email']."</p>
     </div>
     <br>
     <div class = 'conts'>
-    <p>Contact Number</p><p class = 'data'> ".$row['user_contactnumber']."</p>
+    <p class = 'lebs'>Contact Number</p><p class = 'data'> ".$row['user_contactnumber']."</p>
     </div>
     </div>
     </div>
@@ -126,6 +126,15 @@ if(isset($_GET['user']))
     .data{
         font-family: "Varela Round", sans-serif;
         padding: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #777;
+    }
+    .lebs{
+        font-family: "Varela Round", sans-serif;
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 5px;
     }
     .hed{
         font-size: 22px;
