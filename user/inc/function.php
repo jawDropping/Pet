@@ -655,7 +655,12 @@
                 <p class = 'head4' >".$row_pro['services_name']."</p>";
                  if($row_pro['accept_coupon'] == "Yes")
                  {
-                    echo "<p>Coupons Accepted Here</p>";
+                    echo "
+                    <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
                  }
                  else
                  {
@@ -697,7 +702,11 @@
                 <p class = 'head4' >".$row_pro['services_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
-                   echo "<p>Coupons Accepted Here</p>";
+                   echo "  <div class = 'band'>
+                   
+                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                   <p class ='icons'>Coupons Accepted</p>
+                   </div>";
                 }
                        echo" <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -735,7 +744,11 @@
                 <p class = 'head4' >".$row_pro['services_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
-                   echo "<p>Coupons Accepted Here</p>";
+                   echo "<div class = 'band'>
+                   
+                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                   <p class ='icons'>Coupons Accepted</p>
+                   </div>";
                 }
                       echo"  <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -773,7 +786,11 @@
                 <p class = 'head4' >".$row_pro['services_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
-                   echo "<p>Coupons Accepted Here</p>";
+                   echo "<div class = 'band'>
+                   
+                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                   <p class ='icons'>Coupons Accepted</p>
+                   </div>";
                 }
                      echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -811,7 +828,11 @@
                 <p class = 'head4' >".$row_pro['services_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
-                   echo "<p>Coupons Accepted Here</p>";
+                   echo "<div class = 'band'>
+                   
+                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                   <p class ='icons'>Coupons Accepted</p>
+                   </div>";
                 }
                      echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -1557,14 +1578,7 @@
             $municipality = $row_services['municipality'];
             $full_location = $row_services['full_location'];
             $services_name = $row_services['services_name'];
-            
-            $brgy = str_replace(" ", "+", $barangay);
-            $strt = str_replace(" ", "+", $st);
-            $cty = str_replace(" ", "+", $municipality);
-            // $location = str_replace("","+", $st);
-            // $location = str_replace($services_name, $brgy, $strt, $cty);
-            $location = str_replace(" ", "+", $full_location);
-            // $full_location = 
+            $location = $municipality;
 
             $service_cat = $row_services['service_id'];
 
@@ -1641,7 +1655,7 @@
                         <div class = 'loces'>
                        <br>
                         <p class = 'loc'>Location</p>
-                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
+                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$services_name."+".$full_location."+".$st."+".$barangay."+".$municipality."&output=embed'></iframe>
                     </div>
                     </div>
                 </div>

@@ -207,7 +207,7 @@ if(isset($_GET['view']))
         border-radius: 4px;
        float: right;
         margin-bottom: 10px;
-        margin-right: 10px;
+       
     }
     .rjctBtn{
         padding: 10px;
@@ -216,6 +216,7 @@ if(isset($_GET['view']))
         border-radius: 4px;
         float: right;
         margin-bottom: 10px;
+        margin-right: 10px;
     }
     .btnCont{
         height: 50px;
