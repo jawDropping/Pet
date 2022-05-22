@@ -25,76 +25,71 @@
 
     $row = $sql->fetch();
 
-    echo 
-    "<div class = 'main'>
-    <div class='left'>
-    <div class = cont>
-            <p class = 'lebs'>Pet Photo:</p>
-            <div class='drop-zone'>
-            <span class='drop-zone__prompt'>Drop file here or click to upload</span>
-            <img src = '../uploads/pets/".$row['pet_photo']."' />
-            <input type='file' name='proof_photo' class='drop-zone__input'>
-            </div>
-        </div>
-    </div>
-    <div class='right'>
-    <form method = 'POST' enctype = 'multipart/form-data'>
-        <div class='fills'>
-          <br>
-            <p class='heads'>Pet Information</p>
-        
-        <div class = 'cont'>
-            <p class = 'lebs'>Pet Name:</p>
-            <input class =  'ints' type = 'text' name = 'pet_name' placeholder = 'Name' />
-        </div>
-        <div class = 'cont'>
-            <p class = 'lebs'>Pet Age:</p>
-            <input class = 'ints' type = 'text' name = 'pet_age' placeholder = 'Age' />
-        </div>
-        <div class='conts'>
-        <p class = 'lebs'>Your Pet:</p>
-            <input type='radio' id='Dog' name='pet' value='Dog'>
-             <label class = 'ok' for='Dog'>Dog</label>
-             <input type= 'radio' id='Cat' name='pet' value='Cat'>
-             <label class = 'ok' for='Cat'>Cat</label>
-            <input type= 'radio' id='Bird' name='pet' value='Bird'>
-            <label class = 'ok' for='Bird'>Bird</label>
-            <input type=''id='Fish' name='pet' value='Fish'>
-            <label class = 'ok' for='Fish'>Fish</label>
-            <input type='radio' id='Others' name='pet' value='Others'>
-            <label class = 'ok' for='Others'>Others</label>
-           </div>
-        <div class = cont>
-            <p class = 'lebs'>Pet Breed:</p>
-            <input class =  'ints' type = 'text' name = 'pet_breed' placeholder = 'Breed' />
-        </div>
-        <div class='conts'>
-        <p class = 'lebs'>Pet Gender:</p>
-            <input type='radio' id='Dog' name='pet_gender' value='Male'>
-             <label class = 'ok' for='Male'>Male</label>
-             <input type='radio' id='Cat' name='pet_gender' value='Female'>
-             <label class = 'ok' for='Female'>Female</label>
-           </div>
-        <div class = 'cont'>
-            <p class = 'lebs'>Vaccination Status</p>
-            <input class =  'ints' type = 'text' name = 'vaccination_status' value = ".$row['vaccination_status']." />
-        </div>
-        <div class = 'cont'>
-            <p class = 'lebs'>Pet Details:</p>
-            <input class =  'ints' type = 'text' name = 'pet_details' value = ".$row['pet_details']." />
-        </div>
+    echo
+    "<form method = 'POST' enctype = 'multipart/form-data'>
+        <p>Pet Name</p><input type = 'text' name = 'pet_name' value = '".$row['pet_name']."' />
+        <p>Pet Age</p><input type = 'text' name = 'pet_age' value = '".$row['pet_age']."' />
+        <p>Pet</p><input type = 'text' name = 'pet' value = '".$row['pet']."' />
+        <p>Pet Breed</p><input type = 'text' name = 'pet_breed' value = '".$row['pet_breed']."' />
+        <p>Pet Gender</p><input type = 'text' name = 'pet_gender' value = '".$row['pet_gender']."' />
+        <p>Vaccination Status</p><input type = 'text' name = 'vaccination_status' value = '".$row['vaccination_status']."' />
+        <p>Pet Details</p><input type = 'text' name = 'pet_details' value = '".$row['pet_details']."' />
+        <button name = 'update' value = ".$row['id'].">Update</button>
+    </form>";
 
-        <div class= 'cont'>
-        <button name = 'add_pet' class = 'btn'>Update</button>
-        </div>
-           
-        </div>
-        
-    </form>
-    </div>
-   
+    echo
+    "<form method = 'POST' enctype = 'multipart/form-data'>
+      <img src = '../uploads/pets/".$row['pet_photo']."' />
+      <input type = 'file' name = 'pet_photo' required/>
+      <button name = 'update_img' value = ".$row['id'].">Update Image</button>
+    </form>";
 
-</div>";
+    if(isset($_POST['update']))
+    {
+        $id = $_POST['update'];
+        $pet_name = $_POST['pet_name'];
+        $pet_age = $_POST['pet_age'];
+        $pet = $_POST['pet'];
+        $pet_breed = $_POST['pet_breed'];
+        $pet_gender = $_POST['pet_gender'];
+        $vaccination_status = $_POST['vaccination_status'];
+        $pet_details = $_POST['pet_details'];
+
+        $update_pet = $con->prepare("UPDATE pets 
+                      SET
+                      pet = '$pet',
+                      vaccination_status = '$vaccination_status',
+                      pet_name = '$pet_name',
+                      pet_age = '$pet_age',
+                      pet_breed = '$pet_breed',
+                      pet_gender = '$pet_gender',
+                      pet_details = '$pet_details'
+                      WHERE
+                      id = $id
+                      ");
+        if($update_pet->execute())
+        {
+          echo "<script>alert('Updated!');</script>";
+          echo "<script>window.open('myPet.php','_self');</script>";
+        }
+    }
+
+    if(isset($_POST['update_img']))
+    {
+        $id = $_POST['update_img'];
+        $pet_photo = $_FILES['pet_photo']['name'];
+        $pet_photo_tmp = $_FILES['pet_photo']['tmp_name'];
+
+        move_uploaded_file($pet_photo_tmp,"../uploads/pets/$pet_photo");
+
+        $update_img = $con->prepare("UPDATE pets SET pet_photo = '$pet_photo' WHERE id = $id");
+
+        if($update_img->execute())
+        {
+          echo "<script>alert('Updated!');</script>";
+          echo "<script>window.open('myPet.php','_self');</script>";
+        }
+    }
 
 ?>
 
