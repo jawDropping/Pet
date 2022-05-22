@@ -1200,17 +1200,7 @@
                 <div id = 'pro_img'>
 
                     <img id= 'mainPik' class = 'mainImage' src ='../uploads/products/".$row_pro['pro_img']."'/>
-                    <div class = 'images'>
-                        <div class = 'imgDiv' id = 'dems' onclick = 'myFunc()'  >
-                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img']."'/>
-                        </div>
-                        <div class = 'imgDiv'>
-                    
-                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img2']."'/>
-                        </div>
-                        <div class = 'imgDiv'>
-                            <img class = 'underImg' src ='../uploads/products/".$row_pro['pro_img3']."'/>
-                        </div>
+                   
                 </div>
 
 
@@ -2069,7 +2059,7 @@
                 
          
     
-                $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
+                $sql2 = $con->prepare("SELECT accept_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
                 $sql2->setFetchMode(PDO:: FETCH_ASSOC);
                 $sql2->execute();
     
