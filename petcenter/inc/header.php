@@ -34,7 +34,10 @@
                             <ul class = 'dropcontent'>
                                 <li><a href = 'myProfile.php'>My Profile</a></li>
                                 <li><a href = 'logout.php'>Log Out</a></li>
+
                                 <li><a href = 'viewHistory.php?pet_center_id=".$row['pet_center_id']."'>Services History</li>
+
+       
                             </ul>
                     </div>
                    ";
