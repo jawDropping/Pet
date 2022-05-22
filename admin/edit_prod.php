@@ -20,36 +20,43 @@
         color: white;
     }
     .body{
-        margin-top: 7vh;
-        background: #fff;
         
+        background: #fff;
+        margin-bottom: 3vh;
         width: 95%;
         border-radius: 5px;
         padding: 10px;
-        margin-left: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        
 
     }
     .body2{
-        margin-top: 7vh;
-        
-        width: 95%;
-        border-radius: 5px;
-        padding: 10px;
-      
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
+        background: blue;
+    }
+    
+    .asd{
+        background: red;
     }
     .bodies{
-        display: grid;
-        grid-template-columns: 31% 31% 31%;
+        margin-bottom: 3vh;
+        margin-top: 7vh;
         column-gap: 10px;
         width: 95%;
         margin-left: 20px;
-        border-radius: 5px;
         padding: 10px;
         background: #fff;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        display: grid;
+        grid-template-columns: 40% 60%;
+    }
+    .updateBtn{
+        padding: 10px;
+        font-family: "Varela Round", sans-serif;
+        background: #ffb830;
+        outline: none;
+        border: none;
+        border-radius: 4px;
+        margin-top: 10px;
+        float: right;
     }
     .holders{
         padding: 5px;
@@ -92,8 +99,59 @@
         color: white;
     }
     .imges{
-        height: 70px;
+      width: 90%;
     }
+
+
+    .drop-zone {
+            width: 100%;;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  color: #777;
+  border: 2px dashed #009578;
+  border-radius: 10px;
+  margin-left: 5%;
+  margin-bottom: 5px;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
     </style>
     <body>
     <?php 
@@ -119,7 +177,7 @@
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
-        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Generate Report</a></li>
         <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
@@ -138,5 +196,87 @@
 </div>
     
     </body>
-  
+    <script>
+        var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+        var today = new Date();
+        var date = today.getFullYear()+'-'+month[(today.getMonth())]+'-'+today.getDate();
+        var date2 = month[(today.getMonth())]+' '+today.getDate()+' '+today.getFullYear();
+        document.getElementById("currentDate").innerHTML = date2;
+
+
+
+
+
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  const dropZoneElement = inputElement.closest(".drop-zone");
+
+  dropZoneElement.addEventListener("click", (e) => {
+    inputElement.click();
+  });
+
+  inputElement.addEventListener("change", (e) => {
+    if (inputElement.files.length) {
+      updateThumbnail(dropZoneElement, inputElement.files[0]);
+    }
+  });
+
+  dropZoneElement.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
+
+  ["dragleave", "dragend"].forEach((type) => {
+    dropZoneElement.addEventListener(type, (e) => {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    if (e.dataTransfer.files.length) {
+      inputElement.files = e.dataTransfer.files;
+      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+    }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
+});
+
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
+function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  }
+
+  // First time - there is no thumbnail element, so lets create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+    </script>
 </html>
