@@ -54,10 +54,9 @@
         <div class = 'yopak'>
             <p class = 'heaed'>Transaction Number</p>
                <p class = 'heaed'>Donors Name</p>
-             <p class = 'heaed'>Selected Organization</p>
-               <p  class = 'heaed'>Contact Number</p>
+             <p class = 'heaed'>Selected Org</p>
+               <p  class = 'heaed'>Back Acc. No.</p>
              <p class = 'heaed'>Amount</p>
-                <p class = 'heaed'>Proof of Donation</p>
               <p class = 'heaed'>Action</p>
         </div>
         <div>
@@ -115,13 +114,13 @@
     }
     #forming{
         display: grid;
-        grid-template-columns:  15% 12% 15% 15% 12% 15% 15%;
+        grid-template-columns:  25% 12% 15% 15% 12% 15%;
         font-size: 14px;
         margin-top: 20px;
     }
     .yopak{
         display: grid;
-        grid-template-columns: 15% 12% 15% 15% 12% 15% 15%;
+        grid-template-columns: 25% 12% 15% 15% 12% 15%;
         
         
     }
@@ -164,6 +163,8 @@
   font-weight: bold;
   color: black;
     }
+
+    
     </style>
     <script>
         var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
