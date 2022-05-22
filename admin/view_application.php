@@ -2,7 +2,6 @@
     <head>
     <title>Admin Panel</title>
         <link rel = "stylesheet" href="css/style.css" />
-        <link rel = "stylesheet" href="css/add_part.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
@@ -15,7 +14,7 @@
     <?php 
            
            include ("inc/db.php");
-           include ("inc/function.php");
+           include ("inc/function.php"); 
            include ("inc/header.php"); 
            include ("inc/navbar.php"); 
            ?>
@@ -64,11 +63,19 @@ if(isset($_GET['view']))
 
     echo
     "<form method = 'POST' enctype = 'multipart/form-data'>
-        Pet Center Name: <p>".$row['pet_center_name']."</p>
-        Contact Number: <p>".$row['contact_number']."</p>
-        Email: <p>".$row['email']."</p>
-        Business Permit: <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."' style = 'height:50px;width:50px;'/>
-       <button name = 'confirm' value = ".$pet_center_id.">Confirm Application</button>
+        <p class = 'labels'>Business Permit</p>
+        <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."'/>
+        <p class = 'labels'>Pet Center Name</p>
+        <p class = 'values'>".$row['pet_center_name']."</p>
+        <p class = 'labels'>Contact Number</p> 
+        <p >".$row['contact_number']."</p>
+        <p class = 'labels'>Email</p>
+        <p>".$row['email']."</p>
+        <div class = 'btnCont'>
+        <button class = 'rjctBtn' name = 'confirm' value = ".$pet_center_id.">Reject Application </button>
+       <button class = 'confBtn' name = 'reject'>Confirm Application</button>
+      
+       </div>
     </form>";
 
     if(isset($_POST['confirm']))
@@ -137,10 +144,53 @@ if(isset($_GET['view']))
         border-radius: 5px;
         padding: 20px;
         margin-left: 40px;
+        margin-bottom: 3vh;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
     }
+    .labels{
+        font-family: "Varela Round", sans-serif;
+        padding: 10px;
+    }
+    .bimg{
+        width: 80%;
+        margin-left: 10%;
+    }
+    .hed{
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        padding: 10px;
+    }
+    .confBtn{
+        padding: 10px;
+        border: none;
+        outline: none;
+        background: #ffb830;
+        border-radius: 4px;
+       float: right;
+        margin-bottom: 10px;
+        margin-right: 10px;
+    }
+    .rjctBtn{
+        padding: 10px;
+        border: 1px solid red;
+        outline: none;
+        border-radius: 4px;
+        float: right;
+        margin-bottom: 10px;
+    }
+    .btnCont{
+        height: 50px;
+    }
     </style>
+     <script>
+        var month = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+        var today = new Date();
+        var date = today.getFullYear()+'-'+month[(today.getMonth())]+'-'+today.getDate();
+        var date2 = month[(today.getMonth())]+' '+today.getDate()+' '+today.getFullYear();
+        document.getElementById("currentDate").innerHTML = date2;
+    </script>
 </html>
 
 
