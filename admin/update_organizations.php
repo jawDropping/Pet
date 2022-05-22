@@ -101,31 +101,33 @@
             <p class = 'labes'>Facebook(Optional)</p>
                 <input class = 'inp' type = 'text' name = 'facebook' value = '".$row['facebook']."' />
             </div>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-            <div class = 'inbodsDiv' >
-            <p class = 'labes'>Photo</p>
-
-            <div class = 'unity'>
-            <div class='drop-zone'>
-            <span class='drop-zone__prompt'>Drop file here or click to upload</span>
-            <input type='file' name = 'org_photo' class='drop-zone__input'>
-            </div>
-               
-                <button class = 'imgbtn' name = 'update_img'>Update Image<button>
-                </div>
-                </div>
-            </form>
             
-            </div>
             <div class = 'inbodsDivs'>
                 <p class = 'labes'>Organization Description</p>
-                <input class = 'inp' type = 'text' name = 'org_name' value = '".$row['']."' />
+                <input class = 'inp' type = 'text' name = 'org_details' value = '".$row['org_details']."' />
             </div>
             <div class = 'btnS'>
             <button class = 'updateBtn' name = 'update' value = ".$row['id'].">Update</button>
             </div>
         </form>
        ";
+       echo
+       "<form method = 'POST' enctype = 'multipart/form-data'>
+       <div class = 'inbodsDiv' >
+       <p class = 'labes'>Photo</p>
+
+       <div class = 'unity'>
+       <div class='drop-zone'>
+       <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+       <input type='file' name = 'org_photo' class='drop-zone__input'>
+       </div>
+          
+           <button class = 'imgbtn' name = 'update_img'>Update Image<button>
+           </div>
+           </div>
+       </form>
+       
+       </div>";
     
         
       

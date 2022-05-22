@@ -105,6 +105,7 @@
             $paymaya = $_POST['paymaya'];
             $org_manager = $_POST['org_manager'];
             $facebook = $_POST['facebook'];
+            $description = $_POST['description'];
             
             $org_photo = $_FILES['org_photo']['name'];
             $org_photo_tmp = $_FILES['org_photo']['tmp_name'];
@@ -121,7 +122,8 @@
                 website,
                 paymaya,
                 org_manager,
-                facebook
+                facebook,
+                org_details
             ) 
             VALUES(
                 '$org_name',
@@ -133,7 +135,8 @@
                 '$website',
                 '$paymaya',
                 '$org_manager',
-                '$facebook'
+                '$facebook',
+                '$description'
             )");
             if($add_org->execute())
             {
