@@ -63,8 +63,10 @@
         $row = $edit_details->fetch();
 
         echo
-        "<form method = 'POST' action = 'edit_org.php' enctype = 'multipart/form-data'>
-        <div class = 'formGrid'>
+        "
+     
+        <form method = 'POST' action = 'edit_org.php' enctype = 'multipart/form-data'>
+        
             <div class = 'inbodsDiv'>
                 <p class = 'labes'>Organization Name</p>
                 <input class = 'inp' type = 'text' name = 'org_name' value = '".$row['org_name']."' />
@@ -106,9 +108,7 @@
                 <p class = 'labes'>Organization Description</p>
                 <input class = 'inp' type = 'text' name = 'org_details' value = '".$row['org_details']."' />
             </div>
-            <div class = 'btnS'>
-            <button class = 'updateBtn' name = 'update' value = ".$row['id'].">Update</button>
-            </div>
+            
         </form>
        ";
        echo
@@ -122,12 +122,15 @@
        <input type='file' name = 'org_photo' class='drop-zone__input'>
        </div>
           
-           <button class = 'imgbtn' name = 'update_img'>Update Image<button>
+           <button class = 'imgbtn' name = 'update_img'>Update Image</button>
            </div>
            </div>
+           <div class = 'btnS'>
+            <button class = 'updateBtn' name = 'update' value = ".$row['id'].">Update</button>
+            </div>
        </form>
        
-       </div>";
+     ";
     
         
       

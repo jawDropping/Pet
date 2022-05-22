@@ -275,7 +275,7 @@
                         <input type="text" class = "inputs"  name = "st" autocomplete = "new-password" required>
                     </div>
                     <div class="fieldCont">
-                        <p class = "label">Full Address :</p>
+                        <p class = "label">Landmark :</p>
                         <input type="text" class = "inputs"  name = "user_address" autocomplete = "new-password" required>
                     </div>
                     <div class="fieldCont">
