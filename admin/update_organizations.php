@@ -108,7 +108,9 @@
                 <p class = 'labes'>Organization Description</p>
                 <input class = 'inp' type = 'text' name = 'org_details' value = '".$row['org_details']."' />
             </div>
-            
+            <div class = 'btnS'>
+            <button class = 'updateBtn' name = 'update' value = ".$row['id'].">Update</button>
+            </div>
         </form>
        ";
        echo
@@ -125,9 +127,7 @@
            <button class = 'imgbtn' name = 'update_img'>Update Image</button>
            </div>
            </div>
-           <div class = 'btnS'>
-            <button class = 'updateBtn' name = 'update' value = ".$row['id'].">Update</button>
-            </div>
+           
        </form>
        
      ";
@@ -146,6 +146,7 @@
         if($delete_org->execute())
         {
             echo "<script>alert('Deleted Successfully!');</script>";
+            echo "<script>window.open('manage_partner.php', '_self');</script>";
         }
     }
 

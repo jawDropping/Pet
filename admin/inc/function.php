@@ -141,7 +141,7 @@
             if($add_org->execute())
             {
                 echo "<script>alert('Added Successfully!');</script>";
-                echo "<script>window.open('index.php?manage_partner', '_self');</script>";
+                echo "<script>window.open('manage_partner.php', '_self');</script>";
             }
         }
     }
