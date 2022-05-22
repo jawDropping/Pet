@@ -271,7 +271,7 @@
         </div>
     <div class = 'cont' >
             <p class = 'lbes' >Service Discount: </p>
-            <input class = 'ints' type='text' name =  'service_discount' required/></td>
+            <input class = 'ints' type='text' name =  'service_discount' placeholder = '0.00' required/></td>
         </div>
         
     <div class = 'opens'>
