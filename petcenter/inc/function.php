@@ -1259,7 +1259,7 @@ function updateThumbnail(dropZoneElement, file) {
                         <button name = 'update_user'>Update Profile</button>
                     </div>
                     <div class = 'usernameh'>
-                        <button class = 'back' onclick='window.location.href='/Pet/petcenter/index.php'>Back to Home</button>
+                        <a href ='index.php' style = 'text-decoration:none;color:grey;margin-left:40%;margin-top:.5rem;'>Back to Home</a>
                     </div>
                     </div>
                     <div class='rightSide'>
