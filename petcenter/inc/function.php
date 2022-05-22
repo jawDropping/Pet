@@ -86,7 +86,7 @@
                 echo
                 "<div class = 'idNiSha'>
                     <form method = 'post' enctype='multipart/form-data'>
-                    <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                    <a class = 'aTag' href='#'>
                         
                         <img class = 'fikture' src ='../uploads/user_profile/".$row['service_photo']."' />
                         <div class = 'prodDet'>
@@ -1049,53 +1049,76 @@ function updateThumbnail(dropZoneElement, file) {
             $sql5->execute();
             $row5 = $sql5->fetch();
             echo 
-            "<form method = 'POST' enctype='multipart/form-data'>
+            "
+            <form method = 'POST' enctype = 'multipart/form-data'>
                 <div>
-                    <input type = 'text' name = 'services_name' value = '".$row['services_name']."' required/>
+                <img class = 'profImg' src = '../uploads/user_profile/".$row['service_photo']."' />
+                    <div class='drop-zone'>
+                    <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+                    <input type='file' name = 'service_photo' class='drop-zone__input'>
+                    </div>
+                </div>
+                <div class = 'btns'>
+                <button class =  'btn2' name = 'update_img'> Update Image </button>
+                </div>
+            </form>
+            <form method = 'POST' enctype='multipart/form-data'>
+            <div class = 'asd' >
+            <div class = 'hldr'>
+                <div>
+                    <p class = 'lebels'>Service Name</p>
+                    <input class = 'dataLebs' type = 'text' name = 'services_name' value = '".$row['services_name']."' required/>
                 </div>
                 <div>
-                    <input type = 'text' name = 'service_cost' value = '".$row['service_cost']."' required/>
+                    <p class = 'lebels'>Cost</p>
+                    <input class = 'dataLebs' type = 'text' name = 'service_cost' value = '".$row['service_cost']."' required/>
                 </div>
                 <div>
-                    <input type = 'time' name = 'time_open' value = '".$row['time_open']."' required/>
+                <p class = 'lebels'>Opening</p>
+                    <input class = 'dataLebs' type = 'time' name = 'time_open' value = '".$row['time_open']."' required/>
                 </div>
                 <div>
-                    <input type = 'time' name = 'time_close' value = '".$row['time_close']."' required/>
+                    <p class = 'lebels'>Closing</p>
+                    <input class = 'dataLebs' type = 'time' name = 'time_close' value = '".$row['time_close']."' required/>
                 </div>
                 <div>
-                    <select name = 'day_open' required>";
+                <p class = 'lebels'>From</p>
+                    <select  class = 'dataLebs' name = 'day_open' required>";
                         echo days();
                     echo" </select>
                 </div>
                 <div>
-                    <select name = 'day_close' required>";
+                <p class = 'lebels'>To</p>
+                    <select class = 'dataLebs' name = 'day_close' required>";
                         echo days();
                     echo" </select>
                 </div>
                 <div>
-                    <input type = 'text' name = 'st' value = '".$row['st']."' />
+                    <p class = 'lebels'>Street</p>
+                    <input class = 'dataLebs' type = 'text' name = 'st' value = '".$row['st']."' />
                 </div>
                 <div>
-                    <input type = 'text' name = 'municipality' value = '".$row['municipality']."' />
+                <p class = 'lebels'>Municipality</p>
+                    <input class = 'dataLebs' type = 'text' name = 'municipality' value = '".$row['municipality']."' />
                 </div>
                 <div>
-                    <input type = 'text' name = 'barangay' value = '".$row['barangay']."' />
+                <p class = 'lebels'>Barangay</p>
+                    <input class = 'dataLebs' type = 'text' name = 'barangay' value = '".$row['barangay']."' />
                 </div>
                 <div>
-                    <input type = 'text' name = 'full_location' value = '".$row['full_location']."' />
+                <p class = 'lebels'>Barangay</p>
+                    <input class = 'dataLebs' type = 'text' name = 'full_location' value = '".$row['full_location']."' />
                 </div>
               
                 <div>
-                    <button name = 'update_service'>Update Service</button>
+                <div class = 'btnDiv'>
+                    <button class = 'btnUp' name = 'update_service'>Update Service</button>
+                </div>
+                </div>
+                </div>
                 </div>
             </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div>
-                <img src = '../uploads/user_profile/".$row['service_photo']."'  style = 'height:50px;width:50px;' />
-                    <input type = 'file' name = 'service_photo' value = '".$row['service_photo']."' required/>
-                </div>
-                <button name = 'update_img'> Update Image </button>
-            </form>";
+            ";
             if(isset($_POST['update_service']))
             {
                 $services_name = $_POST['services_name'];

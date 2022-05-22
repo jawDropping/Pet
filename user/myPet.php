@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Pet Society</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
         <link rel = "stylesheet" href="css/addPet.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +17,7 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
             ?>
-
+<div class = 'body' >
 <?php
     $current_user = $_SESSION['user_id'];
     $sql = $con->prepare("SELECT * FROM pets WHERE user_id = '$current_user'");
@@ -26,23 +27,55 @@
     $row = $sql->fetch();
 
     echo
-    "<form method = 'POST' enctype = 'multipart/form-data'>
-        <p>Pet Name</p><input type = 'text' name = 'pet_name' value = '".$row['pet_name']."' />
-        <p>Pet Age</p><input type = 'text' name = 'pet_age' value = '".$row['pet_age']."' />
-        <p>Pet</p><input type = 'text' name = 'pet' value = '".$row['pet']."' />
-        <p>Pet Breed</p><input type = 'text' name = 'pet_breed' value = '".$row['pet_breed']."' />
-        <p>Pet Gender</p><input type = 'text' name = 'pet_gender' value = '".$row['pet_gender']."' />
-        <p>Vaccination Status</p><input type = 'text' name = 'vaccination_status' value = '".$row['vaccination_status']."' />
-        <p>Pet Details</p><input type = 'text' name = 'pet_details' value = '".$row['pet_details']."' />
-        <button name = 'update' value = ".$row['id'].">Update</button>
-    </form>";
+    "
+    <div class = 'divs'>
+    <form method = 'POST' enctype = 'multipart/form-data'>
+      <img class = 'imaged' src = '../uploads/pets/".$row['pet_photo']."' />
+      <div class='drop-zone'>
+      <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+      <input type='file' name = 'pet_photo' class='drop-zone__input'>
+      </div>
+      <div class = 'btnDi'>
+      <button class = 'btn2' name = 'update_img' value = ".$row['id'].">Update Image</button>
+      </div>
+    </form>
+    <form method = 'POST' enctype = 'multipart/form-data' class = 'form2'>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Name</p>
+        <input class = 'inputs' type = 'text' name = 'pet_name' value = '".$row['pet_name']."' />
+      </div>
+      <div class = 'hodl'>
+        <p class ='lebs'>Pet Age</p>
+        <input class = 'inputs' type = 'text' name = 'pet_age' value = '".$row['pet_age']."' />
+      </div>
+      <div class = 'hodl'>
+        <p class ='lebs'>Pet</p>
+        <input class = 'inputs' type = 'text' name = 'pet' value = '".$row['pet']."' />
+        
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Breed</p>
+        <input class = 'inputs' type = 'text' name = 'pet_breed' value = '".$row['pet_breed']."' />
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Gender</p>
+        <input class = 'inputs' type = 'text' name = 'pet_gender' value = '".$row['pet_gender']."' />
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Vaccination Status</p>
+        <input class = 'inputs' type = 'text' name = 'vaccination_status' value = '".$row['vaccination_status']."' />
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Details</p>
+        <input class = 'inputs' type = 'text' name = 'pet_details' value = '".$row['pet_details']."' />
+    </div>
+        <div class = 'btnDiv'>
+        <button class = 'btnss' name = 'update' value = ".$row['id'].">Update</button>
+        </div>
+    </form>
+    </div>";
 
-    echo
-    "<form method = 'POST' enctype = 'multipart/form-data'>
-      <img src = '../uploads/pets/".$row['pet_photo']."' />
-      <input type = 'file' name = 'pet_photo' required/>
-      <button name = 'update_img' value = ".$row['id'].">Update Image</button>
-    </form>";
+   
 
     if(isset($_POST['update']))
     {
@@ -92,13 +125,124 @@
     }
 
 ?>
-
+</div>
 <div class="fot">
   <?php
      include ("inc/footer.php");
   ?>
 </div>
 </body>
+<style>
+  .imaged {
+  border-radius: 4px;
+  width: 90%;
+  margin-left:5%;
+}
+.hodl{
+  border: 1px solid #0080fe;
+  width: 90%;
+  border-radius: 4px;
+  margin-bottom: 2vh;
+}
+.divs{
+  margin-top: 2vh;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.lebs {
+  color: black;
+  font-size: 12px;
+  font-family: "Varela Round", sans-serif;
+  padding: 10px;
+}
+.inputs{
+  padding: 10px;
+  margin-left: 5%;
+  width: 70%;
+  border: none;
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 2vh;
+  font-size: 18px;
+}
+.btnss{
+  background: #ffb830;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 10px;
+  float: right;
+  margin-right: 20%;
+  margin-top: 2vh;
+}
+.btn2{
+  border: 1px solid #ffb830;
+  padding: 10px;
+  background: none;
+  border-radius: 4px;
+  float: right;
+  margin-right: 15%;
+}
+.btnDiv{
+  height: 40px;
+}
+.form2{
+  margin-top: 2vh;
+}
+.btnD{
+  height: 50px;
+}
+
+.drop-zone {
+            width: 80%;;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  color: #777;
+  border: 2px dashed #009578;
+  border-radius: 10px;
+  margin-left: 5%;
+            margin-bottom: 10px;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+</style>
 <script>
                         function myFuction(){
             varOne = document.getElementById('municipal').value;
