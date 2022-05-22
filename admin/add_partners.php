@@ -101,9 +101,16 @@
                     <input type="file" name = 'org_photo' class="drop-zone__input">
                     </div>
             </div>
-            <div >
-                <button name = "add_org">Add Organization</button>
-            </d>
+            
+</div>
+            <div  class = 'inbodsDivs'>
+                <p class = 'labes'>About</p>
+                <input  class = 'inp' type = "text" name = "description" />
+            </div>
+            <div class = 'adds'>
+                <button class = 'addSave' name = "add_org">Add Organization</button>
+            </div>
+            </div>
             </div>
         </form>
 
@@ -204,7 +211,25 @@ function updateThumbnail(dropZoneElement, file) {
   }
 }
     </script>
-   
+   <style>
+      .inbodsDivs {
+  width: 95%;
+  margin-left: 2%;
+  padding: 2px;
+  border: 1px solid blue;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.addSave{
+  border: none;
+  outline: none;
+  padding: 10px;
+  float: right;
+}
+.adds{
+  height: 40px;
+}
+   </style>
 </html>
 
 
