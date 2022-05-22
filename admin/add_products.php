@@ -84,21 +84,6 @@
                     <input type="file" name = 'pro_img' class="drop-zone__input">
                     </div>
                 </div>
-                <div class = 'inputHolder'>
-                <div class="drop-zone">
-                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                    <input type="file" name = 'pro_img2' class="drop-zone__input">
-                    </div>
-                </div>
-                    
-   
-
-                <div class = 'inputHolder'>
-                <div class="drop-zone">
-                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                    <input type="file" name = 'pro_img3' class="drop-zone__input">
-                    </div>
-                </div>
                 
                 <div class = 'inputHolder'>
                     <p  id = 'lebelss'>Price: </p>
@@ -117,7 +102,9 @@
          
                 
             </div>
+            <div class = 'btsn'>
             <button class= 'add' name = 'add_prod'>Add Product</button>
+            </div>
           
         </form>
         <?php add_product(); ?>
@@ -159,18 +146,18 @@
     }
     .add{
         height: 52px;
-        width: 90%;
-        margin-left: 5%;
-        padding: 5px;
+        float: right;
+        margin-right: 5%;
+        padding: 10px;
         border: none;
         outline: none;
         color: white;
-        background: #28287774;
+        background: #ffb830;
         border-radius: 5px;
+        width: 10%;
+
     }
-    .add:hover{
-        background: #5a5bf3;
-    }
+    
     .hed{
         font-size: 22px;
         font-weight: bold;
@@ -197,7 +184,10 @@
 
     }
 
-
+    .btsn{
+      height: 40px;
+      margin-bottom: 3vh;
+    }
 
 
     .drop-zone {

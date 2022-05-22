@@ -28,7 +28,7 @@
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Sales Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
@@ -68,9 +68,9 @@ if(isset($_GET['view']))
         <p class = 'labels'>Pet Center Name</p>
         <p class = 'values'>".$row['pet_center_name']."</p>
         <p class = 'labels'>Contact Number</p> 
-        <p >".$row['contact_number']."</p>
+        <p class = 'values'>".$row['contact_number']."</p>
         <p class = 'labels'>Email</p>
-        <p>".$row['email']."</p>
+        <p class = 'values'>".$row['email']."</p>
         <div class = 'btnCont'>
         <button class = 'rjctBtn' name = 'confirm' value = ".$pet_center_id.">Reject Application </button>
        <button class = 'confBtn' name = 'reject'>Confirm Application</button>
@@ -182,6 +182,13 @@ if(isset($_GET['view']))
     }
     .btnCont{
         height: 50px;
+    }
+    .values{
+        border: 1px solid #aabb;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 30px;
+    
     }
     </style>
      <script>

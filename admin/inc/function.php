@@ -1186,6 +1186,22 @@
             $row_cat = $fetch_cat->fetch();
 
             echo "
+            <div class = 'bodies'>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                
+                       <div class = 'mains'>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
+                        <div class = 'buts'>
+                        <div class='drop-zone'>
+                    <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+                    <input type='file' name = 'sample_img1' class='drop-zone__input'>
+                    </div>
+
+                    
+                        <button class = 'updateBtn' name = 'update_first_image'>Update Image</button>
+                        </div>
+                        </div>
+            </form>
             <form method = 'POST' enctype = 'multipart/form-data'>
                 <div class = 'body'>
                 <div class = 'seconds'>
@@ -1216,7 +1232,7 @@
                         <input class = 'oks' type='text' name = 'pro_quantity' value = '".$row['pro_quantity']."'/>
                     </div>
                     <div class = 'holders'>
-                        <p class = 'lebs' >Product Keyword: </p>
+                        <p class = 'lebs' >Product Description: </p>
                         <input class = 'oks' type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/>
                     </di>
                     
@@ -1226,38 +1242,10 @@
                 </div>
                 <br>
             </form>
-            <div class = 'bodies'>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #1</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
-                        <br><input type = 'file' name = 'sample_img1' value = ".$row['pro_img']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_first_image'>Update First Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #2</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img2']."'/>
-                        <br><input type = 'file' name = 'sample_img2' value = ".$row['pro_img2']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_second_image'>Update Second Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #1</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img3']."'/>
-                        <br><input type = 'file' name = 'sample_img3' value = ".$row['pro_img3']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_third_image'>Update Third Image</button>
-            </form>
-            </div>";
+
+            </div>
+            
+           ";
             if(isset($_POST['update_prod']))
             {
                 $cat_name = $_POST['cat_name'];
