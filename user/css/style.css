@@ -838,3 +838,17 @@ h4 {
   display: flex;
   margin-bottom: 7px;
 }
+.couponBand {
+  width: 30px;
+  height: 30px;
+  float: right;
+}
+.band {
+  display: flex;
+  margin-bottom: 7px;
+}
+.icons {
+  font-size: 10px;
+  color: #777;
+  margin-top: 7px;
+}
