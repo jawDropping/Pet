@@ -910,7 +910,8 @@ function updateThumbnail(dropZoneElement, file) {
                     "
                     Greetings! 
             
-                    This is from $service_name. We are glad to inform you that your reservation with us has been confirmed. Please come on $date at $time, and present us your transaction code: $transaction_code.
+                    This is from $service_name. We are glad to inform you that your reservation with us has been confirmed. Please come on $date at $time, and present us your transaction code: $transaction_code.  and 
+                    the amount of $amount.
 
                     Regards,
                     $service_name";
