@@ -32,13 +32,12 @@
                 <li class = 'selection' ><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Product Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
         <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
-        <li ><a href= "/Pet/admin/coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
-        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Generate Report</a></li>
         <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
@@ -225,6 +224,9 @@ function updateThumbnail(dropZoneElement, file) {
   outline: none;
   padding: 10px;
   float: right;
+  background: #ffb830;
+  border-radius: 4px;
+  margin-right: 2%;
 }
 .adds{
   height: 40px;
