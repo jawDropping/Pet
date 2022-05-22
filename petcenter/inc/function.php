@@ -1435,7 +1435,8 @@ function updateThumbnail(dropZoneElement, file) {
                     Greetings! 
             
                     This is from $service_name we are hoping for your best experience for the service we provide. 
-                    Please come with the respective date $date, with the Transacton Code: $transaction_code
+                    Please come with the respective date $date, with the Transacton Code: $transaction_code and 
+                    the amount of $amount.
                     
                     Respecfully yours,
                     $service_name";
