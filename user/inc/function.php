@@ -652,9 +652,12 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
-                 
-                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "<p>Coupons Accepted Here</p>";
+                 }
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -687,9 +690,12 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
-                 
-                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                if($row_pro['accept_coupon'] == "Yes")
+                {
+                   echo "<p>Coupons Accepted Here</p>";
+                }
+                       echo" <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -722,9 +728,12 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
-                 
-                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                if($row_pro['accept_coupon'] == "Yes")
+                {
+                   echo "<p>Coupons Accepted Here</p>";
+                }
+                      echo"  <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -757,9 +766,12 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
-                 
-                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                if($row_pro['accept_coupon'] == "Yes")
+                {
+                   echo "<p>Coupons Accepted Here</p>";
+                }
+                     echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -792,9 +804,12 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
-                 
-                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                if($row_pro['accept_coupon'] == "Yes")
+                {
+                   echo "<p>Coupons Accepted Here</p>";
+                }
+                     echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>

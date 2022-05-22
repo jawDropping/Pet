@@ -72,9 +72,9 @@ if(isset($_GET['view']))
         <p class = 'labels'>Email</p>
         <p class = 'values'>".$row['email']."</p>
         <div class = 'btnCont'>
-        <button class = 'rjctBtn' name = 'confirm' value = ".$pet_center_id.">Reject Application </button>
-       <button class = 'confBtn' name = 'reject'>Confirm Application</button>
-      
+        <button class = 'confBtn' name = 'confirm' value = ".$pet_center_id.">Confirm Application </button>
+       <button class = 'rjctBtn' name = 'reject' value = ".$pet_center_id.">Reject Application</button>
+     
        </div>
     </form>";
 
@@ -113,6 +113,43 @@ if(isset($_GET['view']))
 
             mail($receiver, $subject, $body, $sender);
             echo "<script>alert('Confirmed!');</script>";
+            echo "<script>window.open('petcenterApplication.php' ,'_self');</script>";
+            
+        }
+    }
+
+    if(isset($_POST['reject']))
+    {
+        $pet_center_id = $_POST['reject'];
+
+        $sql2 = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql2->execute();
+        
+        $row = $sql2->fetch();
+        
+        if($row['verified'] == 1)
+        {
+            echo "<script>alert('This account cannot be rejected!');</script>";
+            echo "<script>window.open('petcenterApplication.php' ,'_self');</script>";
+        }
+        else
+        {
+            $sql = $con->prepare("DELETE FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->execute();
+    
+            $receiver = $row['email'];
+            $subject = "Application Rejected!";
+            $body = "We are very sorry to inform that your application has been rejected by the admin.";
+            $sender = "ianjohn0101@gmail.com";
+    
+            if(!$sql->execute())
+            {
+                return;
+            }
+    
+            mail($receiver, $subject, $body, $sender);
+            echo "<script>alert('Rejected!');</script>";
             echo "<script>window.open('petcenterApplication.php' ,'_self');</script>";
             
         }
