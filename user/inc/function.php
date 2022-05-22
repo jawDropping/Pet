@@ -657,6 +657,10 @@
                  {
                     echo "<p>Coupons Accepted Here</p>";
                  }
+                 else
+                 {
+                    echo "<p>Coupons Do Not Accepted</p>";
+                 }
                         echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
@@ -1567,7 +1571,7 @@
                             </div>
                             <div class = 'holdest'>
                             <p class = 'lebs'>Discount Offer: </p>
-                            <p class = 'conts'></p>
+                            <p class = 'conts'>".$row_services['discount']."%</p>
                         </div>
                            
                             <div class = 'btnss' >";
