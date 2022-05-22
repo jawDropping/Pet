@@ -973,11 +973,11 @@ function updateThumbnail(dropZoneElement, file) {
         $row = $sql->fetch();
         $pet_center_id = $row['pet_center_id'];
 
-        $sql2 = $con->prepare("SELECT * FROM confirmed_services");
+        $sql2 = $con->prepare("SELECT * FROM confirmed_services WHERE pet_center_id = '$pet_cent_id'");
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        $sql3 = $con->prepare("SELECT SUM(amount) FROM confirmed_services");
+        $sql3 = $con->prepare("SELECT SUM(amount) FROM confirmed_services WHERE pet_center_id = '$pet_cent_id'");
         $sql3->setFetchMode(PDO:: FETCH_ASSOC);
         $sql3->execute();
 
@@ -1545,12 +1545,12 @@ function updateThumbnail(dropZoneElement, file) {
                         $service_id = $row2['service_id'];
                         $coupon_code = $row2['coupon_code'];
             
-                        $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
-                        $view_service->setFetchMode(PDO:: FETCH_ASSOC);
-                        $view_service->execute();
+                        // $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                        // $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+                        // $view_service->execute();
             
-                        $row_service = $view_service->fetch();
-                        $service_name = $row_service['services_name'];
+                        // $row_service = $view_service->fetch();
+                        // $service_name = $row_service['services_name'];
             
             
                         $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
