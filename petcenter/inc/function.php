@@ -1563,7 +1563,7 @@ function updateThumbnail(dropZoneElement, file) {
                         $empty_coupon = "N/A";
                         echo
                         "<form method = 'POST'>
-                            <div class = 'hed'>
+                            <div class = 'hedBelow'>
                                 <p>".$row2['transaction_code']."</p>
                                 <p>".$user_username."</p>
                                 <p>".$row2['date_confirmed']."</p>";
@@ -1576,13 +1576,15 @@ function updateThumbnail(dropZoneElement, file) {
                                     echo "<p>".$coupon_code."</p>";
                                 }
                                 
-                            echo "</div>
+                            echo "
                             <p>".$row2['status']."</p>";
                             if($row2['status'] != 'USED')
                             {
                                 echo "<button name = 'confirm' value = ".$row2['id'].">Confirm</button>";
                             }
-                        echo"</form>";
+                        echo"
+                        </div>
+                        </form>";
                     }
                 endwhile;
                 if(isset($_POST['confirm']))
