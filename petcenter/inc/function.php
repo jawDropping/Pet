@@ -973,15 +973,16 @@ function updateThumbnail(dropZoneElement, file) {
         $row = $sql->fetch();
         $pet_center_id = $row['pet_center_id'];
 
-        $sql2 = $con->prepare("SELECT * FROM confirmed_services");
+        $sql2 = $con->prepare("SELECT * FROM confirmed_services WHERE pet_center_id = '$pet_cent_id'");
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        $sql3 = $con->prepare("SELECT SUM(amount) FROM confirmed_services");
+        $sql3 = $con->prepare("SELECT SUM(amount) FROM confirmed_services WHERE pet_center_id = '$pet_cent_id'");
         $sql3->setFetchMode(PDO:: FETCH_ASSOC);
         $sql3->execute();
 
         $row2 = $sql3->fetch();
+        
 
         // <th>User Name</th>
         //     <th>Coupon Code</th>
@@ -1009,8 +1010,13 @@ function updateThumbnail(dropZoneElement, file) {
                 {
                     echo "<td>".$row['coupon_code']."</td>";
                 }
-                echo 
-                "<td>".$row['transaction_code']."</td>
+                if($row['status'] == "USED")
+                {
+                    $total_amount+=$row['amount'];
+                }
+                
+                echo"
+                <td>".$row['transaction_code']."['".$row['status']."']</td>
                 <td>".$row['amount']."</td>
                 <td>".$row['date_confirmed']."</td>
             </tr>";   
@@ -1021,7 +1027,7 @@ function updateThumbnail(dropZoneElement, file) {
             <td></td>
             <td></td>
             <td></td>
-            <td>Total Amount: ".$row2['SUM(amount)']."</td>
+            <td>Collected Amount: ".$total_amount."</td>
         </tr>";
     }
 
@@ -1253,7 +1259,7 @@ function updateThumbnail(dropZoneElement, file) {
                         <button name = 'update_user'>Update Profile</button>
                     </div>
                     <div class = 'usernameh'>
-                        <button class = 'back' onclick='window.location.href='/Pet/petcenter/index.php'>Back to Home</button>
+                        <a href ='index.php' style = 'text-decoration:none;color:grey;margin-left:40%;margin-top:.5rem;'>Back to Home</a>
                     </div>
                     </div>
                     <div class='rightSide'>
@@ -1545,12 +1551,12 @@ function updateThumbnail(dropZoneElement, file) {
                         $service_id = $row2['service_id'];
                         $coupon_code = $row2['coupon_code'];
             
-                        $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
-                        $view_service->setFetchMode(PDO:: FETCH_ASSOC);
-                        $view_service->execute();
+                        // $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                        // $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+                        // $view_service->execute();
             
-                        $row_service = $view_service->fetch();
-                        $service_name = $row_service['services_name'];
+                        // $row_service = $view_service->fetch();
+                        // $service_name = $row_service['services_name'];
             
             
                         $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");

@@ -667,6 +667,7 @@
                  {
                     echo "<br><br>";
                  }
+
                         echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
@@ -1539,7 +1540,7 @@
     function other_services()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '4'");
+        $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '5'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 

@@ -351,7 +351,7 @@ include("inc/db.php");
                     {
                         if(strlen($user_contactnumber)<12)
                         {
-                            if(strlen($user_password)<=9 && strlen($user_password)>=3)
+                            if(strlen($user_password)>=8)
                             {
                                 if($user_password == $conf_password)
                                 {
