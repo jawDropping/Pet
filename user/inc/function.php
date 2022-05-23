@@ -662,10 +662,6 @@
                     <p class ='icons'>Coupons Accepted</p>
                     </div>";
                  }
-                 else
-                 {
-                    echo "<p>Coupons Do Not Accepted</p>";
-                 }
                         echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
@@ -1362,11 +1358,12 @@
                 <p class = 'head4'>".$row['services_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "<p>Coupon Accepted</p>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<p>Coupon Do Not Accepted</p>";
+                    echo "
+                    <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
                 }
                 echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
@@ -1404,11 +1401,10 @@
                 <center>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "<p>Coupon Accepted</p>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<p>Coupon Do Not Accepted</p>";
+                    echo "
+                   
+                    <p class ='icons'>Coupons Accepted</p>
+                    ";
                 }
                    echo" <button id = 'pro_btnView'>
                         <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
@@ -1448,11 +1444,9 @@
                 <center>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "<p>Coupon Accepted</p>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<p>Coupon Do Not Accepted</p>";
+                    echo "
+                    <p class ='icons'>Coupons Accepted</p>
+                    ";
                 }
                     echo " <button id = 'pro_btnView'>
                         <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
@@ -1492,11 +1486,9 @@
                 <center>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "<p>Coupon Accepted</p>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<p>Coupon Do Not Accepted</p>";
+                    echo "
+                    <p class ='icons'>Coupons Accepted</p>
+                    ";
                 }
                     echo "<button id = 'pro_btnView'>
                         <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
@@ -1513,7 +1505,7 @@
     function other_services()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '4'");
+        $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '5'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -1536,11 +1528,7 @@
                 <center>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "<p>Coupon Accepted</p>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<p>Coupon Do Not Accepted</p>";
+                    echo "<p class = 'icons'>Coupon Accepted</p>";
                 }
                     echo "<button id = 'pro_btnView'>
                         <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>

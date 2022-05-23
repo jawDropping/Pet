@@ -92,7 +92,7 @@
                             <input class = 'inputer' type='text' name = 'contact_number' placeholder = 'Contact Number' size = '50' required />
                         </div>
                         <div>
-                            <input class = 'inputer' type='text' name = 'pet_center_password' placeholder = 'Password' size = '50' required />
+                            <input class = 'inputer' type='password' name = 'pet_center_password' placeholder = 'Password' size = '50' required />
                         </div>
                         </div>
                         <p class = 'miniHead'>Location</p>
@@ -352,7 +352,7 @@
               {
                   echo "<script>alert('Number must at least 11 digits!');</script>";
               }
-              elseif(strlen($pet_center_password) >= 9 &&
+              elseif(strlen($pet_center_password) <= 9 &&
               preg_match('/[A-Z]/', $pet_center_password) > 0 &&
               preg_match('/[a-z]/', $pet_center_password) > 0)
               {

@@ -982,6 +982,7 @@ function updateThumbnail(dropZoneElement, file) {
         $sql3->execute();
 
         $row2 = $sql3->fetch();
+        
 
         // <th>User Name</th>
         //     <th>Coupon Code</th>
@@ -1009,8 +1010,13 @@ function updateThumbnail(dropZoneElement, file) {
                 {
                     echo "<td>".$row['coupon_code']."</td>";
                 }
-                echo 
-                "<td>".$row['transaction_code']."</td>
+                if($row['status'] == "USED")
+                {
+                    $total_amount+=$row['amount'];
+                }
+                
+                echo"
+                <td>".$row['transaction_code']."['".$row['status']."']</td>
                 <td>".$row['amount']."</td>
                 <td>".$row['date_confirmed']."</td>
             </tr>";   
@@ -1021,7 +1027,7 @@ function updateThumbnail(dropZoneElement, file) {
             <td></td>
             <td></td>
             <td></td>
-            <td>Total Amount: ".$row2['SUM(amount)']."</td>
+            <td>Collected Amount: ".$total_amount."</td>
         </tr>";
     }
 
@@ -1253,7 +1259,7 @@ function updateThumbnail(dropZoneElement, file) {
                         <button name = 'update_user'>Update Profile</button>
                     </div>
                     <div class = 'usernameh'>
-                        <button class = 'back' onclick='window.location.href='/Pet/petcenter/index.php'>Back to Home</button>
+                        <a href ='index.php' style = 'text-decoration:none;color:grey;margin-left:40%;margin-top:.5rem;'>Back to Home</a>
                     </div>
                     </div>
                     <div class='rightSide'>
