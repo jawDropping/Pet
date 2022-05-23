@@ -66,7 +66,7 @@
             </div>
             <div class="under">
                 <p class = 'sayings2' >What PetSociety do?</p><br>
-                <p class = 'smaller' >We found out that most of the time when you donate theres no reward for your good deeds. Thats the reason why we create an agreement between petcenters that they'll give you atleast 2% of discount or higher if you donate directly to the organizations.</p>
+                <p class = 'smaller' >We found out that most of the time when you donate theres no reward for your good deeds. Thats the reason why we create an agreement between petcenters that they'll give you a discount if you donate directly to the organizations.</p>
                 <p class="smaller">Our job is to give information about the organizations, and to check or validate if you donate to those organization by sending us the proof of transaction between you and the organization, if you donate and choose not to inform us it's still okay but youll not be given for the coupon code to claim your discount</p>
             </div>
             <a href = '../petcenter/signup.php' class = 'toSignup'>

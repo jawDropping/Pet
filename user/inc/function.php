@@ -543,27 +543,28 @@
                         <div class = 'infoss'>
                         <div class = 'miniLeft'>
                         <p class = 'lebels'>Location</p>
-                        <p class = 'dates'> ".$row_org['org_location']."</p>
-                        <p class = 'lebels'>GCash Number</p><p class = 'dates'> ".$row_org['org_contact_number']."</p>
+                        <input type = 'text' class = 'dates' value ='".$row_org['org_location']."' disabled />
+                        <p class = 'lebels'>GCash Number</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['org_contact_number']."' disabled/>
                         <p class = 'lebels'>Email Address </p>
-                       <p class = 'dates'>".$row_org['org_email_address']."</p>
+                       <input type = 'text' class = 'dates' value = '".$row_org['org_email_address']."' disabled />
                         <p class = 'lebels'>
                         Bank Details  </p>
-                        <p class = 'dates'>".$row_org['bank_details']."
-                         </p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['bank_details']."' disabled />
                         </div>
 
                         <div class = 'miniRights'>
                         <p class = 'lebels'>Website</p>
-                        <p class = 'dates'> ".$row_org['website']."</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['website']."' disabled />
                        
-                        <p class = 'lebels'>Paymaya</p><p class = 'dates'> ".$row_org['paymaya']."</p>
+                        <p class = 'lebels'>Paymaya</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['paymaya']."' disabled />
                         <p class = 'lebels'>Organization Manager</p>
-                       <p class = 'dates'>".$row_org['org_manager']."</p>
+                       <input type = 'text' class = 'dates' value = '".$row_org['org_manager']."'/ disabled>
                         <p class = 'lebels'>
                         Facebook  </p>
-                        <p class = 'dates'>".$row_org['facebook']."
-                         </p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['facebook']."' disabled/>
+                         </input>
                         </div>
                         
                         <div></div>
