@@ -11,7 +11,70 @@
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&family=Nunito:wght@200&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
+    <style>
 
+
+p{
+    padding: 10px;
+}
+.selection {
+background: #28287774;
+}
+.hed{
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+.body{
+    margin-top: 7vh;
+    background: #fff;
+    width: 95%;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+}
+.hedGrid{
+    display: grid;
+    grid-template-columns: 15% 14% 14% 14% 14% 14% 14%;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+.innerGrid{
+    display: grid;
+    grid-template-columns:15% 14% 14% 14% 14% 14% 14%;
+    text-align: center;
+    
+    margin-top: 20px;
+}
+.btnssih{
+    height: 30px;
+color: #fff;
+border-radius: 3px;
+width: 70%;
+background: #5a5bf3;
+border: 1px solid  #5a5bf3;
+text-decoration: none;
+padding: 5px;
+margin-left: 15%;
+
+}
+.noorders{
+        width: 70%;
+        margin-left: 15%;
+        margin-top: 20vh;
+        text-align: center;
+        font-size: 20px;
+        font-family: "Varela Round", sans-serif;
+        color: white;
+}
+.imgw{
+height: 25px;
+width: 25px;
+    }
+</style>
     <body>
     <?php 
            
@@ -30,12 +93,12 @@
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Product Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li class = 'selection' ><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
-        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
+        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/ord2.png" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
-        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Generate Report</a></li>
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/report.png" class="navicons">Generate Report</a></li>
         <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
@@ -59,7 +122,10 @@ $row = $viewall_ords->fetch();
 if($row == 0)
 {
     
-    echo "NO DELIVERIES";
+    echo "
+    <div class = 'noorders'>
+    <p><img class = 'imgw' src = '../uploads/warn2.png'> NO DELIVERIES</p>
+    </div>";
 }
 else
 {
@@ -97,57 +163,7 @@ else
             
         ?>
     </body>
-    <style>
-
-
-    p{
-        padding: 10px;
-    }
-    .selection {
-  background: #28287774;
-}
-.hed{
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-    }
-    .body{
-        margin-top: 7vh;
-        background: #fff;
-        width: 95%;
-        border-radius: 5px;
-        padding: 10px;
-        margin-left: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
-    }
-    .hedGrid{
-        display: grid;
-        grid-template-columns: 15% 14% 14% 14% 14% 14% 14%;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 1px solid black;
-    }
-    .innerGrid{
-        display: grid;
-        grid-template-columns:15% 14% 14% 14% 14% 14% 14%;
-        text-align: center;
-        
-        margin-top: 20px;
-    }
-    .btnssih{
-        height: 30px;
-  color: #fff;
-  border-radius: 3px;
-  width: 70%;
-  background: #5a5bf3;
-  border: 1px solid  #5a5bf3;
-  text-decoration: none;
-  padding: 5px;
-  margin-left: 15%;
-
-    }
-</style>
+   
 
 
 

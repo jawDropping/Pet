@@ -543,27 +543,28 @@
                         <div class = 'infoss'>
                         <div class = 'miniLeft'>
                         <p class = 'lebels'>Location</p>
-                        <p class = 'dates'> ".$row_org['org_location']."</p>
-                        <p class = 'lebels'>GCash Number</p><p class = 'dates'> ".$row_org['org_contact_number']."</p>
+                        <input type = 'text' class = 'dates' value ='".$row_org['org_location']."' disabled />
+                        <p class = 'lebels'>GCash Number</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['org_contact_number']."' disabled/>
                         <p class = 'lebels'>Email Address </p>
-                       <p class = 'dates'>".$row_org['org_email_address']."</p>
+                       <input type = 'text' class = 'dates' value = '".$row_org['org_email_address']."' disabled />
                         <p class = 'lebels'>
                         Bank Details  </p>
-                        <p class = 'dates'>".$row_org['bank_details']."
-                         </p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['bank_details']."' disabled />
                         </div>
 
                         <div class = 'miniRights'>
                         <p class = 'lebels'>Website</p>
-                        <p class = 'dates'> ".$row_org['website']."</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['website']."' disabled />
                        
-                        <p class = 'lebels'>Paymaya</p><p class = 'dates'> ".$row_org['paymaya']."</p>
+                        <p class = 'lebels'>Paymaya</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['paymaya']."' disabled />
                         <p class = 'lebels'>Organization Manager</p>
-                       <p class = 'dates'>".$row_org['org_manager']."</p>
+                       <input type = 'text' class = 'dates' value = '".$row_org['org_manager']."'/ disabled>
                         <p class = 'lebels'>
                         Facebook  </p>
-                        <p class = 'dates'>".$row_org['facebook']."
-                         </p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['facebook']."' disabled/>
+                         </input>
                         </div>
                         
                         <div></div>
@@ -662,6 +663,11 @@
                     <p class ='icons'>Coupons Accepted</p>
                     </div>";
                  }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
                         echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
@@ -703,6 +709,9 @@
                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
                    <p class ='icons'>Coupons Accepted</p>
                    </div>";
+                }else
+                {
+                   echo "<br><br>";
                 }
                        echo" <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -745,6 +754,9 @@
                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
                    <p class ='icons'>Coupons Accepted</p>
                    </div>";
+                }else
+                {
+                   echo "<br><br>";
                 }
                       echo"  <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -787,6 +799,9 @@
                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
                    <p class ='icons'>Coupons Accepted</p>
                    </div>";
+                }else
+                {
+                   echo "<br><br>";
                 }
                      echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -829,6 +844,9 @@
                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
                    <p class ='icons'>Coupons Accepted</p>
                    </div>";
+                }else
+                {
+                   echo "<br><br>";
                 }
                      echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
@@ -1358,12 +1376,15 @@
                 <p class = 'head4'>".$row['services_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "
-                    <div class = 'band'>
+                    echo "  <div class = 'band'>
                    
-                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                    <p class ='icons'>Coupons Accepted</p>
-                    </div>";
+                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                   <p class ='icons'>Coupons Accepted</p>
+                   </div>";
+                }
+                if($row['accept_coupon'] == "No")
+                {
+                    echo "<br><br>";
                 }
                 echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
@@ -1389,32 +1410,36 @@
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Pet Hotels</h3>";
         while($row = $sql2->fetch()):
             
+       
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>";
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4'>".$row['services_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "
+                    echo "  <div class = 'band'>
                    
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
                     <p class ='icons'>Coupons Accepted</p>
-                    ";
+                    </div>";
                 }
-                   echo" <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                if($row['accept_coupon'] == "No")
+                {
+                    echo "<br><br>";
+                }
+                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1432,31 +1457,36 @@
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Pet Training Services</h3>";
+        
         while($row = $sql2->fetch()):
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>";
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4'>".$row['services_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "
+                    echo "  <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
                     <p class ='icons'>Coupons Accepted</p>
-                    ";
+                    </div>";
                 }
-                    echo " <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                if($row['accept_coupon'] == "No")
+                {
+                    echo "<br><br>";
+                }
+                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1474,31 +1504,36 @@
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Pet Vet Clinics</h3>";
+        
         while($row = $sql2->fetch()):
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>";
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4'>".$row['services_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "
+                    echo "  <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
                     <p class ='icons'>Coupons Accepted</p>
-                    ";
+                    </div>";
                 }
-                    echo "<button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                if($row['accept_coupon'] == "No")
+                {
+                    echo "<br><br>";
+                }
+                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1516,29 +1551,35 @@
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Other Services</h3>";
+      
         while($row = $sql2->fetch()):
             
-            echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>";
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+                
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'head4'>".$row['services_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
-                    echo "<p class = 'icons'>Coupon Accepted</p>";
+                    echo "  <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
                 }
-                    echo "<button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                if($row['accept_coupon'] == "No")
+                {
+                    echo "<br><br>";
+                }
+                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
+                </div>
             </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 

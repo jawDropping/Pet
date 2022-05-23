@@ -48,11 +48,12 @@
                
                 
             </div>
-            <br>
-            <div class="haha">
-                    <p>jdhsakj</p>
-                </div>
-
+        
     </body>
+    <style>
+        .mainer{
+            padding-bottom: 10vh;
+        }
+    </style>
 </html>
 

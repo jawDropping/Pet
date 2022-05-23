@@ -24,7 +24,7 @@
             <div class="sulod">
             <img src="../uploads/gcash.png" id = 'imageGcash' >
             <br><br>
-            <p class = 'heading' >Inform Us with your Gcash Transaction with the Organization so that we can provide you the Coupon code :></p>
+            <p class = 'heading' >Inform Us with your Transaction with the Organization so that we can provide you the Coupon code</p>
             
             </div>
       
@@ -35,11 +35,11 @@
         <div class = 'donateDiv'>
             
    <div class="contData">
-   <p class = 'lebel' >GCash Ref. Number</p>
+   <p class = 'lebel' >Ref. Number</p>
    <input class = 'ints' type = "number" name = "transaction_number" required/>
    </div>
    <div class="contData">
- <p class = 'lebel' >GCash Number</p>
+ <p class = 'lebel' >Acc No.</p>
    <input class = 'ints' type = "text" name = "contact_number" required/>
  </div>
   <div class="contData">
