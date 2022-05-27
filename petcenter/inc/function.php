@@ -165,15 +165,8 @@
 
             $row2 = $view_name->fetch();
 
-            if($row['pet_center_email']>0)
-            {
-                echo "<script>alert('Email Exists');</script>";
-            }
-            elseif($row2['pet_cent_name']>0)
-            {
-                echo "<script>alert('Name Exists');</script>";
-            }
-            elseif(!is_numeric($contact_number))
+
+            if(!is_numeric($contact_number))
             {
                 echo "<script>alert('Only Digits Allowed!');</script>";
             }
@@ -507,6 +500,11 @@
             
        
     </div>
+    <div class = 'cont'>
+        <p class = "lbes">Required People</p>
+        <input class = 'ints' type='text' name =  'req_people' required/>
+       
+    </div>
                     <script>
                         function myFuction(){
             varOne = document.getElementById('municipal').value;
@@ -677,6 +675,7 @@ function updateThumbnail(dropZoneElement, file) {
             $service_cost = $_POST['service_cost'];
             $accept_coupon = $_POST['accept_coupon'];
             $full_location = $_POST['full_location'];
+            $req_people = $_POST['req_people'];
 
             $service_photo = $_FILES['service_photo']['name'];
             $service_photo_tmp = $_FILES['service_photo']['tmp_name'];
@@ -718,7 +717,9 @@ function updateThumbnail(dropZoneElement, file) {
             discount = $service_discount,
             service_photo = '$service_photo',
             accept_coupon = '$accept_coupon',
-            full_location = '$full_location'
+            full_location = '$full_location',
+            req_people = '$req_people',
+            poeple_visited = '0'
             ");
                 
 
@@ -822,6 +823,7 @@ function updateThumbnail(dropZoneElement, file) {
     
                 $row_service = $view_service->fetch();
                 $service_name = $row_service['services_name'];
+                $sid = $row_service['id'];
 
                 
     
@@ -837,7 +839,7 @@ function updateThumbnail(dropZoneElement, file) {
                 "<form method = 'POST'>
                     <div class = 'hed'>
                         <input type = 'hidden' name = 'pet_center_id' value = '".$pet_center_id."' />
-                        <input type = 'hidden' name = 'service_id' value = '".$service_id."' />
+                        <input type = 'hidden' name = 'service_id' value = '".$sid."' />
                         <input type = 'hidden' name = 'user_id' value = '".$user_id."' />
                         <input type = 'hidden' name = 'coupon_code' value = '".$coupon_code."' />
                         <input type = 'hidden' name = 'date_confirmed' value = '".$today."' />
@@ -902,6 +904,13 @@ function updateThumbnail(dropZoneElement, file) {
                     //to email user 
                     $user_email = $_POST['user_email'];
                     $service_name = $_POST['service_name'];
+
+                    $sql6 = $con->prepare("SELECT * FROM services WHERE services_name = '$service_name'");
+                    $sql6->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql6->execute();
+
+                    $row = $sql6->fetch();
+                    $ids = $row['id'];
                     $date = $_POST['date'];
                     
                     $receiver = $user_email;
@@ -949,6 +958,13 @@ function updateThumbnail(dropZoneElement, file) {
                     }
 
                     mail($receiver, $subject, $body, $sender);
+
+                    
+                    $update = $con->prepare("UPDATE services SET people_visited=people_visited+1 WHERE id = '$ids'");
+                    if(!$update->execute())
+                    {
+                        return;
+                    }
 
                     $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
                     if($delete_reservation->execute())
@@ -1446,6 +1462,14 @@ function updateThumbnail(dropZoneElement, file) {
                     $reserve_id = $_POST['reserve_id'];
                     $pet_center_id = $_POST['pet_center_id'];
                     $service_id = $_POST['service_id'];
+
+                    // $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
+                    // $view_service->setFetchMode(PDO:: FETCH_ASSOC);
+                    // $view_service->execute();
+
+                    // $roww_service = $view_service->fetch();
+                    // $id = $roww_service['id'];
+            
                     $user_id = $_POST['user_id'];
                     $coupon_code = $_POST['coupon_code'];
                     $date_confirmed = $_POST['date'];
@@ -1502,6 +1526,12 @@ function updateThumbnail(dropZoneElement, file) {
 
                     mail($receiver, $subject, $body, $sender);
 
+                    // $update_people_visited = $con->prepare("UPDATE services SET people_visited=people_visited+1 WHERE id = '$id'");
+                    // if(!$update_people_visited->execute())
+                    // {
+                    //     return;
+                    // }
+
                     $delete_reservation = $con->prepare("DELETE FROM reserve_services WHERE reserve_id = '$reserve_id'");
                     if($delete_reservation->execute())
                     {
@@ -1551,14 +1581,6 @@ function updateThumbnail(dropZoneElement, file) {
                         $service_id = $row2['service_id'];
                         $coupon_code = $row2['coupon_code'];
             
-                        // $view_service = $con->prepare("SELECT * FROM services WHERE service_id = '$service_id'");
-                        // $view_service->setFetchMode(PDO:: FETCH_ASSOC);
-                        // $view_service->execute();
-            
-                        // $row_service = $view_service->fetch();
-                        // $service_name = $row_service['services_name'];
-            
-            
                         $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
                         $view_user->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_user->execute();
@@ -1573,6 +1595,7 @@ function updateThumbnail(dropZoneElement, file) {
                                 <p>".$row2['transaction_code']."</p>
                                 <p>".$user_username."</p>
                                 <p>".$row2['date_confirmed']."</p>";
+                                echo "<input type = 'hidden' name = 'serv_id' value = '".$service_id."' />";
                                 if($row2['coupon_code'] == '')
                                 {
                                     echo "<p>".$empty_coupon."</p>";
@@ -1594,16 +1617,25 @@ function updateThumbnail(dropZoneElement, file) {
                     }
                 endwhile;
                 if(isset($_POST['confirm']))
-                {
+                {   
                     $id = $_POST['confirm'];
+                    $serv_id = $_POST['serv_id'];
                     $sql = $con->prepare("UPDATE confirmed_services SET status = 'USED' WHERE id = '$id'");
                     $sql->execute();
 
-                    if($sql->execute())
+                    if(!$sql->execute())
                     {
+                        return;
+                    }
+
+                    $sql2 = $con->prepare("UPDATE services SET people_visited=people_visited-1 WHERE id = '$serv_id'");
+                    if($sql2->execute())
+                    {
+                        
                         echo "<script>alert('Confirmed!');</script>";
                         echo "<script>window.open('index.php', '_self');</script>";
                     }
+
                 }
             }
         }

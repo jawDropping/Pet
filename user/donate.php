@@ -56,7 +56,7 @@
   </div>
   <div class="drop-zone">
     <span class="drop-zone__prompt">Drop file here or click to upload</span>
-    <input type="file" name="proof_photo" class="drop-zone__input">
+    <input type="file" name="proof_photo" class="drop-zone__input" required />
   </div>
   <br><br>
    <div></div> <div></div>
