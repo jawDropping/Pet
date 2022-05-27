@@ -1827,6 +1827,66 @@
                     </div>";
                     }
                 }
+
+                //rate service
+                $usrID = $_SESSION['user_id'];
+                $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId'");
+                $qry->setFetchMode(PDO:: FETCH_ASSOC);
+                $qry->execute();
+
+                $row = $qry->fetch();
+
+                if($row==0)
+                {
+                    $sql = $con->prepare("SELECT * FROM review WHERE service_id = '$id' AND user_id = '$usrID'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+    
+                    $rows = $sql->fetch();
+    
+                    if($rows==0)
+                    {
+                        echo 
+                        "<form method = 'POST' enctype = 'multipart/form-data'>
+                            <input type = 'hidden' name = 'service_id' value = '".$id."' />
+                            <button name = 'count_review' value = '1'>1</button>
+                            <button name = 'count_review' value = '2'>2</button>
+                            <button name = 'count_review' value = '3'>3</button>
+                            <button name = 'count_review' value = '4'>4</button>
+                            <button name = 'count_review' value = '5'>5</button>
+                        </form>";
+    
+                        if(isset($_POST['count_review']))
+                        {
+                            $count_review = $_POST['count_review'];
+                            $service_id = $_POST['service_id'];
+                            $user_id = $_SESSION['user_id'];
+                    
+                            $sql = $con->prepare("INSERT INTO review 
+                            SET 
+                            user_id = '$user_id',
+                            service_id = '$service_id',
+                            rating = '$count_review'
+                            ");
+                    
+                            if($sql->execute())
+                            {
+                                echo "<script>alert('Thanks for your rating!');</script>";
+                                echo "<script>window.open('show_service_info.php?id=".$id."' ,'_self');</script>";
+                            }
+                        }
+                    }
+                }
+                
+
+                //Total Rating
+                $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+                echo "Avg: ".$ttl."";
                 
             if(isset($_POST['submit']))
             {
