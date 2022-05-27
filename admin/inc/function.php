@@ -416,7 +416,7 @@
                     {
                         echo
                         "<input type = 'hidden' name = 'total_amount' value = '".$concolacion."' />
-                        <p  class = 'dataLebs'>".$consolacion."</p>";
+                        <p  class = 'dataLebs'>".$concolacion."</p>";
                     }
                     if($row_username['municipality'] == "Lapu-lapu")
                     {
@@ -632,7 +632,7 @@
             $items = $row['items'];
             $user_username = $row['user_username'];
             $total_amount = $row['total_amount'];
-
+            
             $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
             $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user->execute();
@@ -644,7 +644,7 @@
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
 
-            $reciever = $row_username['user_email'];
+            $receiver = $row_username['user_email'];
             $subject = "Order Delivered!";
             $body = "
             Greetings!
@@ -658,26 +658,31 @@
             ";
             $sender = "ianjohn0101@gmail.com";
 
-            if(mail($reciever, $subject, $body, $sender))
-            {
-                // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
-                // $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql = $con->prepare("INSERT INTO delivered_items(delivery_id, items, total_amount, user_username, date_delivered) VALUES('$delivery_id', '$items', '$total_amount', '$user_username', '$today')");
-                if($sql->execute())
+            $sql = $con->prepare("INSERT INTO delivered_items(delivery_id, items, total_amount, user_username, date_delivered) VALUES('$delivery_id', '$items', '$total_amount', '$user_username', '$today')");
+                if(!$sql->execute())
                 {
                   
-                        $update_status = $con->prepare("DELETE FROM delivery_tbl WHERE delivery_id = '$delivery_id'");
-                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-                        $update_status->execute();
-
-                        if($update_status->execute())
-                        {
-                            echo "<script>alert('Item Delivered');</script>";
-                            echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
-                        }
+                       return;
                    
                 }
-            }
+
+                mail($receiver, $subject, $body, $sender);
+                $update_status = $con->prepare("DELETE FROM delivery_tbl WHERE delivery_id = '$delivery_id'");
+                $update_status->setFetchMode(PDO:: FETCH_ASSOC);
+                $update_status->execute();
+
+                if($update_status->execute())
+                {
+                    echo "<script>alert('Item Delivered');</script>";
+                    echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
+                }
+
+            // if(mail($reciever, $subject, $body, $sender))
+            // {
+                // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
+                // $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                
+            //}
         }
     }
 

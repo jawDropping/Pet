@@ -18,7 +18,24 @@
         ?>
         <div class="mainGyud">
         <?php
+        if(isset($_GET['error_message']))
+        {
+            echo "<script>alert('".$_GET['error_message']."');</script>";
+        }
+        
         call_user_func('cart_display');
+        ?>
+        <?php
+        if(isset($_GET['municipality_error']))
+        {
+            echo "<script>alert('".$_GET['municipality_error']."');</script>";
+        }
+        ?>
+        <?php
+        if(isset($_GET['success_message']))
+        {
+            echo "<script>alert('".$_GET['success_message']."');</script>";
+        }
         ?>
         </div><br>
         <div class="foot">
