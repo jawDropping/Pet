@@ -679,13 +679,21 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
             <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'head4' >".$rows['pet_center_name']."</p>";
+                
                  if($row_pro['accept_coupon'] == "Yes")
                  {
                     echo "
@@ -727,13 +735,20 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
             <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'head4' >".$rows['pet_center_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
                    echo "  <div class = 'band'>
@@ -772,13 +787,20 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
             <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'head4' >".$rows['pet_center_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
                    echo "<div class = 'band'>
@@ -817,13 +839,20 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
             <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'head4' >".$rows['pet_center_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
                    echo "<div class = 'band'>
@@ -862,13 +891,20 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
             <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>";
+                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'head4' >".$rows['pet_center_name']."</p>";
                 if($row_pro['accept_coupon'] == "Yes")
                 {
                    echo "<div class = 'band'>
@@ -1399,7 +1435,12 @@
 
        
         while($row = $sql2->fetch()):
-            
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
@@ -1407,7 +1448,8 @@
                 
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>";
+                <p class = 'head4'>".$row['services_name']."</p>
+                <p class = 'head4'>".$rows['pet_center_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
                     echo "  <div class = 'band'>
@@ -1445,7 +1487,12 @@
         $sql2->execute();
 
         while($row = $sql2->fetch()):
-            
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
        
             echo
             "<div class = 'idNiSha'>
@@ -1454,7 +1501,8 @@
                 
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>";
+                <p class = 'head4'>".$row['services_name']."</p>
+                <p class = 'head4'>".$rows['pet_center_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
                     echo "  <div class = 'band'>
@@ -1493,7 +1541,12 @@
 
         
         while($row = $sql2->fetch()):
-            
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
@@ -1501,7 +1554,8 @@
                 
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>";
+                <p class = 'head4'>".$row['services_name']."</p>
+                <p class = 'head4'>".$rows['pet_center_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
                     echo "  <div class = 'band'>
@@ -1540,6 +1594,12 @@
 
         
         while($row = $sql2->fetch()):
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             
             echo
             "<div class = 'idNiSha'>
@@ -1548,7 +1608,8 @@
                 
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>";
+                <p class = 'head4'>".$row['services_name']."</p>
+                <p class = 'head4'>".$rows['pet_center_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
                     echo "  <div class = 'band'>
@@ -1587,6 +1648,12 @@
 
       
         while($row = $sql2->fetch()):
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
@@ -1594,7 +1661,8 @@
                 
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>";
+                <p class = 'head4'>".$row['services_name']."</p>
+                <p class = 'head4'>".$rows['pet_center_name']."</p>";
                 if($row['accept_coupon'] == "Yes")
                 {
                     echo "  <div class = 'band'>
