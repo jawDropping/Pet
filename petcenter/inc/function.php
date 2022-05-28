@@ -94,6 +94,7 @@
                             <a id = 'pro_btnView' href = 'edit_service.php?edit_service=".$row['id']."'>Edit</a>
                             <a id = 'pro_btnViewDelete' href = 'delete_service.php?delete_service=".$row['id']."'>Delete</a>
                             <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+                            <a href='view_service_review.php?reviews=".$row['id']."'>View Reviews</a>
                         </div>
                     </a>
                     </form>
