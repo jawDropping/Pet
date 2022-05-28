@@ -691,8 +691,10 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>
                 <p class = 'head4' >".$row_pro['services_name']."</p>
-                <p class = 'head4' >".$rows['pet_center_name']."</p>";
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
                 
                  if($row_pro['accept_coupon'] == "Yes")
                  {
@@ -747,20 +749,26 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>
                 <p class = 'head4' >".$row_pro['services_name']."</p>
-                <p class = 'head4' >".$rows['pet_center_name']."</p>";
-                if($row_pro['accept_coupon'] == "Yes")
-                {
-                   echo "  <div class = 'band'>
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
+                
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "
+                    <div class = 'band'>
                    
-                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                   <p class ='icons'>Coupons Accepted</p>
-                   </div>";
-                }else
-                {
-                   echo "<br><br>";
-                }
-                       echo" <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
+                 }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -797,25 +805,31 @@
             <form method = 'post' enctype='multipart/form-data'>
             <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
                
-                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
-                <div class = 'prodDet'>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
-                <p class = 'head4' >".$rows['pet_center_name']."</p>";
-                if($row_pro['accept_coupon'] == "Yes")
-                {
-                   echo "<div class = 'band'>
-                   
-                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                   <p class ='icons'>Coupons Accepted</p>
-                   </div>";
-                }else
-                {
-                   echo "<br><br>";
-                }
-                      echo"  <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
-                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
-                </div>
-            </a>
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row_pro['service_cost']."</p>
+            <p class = 'head4' >".$row_pro['services_name']."</p>
+            
+            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row_pro['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
         </div>";
@@ -851,20 +865,26 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>
                 <p class = 'head4' >".$row_pro['services_name']."</p>
-                <p class = 'head4' >".$rows['pet_center_name']."</p>";
-                if($row_pro['accept_coupon'] == "Yes")
-                {
-                   echo "<div class = 'band'>
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
+                
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "
+                    <div class = 'band'>
                    
-                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                   <p class ='icons'>Coupons Accepted</p>
-                   </div>";
-                }else
-                {
-                   echo "<br><br>";
-                }
-                     echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
+                 }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -903,20 +923,26 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>
                 <p class = 'head4' >".$row_pro['services_name']."</p>
-                <p class = 'head4' >".$rows['pet_center_name']."</p>";
-                if($row_pro['accept_coupon'] == "Yes")
-                {
-                   echo "<div class = 'band'>
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
+                
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "
+                    <div class = 'band'>
                    
-                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                   <p class ='icons'>Coupons Accepted</p>
-                   </div>";
-                }else
-                {
-                   echo "<br><br>";
-                }
-                     echo"   <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
+                 }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -1444,28 +1470,32 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
-                
-                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
-                <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>
-                <p class = 'head4'>".$rows['pet_center_name']."</p>";
-                if($row['accept_coupon'] == "Yes")
-                {
-                    echo "  <div class = 'band'>
-                   
-                   <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                   <p class ='icons'>Coupons Accepted</p>
-                   </div>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<br><br>";
-                }
-                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </div>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>
+            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
         </div>";
@@ -1497,28 +1527,32 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
-                
-                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
-                <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>
-                <p class = 'head4'>".$rows['pet_center_name']."</p>";
-                if($row['accept_coupon'] == "Yes")
-                {
-                    echo "  <div class = 'band'>
-                   
-                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                    <p class ='icons'>Coupons Accepted</p>
-                    </div>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<br><br>";
-                }
-                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </div>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>
+            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
         </div>";
@@ -1550,28 +1584,32 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
-                
-                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
-                <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>
-                <p class = 'head4'>".$rows['pet_center_name']."</p>";
-                if($row['accept_coupon'] == "Yes")
-                {
-                    echo "  <div class = 'band'>
-                   
-                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                    <p class ='icons'>Coupons Accepted</p>
-                    </div>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<br><br>";
-                }
-                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </div>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>
+            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
         </div>";
@@ -1604,28 +1642,32 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
-                
-                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
-                <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>
-                <p class = 'head4'>".$rows['pet_center_name']."</p>";
-                if($row['accept_coupon'] == "Yes")
-                {
-                    echo "  <div class = 'band'>
-                   
-                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                    <p class ='icons'>Coupons Accepted</p>
-                    </div>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<br><br>";
-                }
-                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </div>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>
+            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
         </div>";
@@ -1657,28 +1699,32 @@
             
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
-                
-                <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
-                <div class = 'prodDet'>
-                <p class = 'head4'>".$row['services_name']."</p>
-                <p class = 'head4'>".$rows['pet_center_name']."</p>";
-                if($row['accept_coupon'] == "Yes")
-                {
-                    echo "  <div class = 'band'>
-                   
-                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
-                    <p class ='icons'>Coupons Accepted</p>
-                    </div>";
-                }
-                if($row['accept_coupon'] == "No")
-                {
-                    echo "<br><br>";
-                }
-                echo"    <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </div>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>
+            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
         </div>";
@@ -1734,8 +1780,8 @@
                     
                     <div class = 'secondBody'>
                         <p class = 'hed'>".$row_services['services_name']."</p>
-                        <p>".$row_pet_center['pet_center_name']."</p>
-                        <p>".$row_services['description']."</p>
+                        <p class = 'head51'>".$row_pet_center['pet_center_name']."</p>
+                        <p class = 'head52'>".$row_services['description']."</p>
                         <div class = 'mainHoldest'>
                             <div class = 'holdest'>
                                 <p class = 'lebs'> Service Category: </p>
@@ -1769,6 +1815,11 @@
                             
                             
                         </div>
+                        <div class = 'holdest'>
+                        <p class = 'lebs'>People Accomodated</p> 
+                        <p class = 'conts'>".$row_services['people_visited']."</p>
+                        </div>
+                        </div><br><br>
                         ";
                         
                            echo" <div class = 'btnss' >";
@@ -1776,20 +1827,20 @@
                             
                             if($row_services['accept_coupon'] == 'No')
                             {
-                                echo "<a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>";
+                                echo "<a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Book Appointment</a>";
                             }
                             if($row_services['accept_coupon'] == 'Yes')
                             {
-                                echo " <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>";
+                                echo " <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Book Appointment</a>";
                             }
                                 
                            echo" </div>
                            
-                        <p class = 'lebs'>People Accomodated: ".$row_services['people_visited']."</p>
+                        
                             <br>
                             <br>
                             
-                            </div>
+                            
                            </div>
                         </div>  
                         <div class = 'loces'>

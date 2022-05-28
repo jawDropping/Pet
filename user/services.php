@@ -50,11 +50,12 @@
               <div class = 'fDogs'>
                    <?php featured_service_vet_clinic(); ?>
                    </div>
-        </div>
+       
         <h3>Others</h3>
               <div class = 'fDogs'>
                    <?php featured_service_others(); ?>
                    </div>
+        </div>
         </div>
         </div>
             <?php
