@@ -1470,7 +1470,7 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
                
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
@@ -1493,7 +1493,7 @@
              }
 
                     echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
-                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
             </div>
         </a>
             </form>
@@ -1527,7 +1527,7 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
                
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
@@ -1550,7 +1550,7 @@
              }
 
                     echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
-                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
             </div>
         </a>
             </form>
@@ -1584,7 +1584,7 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
                
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
@@ -1607,7 +1607,7 @@
              }
 
                     echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
-                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
             </div>
         </a>
             </form>
@@ -1642,7 +1642,7 @@
             echo
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
                
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
@@ -1665,7 +1665,7 @@
              }
 
                     echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
-                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
             </div>
         </a>
             </form>
@@ -1699,7 +1699,7 @@
             
             "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
                
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
@@ -1722,7 +1722,7 @@
              }
 
                     echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
-                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
             </div>
         </a>
             </form>
