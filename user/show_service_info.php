@@ -7,28 +7,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
-
-    <body>
-       
-        <?php 
-            include ("inc/function.php");
-            include ("inc/header.php"); 
-            include ("inc/navbar.php");  ?>
-
-        <div class="mainCont">
-        <?php service_info(); ?>
-        
-        </div>
-        
-        <div class = 'bottomD'>
-        <?php showFeeds(); ?>
-        </div>
-        <div class="fot">
-        <?php include ("inc/footer.php");?>
-        </div>
-           
-
-    </body>
     <style>
         .mainCont{
            
@@ -171,7 +149,7 @@
             color: #555;
         }
         .btnss{
-            margin-top: 10vh;
+            float: right;
             display: flex;
             width: 30vw;
         }
@@ -199,12 +177,24 @@
             font-size: 28px;
             color: #555;
         }
+        .head51{
+            padding-left: 20px;
+            font-size: 10px;
+            color: #555;
+        }
+        .head52{
+            margin-top: 2px;
+            font-size: 12px;
+            padding-left: 20px;
+            color: #555;
+            
+        }
        
         .bbm{
-            padding: 7.5px;
-           color: #555;
+            padding: 15px;
+            background: #ffb830;
+            color: white;
             margin-left: 5px;
-            width: 100%;
             font-size: 12px;
             text-decoration: none;
             text-align: center;
@@ -249,4 +239,26 @@
             margin-bottom: 10px;
         }
     </style>
+    <body>
+       
+        <?php 
+            include ("inc/function.php");
+            include ("inc/header.php"); 
+            include ("inc/navbar.php");  ?>
+
+        <div class="mainCont">
+        <?php service_info(); ?>
+        
+        </div>
+        
+        <div class = 'bottomD'>
+        <?php showFeeds(); ?>
+        </div>
+        <div class="fot">
+        <?php include ("inc/footer.php");?>
+        </div>
+           
+
+    </body>
+   
 </html>
