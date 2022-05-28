@@ -11,11 +11,10 @@
     <body>
        
         <?php 
-            include ("inc/header.php"); 
-            include ("inc/navbar.php");  
             include ("inc/function.php");
-            
-            ?>
+            include ("inc/header.php"); 
+            include ("inc/navbar.php");  ?>
+
 
         <div class="mainCont">
         <?php service_info(); ?>
@@ -29,9 +28,7 @@
         <?php include ("inc/footer.php");?>
         </div>
            
-
-    </body>
-    <style>
+        <style>
         .mainCont{
            
         }
@@ -263,4 +260,7 @@
             margin-bottom: 10px;
         }
     </style>
+    </body>
+   
+
 </html>
