@@ -7,7 +7,27 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
-    <style>
+    
+    <body>
+       
+        <?php 
+            include ("inc/function.php");
+            include ("inc/header.php"); 
+            include ("inc/navbar.php");  ?>
+
+        <div class="mainCont">
+        <?php service_info(); ?>
+        
+        </div>
+        
+        <div class = 'bottomD'>
+        <?php showFeeds(); ?>
+        </div>
+        <div class="fot">
+        <?php include ("inc/footer.php");?>
+        </div>
+           
+        <style>
         .mainCont{
            
         }
@@ -239,26 +259,6 @@
             margin-bottom: 10px;
         }
     </style>
-    <body>
-       
-        <?php 
-            include ("inc/function.php");
-            include ("inc/header.php"); 
-            include ("inc/navbar.php");  ?>
-
-        <div class="mainCont">
-        <?php service_info(); ?>
-        
-        </div>
-        
-        <div class = 'bottomD'>
-        <?php showFeeds(); ?>
-        </div>
-        <div class="fot">
-        <?php include ("inc/footer.php");?>
-        </div>
-           
-
     </body>
    
 </html>
