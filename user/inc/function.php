@@ -1889,7 +1889,7 @@
     
                     $row = $qry->fetch();
     
-                    if($row==0)
+                    if($row!=0)
                     {
                         $sql = $con->prepare("SELECT * FROM review WHERE service_id = '$id' AND user_id = '$usrID'");
                         $sql->setFetchMode(PDO:: FETCH_ASSOC);
