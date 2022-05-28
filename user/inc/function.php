@@ -1774,27 +1774,29 @@
                 "
                 <div class = 'pckman'>
                     <div id = 'pic'>
-                    <img id = 'okpic' src ='../uploads/user_profile/".$row_services['service_photo']."'/>
-                    
+                        <img id = 'okpic' src ='../uploads/user_profile/".$row_services['service_photo']."'/>
                     </div>
-                    
                     <div class = 'secondBody'>
                         <p class = 'hed'>".$row_services['services_name']."</p>
                         <p class = 'head51'>".$row_pet_center['pet_center_name']."</p>
                         <p class = 'head52'>".$row_services['description']."</p>
                         <div class = 'mainHoldest'>
+
                             <div class = 'holdest'>
                                 <p class = 'lebs'> Service Category: </p>
                                 <p class = 'conts' >".$cat_name."</p>
                             </div>
+
                             <div class = 'holdest'>
                                 <p class = 'lebs'> Contact Number: </p>
                                 <p class = 'conts'>".$row_services['services_contact_number']." </p>
                             </div>
+
                             <div class = 'holdest'>
                                 <p class = 'lebs'>Email Address:</p>
                                 <p class = 'conts'> ".$row_services['services_email']."</p>
                             </div>
+
                             <div class = 'holderister'>
                                 <div class = 'holdest2'>
                                     <p class = 'lebs' >Time Open:</p>
@@ -1805,24 +1807,28 @@
                                     <p class = 'conts' > ".$close_time." </p>
                                 </div>
                             </div>
+
                             <div class = 'holdest'>
                                 <p class = 'lebs'>Service Cost: </p>
                                 <p class = 'conts'>".$row_services['service_cost']."</p>
                             </div>
+
                             <div class = 'holdest'>
                             <p class = 'lebs'>Discount Offer: </p>
                             <p class = 'conts'>".$row_services['discount']."%</p>
-                            
-                            
+                             </div>
+
+                            <div class = 'holdest'>
+                            <p class = 'lebs'>People Accomodated</p> 
+                            <p class = 'conts'>".$row_services['people_visited']."</p>
+                            </div>
+
                         </div>
-                        <div class = 'holdest'>
-                        <p class = 'lebs'>People Accomodated</p> 
-                        <p class = 'conts'>".$row_services['people_visited']."</p>
-                        </div>
-                        </div><br><br>
+                        <br><br>
                         ";
                         
-                           echo" <div class = 'btnss' >";
+                           echo" 
+                        <div class = 'btnss' >";
                             
                             
                             if($row_services['accept_coupon'] == 'No')
@@ -1841,10 +1847,10 @@
                             <br>
                             
                             
-                           </div>
-                        </div>  
+                        </div>
+                    </div>  
                         <div class = 'loces'>
-                       <br>
+                        <br>
                         <p class = 'loc'>Location</p>
                         <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$services_name."+".$full_location."+".$st."+".$barangay."+".$municipality."&output=embed'></iframe>
                     </div>
@@ -1880,53 +1886,50 @@
                 }
 
                 //rate service
-                if(isset($_SESSION['user_id']))
+                $usrID = $_SESSION['user_id'];
+                $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId'");
+                $qry->setFetchMode(PDO:: FETCH_ASSOC);
+                $qry->execute();
+
+                $row = $qry->fetch();
+
+                if($row==0)
                 {
-                    $usrID = $_SESSION['user_id'];
-                    $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId'");
-                    $qry->setFetchMode(PDO:: FETCH_ASSOC);
-                    $qry->execute();
+                    $sql = $con->prepare("SELECT * FROM review WHERE service_id = '$id' AND user_id = '$usrID'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
     
-                    $row = $qry->fetch();
+                    $rows = $sql->fetch();
     
-                    if($row==0)
+                    if($rows==0)
                     {
-                        $sql = $con->prepare("SELECT * FROM review WHERE service_id = '$id' AND user_id = '$usrID'");
-                        $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                        $sql->execute();
-        
-                        $rows = $sql->fetch();
-        
-                        if($rows==0)
+                        echo 
+                        "<form method = 'POST' enctype = 'multipart/form-data'>
+                            <input type = 'hidden' name = 'service_id' value = '".$id."' />
+                            <button name = 'count_review' value = '1'>⭐️</button>
+                            <button name = 'count_review' value = '2'>⭐️</button>
+                            <button name = 'count_review' value = '3'>⭐️</button>
+                            <button name = 'count_review' value = '4'>⭐️</button>
+                            <button name = 'count_review' value = '5'>⭐️</button>
+                        </form>";
+    
+                        if(isset($_POST['count_review']))
                         {
-                            echo 
-                            "<form method = 'POST' enctype = 'multipart/form-data'>
-                                <input type = 'hidden' name = 'service_id' value = '".$id."' />
-                                <button name = 'count_review' value = '1'>1</button>
-                                <button name = 'count_review' value = '2'>2</button>
-                                <button name = 'count_review' value = '3'>3</button>
-                                <button name = 'count_review' value = '4'>4</button>
-                                <button name = 'count_review' value = '5'>5</button>
-                            </form>";
-        
-                            if(isset($_POST['count_review']))
+                            $count_review = $_POST['count_review'];
+                            $service_id = $_POST['service_id'];
+                            $user_id = $_SESSION['user_id'];
+                    
+                            $sql = $con->prepare("INSERT INTO review 
+                            SET 
+                            user_id = '$user_id',
+                            service_id = '$service_id',
+                            rating = '$count_review'
+                            ");
+                    
+                            if($sql->execute())
                             {
-                                $count_review = $_POST['count_review'];
-                                $service_id = $_POST['service_id'];
-                                $user_id = $_SESSION['user_id'];
-                        
-                                $sql = $con->prepare("INSERT INTO review 
-                                SET 
-                                user_id = '$user_id',
-                                service_id = '$service_id',
-                                rating = '$count_review'
-                                ");
-                        
-                                if($sql->execute())
-                                {
-                                    echo "<script>alert('Thanks for your rating!');</script>";
-                                    echo "<script>window.open('show_service_info.php?id=".$id."' ,'_self');</script>";
-                                }
+                                echo "<script>alert('Thanks for your rating!');</script>";
+                                echo "<script>window.open('show_service_info.php?id=".$id."' ,'_self');</script>";
                             }
                         }
                     }
