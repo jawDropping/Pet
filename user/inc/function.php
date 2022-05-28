@@ -1854,7 +1854,7 @@
                 if(isset($_SESSION['user_id']))
                 {
                     $usrId = $_SESSION['user_id'];
-                    $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId'");
+                    $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId' AND service_id = '$id'");
                     $qry->setFetchMode(PDO:: FETCH_ASSOC);
                     $qry->execute();
 
@@ -1883,19 +1883,19 @@
                 if(isset($_SESSION['user_id']))
                 {
                     $usrID = $_SESSION['user_id'];
-                    $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId'");
+                    $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId' AND service_id = '$id'");
                     $qry->setFetchMode(PDO:: FETCH_ASSOC);
                     $qry->execute();
     
-                    $row = $qry->fetch();
+                    $row = $qry->rowCount();
     
-                    if($row!=0)
+                    if($row>0)
                     {
                         $sql = $con->prepare("SELECT * FROM review WHERE service_id = '$id' AND user_id = '$usrID'");
                         $sql->setFetchMode(PDO:: FETCH_ASSOC);
                         $sql->execute();
         
-                        $rows = $sql->fetch();
+                        $rows = $sql->rowCount();
         
                         if($rows==0)
                         {
