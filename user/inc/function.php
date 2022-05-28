@@ -1902,11 +1902,11 @@
                             echo 
                             "<form method = 'POST' enctype = 'multipart/form-data'>
                                 <input type = 'hidden' name = 'service_id' value = '".$id."' />
-                                <button name = 'count_review' value = '1'>1</button>
-                                <button name = 'count_review' value = '2'>2</button>
-                                <button name = 'count_review' value = '3'>3</button>
-                                <button name = 'count_review' value = '4'>4</button>
-                                <button name = 'count_review' value = '5'>5</button>
+                                <button name = 'count_review' value = '1'>⭐</button>
+                                <button name = 'count_review' value = '2'>⭐</button>
+                                <button name = 'count_review' value = '3'>⭐</button>
+                                <button name = 'count_review' value = '4'>⭐</button>
+                                <button name = 'count_review' value = '5'>⭐</button>
                             </form>";
         
                             if(isset($_POST['count_review']))
@@ -1934,13 +1934,53 @@
                 
 
                 //Total Rating
+                echo "Ratings:";
                 $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
                 $rows = $rev->fetch();
                 $ttl = $rows['AVG(rating)'];
-                echo "Avg: ".$ttl."";
+
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
                 
             if(isset($_POST['submit']))
             {
