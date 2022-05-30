@@ -18,7 +18,7 @@
             if($countUser>0)
             {
                 $_SESSION['id'] = $row['id'];
-                echo "<script>window.open('/Pet/admin/manage_donation.php?login_user=".$_SESSION['id']."','_self');</script>";
+                echo "<script>window.open('/Pet/admin/coupons.php?login_user=".$_SESSION['id']."','_self');</script>";
             }
             else
             {
@@ -100,6 +100,12 @@
             $org_location = $_POST['org_location'];
             $org_contact_number = $_POST['org_contact_number'];
             $org_email_address = $_POST['org_email_address'];
+            $bank_details = $_POST['bank_details'];
+            $website = $_POST['website'];
+            $paymaya = $_POST['paymaya'];
+            $org_manager = $_POST['org_manager'];
+            $facebook = $_POST['facebook'];
+            $description = $_POST['description'];
             
             $org_photo = $_FILES['org_photo']['name'];
             $org_photo_tmp = $_FILES['org_photo']['tmp_name'];
@@ -111,19 +117,31 @@
                 org_location,
                 org_contact_number,
                 org_email_address,
-                org_photo
+                org_photo,
+                bank_details,
+                website,
+                paymaya,
+                org_manager,
+                facebook,
+                org_details
             ) 
             VALUES(
                 '$org_name',
                 '$org_location',
                 '$org_contact_number',
                 '$org_email_address',
-                '$org_photo'
+                '$org_photo',
+                '$bank_details',
+                '$website',
+                '$paymaya',
+                '$org_manager',
+                '$facebook',
+                '$description'
             )");
             if($add_org->execute())
             {
                 echo "<script>alert('Added Successfully!');</script>";
-                echo "<script>window.open('index.php?manage_partner', '_self');</script>";
+                echo "<script>window.open('manage_partner.php', '_self');</script>";
             }
         }
     }
@@ -139,7 +157,7 @@
             
             echo 
             "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data' id = 'forming'>
-                
+                <div class = 'mainH'>
             <div class = 'holdest'>
             <p>".$row['org_name']."</p>
             </div>
@@ -152,14 +170,15 @@
             <div class = 'holdest'>
             <p>".$row['org_email_address']."</p>
             </div>
+            <div class = 'btnss'>
             <div class = 'holdest'>
             <button id='views2' name = 'edit_org' value = ".$row['id'].">Edit</button>
             </div>
             <div class = 'holdest'>
             <button  id='views' name = 'delete_org' value = ".$row['id'].">Delete</button>
             </div>
-                    
-                    
+            </div>     
+            </div>
                    
                     
                     
@@ -220,67 +239,58 @@
 
     function add_product() 
     {
+        include("inc/db.php");
+        if(isset($_POST['add_prod']))
+        {
+            $pro_name = $_POST['pro_name'];
+            $cat_id = $_POST['cat_name'];
+            $pro_brand = $_POST['pro_brand'];
 
+            $pro_img = $_FILES['pro_img']['name'];
+            $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
 
-       include("inc/db.php");
-       if(isset($_POST['add_prod']))
-       {
-           $pro_name = $_POST['pro_name'];
-           $cat_id = $_POST['cat_name'];
-           $pro_brand = $_POST['pro_brand'];
-           $pro_keyword = $_POST['pro_keyword'];
+            $pro_img2 = $_FILES['pro_img2']['name'];
+            $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
 
-           $pro_img = $_FILES['pro_img']['name'];
-           $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
-           $pro_img2 = $_FILES['pro_img2']['name'];
-           $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
-           
-           $pro_img3 = $_FILES['pro_img3']['name'];
-           $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
-           
+            $pro_img3 = $_FILES['pro_img3']['name'];
+            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
 
-        
-           move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
-           move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
-           move_uploaded_file($pro_img3_tmp,"../uploads/products/$pro_img3");
-           
-           $pro_price = $_POST['pro_price'];
-           $pro_quantity = $_POST['pro_quantity'];
+            $pro_price = $_POST['pro_price'];
+            $pro_quantity = $_POST['pro_quantity'];
+            $pro_keyword = $_POST['pro_keyword'];
 
-    
-           $add_pro = $con->prepare("insert into product_tbl
-           (
-               pro_name, 
-               cat_id, 
-               pro_brand, 
-               pro_img, 
-               pro_img2, 
-               pro_img3,
-               pro_price, 
-               pro_quantity,
-               pro_keyword
-            ) values
-            (
-                '$pro_name',
-                '$cat_id',
-                '$pro_brand',
-                '$pro_img',
-                '$pro_img2',
-                '$pro_img3',
-                '$pro_price',
-                '$pro_quantity',
-                '$pro_keyword'
-            )");
-            
-           if($add_pro->execute())
-           {
-                echo "<script>alert('Product Added Successfully!');</script>"; 
-           }
-           else
-           {
-                echo "<script>alert('Product Not Added Successfully!');</script>";
-           }
-        }    
+            // var_dump($pro_name);
+            // var_dump($cat_id);
+            // var_dump($pro_brand);
+            // var_dump($pro_img);
+            // var_dump($pro_img2);
+            // var_dump($pro_img3);
+            // var_dump($pro_price);
+            // var_dump($pro_quantity);
+            // var_dump($pro_keyword);
+
+            $add_prod = $con->prepare("INSERT INTO product_tbl 
+            SET
+            pro_name = '$pro_name',
+            cat_id = $cat_id,
+            pro_brand = '$pro_brand',
+            pro_img = '$pro_img',
+            pro_img2 = '$pro_img2',
+            pro_img3 = '$pro_img3',
+            pro_price = '$pro_price',
+            pro_quantity = $pro_quantity,
+            pro_keyword = '$pro_keyword'
+            ");
+
+            if($add_prod->execute())
+            {
+                echo "<script>alert('ADDED!');</script>";
+            }
+            else
+            {
+                echo "<script>alert('UNSUCCSESSFUL');</script>";
+            }
+        }
     }
 
     function viewall_cat()
@@ -358,14 +368,18 @@
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
             {
-                $net_total += $order['sum(od.qty * od.price)'];
+                // $net_total += $order['sum(od.qty * od.price)'];
                 $order_id = $order['order_id'];
+                $mandaue = $order['sum(od.qty * od.price)']+10;
+                $cebu = $order['sum(od.qty * od.price)']+12;
+                $concolacion = $order['sum(od.qty * od.price)']+12;
+                $lapulapu = $order['sum(od.qty * od.price)']+12;
                 echo
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
-                    
+                        
                         <input type = 'hidden' name = 'order_id' value = '".$order['order_id']."' />
 
-                        <p>".$order_id."</p>";
+                        <p class = 'dataLebs'>".$order_id."</p>";
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
@@ -381,19 +395,42 @@
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
 
-                        <p>".$row_username['user_username']."</p>";
+                        <a href = 'user.php?user=".$row_username['user_id']."'><p  class = 'dataLebs'>".$row_username['user_username']."</p></a>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
-                    <p>".$order['items']."</p>
-                    <p>".$order['order_date']."</p>
-                    <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <p>".$net_total."</p>
-                    <input class = 'dets' type = 'date' name = 'delivery_date' required/>
+                    <p  class = 'dataLebss'>".$order['items']."</p>
+                    <p  class = 'dataLebs'>".$order['order_date']."</p>";
+                    if($row_username['municipality'] == "Mandaue City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$mandaue."' />
+                        <p  class = 'dataLebs'>".$mandaue."</p>";
+                    }
+                    if($row_username['municipality'] == "Cebu City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$cebu."' />
+                        <p  class = 'dataLebs'>".$cebu."</p>";
+                    }
+                    if($row_username['municipality'] == "Consolacion")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$concolacion."' />
+                        <p  class = 'dataLebs'>".$concolacion."</p>";
+                    }
+                    if($row_username['municipality'] == "Lapu-lapu")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$lapulapu."' />
+                        <p  class = 'dataLebs'>".$lapulapu."</p>";
+                    }
+                    
+                   echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>
                     <div class ='bots'>
                     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
                      </div>
-        
+ 
                 </form>";
             }
         if(isset($_POST['confirm_order']))
@@ -418,17 +455,16 @@
             $body = "
             Greetings!
 
-            Your Order has been confirmed and will be delivered on $delivery_date 
+            Your order has been confirmed and will be delivered on $delivery_date with order #$order_id 
 
-            Order Number: $order_id
-            Items: $items
+            Items include: 
+            $items
 
-            Please do keep your lines open because your items will be arrived to your
-            destination according to the delivery date.
-            Thank you for purchasing to our store hopefully you're 
-            happy with those items you purchased. 
+            Please keep your lines open because your items will arrive at your destination according to the aforementioned delivery date. 
+            
+            Thank you for being part of Pet Society where we treat your pet as our family. Enjoy!
 
-            Lovely store,
+            Meow,
             Pet Society
             ";
             $sender = "ianjohn0101@gmail.com";
@@ -437,10 +473,15 @@
 
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
+            $dateTimeStamp = strtotime($delivery_date);
+            $dateTimeStamp2 = strtotime($today);
 
-            if($delivery_date > $today)
+            // var_dump($dateTimeStamp);
+            // var_dump($dateTimeStamp2);
+
+            if($dateTimeStamp < $dateTimeStamp2)
             {
-                echo "INVALID DATE!";
+                echo "<script>alert('Date Chosen Invalid!');</script>";
             }
             else
             {
@@ -518,7 +559,7 @@
     function viewalldelivered_items()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY order_id");
+        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY delivery_id");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -530,19 +571,18 @@
         while($row = $sql->fetch()):
 
             echo
-            "<div class = 'dataGrid'>
-                <p class = 'dataLebs'>".$row['order_id']."</p>
-                <p class = 'dataLebss'>".$row['items']."</p>
-                <p class = 'dataLebs'>".$row['user_username']."</p>
-                <p class = 'dataLebs'>".$row['date_delivered']."</p>
-                <p class = 'dataLebs'>₱".$row['total_amount']."</p>
-            </div>";
+            "<tr>
+                <td>".$row['delivery_id']."</td>
+                <td>".$row['items']."</td>
+                <td>".$row['user_username']."</td>
+                <td>".$row['date_delivered']."</td>
+                <td>P".$row['total_amount']."</td>
+            </tr>";
         endwhile;
         echo
-        "<div class = 'total'>
-            
-            <p>Amount Collected:</p><p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
-        </div>";
+        "<td>
+            <p class = 'det' style = 'margin-left:1.5rem'>Amount Collected:</p><p class = 'figures'> P".$row2['SUM(total_amount)']."</p>
+        </td>";
     }
 
     
@@ -564,15 +604,16 @@
             $user_address = $row_user['user_address'];
             echo 
             "<div class = 'innerGrid'>
-                <p>".$row['order_id']."</p>
+                <p>".$row['delivery_id']."</p>
                 <p>".$row['items']."</p>
                 <p>".$row['total_amount']."</p>
                 <p>".$row['user_username']."</p>
                 <p>".$user_address."</p>
                 <p>".$row['delivery_date']."</p>
                 <a class = 'btnssih' href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Delivered</a>
+               
             </div>";
-            
+            // <a class = 'btnssih' href = 'return_delivery.php?return_delivery=".$row['delivery_id']."'>Return</a>
         endwhile;
     }
 
@@ -592,7 +633,7 @@
             $items = $row['items'];
             $user_username = $row['user_username'];
             $total_amount = $row['total_amount'];
-
+            
             $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
             $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user->execute();
@@ -604,41 +645,45 @@
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
 
-            $reciever = $row_username['user_email'];
+            $receiver = $row_username['user_email'];
             $subject = "Order Delivered!";
             $body = "
             Greetings!
 
-            Your Order has been delivered on $today
+            Your order has been delivered on $today.
 
-            Thank you for purchasing to our store hopefully you're 
-            happy with those items you purchased. 
+            Thank you for being part of Pet Society where we treat your pet as our family. Enjoy!
 
-            Lovely store,
+            Arf arf,
             Pet Society
             ";
             $sender = "ianjohn0101@gmail.com";
 
-            if(mail($reciever, $subject, $body, $sender))
-            {
-                // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
-                // $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql = $con->prepare("INSERT INTO delivered_items(order_id, items, total_amount, user_username, date_delivered) VALUES('$order_id', '$items', '$total_amount', '$user_username', '$today')");
-                if($sql->execute())
+            $sql = $con->prepare("INSERT INTO delivered_items(delivery_id, items, total_amount, user_username, date_delivered) VALUES('$delivery_id', '$items', '$total_amount', '$user_username', '$today')");
+                if(!$sql->execute())
                 {
                   
-                        $update_status = $con->prepare("DELETE FROM delivery_tbl WHERE delivery_id = '$delivery_id'");
-                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-                        $update_status->execute();
-
-                        if($update_status->execute())
-                        {
-                            echo "<script>alert('Item Delivered');</script>";
-                            echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
-                        }
+                       return;
                    
                 }
-            }
+
+                mail($receiver, $subject, $body, $sender);
+                $update_status = $con->prepare("DELETE FROM delivery_tbl WHERE delivery_id = '$delivery_id'");
+                $update_status->setFetchMode(PDO:: FETCH_ASSOC);
+                $update_status->execute();
+
+                if($update_status->execute())
+                {
+                    echo "<script>alert('Item Delivered');</script>";
+                    echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
+                }
+
+            // if(mail($reciever, $subject, $body, $sender))
+            // {
+                // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
+                // $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                
+            //}
         }
     }
 
@@ -671,6 +716,7 @@
             echo "<option value = '".$row['sub_cat_id']."'>".$row['sub_cat_name']."</option>";
         endwhile;
     }
+    
 
     function view_all_products()
     {
@@ -742,9 +788,7 @@
                     <div class = 'holdest'>
                     <p>".$row['amount']."</p>
                     </div>
-                    <div class = 'holdest'>
-                    <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
-                    </div>
+                    
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
                     <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
@@ -814,6 +858,69 @@
     //     $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
     // }
 
+    function registered_petcenters()
+    {
+        include("inc/db.php");
+        $view_petcenters = $con->prepare("SELECT * FROM pet_center_tbl");
+        $view_petcenters->setFetchMode(PDO:: FETCH_ASSOC);
+        $view_petcenters->execute();
+
+        while($row = $view_petcenters->fetch()):
+            echo
+            "<form method = 'POST' enctype = 'multipart/form-data'>
+                <div class = 'innerGrid'>
+                <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."'/>
+                    <p class = 'asd'>".$row['pet_center_name']."</p>
+                    <p class = 'asd'>".$row['contact_number']."</p>
+                    <p class = 'asd'>".$row['email']."</p>
+                   
+                    <input type = 'hidden' name = 'email' value = '".$row['email']."' />
+                    <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
+                    <a class = 'btnV' href = view_application.php?view=".$row['pet_center_id'].">View</a>
+                </div>
+               
+            </form>";
+        endwhile;
+
+            if(isset($_POST['confirm']))
+            {
+                $pet_center_id = $_POST['pet_center_id'];
+
+                $sql2 = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+                
+                $v_key = generateRandomString();
+
+                $row = $sql2->fetch();
+                
+                if($row['verified'] == 1)
+                {
+                    echo "<script>alert('This account has been confirmed!');</script>";
+                }
+                else
+                {
+                    $receiver = $row['email'];
+                    $subject = "Account Confirmation!";
+                    $body = "Your account has been confirmed, please use this OTP Code: $v_key to validate your account!";
+                    $sender = "ianjohn0101@gmail.com";
+    
+                    $sql = $con->prepare("UPDATE pet_center_tbl SET v_key = '$v_key' WHERE pet_center_id = '$pet_center_id'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+                    
+                    if(!$sql->execute())
+                    {
+                        return;
+                    }
+    
+                    mail($receiver, $subject, $body, $sender);
+                    echo "<script>alert('Confirmed!');</script>";
+                    
+                }
+            }
+    }
+
     function view_detail()
     {
         include("inc/db.php");
@@ -836,31 +943,41 @@
                 $org_name = $row_org['org_name'];
                 echo 
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+
                         <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
-                        
+                        <div class = 'imageDiv'>
+                        <img class = 'imagesP' src = '../uploads/donations/".$row['proof_photo']."' '/><div></div>
+                        </div>
+                        <div>
                         <div class = 'holdest'>
-                        <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
-                        <p  name = 'transaction_number'>".$row['transaction_number']."</p>
+                        <p class = 'lebss'>Transaction No.</p>
+                        <input  type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
+                        <p  class = 'dates' name = 'transaction_number'>".$row['transaction_number']."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p class = 'lebss'>Name</p>
                         <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
-                        <p>".$row['full_name']."</p>
+                        <p class = 'dates'>".$row['full_name']."</p>
                         </div>
+                        <div class = 'holdest'>
+                        <p class = 'lebss'>Organization Name</p>
                         <input type = 'hidden' name = 'org_name' value = '".$org_name."' />
-                        <div class = 'holdest'>
-                        <p>".$org_name."</p>
+                        
+                        <p class = 'dates'>".$org_name."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p class = 'lebss'>Bank Acc. No.</p>
                         <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
-                        <p>".$row['contact_number']."</p>
+                        <p class = 'dates'>".$row['contact_number']."</p>
                         </div>
                         <div class = 'holdest'>
-                        <p>".$row['amount']."</p>
+                        <p class = 'lebss'>Amount</p>
+                        <p class = 'dates'>".$row['amount']."</p>
                         </div>
-                        <div class = 'holdest'>
-                        <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
-                        </div>
-                        <div class = 'holdest'>
+                       
+                       
+                     
+                        
                         <div id = 'aksyon'>
                         <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
                         </div>
@@ -936,13 +1053,14 @@
           
             echo
             "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
-            
-                <p>".$row['transaction_number']."</p>
-                <p>".$row['full_name']."</p>
-                <p>".$row['org_name']."</p>
-                <p>".$row['contact_number']."</p>
-                <p>".$row['date_confirmed']."</p>
-       
+                <div class = 'inner'>
+                <p class = 'lebs'>".$row['transaction_number']."</p>
+                <p class = 'lebs'>".$row['full_name']."</p>
+                <p class = 'lebs'>".$row['org_name']."</p>
+                <p class = 'lebs'>".$row['contact_number']."</p>
+                <p class = 'lebs'>".$row['date_confirmed']."</p>
+                <p class = 'lebs'>".$row['coupon_code']."</p>
+            </div>
            
         </form>";
         endwhile;
@@ -964,13 +1082,16 @@
                while($row = $search_transaction_number->fetch())
                {
                     echo 
-                    "<tr>
-                        <td>".$row['transaction_number']."</td>
-                        <td>".$row['full_name']."</td>
-                        <td>".$row['org_name']."</td>
-                        <td>".$row['contact_number']."</td>
-                        <td>".$row['date_confirmed']."</td>
-                    </tr>";
+                    "<form id='forming'>
+                    <div class = 'inner' >
+                    <p class = 'lebs'>".$row['transaction_number']."</p>
+                    <p class = 'lebs'>".$row['full_name']."</p>
+                    <p class = 'lebs'>".$row['org_name']."</p>
+                    <p class = 'lebs'>".$row['contact_number']."</p>
+                    <p class = 'lebs'>".$row['date_confirmed']."</p>
+                    </div>
+               
+            </form>";
                }
             }
             else
@@ -1044,16 +1165,15 @@
 
         while($row=$fetch_pro->fetch()):
             echo "<div class = 'innerGrid'>
-                <p>".$i++."</p>
-                <p>".$row['user_username']."</p>
-                <p>".$row['user_email']."</p>
-                <p>".$row['user_contactnumber']."</p>
-                <p>".$row['user_address']."</p>
-                <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
-                <div style = 'display: flex'>
-                <a class = 'btn1' href='#'>Edit</a>
-                <a class = 'btn2' href='#'>Delete</a>
-                </div>
+                 <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+                 <p class = 'okss'>".$row['user_username']."</p>
+                 <p class = 'okss'>".$i++."</p>
+                <p class = 'okss'>".$row['user_email']."</p>
+                <p class = 'okss'>".$row['user_contactnumber']."</p>
+                <p class = 'okss'>".$row['user_address']."</p>
+                <a class = 'dbtn' href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
+                
+               
          </div>";
         endwhile;
     }
@@ -1076,6 +1196,22 @@
             $row_cat = $fetch_cat->fetch();
 
             echo "
+            <div class = 'bodies'>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                
+                       <div class = 'mains'>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
+                        <div class = 'buts'>
+                        <div class='drop-zone'>
+                    <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+                    <input type='file' name = 'sample_img1' class='drop-zone__input'>
+                    </div>
+
+                    
+                        <button class = 'updateBtn' name = 'update_first_image'>Update Image</button>
+                        </div>
+                        </div>
+            </form>
             <form method = 'POST' enctype = 'multipart/form-data'>
                 <div class = 'body'>
                 <div class = 'seconds'>
@@ -1106,7 +1242,7 @@
                         <input class = 'oks' type='text' name = 'pro_quantity' value = '".$row['pro_quantity']."'/>
                     </div>
                     <div class = 'holders'>
-                        <p class = 'lebs' >Product Keyword: </p>
+                        <p class = 'lebs' >Product Description: </p>
                         <input class = 'oks' type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/>
                     </di>
                     
@@ -1116,38 +1252,10 @@
                 </div>
                 <br>
             </form>
-            <div class = 'bodies'>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #1</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
-                        <br><input type = 'file' name = 'sample_img1' value = ".$row['pro_img']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_first_image'>Update First Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #2</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img2']."'/>
-                        <br><input type = 'file' name = 'sample_img2' value = ".$row['pro_img2']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_second_image'>Update Second Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #1</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img3']."'/>
-                        <br><input type = 'file' name = 'sample_img3' value = ".$row['pro_img3']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_third_image'>Update Third Image</button>
-            </form>
-            </div>";
+
+            </div>
+            
+           ";
             if(isset($_POST['update_prod']))
             {
                 $cat_name = $_POST['cat_name'];
@@ -1170,7 +1278,7 @@
                 if($update_prod->execute())
                 {
                     echo "<script>alert('Product Updated Successfully!');</script>";
-                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                    echo "<script>window.open('products.php','_self');</script>";
                 }
             }
             if(isset($_POST['update_first_image']))
@@ -1263,7 +1371,7 @@
         if($delete_prod->execute())
         {
             echo "<script>alert('Product Deleted Successfully!');</script>";
-            echo "<script>window.open('index.php?viewall_products','_self');</script>";
+            echo "<script>window.open('products.php','_self');</script>";
         }
     }
 

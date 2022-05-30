@@ -35,6 +35,11 @@
     
         $row_user = $fetch_user_username->fetch();
         $net_total = 0;
+        $mandaue_fee = 10;
+        $cebu_fee = 12;
+        $consolacion_fee = 12;
+        $lapu_lapu_fee = 12;
+            
 
         echo "<div class = checkoutTab>
         ";
@@ -65,15 +70,15 @@
             <div id = 'groupContainer'>
             <div class = 'group'>
             <p class = 'tag'>Street </p>
-            <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['user_address']." disabled/>
+            <input type = 'text' class = 'inputed' name = 'user_address' value = '".$row_user['user_address']."' disabled/>
             </div>
             <div class = 'group'>
             <p class = 'tag'>Brgy </p>
-            <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['barangay']." disabled/>
+            <input type = 'text' class = 'inputed' name = 'user_address' value = '".$row_user['barangay']."' disabled/>
             </div>
             <div class = 'group'>
             <p class = 'tag'>Municipality </p>
-            <input type = 'text' class = 'inputed' name = 'user_address' value = ".$row_user['municipality']." disabled/>
+            <input type = 'text' class = 'inputed' name = 'user_address' value = '".$row_user['municipality']."' disabled/>
             </div>
             </div>
             </div>
@@ -92,6 +97,7 @@
             $qty = array_count_values($_SESSION['cart'])[$row['pro_id']];
             $pro_price = $row['pro_price'];
             $sub_total = $qty * $pro_price; 
+            
         echo 
         "<form method = 'POST'  enctype = 'multipart/form-data'>
         ";
@@ -103,6 +109,7 @@
                     <input class = 'useless' style = 'display:none;' type = 'hidden' name = 'pro_id' value = ".$row['pro_id']." />
                     <p class = 'tag'>Product Name: <p/>
                     <input class = 'inputeder' type = 'text' name = 'pro_id' value = '".$row['pro_name']."' disabled/>
+                    
                     </div>
                     <div class = 'groups'>
                     <p class = 'tag'>Qty: </p>
@@ -110,22 +117,7 @@
                     </div>
                 </div>
                 ";
-                if($row_user['municipality'] == "Mandaue City")
-                {  
-                    $net_total = $net_total + 10 + $sub_total;
-                }
-                elseif($row_user['municipality'] == "Cebu")
-                {
-                    $net_total = $net_total + 12 + $sub_total;
-                }
-                elseif($row_user['municipality'] == "Consolacion")
-                {
-                    $net_total = $net_total + 12 + $sub_total;
-                }
-                elseif($row_user['municipality'] == "Lapu-Lapu City")
-                {
-                    $net_total = $net_total + 12 + $sub_total;
-                }
+                $net_total = $net_total + $sub_total;
                
         endwhile;
                 if($row_user['municipality'] == "Mandaue City")
@@ -170,9 +162,35 @@
                 }
                 echo "</tr>
                 <div class = 'group'>
-                <p class = 'tag'>Total Amount:</p>
-                <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>
-                </div>";
+                <p class = 'tag'>Total Amount:</p>";
+                if($row_user['municipality'] == "Mandaue City")
+                {
+                    $net_total+=10;
+                    echo  "
+                    <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
+                echo "</div>";
+                }
+                if($row_user['municipality'] == "Cebu City")
+                {
+                    $net_total+=12;
+                    echo  "
+                    <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
+                echo "</div>";
+                }
+                if($row_user['municipality'] == "Lapu-Lapu City")
+                {
+                    $net_total+=13;
+                    echo  "
+                    <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
+                echo "</div>";
+                }
+                if($row_user['municipality'] == "Consolacion")
+                {
+                    $net_total+=12;
+                    echo  "
+                    <input class = 'inputed' type = 'text' value = ' P".$net_total."' disabled/>";
+                echo "</div>";
+                }
                 echo"
             </div>
             </div>

@@ -19,7 +19,7 @@
   width: 100%;
   height: 40px;
   float: left;
-  color: #444;
+  color: black;
   display: flex;
   padding: 5px 0px 10px 10px;
   margin-left: 5%;
@@ -44,7 +44,7 @@
 .dropcontent {
   list-style-type: none;
   display: none;
-  margin-top: 40px;
+  margin-top: 50px;
   margin-left: -5%;
   position: absolute;
   background-color: #f9f9f9;
@@ -91,7 +91,7 @@
 #search form input {
   border: 0.8px solid #555;
   border-radius: 5px;
-  width: 70%;
+  width: 100%;
   height: 35px;
   padding-left: 2%;
   outline: none;
@@ -259,7 +259,6 @@
   background: #eee;
   overflow: hidden;
   padding-top: 60px;
-
 }
 
 #choice {
@@ -322,7 +321,7 @@
   text-overflow: ellipsis;
   margin-top: 15px;
   margin-bottom: 5px;
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
   font-weight: bold;
   font-size: 16px;
   color: #555;
@@ -429,7 +428,7 @@
   color: white;
   font-size: 12px;
 }
-#pro_btnView:hover{
+#pro_btnView:hover {
   background: rgb(0, 116, 210);
 }
 #pro_btnViewDelete {
@@ -440,8 +439,8 @@
   color: white;
   font-size: 12px;
 }
-#pro_btnViewDelete:hover{
-  background:rgb(216, 28, 28);
+#pro_btnViewDelete:hover {
+  background: rgb(216, 28, 28);
 }
 
 #bodyleft h3 {
@@ -643,20 +642,20 @@
 .ko {
   width: 100%;
   background: #ffb830;
-  height: 35px;
-  padding-top: 7vh;
+  height: 40px;
+  padding-top: 8vh;
 }
 .inners {
   margin-left: 5%;
 }
-.rightSide{
+.rightSide {
   display: flex;
 }
-.petCenterName{
+.petCenterName {
   color: black;
-  margin-right: 10px; 
+  margin-right: 10px;
   font-size: 16px;
-  font-family:"Fredoka One", cursive; 
+  font-family: "Fredoka One", cursive;
   margin-top: 13px;
 }
 .lengk {

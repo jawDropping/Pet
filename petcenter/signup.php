@@ -92,7 +92,7 @@
                             <input class = 'inputer' type='text' name = 'contact_number' placeholder = 'Contact Number' size = '50' required />
                         </div>
                         <div>
-                            <input class = 'inputer' type='text' name = 'pet_center_password' placeholder = 'Password' size = '50' required />
+                            <input class = 'inputer' type='password' name = 'pet_center_password' placeholder = 'Password' size = '50' required />
                         </div>
                         </div>
                         <p class = 'miniHead'>Location</p>
@@ -277,9 +277,16 @@
                         <div>
                             <input class = 'inputer' type='text' name = 'st' placeholder = 'Street' size = '50' required />
                         </div>
-                        
+                        <div>
+                            <input class = 'inputer' type='text' name = 'full_location' placeholder = 'Location' size = '50' required />
                         </div>
                         
+                        </div>
+                        <p class = 'miniHead'>Business Permit:</p> 
+                        <div class="drop-zone">
+                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                            <input type="file" name = 'proof_photo' class="drop-zone__input">
+                            </div>
                         
                        <br>
                         <button name = 'add_user' id = 'regs'>Register</button>
@@ -304,13 +311,19 @@
               $email = $_POST['email'];
               $st = $_POST['st'];
               $contact_number = $_POST['contact_number'];
-              $accept_coupons = $_POST['accept_coupons'];
               $pet_center_photo = "userIcon.svg";
               $barangay = $_POST['barangays'];
               $municipality = $_POST['municipality'];
-              $verification_key = generateRandomString();
+              $full_location = $_POST['full_location'];
+            
               $verified = 0;
-  
+
+              $proof_photo = $_FILES['proof_photo']['name'];
+              $proof_photo_tmp = $_FILES['proof_photo']['tmp_name'];
+              
+              move_uploaded_file($proof_photo_tmp,"../uploads/business_permits/$proof_photo");
+
+              
               $view_email = $con->prepare("SELECT COUNT(*) AS pet_center_email FROM pet_center_tbl WHERE email = '$email'");
               $view_email->setFetchMode(PDO::FETCH_ASSOC);
               $view_email->execute();
@@ -339,7 +352,7 @@
               {
                   echo "<script>alert('Number must at least 11 digits!');</script>";
               }
-              elseif(strlen($pet_center_password) >= 9 &&
+              elseif(strlen($pet_center_password) <= 9 &&
               preg_match('/[A-Z]/', $pet_center_password) > 0 &&
               preg_match('/[a-z]/', $pet_center_password) > 0)
               {
@@ -347,11 +360,7 @@
               }
               else
               {
-                  $receiver = $email;
-                  $subject = "Email Verification";
-                  $body = "Use this Verification Code: $verification_key to verify your email!";
-                  $sender = "ianjohn0101@gmail.com";
-  
+                  
                   $add_service = $con->prepare("INSERT INTO pet_center_tbl 
                   SET
                   pet_center_name = '$pet_center_name',
@@ -360,23 +369,22 @@
                   st = '$st',
                   municipality = '$municipality',
                   barangay = '$barangay',
+                  full_location = '$full_location',
                   contact_number = '$contact_number',
                   pet_center_photo = '$pet_center_photo',
-                  active_coupon = '$accept_coupons',
-                  v_key = '$verification_key',
-                  verified = $verified
+                  verified = $verified,
+                  business_permit = '$proof_photo'
                   ");
       
                   if($add_service->execute())
                   {
                       echo "
                       <script>
-                      alert('Registered Successful!');
+                      alert('Registered Successful, Please wait for the confirmation!');
                       if ( window.history.replaceState ) {
                       window.history.replaceState( null, null, window.location.href );
                   }            
                       </script>"; 
-                      mail($receiver, $subject, $body, $sender);
                       echo "<script>window.open('login.php', '_self');</script>";
                       
                   }
@@ -396,6 +404,7 @@
             }
             return $randomString;
         }
+        
         ?>  
     </body>
     <style>
@@ -410,6 +419,7 @@
                 justify-content: center;
                 
             }
+
             .inner{
                 background: white;
                 box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -549,5 +559,130 @@
   display: none;
 }
   
+
+
+
+.drop-zone {
+        width: 80%;
+height: 50px;
+padding: 6px;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+font-family: "Quicksand", sans-serif;
+font-weight: 500;
+font-size: 14px;
+cursor: pointer;
+color: #777;
+border: 2px dashed #009578;
+border-radius: 10px;
+margin-left: 5%;
+        margin-bottom: 10px;
+}
+
+.drop-zone--over {
+border-style: solid;
+}
+
+.drop-zone__input {
+display: none;
+}
+
+.drop-zone__thumb {
+width: 100%;
+height: 100%;
+border-radius: 10px;
+overflow: hidden;
+background-color: #cccccc;
+background-size: cover;
+position: relative;
+}
+
+.drop-zone__thumb::after {
+content: attr(data-label);
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+padding: 5px 0;
+color: #ffffff;
+background: rgba(0, 0, 0, 0.75);
+font-size: 14px;
+text-align: center;
+}
     </style>
+    <script>
+          document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  const dropZoneElement = inputElement.closest(".drop-zone");
+
+  dropZoneElement.addEventListener("click", (e) => {
+    inputElement.click();
+  });
+
+  inputElement.addEventListener("change", (e) => {
+    if (inputElement.files.length) {
+      updateThumbnail(dropZoneElement, inputElement.files[0]);
+    }
+  });
+
+  dropZoneElement.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
+
+  ["dragleave", "dragend"].forEach((type) => {
+    dropZoneElement.addEventListener(type, (e) => {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    if (e.dataTransfer.files.length) {
+      inputElement.files = e.dataTransfer.files;
+      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+    }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
+});
+
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
+function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  }
+
+  // First time - there is no thumbnail element, so lets create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+    </script>
 </html>

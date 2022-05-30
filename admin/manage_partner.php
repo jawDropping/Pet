@@ -29,13 +29,13 @@
                        <li class = 'selection' ><a href="manage_partner.php">Manage Partners</a></li>
                           <li><a href="ledger.php">Ledger</a></li>
                    </ul>
-        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Product Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
-        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
-        <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
+        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/ord2.png" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
-        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/report.png" class="navicons">Generate Report</a></li>
+        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -56,8 +56,6 @@
             <p>Location</p>
             <p>Contact Number</p>
             <p>Email Address</p>
-            <p>Edit</p>
-            <p>Delete</p>
         </div>
         <tr>
             <?php
@@ -78,9 +76,13 @@
 <style>
     .gridnasad{
         display: grid;
-        grid-template-columns:  16% 16% 16% 20% 12% 12%;
-        border-bottom: 1px solid #aaa;
+        grid-template-columns:  16% 16% 16% 20%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+        font-family: "Varela Round", sans-serif;
     }
+ 
     .addPart{
         padding: 10px;
         float: right;
@@ -97,10 +99,19 @@
         
     }
     #forming{
-        display: grid;
-        grid-template-columns:  16% 16% 16% 20% 12% 12%;
-        font-size: 14px;
+        
         margin-top: 20px;
+    }
+    .mainH{
+        display: grid;
+        grid-template-columns:  16% 16% 16% 20% 24%;
+        margin-top: 1%;
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 4px;
+    }
+    .btnss{
+        display: flex;
     }
     .body{
         margin-top: 7vh;
@@ -124,6 +135,8 @@
     }
     .holdest{
         height: 42px;
+        text-align: center;
+        font-family: "Varela Round", sans-serif;
     }
     #views{
         height: 30px;

@@ -27,10 +27,10 @@
         </div>
             <div id='bodyleft'>
                 <div class="kapo">
-                <form method = "GET" action = "search.php"  enctype="multipart/form-data">
+                <form method = "GET" action = "search_transaction_code.php"  enctype="multipart/form-data">
            <div class = 'search'>
 
-            <p class = 'lebs'> Transaction</p> 
+            <p class = 'lebs'> Search Transaction Code:</p> 
             <div class="searches">
             <input class = 'intsearch' type = "text" name = "user_query" />
             <button class = 'btns' name = "search"><img src="../uploads/searchT.png"></button>
@@ -48,11 +48,12 @@
                
                 
             </div>
-            <br>
-            <div class="haha">
-                    <p>jdhsakj</p>
-                </div>
-
+        
     </body>
+    <style>
+        .mainer{
+            padding-bottom: 10vh;
+        }
+    </style>
 </html>
 

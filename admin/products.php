@@ -29,13 +29,13 @@
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li class = 'selection' ><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li class = 'selection' ><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Product Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
-        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
-        <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
+        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/ord2.png" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
-        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/report.png" class="navicons">Generate Report</a></li>
+        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -46,16 +46,16 @@
         </div>
                 </div>
                 <div id="bodyright">
-                <p class = 'hed'>View All Products</p>
+                <p class = 'hed'>Sales Inventory / Product Management</p>
                 <div class = "body">
     
     <form method = "POST" enctype = "multipart/form-data">
     <div class = 'tebs'>
         <div class = 'hedGrid'>
-            <p>PRODUCT NAME </p>
-            <p>PRICE</p>
-            <p>QUANTITY</p>
-            <p>Action</p>
+            <p class = 'textH'>PRODUCT NAME </p>
+            <p class = 'textH'>PRICE</p>
+            <p class = 'textH'>QUANTITY</p>
+            <p class = 'textH'>Action</p>
         </div>
         <div>
             <?php
@@ -66,6 +66,7 @@
     </form>
 </div>
                 </div>
+                <br>
     </body>
     <style>
  
@@ -82,12 +83,25 @@
     .innerGrid{
         display: grid;
         grid-template-columns: 45% 15% 15% 25%;
-        text-align: center;
-        
-        margin-top: 20px;
+        margin-top: 1%;
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 4px;
     }
     .p1{
         text-align: left;
+        font-family: "Varela Round", sans-serif;
+    }
+    .p2{
+        font-family: "Varela Round", sans-serif;
+  text-align: center;
+    }
+    .textH{
+        font-family: "Varela Round", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  color: #777;
+  text-align: center;
     }
     .hed{
         font-size: 22px;
@@ -100,6 +114,7 @@
     }
     .body{
         margin-top: 7vh;
+        margin-bottom: 3vh;
         background: #fff;
         width: 95%;
         border-radius: 5px;

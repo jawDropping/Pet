@@ -30,13 +30,13 @@
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Product Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
         <li><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
-        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
-        <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
+        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/ord2.png" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
         <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
-        <li class = 'selection' ><a href= "/Pet/admin/sales.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li class = 'selection' ><a href= "/Pet/admin/sales.php"><img src="../uploads/report.png" class="navicons">Generate Report</a></li>
+        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -47,31 +47,46 @@
         </div>
 </div>
 <div id="bodyright">
-<p class = 'hed'>Transaction History</p>
+<p class = 'hed'>Sales Report</p>
+<br><br><br>
+<div class = 'btnssss'>
+<form method = 'GET' action = 'date_sales.php' enctpye = 'multipart/form-data'>
+<div class = 'unity'>
+    <input class = 'searchBar' type = 'date'  name = 'date' />
+    <input class = 'searchBar' type = 'date' name = 'todate' />
+    <button class = 'btnS' name = 'get_date'>Search date</button>
+</div>
+</form>
 <div class="buttons">
 <button id = "btnExport" value = "PRINT"><img class ='printPic' src = '../uploads/print.png'> PRINT</button>
 <button id = "csv"><img class ='printPic' src = '../uploads/excel.png'>EXPORT TO EXCEL</button>
     <button id = "pdf"><img class ='printPic' src = '../uploads/pdf.png'>EXPORT TO PDF</button>
     
 </div>
-   
+</div>
     <br>
 <div class = "body">
 
     <form method = "POST" enctype = "multipart/form-data">
     
-       <div class = 'headGrid'>
-        <p class = 'headLebs'>Order ID</p>
-        <p  class = 'headLebs'>Items</p>
-        <p class = 'headLebs'>Customer</p>
-        <p class = 'headLebs'>Date Delivered</p>
-        <p class = 'headLebs'>Amount Collected</p>
-       </div>
-    
-       <?php
-            echo viewalldelivered_items();
-        ?>
-      
+      <table id = "table" class = "table">
+            <thead>
+                <tr>
+                    <th  style = "background-color:black;color:white;border-top-left-radius:5px;border-bottom-left-radius:5px;">Transaction ID</th>
+                    <th  style = "background-color:black;color:white">Items</th>
+                    <th  style = "background-color:black;color:white;">Customer</th>
+                    <th  style = "background-color:black;color:white;">Date Delivered</th>
+                    <th  style = "background-color:black;color:white;border-top-right-radius:5px;border-bottom-right-radius:5px;">Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <?php
+                        echo viewalldelivered_items();
+                    ?>
+                </tr>
+            </tbody>
+      </table>
 
     </form>
 </div>
