@@ -52,9 +52,7 @@
         <div class = 'divHead'>
              <p class = 'headers'>SUB-TOTAL</p>
         </div>
-        <div class = 'divHead'>
-             <p class = 'headers'>DELIVERY DATE</p>
-        </div>
+        
         <div class="divHead">
              <p class = 'headers'>ORDER STATUS</p>
         </div> 
@@ -85,10 +83,8 @@
                     <p class = 'dataCont' >₱".$row['total_amount']."</p>
                     </div>
                     <div class = 'dataHolder'>
-                    <p class = 'dataCont'>".$row['delivery_date']."</p>
-                    </div>
-                    <div class = 'dataHolder'>
                     <p class = 'dataCont'>".$row['delivery_status']."</p>
+                    <p class = 'dataCont'>Delivery Date:".$row['delivery_date']."</p>
                     </div>
                    
                 ";
