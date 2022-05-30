@@ -502,7 +502,7 @@
        
     </div>
     <div class = 'cont'>
-        <p class = "lbes">Required People</p>
+        <p class = "lbes">Capacity</p>
         <input class = 'ints' type='text' name =  'req_people' required/>
        
     </div>

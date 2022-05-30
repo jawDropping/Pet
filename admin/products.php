@@ -54,8 +54,7 @@
         <div class = 'hedGrid'>
             <p class = 'textH'>PRODUCT NAME </p>
             <p class = 'textH'>PRICE</p>
-            <p class = 'textH'>QUANTITY</p>
-            <p class = 'textH'>Action</p>
+            <p class = 'textH'>AVAILABLE STOCK</p>
         </div>
         <div>
             <?php
@@ -75,14 +74,14 @@
     }
     .hedGrid{
         display: grid;
-        grid-template-columns: 45% 15% 15% 25%;
+        grid-template-columns: 45% 15% 25% 25%;
         text-align: center;
         font-weight: bold;
         border-bottom: 1px solid black;
     }
     .innerGrid{
         display: grid;
-        grid-template-columns: 45% 15% 15% 25%;
+        grid-template-columns: 45% 15% 25% 25%;
         margin-top: 1%;
     padding: 10px;
     background: #f4f4f4;

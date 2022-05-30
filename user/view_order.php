@@ -13,9 +13,7 @@
             include ("inc/navbar.php"); 
         ?>
 
-    <div id = "insideDiv">
-            <a class = 'servDiv' href = "viewfordeliveries.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/grooming.png" alt="">View For Deliveries</a>
-        </div>
+
     <div class="containersest">
           
     <?php
