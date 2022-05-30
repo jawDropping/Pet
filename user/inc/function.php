@@ -2382,12 +2382,16 @@
                         {
                             echo 
                             "<form method = 'POST' enctype = 'multipart/form-data'>
+                            
+                            <div class='starbtn' >
                                 <input type = 'hidden' name = 'service_id' value = '".$id."' />
+                                <a href = '#'>Rate :</a>
                                 <button name = 'count_review' value = '1'>⭐</button>
                                 <button name = 'count_review' value = '2'>⭐</button>
                                 <button name = 'count_review' value = '3'>⭐</button>
                                 <button name = 'count_review' value = '4'>⭐</button>
                                 <button name = 'count_review' value = '5'>⭐</button>
+                            </div>
                             </form>";
         
                             if(isset($_POST['count_review']))
@@ -2414,7 +2418,8 @@
                 }
                 
 
-                //Total Rating
+                //Total Rating  
+                echo "<div class = 'okayKadiv'>";       
                 echo "Ratings:";
                 $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
@@ -2422,7 +2427,7 @@
 
                 $rows = $rev->fetch();
                 $ttl = $rows['AVG(rating)'];
-
+               
                 if(intval($ttl) == 0)
                 {
                     echo "NO REVIEWS";
@@ -2462,7 +2467,7 @@
                     echo "<br>";
                     echo "Avg: ".intval($ttl)."/5";
                 }
-                
+                echo "</div>";
             if(isset($_POST['submit']))
             {
                 $comment = $_POST['comment'];

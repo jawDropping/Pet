@@ -19,7 +19,8 @@
 
         $row = $query->fetch();
 
-        echo $items = $row['items'];
-
+        $items = $row['items'];
+        
+        echo $items;
     }
 ?>
