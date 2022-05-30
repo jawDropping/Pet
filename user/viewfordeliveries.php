@@ -84,6 +84,7 @@
                     </div>
                     <div class = 'dataHolder'>
                     <p class = 'dataCont'>".$row['delivery_status']."</p>
+                    <p class = 'dataCont'>Delivery Date:".$row['delivery_date']."</p>
                     </div>
                    
                 ";

@@ -614,8 +614,9 @@
                 <p>".$user_address."</p>
                 <p>".$row['delivery_date']."</p>
                 <a class = 'btnssih' href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Delivered</a>
+               
             </div>";
-            
+            // <a class = 'btnssih' href = 'return_delivery.php?return_delivery=".$row['delivery_id']."'>Return</a>
         endwhile;
     }
 
