@@ -679,6 +679,15 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row_pro['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -691,8 +700,47 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'price' >₱".$row_pro['service_cost']."</p>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+                echo"<p class = 'head4' >".$row_pro['services_name']."</p>
                 
                 <p class = 'head5' >".$rows['pet_center_name']."</p>";
                 
@@ -737,6 +785,15 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row_pro['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -749,8 +806,47 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'price' >₱".$row_pro['service_cost']."</p>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+                echo" <p class = 'head4' >".$row_pro['services_name']."</p>
                 
                 <p class = 'head5' >".$rows['pet_center_name']."</p>";
                 
@@ -795,6 +891,15 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row_pro['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -807,8 +912,47 @@
                
             <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
             <div class = 'prodDet'>
-            <p class = 'price' >₱".$row_pro['service_cost']."</p>
-            <p class = 'head4' >".$row_pro['services_name']."</p>
+            <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+            if(intval($ttl) == 0)
+            {
+                echo "NO REVIEWS";
+            }
+
+            if(intval($ttl) == 1)
+            {
+                echo "⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 2)
+            {
+                echo "⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 3)
+            {
+                echo "⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 4)
+            {
+                echo "⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 5)
+            {
+                echo "⭐⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+            echo"<p class = 'head4' >".$row_pro['services_name']."</p>
             
             <p class = 'head5' >".$rows['pet_center_name']."</p>";
             
@@ -853,6 +997,15 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row_pro['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -865,8 +1018,47 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'price' >₱".$row_pro['service_cost']."</p>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+               echo" <p class = 'head4' >".$row_pro['services_name']."</p>
                 
                 <p class = 'head5' >".$rows['pet_center_name']."</p>";
                 
@@ -911,6 +1103,15 @@
         $fetch_pro->execute();
 
         while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row_pro['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -923,8 +1124,47 @@
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
                 <div class = 'prodDet'>
-                <p class = 'price' >₱".$row_pro['service_cost']."</p>
-                <p class = 'head4' >".$row_pro['services_name']."</p>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+                echo"<p class = 'head4' >".$row_pro['services_name']."</p>
                 
                 <p class = 'head5' >".$rows['pet_center_name']."</p>";
                 
@@ -1461,6 +1701,15 @@
 
        
         while($row = $sql2->fetch()):
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1475,8 +1724,47 @@
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
             <p class = 'price' >₱".$row['service_cost']."</p>
-            <p class = 'head4' >".$row['services_name']."</p>
-            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
             
              if($row['accept_coupon'] == "Yes")
              {
@@ -1517,6 +1805,15 @@
         $sql2->execute();
 
         while($row = $sql2->fetch()):
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1532,8 +1829,47 @@
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
             <p class = 'price' >₱".$row['service_cost']."</p>
-            <p class = 'head4' >".$row['services_name']."</p>
-            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
             
              if($row['accept_coupon'] == "Yes")
              {
@@ -1575,6 +1911,15 @@
 
         
         while($row = $sql2->fetch()):
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1589,8 +1934,47 @@
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
             <p class = 'price' >₱".$row['service_cost']."</p>
-            <p class = 'head4' >".$row['services_name']."</p>
-            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
             
              if($row['accept_coupon'] == "Yes")
              {
@@ -1632,6 +2016,15 @@
 
         
         while($row = $sql2->fetch()):
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1647,8 +2040,47 @@
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
             <p class = 'price' >₱".$row['service_cost']."</p>
-            <p class = 'head4' >".$row['services_name']."</p>
-            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+            {
+                echo "NO REVIEWS";
+            }
+
+            if(intval($ttl) == 1)
+            {
+                echo "⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 2)
+            {
+                echo "⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 3)
+            {
+                echo "⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 4)
+            {
+                echo "⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 5)
+            {
+                echo "⭐⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
             
              if($row['accept_coupon'] == "Yes")
              {
@@ -1690,6 +2122,15 @@
 
       
         while($row = $sql2->fetch()):
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
             $pet_center_id = $row['pet_center_id'];
             $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
             $sql->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1704,8 +2145,47 @@
             <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
             <div class = 'prodDet'>
             <p class = 'price' >₱".$row['service_cost']."</p>
-            <p class = 'head4' >".$row['services_name']."</p>
-            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+            {
+                echo "NO REVIEWS";
+            }
+
+            if(intval($ttl) == 1)
+            {
+                echo "⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 2)
+            {
+                echo "⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 3)
+            {
+                echo "⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 4)
+            {
+                echo "⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 5)
+            {
+                echo "⭐⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
             
              if($row['accept_coupon'] == "Yes")
              {
@@ -1780,8 +2260,9 @@
                     
                     <div class = 'secondBody'>
                         <p class = 'hed'>".$row_services['services_name']."</p>
-                        <p class = 'head51'>".$row_pet_center['pet_center_name']."</p>
-                        <p class = 'head52'>".$row_services['description']."</p>
+                        <p class = 'head51'>".$row_pet_center['pet_center_name']."</p>";
+                        
+                        echo"<p class = 'head52'>".$row_services['description']."</p>
                         <div class = 'mainHoldest'>
                             <div class = 'holdest'>
                                 <p class = 'lebs'> Service Category: </p>
@@ -1816,8 +2297,8 @@
                             
                         </div>
                         <div class = 'holdest'>
-                        <p class = 'lebs'>People Accomodated</p> 
-                        <p class = 'conts'>".$row_services['people_visited']."</p>
+                        <p class = 'lebs'>REMAINING SLOT</p> 
+                        <p class = 'conts'>".intval($row_services['req_people']-$row_services['people_visited'])."</p>
                         </div>
                         </div><br><br>
                         ";
