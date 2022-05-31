@@ -69,7 +69,7 @@
         </div>
         <div>
             <?php
-                echo viewall_users();
+                echo search_user();
             ?>
         </div>
         </div>

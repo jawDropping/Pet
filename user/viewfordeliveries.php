@@ -81,13 +81,58 @@
                     </div>
                     <div class = 'dataHolders'>
                     <p class = 'dataCont' >₱".$row['total_amount']."</p>
-                    </div>
-                    <div class = 'dataHolder'>
-                    <p class = 'dataCont'>".$row['delivery_status']."</p>
-                    <p class = 'dataCont'>Delivery Date:".$row['delivery_date']."</p>
-                    </div>
+                    </div>";
+                    // if($row['delivery_status'] != 'UNSUCCESSFUL')
+                    // {
+                    //     echo"<div class = 'dataHolder'>
+                    //     <p class = 'dataCont'>".$row['delivery_status']."</p>
+                    //     <p class = 'dataCont'>Delivery Date:".$row['delivery_date']."</p>
+                    //     </div>";
+                    // }
+                    
+                    // else
+                    // {
+                    //     if($row['redelivery'] == 'REQUEST FOR REDELIVERY')
+                    //     {
+                    //         echo"<div class = 'dataHolder'>
+                    //         <p class = 'dataCont'>".$row['delivery_status']."</p>
+                    //         <p class = 'dataCont'>Date Delivered:".$row['date_delivered']."</p>
+                    //         </div>";
+    
+                    //         echo
+                    //         "<a href = 'redeliver_item.php?redeliver=".$row['delivery_id']."' style = 'text-decoration:none;color:white;padding:.5rem;margin-top:30px;height:20px;width:150px;background-color:blue;border-radius:20px;'>Redeliver</a>";
+                    //     }
+                    // }
+                    if($row['delivery_status'] == 'FOR DELIVERY')
+                    {
+                        echo"<div class = 'dataHolder'>
+                             <p class = 'dataCont'>".$row['delivery_status']."</p>
+                             <p class = 'dataCont'>Delivery Date:".$row['delivery_date']."</p>
+                             </div>";
+                    }
+                    if($row['delivery_status'] == 'UNSUCCESSFUL')
+                    {
+                        echo"<div class = 'dataHolder'>
+                        <p class = 'dataCont'>".$row['delivery_status']."</p>
+                        <p class = 'dataCont'>Date Delivered:".$row['date_delivered']."</p>
+                        </div>";
+                        if($row['redelivery'] == '')
+                        {
+                            echo
+                            "<a href = 'redeliver_item.php?redeliver=".$row['delivery_id']."' style = 'text-decoration:none;color:white;padding:.5rem;margin-top:30px;height:20px;width:150px;background-color:blue;border-radius:20px;'>Redeliver</a>";
+                        }
+                        elseif($row['redelivery'] == 'REQUEST FOR REDELIVERY')
+                        {
+                            echo
+                            "<a href = '#' style = 'text-decoration:none;color:white;padding:.5rem;margin-top:30px;height:20px;width:150px;background-color:red;border-radius:20px;'>Requested</a>";
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    
                    
-                ";
             endwhile;
         
             

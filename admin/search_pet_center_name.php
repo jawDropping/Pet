@@ -69,7 +69,7 @@
         </div>
         <tr>
             <?php
-                echo registered_petcenters();
+                echo search_pet_center_name();
             ?>
         </tr>
        </div>

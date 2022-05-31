@@ -25,6 +25,11 @@ background: #28287774;
     font-weight: bold;
     color: white;
 }
+.hhes{
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
 .body{
     margin-top: 7vh;
     background: #fff;
@@ -37,14 +42,17 @@ background: #28287774;
 }
 .hedGrid{
     display: grid;
-    grid-template-columns: 15% 14% 14% 14% 14% 14% 14%;
+    grid-template-columns:10% 15% 10% 12% 12% 10% 14% 12%;
     text-align: center;
     font-weight: bold;
     border-bottom: 1px solid black;
 }
+.btn{
+    display: flex;
+}
 .innerGrid{
     display: grid;
-    grid-template-columns:15% 14% 14% 14% 14% 14% 14%;
+    grid-template-columns:10% 15% 10% 12% 12% 10% 14% 12%;
     text-align: center;
     
     margin-top: 20px;
@@ -60,6 +68,20 @@ text-decoration: none;
 padding: 5px;
 margin-left: 15%;
 
+}
+.dets{
+    height: 30px;
+}
+.btnssihed{
+height: 30px;
+color: red;
+border-radius: 3px;
+width: 70%;
+background: none;
+border: 1px solid  red;
+text-decoration: none;
+padding: 5px;
+margin-left: 15%;
 }
 .noorders{
         width: 70%;
@@ -144,16 +166,46 @@ else
             <p>Customer</p>
             <p>Delivery Address</p>
             <p>Delivery Date </p>
-            <p>Action</p>
+            <p>Status </p>
         </div>
         <div>
             <?php
                 echo viewall_deliveries(); 
+                
             ?>
         </div>
         </div>
     </form>
 </div>
+<br>
+<br>
+<br>
+<br>
+<p class = 'hhes'>REQUEST FOR REDELIVER</p>
+<div class = "body">
+    
+    <form method = "POST" enctype = "multipart/form-data">
+    <div>
+        <div class = 'hedGrid'>
+  
+            <p>Delivery Id</p>
+            <p>Items</p>
+            <p>Total Amount</p>
+            <p>Customer</p>
+            <p>Delivery Address</p>
+            <p>Delivery Date </p>
+            <p>Status</p>
+        </div>
+        <div>
+            <?php
+                echo viewall_unsuccessful_deliveries(); 
+                
+            ?>
+        </div>
+        </div>
+    </form>
+</div>
+
               
                 </div>
                 </div>

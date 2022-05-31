@@ -65,7 +65,7 @@
         </div>
         <tr>
             <?php
-                echo viewall_partners();
+                echo search_org();
             ?>
         </tr>
        </div>

@@ -681,7 +681,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -787,7 +787,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -893,7 +893,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -999,7 +999,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1105,7 +1105,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1703,7 +1703,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1807,7 +1807,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1913,7 +1913,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -2018,7 +2018,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -2124,7 +2124,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -2400,7 +2400,7 @@
                                 $service_id = $_POST['service_id'];
                                 $user_id = $_SESSION['user_id'];
                         
-                                $sql = $con->prepare("INSERT INTO review 
+                                $sql = $con->prepare("INSERT INTO reviews
                                 SET 
                                 user_id = '$user_id',
                                 service_id = '$service_id',
@@ -2421,7 +2421,7 @@
                 //Total Rating  
                 echo "<div class = 'okayKadiv'>";       
                 echo "Ratings:";
-                $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$id'");
+                $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -2767,6 +2767,12 @@
                 $dt2=date("l", $dt1);
                 $dt3=strtolower($dt2);
 
+                $query = $con->prepare("SELECT * FROM reserve_services WHERE reserve_time = '$reserve_time' AND reserve_date = '$reserve_date' AND  service_id = '$service_id'");
+                $query->setFetchMode(PDO:: FETCH_ASSOC);
+                $query->execute();
+
+                $row = $query->fetch();
+
                 if($row_pent['req_people'] != $row_pent['people_visited'])
                 {
                     if(($dt3 != "saturday") && ($dt3 != "sunday"))
@@ -3020,9 +3026,18 @@
                     $reserved_date = $row_date_and_time['reserve_date'];
                     $reserved_time = $row_date_and_time['reserve_time'];
 
+                    $dateTimestamp4 = strtotime($reserved_date); 
+                    $dateTimestamp5 = strtotime($reserved_time); 
+
                     $dt1=strtotime($reserve_date);
                     $dt2=date("l", $dt1);
                     $dt3=strtolower($dt2);
+                    $query = $con->prepare("SELECT * FROM reserve_services WHERE reserve_time = '$reserve_time' AND reserve_date = '$reserve_date' AND  service_id = '$service_id'");
+                    $query->setFetchMode(PDO:: FETCH_ASSOC);
+                    $query->execute();
+
+                    $row = $query->fetch();
+
 
                     if($rows['req_people'] >= $rows['people_visited'])
                     {
@@ -3032,59 +3047,64 @@
                             {
                                 if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
                                 {
-                                    if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
+                                    if($reserve_date != $reserved_date && $dateTimestamp3 != $reserved_time)
                                     {
-                                        
-                
-                                        $sql2 = $con->query("SELECT * FROM reserve_services");
-                                        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                                        $sql2->execute();
-                
-                                        $row = $sql->rowCount();
-                                        $row_user = $sql2->fetch();
-                                        $user_id = $row_user['user_id'];
-                
-                                        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
-                                        $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-                                        $fetch_user_username->execute();
-                                
-                                        $row4 = $fetch_user_username->fetch();
-                                        $receiver = $row4['user_email'];
-                                        $subject = "For Confirmation";
-                                        $body = "Wait for the petcenter to confirm your reservation!";
-                                        $sender = "ianjohn0101@gmail.com";
-            
-                                        if(mail($receiver, $subject, $body, $sender))
+                                        if($row==0)
                                         {
-                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                                pet_center_id,
-                                                service_id,
-                                                user_id,
-                                                service_cost,
-                                                reserve_date,
-                                                reserve_time,
-                                                coupon_code,
-                                                service_status
-                                            ) 
-                                            VALUES (
-                                                '$pet_center_id',
-                                                '$service_id',
-                                                '$current_user',
-                                                '$service_cost',
-                                                '$reserve_date',
-                                                '$reserve_time',
-                                                '$coupon_code',
-                                                'For Confirmation'
-                                            )");
-                                
-                                            if($reserve_service->execute())
+                                            $sql2 = $con->query("SELECT * FROM reserve_services");
+                                            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                                            $sql2->execute();
+                    
+                                            $row = $sql->rowCount();
+                                            $row_user = $sql2->fetch();
+                                            $user_id = $row_user['user_id'];
+                    
+                                            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+                                            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                            $fetch_user_username->execute();
+                                    
+                                            $row4 = $fetch_user_username->fetch();
+                                            $receiver = $row4['user_email'];
+                                            $subject = "For Confirmation";
+                                            $body = "Wait for the petcenter to confirm your reservation!";
+                                            $sender = "ianjohn0101@gmail.com";
+                
+                                            if(mail($receiver, $subject, $body, $sender))
                                             {
-                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                                $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                    pet_center_id,
+                                                    service_id,
+                                                    user_id,
+                                                    service_cost,
+                                                    reserve_date,
+                                                    reserve_time,
+                                                    coupon_code,
+                                                    service_status
+                                                ) 
+                                                VALUES (
+                                                    '$pet_center_id',
+                                                    '$service_id',
+                                                    '$current_user',
+                                                    '$service_cost',
+                                                    '$reserve_date',
+                                                    '$reserve_time',
+                                                    '$coupon_code',
+                                                    'For Confirmation'
+                                                )");
+                                    
+                                                if($reserve_service->execute())
+                                                {
+                                                    echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                                }
+                                                else
+                                                {
+                                                    echo "<script>alert('UNSUCCESSFUL');</script>";
+                                                }
                                             }
-                                            else
-                                            {
-                                                echo "<script>alert('UNSUCCESSFUL');</script>";
-                                            }
+                                        }
+                                        else
+                                        {
+                                            echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                                         }
                                     }
                                     else

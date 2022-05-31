@@ -47,6 +47,13 @@
                 </div>
                 <div id="bodyright">
                 <p class = 'hed'>Sales Inventory / Product Management</p>
+                <form method = 'GET' action = 'search_products.php' enctype = 'multipart/form-data'>
+<div class = 'searchs'>
+    <p class = 'searchl'>Product Name:</p> <input class = 'okss' type = 'text' name = 'pro_name' placeholder = 'Search Product Name..' />
+           <button id = 'search_btn' name = 'search'>Search</button>
+    </div> 
+        </form>
+
                 <div class = "body">
     
     <form method = "POST" enctype = "multipart/form-data">
