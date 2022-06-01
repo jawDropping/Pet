@@ -602,7 +602,10 @@
         endwhile;
         echo
         "<td>
-            <p class = 'det' style = 'margin-left:1.5rem'>Amount Collected:</p><p class = 'figures'> P".$row2['SUM(total_amount)']."</p>
+            <p class = 'det'>Amount Collected:</p>
+        </td>
+        <td>
+        <p class = 'figures'> ₱".$row2['SUM(total_amount)']."</p>
         </td>";
     }
 

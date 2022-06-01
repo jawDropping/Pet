@@ -36,7 +36,7 @@ p {
 }
 .innerGrid {
   display: grid;
-  grid-template-columns: 8% 20% 8% 14% 14% 20% 10%;
+  grid-template-columns: 8% 20% 8% 14% 14% 20% 15%;
   margin-top: 1%;
   padding: 10px;
   background: #f4f4f4;
@@ -53,7 +53,7 @@ p {
   border: 1px solid blue;
   height: 22px;
   border-radius: 4px;
-  width: 45%;
+  width: 55%;
   text-align: center;
 }
 .dbtn:hover {

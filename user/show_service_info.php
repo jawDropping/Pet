@@ -15,6 +15,7 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php");  ?>
 
+
         <div class="mainCont">
         <?php service_info(); ?>
         
@@ -282,4 +283,5 @@
     </style>
     </body>
    
+
 </html>
