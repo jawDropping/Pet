@@ -353,6 +353,7 @@
     function viewall_orders()
     {
         include("inc/db.php");
+        require("../fpdf184/fpdf.php");
         
         $net_total = 0;
         $q = $con->query("
@@ -383,7 +384,7 @@
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
-            
+                    
                         $row = $view_details->fetch();
                         $user_id = $row['user_id'];
             
@@ -424,20 +425,41 @@
                         "<input type = 'hidden' name = 'total_amount' value = '".$lapulapu."' />
                         <p  class = 'dataLebs'>".$lapulapu."</p>";
                     }
-                    
-                   echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>
-                    <div class ='bots'>
+                    echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>";
+                   
+                     echo"<div class ='bots'>
                     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
+                     <a class = 'busog' href='print_receipt.php?order_id=".$order['order_id']."' target='_blank'>Print Receipt</a>
                      </div>
  
                 </form>";
+                //     if($row_username['municipality'] == "Consolacion")
+                //     {
+                //         echo
+                //         "<input type = 'hidden' name = 'total_amount' value = '".$concolacion."' />
+                //         <p  class = 'dataLebs'>".$concolacion."</p>";
+                //     }
+                //     if($row_username['municipality'] == "Lapu-lapu")
+                //     {
+                //         echo
+                //         "<input type = 'hidden' name = 'total_amount' value = '".$lapulapu."' />
+                //         <p  class = 'dataLebs'>".$lapulapu."</p>";
+                //     }
+                    
+                //    echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>";"
+                //     echo"<div class ='bots'>
+                //     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
+                //      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
+                //      <a class = 'busog' href='print_receipt.php?order_id=".$order['order_id']."'>Print Receipt</a>
+                //      </div>
+ 
+                // </form>";
             }
         if(isset($_POST['confirm_order']))
         {
             $order_id = $_POST['confirm_order'];
 
-            
             $items = $_POST['items'];
             $total_amount = $_POST['total_amount'];
             $user_username = $_POST['user_username'];
@@ -449,7 +471,7 @@
             $fetch_user->execute();
         
             $row_username = $fetch_user->fetch();
-
+            $location = $row_username['user_address'];
             $receiver = $row_username['user_email'];
             $subject = "Order Confirmation Mail";
             $body = "
@@ -468,6 +490,7 @@
             Pet Society
             ";
             $sender = "ianjohn0101@gmail.com";
+            
 
             $datenow = getdate();
 
@@ -519,7 +542,7 @@
                     $pro_id = $row['pro_id'];
                     $qty = $row['qty'];
     
-                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty+2 WHERE pro_id = $pro_id");
+                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity=pro_quantity-$qty WHERE pro_id = $pro_id");
                     $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
                     $update_qty->execute();
                 endwhile;
@@ -528,9 +551,7 @@
                 if(!$delete_ord->execute())
                 {
                     return;  
-                } 
-                echo "<script>alert('Successfully Confirmed!');</script>";
-                echo "<script>window.open('viewall_orders.php', '_self');</script>";
+                }
             }
         }
     }
@@ -1100,8 +1121,65 @@
         return $randomString;
     }
 
-    function showledger()
+    function viewall_org()
+    {   
+        include("inc/db.php");
+        $fetch_cat=$con->prepare("SELECT * from organizations");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+                            
+        while($row=$fetch_cat->fetch()):
+            echo "<option value = '".$row['id']."'>".$row['org_name']."</option>";
+        endwhile;
+    }
+
+    function view_org_donations()
     {
+        include("inc/db.php");
+        if(isset($_POST['view_org']))
+        {
+            $org_id = $_POST['org_name'];
+            $net_total = 0;
+            $sql = $con->prepare("SELECT * FROM organizations WHERE id = '$org_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row = $sql->fetch();
+            $org_name = $row['org_name'];
+
+            $show_ledger = $con->prepare("SELECT * FROM ledger_tbl WHERE org_name = '$org_name'");
+            $show_ledger->setFetchMode(PDO:: FETCH_ASSOC);
+            $show_ledger->execute();
+
+
+           
+            if($show_ledger->rowCount()>0)
+            {
+                while($row = $show_ledger->fetch()):
+                   $net_total+=$row['amount'];
+                    echo
+                    "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
+                        <div class = 'inner'>
+                        <p class = 'lebs'>".$row['transaction_number']."</p>
+                        <p class = 'lebs'>".$row['full_name']."</p>
+                        <p class = 'lebs'>".$row['org_name']."</p>
+                        <p class = 'lebs'>".$row['contact_number']."</p>
+                        <p class = 'lebs'>".$row['date_confirmed']."</p>
+                        <p class = 'lebs'>".$row['coupon_code']."</p>
+                        </div>
+                    </form>";
+                endwhile;   
+                echo "Total Donation: $net_total";
+                echo "<br>";
+                echo "Total Donor/s:",$show_ledger->rowCount();
+            }
+          
+        }
+    }
+
+    function showledger()
+    {   
+
        
         $total_amount = 0;
 
@@ -1130,55 +1208,55 @@
         
         endwhile;
 
-        $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'IRO'");
-        $sql->setFetchMode(PDO::FETCH_ASSOC);
-        $sql->execute();
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'IRO'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
 
-        $rows = $sql->fetch();
-        echo "Org Name: IRO<br>";
-        echo "Total Amount Donated: ",$rows['SUM(amount)'];
-        echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
-        echo "<br>";
+        // $rows = $sql->fetch();
+        // echo "Org Name: IRO<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
 
-        $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'Cebu Veterinary Doctors'");
-        $sql->setFetchMode(PDO::FETCH_ASSOC);
-        $sql->execute();
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'Cebu Veterinary Doctors'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
 
-        $rows = $sql->fetch();
-        echo "<br>Org Name: Cebu Veterinary Doctors<br>";
-        echo "Total Amount Donated: ",$rows['SUM(amount)'];
-        echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
-        echo "<br>";
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: Cebu Veterinary Doctors<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
 
-        $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'PAWS'");
-        $sql->setFetchMode(PDO::FETCH_ASSOC);
-        $sql->execute();
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'PAWS'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
 
-        $rows = $sql->fetch();
-        echo "<br>Org Name: PAWS<br>";
-        echo "Total Amount Donated: ",$rows['SUM(amount)'];
-        echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
-        echo "<br>";
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: PAWS<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
 
-        $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'Mayari Animal Rescue'");
-        $sql->setFetchMode(PDO::FETCH_ASSOC);
-        $sql->execute();
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'Mayari Animal Rescue'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
 
-        $rows = $sql->fetch();
-        echo "<br>Org Name: Mayari Animal Rescue<br>";
-        echo "Total Amount Donated: ",$rows['SUM(amount)'];
-        echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
-        echo "<br>";
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: Mayari Animal Rescue<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
 
-        $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'DUMAGUETE ANIMAL SANCTUARY'");
-        $sql->setFetchMode(PDO::FETCH_ASSOC);
-        $sql->execute();
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'DUMAGUETE ANIMAL SANCTUARY'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
 
-        $rows = $sql->fetch();
-        echo "<br>Org Name: DUMAGUETE ANIMAL SANCTUARY<br>";
-        echo "Total Amount Donated: ",$rows['SUM(amount)'];
-        echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
-        echo "<br>";
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: DUMAGUETE ANIMAL SANCTUARY<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
         
         
        

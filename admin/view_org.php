@@ -86,7 +86,7 @@
         </div>
         <tr>
             <?php
-                echo showledger();
+                echo view_org_donations();
             ?>
         </tr>
        </div>
