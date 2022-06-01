@@ -84,6 +84,27 @@
             padding: 10px;
            
         }
+        .starbtn{
+            margin-left: 14vw;
+            margin-top: 5vh;
+        }
+        .starbtn button{
+            border: none;
+            background: none;
+            margin-right: 5px;
+        }
+        .starbtn button:hover{
+            border: 1px solid black;
+            transition: 1s;
+        }
+        .starbtn a{
+            text-decoration: none;
+            color: #555;
+        }
+        .okayKadiv{
+            margin-left: 14vw;
+            margin-top: 3vh;
+        }
         .headF{
             font-family: "Varela Round", sans-serif;
             font-weight: bold;

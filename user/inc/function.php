@@ -373,6 +373,7 @@
                     </div>
                     <div class = 'dataHolder'>
                     <p class = 'dataCont'><a class = 'dataLenk' href = 'cancel_order.php?cancel_order=".$order['order_id']."'>Cancel</a></p>
+                    <a class = 'busog' href='print_receipt.php?order_id=".$order['order_id']."' target='_blank'>Get Receipt</a>
                     </div>
                 ";
                 // $net_total = $net_total + $sub_total;
@@ -681,7 +682,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -787,7 +788,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -893,7 +894,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -999,7 +1000,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1105,7 +1106,7 @@
         while($row_pro = $fetch_pro->fetch()):
             $service_id = $row_pro['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1703,7 +1704,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1807,7 +1808,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -1913,7 +1914,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -2018,7 +2019,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -2124,7 +2125,7 @@
         while($row = $sql2->fetch()):
             $service_id = $row['service_id'];
 
-            $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$service_id'");
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
@@ -2396,36 +2397,55 @@
     
                         if(isset($_POST['count_review']))
                         {
-                            $count_review = $_POST['count_review'];
-                            $service_id = $_POST['service_id'];
-                            $user_id = $_SESSION['user_id'];
-                    
-                            $sql = $con->prepare("INSERT INTO review 
-                            SET 
-                            user_id = '$user_id',
-                            service_id = '$service_id',
-                            rating = '$count_review'
-                            ");
-                    
-                            if($sql->execute())
+                            echo 
+                            "<form method = 'POST' enctype = 'multipart/form-data'>
+                            
+                            <div class='starbtn' >
+                                <input type = 'hidden' name = 'service_id' value = '".$id."' />
+                                <a href = '#'>Rate :</a>
+                                <button name = 'count_review' value = '1'>⭐</button>
+                                <button name = 'count_review' value = '2'>⭐</button>
+                                <button name = 'count_review' value = '3'>⭐</button>
+                                <button name = 'count_review' value = '4'>⭐</button>
+                                <button name = 'count_review' value = '5'>⭐</button>
+                            </div>
+                            </form>";
+        
+                            if(isset($_POST['count_review']))
                             {
-                                echo "<script>alert('Thanks for your rating!');</script>";
-                                echo "<script>window.open('show_service_info.php?id=".$id."' ,'_self');</script>";
+                                $count_review = $_POST['count_review'];
+                                $service_id = $_POST['service_id'];
+                                $user_id = $_SESSION['user_id'];
+                        
+                                $sql = $con->prepare("INSERT INTO reviews
+                                SET 
+                                user_id = '$user_id',
+                                service_id = '$service_id',
+                                rating = '$count_review'
+                                ");
+                        
+                                if($sql->execute())
+                                {
+                                    echo "<script>alert('Thanks for your rating!');</script>";
+                                    echo "<script>window.open('show_service_info.php?id=".$id."' ,'_self');</script>";
+                                }
+
                             }
                         }
                     }
                 }
                 
 
-                //Total Rating
+                //Total Rating  
+                echo "<div class = 'okayKadiv'>";       
                 echo "Ratings:";
-                $rev = $con->prepare("SELECT AVG(rating) FROM review WHERE service_id = '$id'");
+                $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$id'");
                 $rev->setFetchMode(PDO:: FETCH_ASSOC);
                 $rev->execute();
 
                 $rows = $rev->fetch();
                 $ttl = $rows['AVG(rating)'];
-
+               
                 if(intval($ttl) == 0)
                 {
                     echo "NO REVIEWS";
@@ -2465,7 +2485,7 @@
                     echo "<br>";
                     echo "Avg: ".intval($ttl)."/5";
                 }
-                
+                echo "</div>";
             if(isset($_POST['submit']))
             {
                 $comment = $_POST['comment'];
@@ -2765,6 +2785,12 @@
                 $dt2=date("l", $dt1);
                 $dt3=strtolower($dt2);
 
+                $query = $con->prepare("SELECT * FROM reserve_services WHERE reserve_time = '$reserve_time' AND reserve_date = '$reserve_date' AND  service_id = '$service_id'");
+                $query->setFetchMode(PDO:: FETCH_ASSOC);
+                $query->execute();
+
+                $row = $query->fetch();
+
                 if($row_pent['req_people'] != $row_pent['people_visited'])
                 {
                     if(($dt3 != "saturday") && ($dt3 != "sunday"))
@@ -2777,14 +2803,67 @@
                                 {
                                     if($coupon_code != "asdasdsadsadsadsadsa" || $coupon_code != "sakdnsakdnsakdnkas" || $coupon_code != "aslkdmaskldsakdnjasnjna" || $coupon_code != "jasndinindaisndisandi" || $coupon_code != "asmdioasmdsiandisad")
                                     {
-                                        if(strlen($coupon_code) <= 9)
+                                        if($row==0)
                                         {
-                                            if($row5!=0)
+                                            if(strlen($coupon_code) <= 9)
                                             {
-                                                if($row6!=0)
+                                                if($row5!=0)
                                                 {
-                                                    if($coupon_code == '')
+                                                    if($row6!=0)
                                                     {
+                                                        if($coupon_code == '')
+                                                        {
+                                                            $receiver = $row4['user_email'];
+                                                            $subject = "For Confirmation";
+                                                            $body = "Your Reservation will be validated to the pet center";
+                                                            $sender = "ianjohn0101@gmail.com";
+                            
+                                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                                pet_center_id,
+                                                                service_id,
+                                                                user_id,
+                                                                service_cost,
+                                                                reserve_date,
+                                                                reserve_time,
+                                                                coupon_code,
+                                                                service_status
+                                                            ) 
+                                                            VALUES (
+                                                                '$pet_center_id',
+                                                                '$service_id',
+                                                                '$current_user',
+                                                                '$service_cost',
+                                                                '$reserve_date',
+                                                                '$reserve_time',
+                                                                '$coupon_code',
+                                                                'For Confirmation'
+                                                            )");
+                                                
+                                                            if($reserve_service->execute())
+                                                            {
+                                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                                            }
+                                                            else
+                                                            {
+                                                                echo "<script>alert('UNSUCCESSFUL');</script>";
+                                                            }
+                                                            mail($receiver, $subject, $body, $sender);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        echo "<script>alert('Coupon Already Used!');</script>";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if($row2!=0)
+                                                    {
+                                                        $total = $service_cost * $serv_discount;
+                                                        $convertfloat = floatval($total);
+                        
+                                                        $service_total_cost = $service_cost - $convertfloat;
+                        
                                                         $receiver = $row4['user_email'];
                                                         $subject = "For Confirmation";
                                                         $body = "Your Reservation will be validated to the pet center";
@@ -2804,7 +2883,7 @@
                                                             '$pet_center_id',
                                                             '$service_id',
                                                             '$current_user',
-                                                            '$service_cost',
+                                                            '$service_total_cost',
                                                             '$reserve_date',
                                                             '$reserve_time',
                                                             '$coupon_code',
@@ -2813,6 +2892,7 @@
                                             
                                                         if($reserve_service->execute())
                                                         {
+                                                           
                                                             echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
                                                         }
                                                         else
@@ -2820,70 +2900,23 @@
                                                             echo "<script>alert('UNSUCCESSFUL');</script>";
                                                         }
                                                         mail($receiver, $subject, $body, $sender);
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    echo "<script>alert('Coupon Already Used!');</script>";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if($row2!=0)
-                                                {
-                                                    $total = $service_cost * $serv_discount;
-                                                    $convertfloat = floatval($total);
-                    
-                                                    $service_total_cost = $service_cost - $convertfloat;
-                    
-                                                    $receiver = $row4['user_email'];
-                                                    $subject = "For Confirmation";
-                                                    $body = "Your Reservation will be validated to the pet center";
-                                                    $sender = "ianjohn0101@gmail.com";
-                    
-                                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                                        pet_center_id,
-                                                        service_id,
-                                                        user_id,
-                                                        service_cost,
-                                                        reserve_date,
-                                                        reserve_time,
-                                                        coupon_code,
-                                                        service_status
-                                                    ) 
-                                                    VALUES (
-                                                        '$pet_center_id',
-                                                        '$service_id',
-                                                        '$current_user',
-                                                        '$service_total_cost',
-                                                        '$reserve_date',
-                                                        '$reserve_time',
-                                                        '$coupon_code',
-                                                        'For Confirmation'
-                                                    )");
-                                        
-                                                    if($reserve_service->execute())
-                                                    {
-                                                       
-                                                        echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+            
                                                     }
                                                     else
                                                     {
-                                                        echo "<script>alert('UNSUCCESSFUL');</script>";
+                                                        echo "<script>alert('Coupon Already Used!');</script>";
                                                     }
-                                                    mail($receiver, $subject, $body, $sender);
-        
-                                                }
-                                                else
-                                                {
-                                                    echo "<script>alert('Coupon Already Used!');</script>";
                                                 }
                                             }
+            
+                                            else
+                                            {
+                                                echo "<script>alert('Coupon Invalid.');</script>";
+                                            }
                                         }
-        
                                         else
                                         {
-                                            echo "<script>alert('Coupon Invalid.');</script>";
+                                            echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                                         }
                                     }
                                     else
@@ -3018,9 +3051,18 @@
                     $reserved_date = $row_date_and_time['reserve_date'];
                     $reserved_time = $row_date_and_time['reserve_time'];
 
+                    $dateTimestamp4 = strtotime($reserved_date); 
+                    $dateTimestamp5 = strtotime($reserved_time); 
+
                     $dt1=strtotime($reserve_date);
                     $dt2=date("l", $dt1);
                     $dt3=strtolower($dt2);
+                    $query = $con->prepare("SELECT * FROM reserve_services WHERE reserve_time = '$reserve_time' AND reserve_date = '$reserve_date' AND  service_id = '$service_id'");
+                    $query->setFetchMode(PDO:: FETCH_ASSOC);
+                    $query->execute();
+
+                    $row = $query->fetch();
+
 
                     if($rows['req_people'] >= $rows['people_visited'])
                     {
@@ -3030,59 +3072,64 @@
                             {
                                 if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
                                 {
-                                    if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
+                                    if($reserve_date != $reserved_date && $dateTimestamp3 != $reserved_time)
                                     {
-                                        
-                
-                                        $sql2 = $con->query("SELECT * FROM reserve_services");
-                                        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                                        $sql2->execute();
-                
-                                        $row = $sql->rowCount();
-                                        $row_user = $sql2->fetch();
-                                        $user_id = $row_user['user_id'];
-                
-                                        $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
-                                        $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-                                        $fetch_user_username->execute();
-                                
-                                        $row4 = $fetch_user_username->fetch();
-                                        $receiver = $row4['user_email'];
-                                        $subject = "For Confirmation";
-                                        $body = "Wait for the petcenter to confirm your reservation!";
-                                        $sender = "ianjohn0101@gmail.com";
-            
-                                        if(mail($receiver, $subject, $body, $sender))
+                                        if($row==0)
                                         {
-                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                                pet_center_id,
-                                                service_id,
-                                                user_id,
-                                                service_cost,
-                                                reserve_date,
-                                                reserve_time,
-                                                coupon_code,
-                                                service_status
-                                            ) 
-                                            VALUES (
-                                                '$pet_center_id',
-                                                '$service_id',
-                                                '$current_user',
-                                                '$service_cost',
-                                                '$reserve_date',
-                                                '$reserve_time',
-                                                '$coupon_code',
-                                                'For Confirmation'
-                                            )");
-                                
-                                            if($reserve_service->execute())
+                                            $sql2 = $con->query("SELECT * FROM reserve_services");
+                                            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                                            $sql2->execute();
+                    
+                                            $row = $sql->rowCount();
+                                            $row_user = $sql2->fetch();
+                                            $user_id = $row_user['user_id'];
+                    
+                                            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+                                            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                            $fetch_user_username->execute();
+                                    
+                                            $row4 = $fetch_user_username->fetch();
+                                            $receiver = $row4['user_email'];
+                                            $subject = "For Confirmation";
+                                            $body = "Wait for the petcenter to confirm your reservation!";
+                                            $sender = "ianjohn0101@gmail.com";
+                
+                                            if(mail($receiver, $subject, $body, $sender))
                                             {
-                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                                $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                    pet_center_id,
+                                                    service_id,
+                                                    user_id,
+                                                    service_cost,
+                                                    reserve_date,
+                                                    reserve_time,
+                                                    coupon_code,
+                                                    service_status
+                                                ) 
+                                                VALUES (
+                                                    '$pet_center_id',
+                                                    '$service_id',
+                                                    '$current_user',
+                                                    '$service_cost',
+                                                    '$reserve_date',
+                                                    '$reserve_time',
+                                                    '$coupon_code',
+                                                    'For Confirmation'
+                                                )");
+                                    
+                                                if($reserve_service->execute())
+                                                {
+                                                    echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                                }
+                                                else
+                                                {
+                                                    echo "<script>alert('UNSUCCESSFUL');</script>";
+                                                }
                                             }
-                                            else
-                                            {
-                                                echo "<script>alert('UNSUCCESSFUL');</script>";
-                                            }
+                                        }
+                                        else
+                                        {
+                                            echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                                         }
                                     }
                                     else

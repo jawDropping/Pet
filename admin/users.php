@@ -49,6 +49,12 @@
 </div>
 <div id="bodyright">
 <p class = 'hed'>View All Users</p>
+<form method = 'GET' action = 'search_user.php' enctype = 'multipart/form-data'>
+<div class = 'searchs'>
+    <p class = 'searchl'>User Name:</p> <input class = 'okss' type = 'text' name = 'user_username' placeholder = 'Search User Name..' />
+           <button id = 'search_btn' name = 'search'>Search</button>
+    </div> 
+        </form>
 <div class = "body">
     
     <form method = "POST" enctype = "multipart/form-data">

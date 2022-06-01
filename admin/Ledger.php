@@ -57,6 +57,14 @@
     </div> 
           
         </form>
+        <form method = 'POST' action = 'view_org.php' enctype = 'multipart/form-data'>
+            <select name = 'org_name'>
+                <?php
+                echo viewall_org();
+                ?>
+            </select>
+            <button name = 'view_org'>View</button>
+        </form>
     <div class="body">
         
        <div>

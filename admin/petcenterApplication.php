@@ -48,6 +48,13 @@
 
 <p class = 'hed'>Pet Center Application</p>
 <div class="ledger">
+<form method = 'GET' action = 'search_pet_center_name.php' enctype = 'multipart/form-data'>
+<div class = 'searchs'>
+    <p class = 'searchl'>Pet Center Name:</p> <input class = 'okss' type = 'text' name = 'pet_center_name' placeholder = 'Search Pet Center Name..' />
+           <button id = 'search_btn' name = 'search'>Search</button>
+    </div> 
+        </form>
+
     <div class="body">
         
        <div>

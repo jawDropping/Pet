@@ -48,6 +48,12 @@
         <div id="bodyright">
         <p class = 'hed'>Partnered Organizations</p>
         <div class="partnerBody">
+        <form method = 'GET' action = 'search_org_name.php' enctype = 'multipart/form-data'>
+<div class = 'searchs'>
+    <p class = 'searchl'>Organization Name:</p> <input class = 'okss' type = 'text' name = 'org_name' placeholder = 'Search Organization Name..' />
+           <button id = 'search_btn' name = 'search'>Search</button>
+    </div> 
+        </form>
     <div class="body">
         
        <div>

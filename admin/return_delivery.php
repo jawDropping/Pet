@@ -5,21 +5,43 @@
     {
         $id = $_GET['return_delivery'];
         
-        // $q = $con->query("
-        //     SELECT od.order_id, od.order_date, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
-        //     (select o.order_id, p.pro_name, count(p.pro_name) qty, p.pro_price price, o.delivery_status, o.order_date
-        //     from orders_tbl o join product_tbl p on o.pro_id = p.pro_id
-        //     WHERE o.user_id = o.user_id
-        //     group by o.order_id, p.pro_name, o.delivery_status, o.order_date) od
-        //     group by od.order_id, od.delivery_status, od.order_date    
-        //     ");
-        $query = $con->query("SELECT * FROM delivery_tbl WHERE delivery_id = '$id'");
+        $query = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'UNSUCCESSFUL' WHERE delivery_id = '$id'");
         $query->setFetchMode(PDO:: FETCH_ASSOC);
         $query->execute();
 
-        $row = $query->fetch();
+            
+        $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+        $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_user->execute();
+    
+        $row_username = $fetch_user->fetch();
 
-        echo $items = $row['items'];
 
+        if(!$query->execute())
+        {
+            return;
+        }
+
+        $datenow = getdate();
+
+        // $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
+        // $receiver = $row_username['user_email'];
+        // $subject = "DELIVERY UNSUCCESSFUL";
+        // $body =  "
+        // Greetings!
+
+        // Your order has been delivered on $today.
+
+        // Unfortunately your order is unsuccessfully delivered.
+        // Arf arf,
+        // Pet Society
+        // ";
+        // $sender = "ianjohn0101@gmail.com";
+
+        // mail($receiver, $subject, $body, $sender);
+        
+        // echo "<script>window.open('index.php?deliveries.php','_self');</script>";
+        
     }
 ?>
