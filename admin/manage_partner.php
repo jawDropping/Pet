@@ -50,8 +50,8 @@
         <div class="partnerBody">
         <form method = 'GET' action = 'search_org_name.php' enctype = 'multipart/form-data'>
 <div class = 'searchs'>
-    <p class = 'searchl'>Organization Name:</p> <input class = 'okss' type = 'text' name = 'org_name' placeholder = 'Search Organization Name..' />
-           <button id = 'search_btn' name = 'search'>Search</button>
+   <input class = 'okss' type = 'text' name = 'org_name' placeholder = 'Search Organization Name..' />
+           <button class = 'btnse' name = 'search'>Search</button>
     </div> 
         </form>
     <div class="body">
@@ -80,6 +80,25 @@
     </body>
   
 <style>
+    .searchs{
+        display: flex;
+        margin-top: 3vh;
+        height: 40px;
+        margin-left: 20px;
+    }
+    .btnse{
+        background: #ffb830;
+        border: none;
+        outline: none;
+        padding: 5px;
+        width: 5vw;
+    }
+    .okss{
+        width: 15%;
+        outline: none;
+        padding: 5px;
+        border: none;
+    }
     .gridnasad{
         display: grid;
         grid-template-columns:  16% 16% 16% 20%;
@@ -110,7 +129,7 @@
     }
     .mainH{
         display: grid;
-        grid-template-columns:  16% 16% 16% 20% 24%;
+        grid-template-columns:  16% 16% 16% 25% 24%;
         margin-top: 1%;
     padding: 10px;
     background: #f4f4f4;
@@ -140,7 +159,6 @@
         color: white;
     }
     .holdest{
-        height: 42px;
         text-align: center;
         font-family: "Varela Round", sans-serif;
     }

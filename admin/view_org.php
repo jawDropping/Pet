@@ -52,18 +52,20 @@
 <div class="ledger">
 <form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
     <div class = 'searchs'>
-    <p class = 'searchl'>Transaction:</p> <input class = 'okss' type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
+   <input class = 'okss' type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
            <button id = 'search_btn' name = 'search'>Search</button>
     </div> 
           
         </form>
         <form method = 'POST' action = 'view_org.php' enctype = 'multipart/form-data'>
-            <select name = 'org_name'>
+        <div class = 'sels'>
+            <select name = 'org_name' class = 'orgs'>
                 <?php
                 echo viewall_org();
                 ?>
             </select>
-            <button name = 'view_org'>View</button>
+            <button class = 'btnse' name = 'view_org'>View</button>
+        </div>
         </form>
     <div class="body">
         
@@ -108,6 +110,24 @@
         width: 100%;
   
     }
+    .btnse{
+        background: #ffb830;
+        outline: none;
+        border: none;
+        width: 5vw;
+
+    }
+    .orgs{
+        border: none;
+        outline: none;
+    }
+    .sels{
+        height: 40px;
+        display: flex;
+        margin-top: 2vh;
+        margin-left: 20px;
+
+    }
     .searchl{
         color: white;
         font-family: "Varela Round", sans-serif;
@@ -132,7 +152,7 @@
     .searchs{
         display: flex;
         margin-top: 5vh;
-        margin-left: 5%;
+        margin-left: 20px;
     }
     .body{
         margin-top: 2vh;

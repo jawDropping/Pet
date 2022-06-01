@@ -1561,8 +1561,10 @@
                 <p class = 'okss'>".$row['user_email']."</p>
                 <p class = 'okss'>".$row['user_contactnumber']."</p>
                 <p class = 'okss'>".$row['user_address']."</p>
+                <divs>
                 <a class = 'dbtn' href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
                 <a class = 'dbtn' href = 'view_pet.php?view=".$row['user_id']."'>View Pet</a>
+                </divs>
                
          </div>";
         endwhile;
