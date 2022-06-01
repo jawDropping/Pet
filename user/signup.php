@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "css/signup.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,7 +72,6 @@
     </script>
 
     <body>
-    <?php  include("inc/db.php"); ?>
     <div class = "mainContainer">
             <div class="insideDiv">
                 <div class="rightSide">
@@ -272,6 +272,10 @@
                     </div>
                     <div class="fieldCont">
                         <p class = "label">Street :</p>
+                        <input type="text" class = "inputs"  name = "st" autocomplete = "new-password" required>
+                    </div>
+                    <div class="fieldCont">
+                        <p class = "label">Landmark :</p>
                         <input type="text" class = "inputs"  name = "user_address" autocomplete = "new-password" required>
                     </div>
                     <div class="fieldCont">
@@ -288,8 +292,14 @@
                 
                 </div>
                 <div class="leftSide">
-                
-                        <img src="../uploads/signGirl.svg" alt="" id="imgLeft">
+                <p class = 'oneS'>Your FURever companion for your pet necessities</p>
+               
+                <p class = 'welss'>Welcome to Pet Society</p>
+                    <div class="imgCont">
+                       
+                     <img src="../uploads/signGirl.svg" id="imgLeft">
+                    </div>
+                       
                 </div>
             </div>
               
@@ -314,8 +324,12 @@ include("inc/db.php");
             $user_contactnumber = $_POST['user_contactnumber'];
             $municipality = $_POST['municipality'];
             $barangay = $_POST['barangays'];
+            $st = $_POST['st'];
             $user_address = $_POST['user_address'];
+            $conf_password = $_POST['conf_password'];
             $verification_key = generateRandomString();
+            $verified = 0;
+            $user_profilephoto = "userIcon.svg";
 
             $view_email = $con->prepare("SELECT COUNT(*) AS all_emails FROM users_table WHERE user_email = '$user_email'");
             $view_email->setFetchMode(PDO::FETCH_ASSOC);
@@ -329,76 +343,84 @@ include("inc/db.php");
 
             $row2 = $view_name->fetch();
 
-            $receiver = $user_email;
-            $subject = "Email Verification";
-            $body = "Use this Verification Code: $verification_key to verify your email!";
-            $sender = "ianjohn0101@gmail.com";
-
-            if($row['all_emails']>0)
+            if($row['all_emails'] == 0)
             {
-                echo "<script>alert('Email Exists');</script>";
-            }
-            elseif($row2['all_usernames']>0)
-            {
-                echo "<script>alert('Name Exists');</script>";
-            }
-            elseif(!is_numeric($user_contactnumber))
-            {
-                echo "<script>alert('Only Digits Allowed!');</script>";
-            }
-            elseif(strlen($user_contactnumber)>=12)
-            {
-                echo "<script>alert('Number must at least 11 digits!');</script>";
-            }
-            elseif(strlen($user_password) >= 9 &&
-            preg_match('/[A-Z]/', $user_password) > 0 &&
-            preg_match('/[a-z]/', $user_password) > 0)
-            {
-                echo "<script>alert('Password must at least 8 characters in length!');</script>";
-            }
-            else
-            {
-                if(mail($receiver, $subject, $body, $sender))
+                if($row2['all_usernames'] == 0)
                 {
-                    $add_user = $con->prepare("INSERT INTO users_table(
-                        user_username,
-                        user_email,
-                        user_contactnumber,
-                        user_password,
-                        municipality,
-                        barangay,
-                        user_address,
-                        user_profilephoto
-                        verified,
-                        verification_key
-                    ) 
-                    VALUES (
-                        '$user_username',
-                        '$user_email',
-                        '$user_contactnumber',
-                        '$user_password',
-                        '$municipality',
-                        '$barangay',
-                        '$user_address',
-                        'userIcon.svg',
-                        0,
-                        '$verification_key'
-                    )");
-        
-                    if($add_user->execute())
+                    if(is_numeric($user_contactnumber))
                     {
-                        echo "<script>alert('Registration Successfull!');</script>"; 
-                        echo "<script>
-                        if ( window.history.replaceState ) {
-                           window.history.replaceState( null, null, window.location.href );
-                       }            
-                        </script>";
+                        if(strlen($user_contactnumber)<12)
+                        {
+                            if(strlen($user_password)>=8)
+                            {
+                                if($user_password == $conf_password)
+                                {
+                                    if(preg_match('/[A-Z]/', $user_password) != 0 &&
+                                    preg_match('/[a-z]/', $user_password) != 0)
+                                    {
+                                        $add_user = $con->prepare("INSERT INTO users_table 
+                                        SET
+                                        user_username = '$user_username',
+                                        user_password = '$user_password',
+                                        user_contactnumber = '$user_contactnumber',
+                                        user_address =  '$user_address',
+                                        st = '$st',
+                                        municipality = '$municipality',
+                                        barangay = '$barangay',
+                                        user_email = '$user_email',
+                                        v_key = '$verification_key',
+                                        verified = $verified,
+                                        user_profilephoto = '$user_profilephoto'
+                                        ");
+                            
+                                        if($add_user->execute())
+                                        {
+                                            echo "<script>alert('Registration Successfull!');</script>"; 
+                                            echo "<script>
+                                            if ( window.history.replaceState ) {
+                                            window.history.replaceState( null, null, window.location.href );
+                                        }            
+                                            </script>";
+                                            echo "<script>window.open('login.php', '_self');</script>";
+                                        }
+                                        else
+                                        {
+                                            echo "<script>alert('Registration Unsuccessfull!');</script>";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo "<script>alert('Password must have at least 1 uppercase, 1 special character');</script>";
+                                    }
+                                }
+                                else
+                                {
+                                    echo "<script>alert('Password must match');</script>";
+                                }
+                            }
+                            else
+                            {
+                                echo "<script>alert('Password must at least 8 characters');</script>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<script>alert('Contact Number must at least 11 characters');</script>";
+                        }
                     }
                     else
                     {
-                        echo "<script>alert('Registration Unsuccessfull!');</script>";
+                        echo "<script>alert('Contact Number Invalid!');</script>";
                     }
                 }
+                else
+                {
+                    echo "<script>alert('Username Existed!');</script>";
+                }
+            }
+            else
+            {
+                echo "<script>alert('Email Existed!');</script>";
             }
         }
 

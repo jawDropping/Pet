@@ -12,12 +12,28 @@
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
         ?>
+
+    <div id = "insideDiv">
+            <a class = 'servDiv' href = "viewfordeliveries.php" style = "text-decoration: none;color:#000;"><img class = "image" src="../uploads/grooming.png" alt="">View For Deliveries</a>
+        </div>
     <div class="containersest">
+          
+    <?php
+        $current_user = $_SESSION['user_id'];
+        $sql = $con->prepare("SELECT * FROM orders_tbl WHERE user_id = '$current_user'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        $row = $sql->fetch();
+        if($row>0)
+        {
+            
+    ?>
 
     <div class="ttl">
     <img src="../uploads/orderist.png" id = 'orderIc' > <h3>Orders</h3>
     </div>
-    
+  
     <div class="contTable">
     <div class = 'inside'>
         
@@ -42,6 +58,20 @@
         </div>
     </div>
     </div>
+
+    <?php
+        }
+        else
+        {
+            echo "
+            <div class = 'blank'>
+            <center>
+            <img src = '../uploads/empty.gif'>
+            <p class = 'state'>You don't have any orders yet Click the link to buy products from our store!<a id = 'linkEmpty'href='/Pet/user/index.php'>Click Me!</a></p>
+            </center>
+            </div>";
+        }
+    ?>
     
     
     </div>
@@ -51,6 +81,24 @@
         *{
             padding: 0;
             margin: 0;
+        }
+        .blank{
+            margin-top: 8vh;
+            width: 70%;
+            margin-left: 15%;
+            padding: 15px;
+            
+        }
+        .state{
+            font-family: "Varela Round", sans-serif;
+            font-size: 18px;
+            margin-top: 4%;
+        }
+        #linkEmpty{
+            font-family: "Varela Round", sans-serif;
+            font-size: 18px;
+            margin-top: 4%;
+            margin-left: 10px;
         }
         .inside{
             display: grid;

@@ -26,17 +26,17 @@
       <ul class = 'mainUl'>
         <li class =  "donate"><a href = "index.php"><img src="../uploads/donation2.1.svg" class="navicons">Donations</a></li>
             <ul class="subList">
-                <li><a href="manage_donation.php">Manage Donations</a></li>
+                <li><a href="coupons.php">Coupon Application</a></li>
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li class = 'selection' ><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Product Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
-        <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
-        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
-        <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
-        <li><a href= "/Pet/admin/viewall_users.php"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
-        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
+        <li><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/ord2.png" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
+        <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/report.png" class="navicons">Generate Report</a></li>
+        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -50,27 +50,38 @@
 
 <p class = 'hed'>Donation Records</p>
 <div class="ledger">
+<form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
+    <div class = 'searchs'>
+    <p class = 'searchl'>Transaction:</p> <input class = 'okss' type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
+           <button id = 'search_btn' name = 'search'>Search</button>
+    </div> 
+          
+        </form>
+        <form method = 'POST' action = 'view_org.php' enctype = 'multipart/form-data'>
+            <select name = 'org_name'>
+                <?php
+                echo viewall_org();
+                ?>
+            </select>
+            <button name = 'view_org'>View</button>
+        </form>
     <div class="body">
         
        <div>
-       <form method = 'GET' action = 'search_transaction_number.php' enctype = 'multipart/form-data'>
-           Search Transaction Number: <input type = 'text' name = 'transaction_number' placeholder = 'Search Transaction Number..' />
-           <button id = 'search_btn' name = 'search'>Search</button><br>
-        </form>
-        <form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
-        <button name = 'sort_asc'>Sort Asc by Org</button>
-            <button name = 'sort_desc'>Desc Asc by Org</button>
-        </form>
+       
+       
         <div class = 'gridnasad'>
-           <p>Transaction Number</p>
+           <p class = 'heads'>Transaction Number</p>
 
-            <p>Full Name</p>
+            <p  class = 'heads'>Full Name</p>
 
-            <p>Selected Organization</p>
+            <p  class = 'heads'>Selected Organization</p>
 
-            <p>Contact Number</p>
+            <p  class = 'heads'>Contact Number</p>
 
-            <p>Date Confirmed</p>
+            <p  class = 'heads'>Date Confirmed</p>
+
+            <p  class = 'heads'>Coupon Code</p>
             <div></div>
         </div>
         <tr>
@@ -97,8 +108,34 @@
         width: 100%;
   
     }
+    .searchl{
+        color: white;
+        font-family: "Varela Round", sans-serif;
+    }
+    .okss{
+        padding: 10px;
+        font-family: "Varela Round", sans-serif;
+        width: 15%;
+        border: none;
+        border-radius: 2px;
+        outline: none;
+        font-size: 12px;
+    }
+    #search_btn{
+        border: none;
+  outline: none;
+  padding: 11px;
+  border-radius: 2px;
+  background: #ffb830;
+  margin-left: -8px;
+    }
+    .searchs{
+        display: flex;
+        margin-top: 5vh;
+        margin-left: 5%;
+    }
     .body{
-        margin-top: 7vh;
+        margin-top: 2vh;
         margin-left: 20px;
         background: #fff;
         width: 95%;
@@ -117,16 +154,38 @@
         font-weight: bold;
         color: white;
     }
+    .heads{
+        font-family: "Varela Round", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #777;
+    text-align: center;
+    }
     .gridnasad{
         display: grid;
-        grid-template-columns:  20% 20% 20% 20% 20%;
-        border-bottom: 1px solid #aaa;
+        grid-template-columns:  15% 20% 20% 20% 10% 10%;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid black;
     }
     #forming{
-        display: grid;
-        grid-template-columns: 20% 20% 20% 20% 20%;
+       
         font-size: 14px;
         margin-top: 20px;
+    }
+    .inner{
+        display: grid;
+        grid-template-columns: 15% 20% 20% 20% 10% 10%;
+        margin-top: 1%;
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 4px;
+    }
+    .lebs{
+        font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    color: #777;
+    text-align: center;
     }
 </style>
 

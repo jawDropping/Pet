@@ -1,7 +1,9 @@
 <html>
     <head>
         <title>Pet Society</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
+        <link rel = "stylesheet" href="css/addPet.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
@@ -14,266 +16,368 @@
             include ("inc/function.php");
             include ("inc/header.php"); 
             include ("inc/navbar.php"); 
-        ?>
-        <div id='pinakaMain'>
-        <?php
-            //////////////
-            
-            include("inc/db.php");
+            ?>
+<div class = 'body' >
+<?php
+    $current_user = $_SESSION['user_id'];
+    $sql = $con->prepare("SELECT * FROM pets WHERE user_id = '$current_user'");
+    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+    $sql->execute();
 
-            echo "
-            <div class = 'container'>
-            <div class = 'firstCont'>
-            Your Pet</div>";
+    $row = $sql->fetch();
 
-            $current_user = $_SESSION['user_id'];
+    echo
+    "
+    <div class = 'divs'>
+    <form method = 'POST' enctype = 'multipart/form-data'>
+      <img class = 'imaged' src = '../uploads/pets/".$row['pet_photo']."' />
+      <div class='drop-zone'>
+      <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+      <input type='file' name = 'pet_photo' class='drop-zone__input'>
+      </div>
+      <div class = 'btnDi'>
+      <button class = 'btn2' name = 'update_img' value = ".$row['id'].">Update Image</button>
+      </div>
+    </form>
+    <form method = 'POST' enctype = 'multipart/form-data' class = 'form2'>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Name</p>
+        <input class = 'inputs' type = 'text' name = 'pet_name' value = '".$row['pet_name']."' />
+      </div>
+      <div class = 'hodl'>
+        <p class ='lebs'>Pet Age</p>
+        <input class = 'inputs' type = 'text' name = 'pet_age' value = '".$row['pet_age']."' />
+      </div>
+      <div class = 'hodl'>
+        <p class ='lebs'>Pet</p>
+        <input class = 'inputs' type = 'text' name = 'pet' value = '".$row['pet']."' />
         
-            $viewall_pets = $con->prepare("SELECT * FROM pets WHERE user_id = '$current_user'");
-            $viewall_pets->setFetchMode(PDO:: FETCH_ASSOC);
-            $viewall_pets->execute();
-    
-    
-            while($row = $viewall_pets->fetch()):
-            $pet_id = $row['id'];
-            $user_id = $row['user_id'];
-            $likes = $row['likes'];
-    
-            $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-                    $user->setFetchMode(PDO:: FETCH_ASSOC);
-                    $user->execute();
-            
-            $row_user = $user->fetch();
-            $user_username = $row_user['user_username'];
-            $profile = $row_user['user_profilephoto'];
-            $comment = $con->prepare("SELECT * FROM comment_tbl WHERE pet_id = '$pet_id'");
-            $comment->setFetchMode(PDO:: FETCH_ASSOC);
-            $comment->execute();
-    
-            $count_comments = $comment->rowCount();
-///////////
-            
-///////////////
-                echo
-                "
-                
-                    <div class = 'innerCont'>
-                    <div class = 'forPadding'>
-                    <form method = 'post' action = 'submit_entries.php' enctype='multipart/form-data'>
-                    <div id = 'userHead'>
-                    <img class='profileImg2' src = '../uploads/user_profile/".$row_user['user_profilephoto']."'>
-                    <p class = 'postName'>".$user_username."</p>
-                    </div>
-                        <img src ='../uploads/pets/".$row['pet_photo']."' class = 'imagePost'/>
-                       
-                        
-                            <button id = 'likeBtn' name = 'like' value = ".$row['id'].">
-                            <img src ='../uploads/like.png' id = 'likeBtnImg'>
-                            </button>
-                            <button type = 'button' id = 'commentBtn'>
-                            <img src ='../uploads/comment.png' id = 'commentBtnImg'>
-                            </button>
-                            <div id = 'infoPost'>
-                            <p id = 'likeCount'>".$likes." likes</p>
-                            <p id = 'commentIhap'>
-                            ".$count_comments." Comments
-                            </p>
-                            </div>
-                            <div class = 'captionArea'>
-                            <p class = 'nameok'>".$user_username."</p><p id = 'caption'>  ".$row['pet_details']."</p>
-                            </div>
-                            ";
-                            echo "
-                       
-                       
-                        <div id = 'commites'>
-                            <input type = 'text' name = 'comment' placeholder = 'Add a comment' class = 'coms'/>
-                            <button name = 'submit' value = ".$row['id']." id = 'cmtbnt'>Post</button>
-                        </div>";
-////////////////                    
-                    while($row_comment = $comment->fetch()):
-                    $users_id = $row_comment['user_id'];
-                    $likes = $row_comment['likes'];
-    
-                    $user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
-                    $user->setFetchMode(PDO:: FETCH_ASSOC);
-                    $user->execute();
-
-                    $row_users = $user->fetch();
-//////////////
-                        
-                        echo "
-                        <div id = 'commentors'>
-                        <img class='profileImg' src = '../uploads/user_profile/".$row_users['user_profilephoto']."'>:".$row_comment['comment']."";
-                        
-                        if(isset($_SESSION['user_id']))
-                        {
-                            //check kinsay naka login
-                            $current_user = $_SESSION['user_id'];
-                            $check_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
-                            $check_user->setFetchMode(PDO:: FETCH_ASSOC);
-                            $check_user->execute();
-    
-                            $row_check_user = $check_user->fetch();
-                            $current_user_id = $row_check_user['user_id'];
-    
-                            //compare ang id sa user og ang nag comment
-                            //if ang current user naka login
-                            //maka like edit og comment siya
-                            if($current_user_id == $users_id)
-                            {
-                                echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>";
-                                echo "<button name = 'edit_comment' value = ".$row_comment['id'].">Edit</button>";
-                                echo "<button name = 'delete_comment' value = ".$row_comment['id'].">Delete</button>
-                                </div>";
-                            }
-                            //if dili gani siya
-                            //maka like ra sia sa comment sa uban
-                            else
-                            {
-                                echo "<button name = 'like_comment' value = ".$row_comment['id'].">Like(".$likes.")</button>
-                                </div>";
-                            }
-                        }
-                    endwhile;
-                    echo"
-                    
-                    </form>
-                    </div>
-                    </div>
-                ";
-            endwhile;
-                 echo"</div>
-                  </div>";
-
-                  ///////////////////////////////
-        
-
-        ?>
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Breed</p>
+        <input class = 'inputs' type = 'text' name = 'pet_breed' value = '".$row['pet_breed']."' />
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Gender</p>
+        <input class = 'inputs' type = 'text' name = 'pet_gender' value = '".$row['pet_gender']."' />
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Vaccination Status</p>
+        <input class = 'inputs' type = 'text' name = 'vaccination_status' value = '".$row['vaccination_status']."' />
+    </div>
+    <div class = 'hodl'>
+        <p class ='lebs'>Pet Details</p>
+        <input class = 'inputs' type = 'text' name = 'pet_details' value = '".$row['pet_details']."' />
+    </div>
+        <div class = 'btnDiv'>
+        <button class = 'btnss' name = 'update' value = ".$row['id'].">Update</button>
         </div>
-        
-    </body>
-    <style>
-        *{
-            padding: 0;
-            margin: 0;
+    </form>
+    </div>";
+
+   
+
+    if(isset($_POST['update']))
+    {
+        $id = $_POST['update'];
+        $pet_name = $_POST['pet_name'];
+        $pet_age = $_POST['pet_age'];
+        $pet = $_POST['pet'];
+        $pet_breed = $_POST['pet_breed'];
+        $pet_gender = $_POST['pet_gender'];
+        $vaccination_status = $_POST['vaccination_status'];
+        $pet_details = $_POST['pet_details'];
+
+        $update_pet = $con->prepare("UPDATE pets 
+                      SET
+                      pet = '$pet',
+                      vaccination_status = '$vaccination_status',
+                      pet_name = '$pet_name',
+                      pet_age = '$pet_age',
+                      pet_breed = '$pet_breed',
+                      pet_gender = '$pet_gender',
+                      pet_details = '$pet_details'
+                      WHERE
+                      id = $id
+                      ");
+        if($update_pet->execute())
+        {
+          echo "<script>alert('Updated!');</script>";
+          echo "<script>window.open('myPet.php','_self');</script>";
         }
-        #pinakaMain{
-            width:80vw;
-            margin-left: 10vw;
-         
+    }
+
+    if(isset($_POST['update_img']))
+    {
+        $id = $_POST['update_img'];
+        $pet_photo = $_FILES['pet_photo']['name'];
+        $pet_photo_tmp = $_FILES['pet_photo']['tmp_name'];
+
+        move_uploaded_file($pet_photo_tmp,"../uploads/pets/$pet_photo");
+
+        $update_img = $con->prepare("UPDATE pets SET pet_photo = '$pet_photo' WHERE id = $id");
+
+        if($update_img->execute())
+        {
+          echo "<script>alert('Updated!');</script>";
+          echo "<script>window.open('myPet.php','_self');</script>";
+        }
+    }
+
+?>
+</div>
+<div class="fot">
+  <?php
+     include ("inc/footer.php");
+  ?>
+</div>
+</body>
+<style>
+  .imaged {
+  border-radius: 4px;
+  width: 90%;
+  margin-left:5%;
+}
+.hodl{
+  border: 1px solid #0080fe;
+  width: 90%;
+  border-radius: 4px;
+  margin-bottom: 2vh;
+}
+.divs{
+  margin-top: 2vh;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.lebs {
+  color: black;
+  font-size: 12px;
+  font-family: "Varela Round", sans-serif;
+  padding: 10px;
+}
+.inputs{
+  padding: 10px;
+  margin-left: 5%;
+  width: 70%;
+  border: none;
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 2vh;
+  font-size: 18px;
+}
+.btnss{
+  background: #ffb830;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 10px;
+  float: right;
+  margin-right: 20%;
+  margin-top: 2vh;
+}
+.btn2{
+  border: 1px solid #ffb830;
+  padding: 10px;
+  background: none;
+  border-radius: 4px;
+  float: right;
+  margin-right: 15%;
+}
+.btnDiv{
+  height: 40px;
+}
+.form2{
+  margin-top: 2vh;
+}
+.btnD{
+  height: 50px;
+}
+
+.drop-zone {
+            width: 80%;;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  color: #777;
+  border: 2px dashed #009578;
+  border-radius: 10px;
+  margin-left: 5%;
+            margin-bottom: 10px;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+</style>
+<script>
+                        function myFuction(){
+            varOne = document.getElementById('municipal').value;
+                if(varOne == 'Mandaue City'){
+                    document.getElementById('mandaue').setAttribute('name', 'barangays');
+                    document.getElementById('Cebu').setAttribute('name', 'barangay');
+                    document.getElementById('Lapulapu').setAttribute('name', 'barangay');
+                    document.getElementById('Consolacion').setAttribute('name', 'barangay');
+                    document.getElementById('mandaue').style.display = "block";
+                    document.getElementById('Cebu').style.display = 'none';
+                    document.getElementById('Lapulapu').style.display = "none";
+                    document.getElementById('Consolacion').style.display = "none";
+                    console.log(varOne);
+                }
+                if(varOne == ''){
+                    
+                    document.getElementById('mandaue').style.display = "none";
+                    document.getElementById('Cebu').style.display = 'none';
+                    document.getElementById('Lapulapu').style.display = "none";
+                    document.getElementById('Consolacion').style.display = "none";
+                    //console.log(varOne);
+                }
+                if(varOne == 'Cebu City'){
+                    document.getElementById('mandaue').setAttribute('name', 'barangay');
+                    document.getElementById('Cebu').setAttribute('name', 'barangays');
+                    document.getElementById('Lapulapu').setAttribute('name', 'barangay');
+                    document.getElementById('Consolacion').setAttribute('name', 'barangay');
+                    document.getElementById('Cebu').style.display = 'block';
+                    document.getElementById('mandaue').style.display = "none";
+                    document.getElementById('Lapulapu').style.display = "none";
+                    document.getElementById('Consolacion').style.display = "none";
+                    console.log(varOne);
+                }
+                if(varOne == 'Consolacion'){
+                    document.getElementById('mandaue').setAttribute('name', 'barangay');
+                    document.getElementById('Cebu').setAttribute('name', 'barangay');
+                    document.getElementById('Lapulapu').setAttribute('name', 'barangay');
+                    document.getElementById('Consolacion').setAttribute('name', 'barangays');
+                    document.getElementById('Cebu').style.display = 'none';
+                    document.getElementById('mandaue').style.display = "none";
+                    document.getElementById('Lapulapu').style.display = "none";
+                    document.getElementById('Consolacion').style.display = "block";
+                   console.log(varOne);
+                }
+                if(varOne == 'Lapu-Lapu City'){
+                    document.getElementById('mandaue').setAttribute('name', 'barangay');
+                    document.getElementById('Cebu').setAttribute('name', 'barangay');
+                    document.getElementById('Lapulapu').setAttribute('name', 'barangays');
+                    document.getElementById('Consolacion').setAttribute('name', 'barangay');
+                    document.getElementById('Cebu').style.display = 'none';
+                    document.getElementById('mandaue').style.display = "none";
+                    document.getElementById('Lapulapu').style.display = "block";
+                    document.getElementById('Consolacion').style.display = "none";
+                    console.log(varOne);
+                }
+                
+                
+   
+            
 
         }
-       
-        .container{
-            width: 60%;
-            margin-left: 20%;
-            
-        }
-        #userHead{
-            display: flex;
-            margin-bottom: 10px;
-            text-decoration: none;
-        }
-        .innerCont{
-            width: 100%;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-        }
-        .imagePost{
-            margin-left: -1.5%;
-            width: 103%;
-            height: 50vh;
-        }
-        .forPadding{
-            padding: 10px;
-        }
-        .postName{
-            margin-top: 15px;
-            margin-left: 15px;
-            
-        }
-        .profileImg2{
-            border-radius: 30px;
-            width: 30px;
-            height: 30px;
-            color: #333;
-            float: center;
-            margin-top: 10px;
-        }
-        #infoPost{
-            display: flex;
-            margin-bottom: 10px;
-        }
-        #likeBtn{
-            margin-top: 10px;
-            border: none;
-            background: white;
-        }
-        #commentBtn{
-            margin-top: 10px;
-            margin-left: 10px;
-            border: none;
-            background: white;
-        }
-        #likeBtnImg{
-            height: 30px;
-        }
-        #commentBtnImg{
-            height: 30px;
-        }
-        .firstCont{
-            height: 60px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-            margin-top: 10px;
-        }
-        #caption{
-            color: gray;
-        }
-        .captionArea{
-            display: flex;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-        .nameok{
-            margin-right: 10px;
-        }
-        a{
-            text-decoration: none;
-        }
-        #likeCount{
-            margin-top: 10px;
-            margin-right: 20px;
-            color: gray;
-            font-size: 12px;
-            
-        }
-        #commentIhap{
-            margin-top: 10px;
-            color: gray;
-            font-size: 12px;
-        }
-        #commentors{
-            display: none;
-        }
-        .coms{
-            height: 42px;
-            padding: 10px;
-            width: 90%;
-            border: none;
-        }
-       #commites{
-          border: 1px solid gray;
-       }
-       #cmtbnt{
-           height: 42px;
-           width: 9%;
-           border: none;
-           outline: none;
-           background: white;
-       }
-    </style>
-    <script>
-      
-    </script>
+
+
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  const dropZoneElement = inputElement.closest(".drop-zone");
+
+  dropZoneElement.addEventListener("click", (e) => {
+    inputElement.click();
+  });
+
+  inputElement.addEventListener("change", (e) => {
+    if (inputElement.files.length) {
+      updateThumbnail(dropZoneElement, inputElement.files[0]);
+    }
+  });
+
+  dropZoneElement.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
+
+  ["dragleave", "dragend"].forEach((type) => {
+    dropZoneElement.addEventListener(type, (e) => {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    if (e.dataTransfer.files.length) {
+      inputElement.files = e.dataTransfer.files;
+      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+    }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
+});
+
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
+function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  }
+
+  // First time - there is no thumbnail element, so lets create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+                    </script>
 </html>
+
+

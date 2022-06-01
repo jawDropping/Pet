@@ -27,8 +27,8 @@
         <div class = 'hed' ><img src = '../uploads/dog2.gif' id = 'imgTop'><p class = 'ttlHead' >woof</p>
         </div><br>
             <?php
-            echo "<ul>";
-                   dog_food_products(); echo"</ul>
+            echo "<div class = 'fDogs'>";
+                   dog_food_products(); echo"</div>
                   </div>";
             include ("inc/bodyright.php"); 
             include ("inc/footer.php"); 

@@ -3,6 +3,7 @@
         <title>Pet Society</title>
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fredoka+One&family=Open+Sans:wght@500&family=Palette+Mosaic&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
@@ -65,7 +66,7 @@
             </div>
             <div class="under">
                 <p class = 'sayings2' >What PetSociety do?</p><br>
-                <p class = 'smaller' >We found out that most of the time when you donate theres no reward for your good deeds. Thats the reason why we create an agreement between petcenters that they'll give you atleast 2% of discount or higher if you donate directly to the organizations.</p>
+                <p class = 'smaller' >We found out that most of the time when you donate theres no reward for your good deeds. Thats the reason why we create an agreement between petcenters that they'll give you a discount if you donate directly to the organizations.</p>
                 <p class="smaller">Our job is to give information about the organizations, and to check or validate if you donate to those organization by sending us the proof of transaction between you and the organization, if you donate and choose not to inform us it's still okay but youll not be given for the coupon code to claim your discount</p>
             </div>
             <a href = '../petcenter/signup.php' class = 'toSignup'>
@@ -75,15 +76,15 @@
                 </div>
                 <div class="righter">
                     <p class = 'rightist' >Become one of our Petcenters? :></p>
-                    <p class = 'smaller2' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias maxime fugiat sapiente eum vel. Quaerat officia libero magnam et enim similique ea reiciendis, hic sint, numquam modi ipsam fugit possimus.</p>
+                    <p class = 'smaller2' >By applying so, you can enjoy many benefits from us. To name a few, you can broaden your scope since this is an online platform, and encourage many people to book appointments or make reservations online with just a click of your fingertip. Most importantly, it will boost your business. You can also help many pet organizations by encouraging people to donate thru coupons and discounts! What are you waiting for? Be part of the family, be part of Pet Society!</p>
                 </div>
             </div>
             </a>
             <div class="orgs">
                 <h3 class="headister">Our Selected Organizations</h3><br>
-            <ul>
+            <div class = 'fDogs'>
                   <?php donate(); ?>
-                </ul>
+                </div>
             </div>
                
                

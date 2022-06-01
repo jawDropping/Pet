@@ -18,7 +18,7 @@
             if($countUser>0)
             {
                 $_SESSION['id'] = $row['id'];
-                echo "<script>window.open('/Pet/admin/index.php?login_user=".$_SESSION['id']."','_self');</script>";
+                echo "<script>window.open('/Pet/admin/coupons.php?login_user=".$_SESSION['id']."','_self');</script>";
             }
             else
             {
@@ -100,6 +100,12 @@
             $org_location = $_POST['org_location'];
             $org_contact_number = $_POST['org_contact_number'];
             $org_email_address = $_POST['org_email_address'];
+            $bank_details = $_POST['bank_details'];
+            $website = $_POST['website'];
+            $paymaya = $_POST['paymaya'];
+            $org_manager = $_POST['org_manager'];
+            $facebook = $_POST['facebook'];
+            $description = $_POST['description'];
             
             $org_photo = $_FILES['org_photo']['name'];
             $org_photo_tmp = $_FILES['org_photo']['tmp_name'];
@@ -111,19 +117,31 @@
                 org_location,
                 org_contact_number,
                 org_email_address,
-                org_photo
+                org_photo,
+                bank_details,
+                website,
+                paymaya,
+                org_manager,
+                facebook,
+                org_details
             ) 
             VALUES(
                 '$org_name',
                 '$org_location',
                 '$org_contact_number',
                 '$org_email_address',
-                '$org_photo'
+                '$org_photo',
+                '$bank_details',
+                '$website',
+                '$paymaya',
+                '$org_manager',
+                '$facebook',
+                '$description'
             )");
             if($add_org->execute())
             {
                 echo "<script>alert('Added Successfully!');</script>";
-                echo "<script>window.open('index.php?manage_partner', '_self');</script>";
+                echo "<script>window.open('manage_partner.php', '_self');</script>";
             }
         }
     }
@@ -139,7 +157,7 @@
             
             echo 
             "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data' id = 'forming'>
-                
+                <div class = 'mainH'>
             <div class = 'holdest'>
             <p>".$row['org_name']."</p>
             </div>
@@ -152,14 +170,15 @@
             <div class = 'holdest'>
             <p>".$row['org_email_address']."</p>
             </div>
+            <div class = 'btnss'>
             <div class = 'holdest'>
             <button id='views2' name = 'edit_org' value = ".$row['id'].">Edit</button>
             </div>
             <div class = 'holdest'>
             <button  id='views' name = 'delete_org' value = ".$row['id'].">Delete</button>
             </div>
-                    
-                    
+            </div>     
+            </div>
                    
                     
                     
@@ -220,67 +239,58 @@
 
     function add_product() 
     {
+        include("inc/db.php");
+        if(isset($_POST['add_prod']))
+        {
+            $pro_name = $_POST['pro_name'];
+            $cat_id = $_POST['cat_name'];
+            $pro_brand = $_POST['pro_brand'];
 
+            $pro_img = $_FILES['pro_img']['name'];
+            $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
 
-       include("inc/db.php");
-       if(isset($_POST['add_prod']))
-       {
-           $pro_name = $_POST['pro_name'];
-           $cat_id = $_POST['cat_name'];
-           $pro_brand = $_POST['pro_brand'];
-           $pro_keyword = $_POST['pro_keyword'];
+            $pro_img2 = $_FILES['pro_img2']['name'];
+            $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
 
-           $pro_img = $_FILES['pro_img']['name'];
-           $pro_img_tmp = $_FILES['pro_img']['tmp_name'];
-           $pro_img2 = $_FILES['pro_img2']['name'];
-           $pro_img2_tmp = $_FILES['pro_img2']['tmp_name'];
-           
-           $pro_img3 = $_FILES['pro_img3']['name'];
-           $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
-           
+            $pro_img3 = $_FILES['pro_img3']['name'];
+            $pro_img3_tmp = $_FILES['pro_img3']['tmp_name'];
 
-        
-           move_uploaded_file($pro_img_tmp,"../uploads/products/$pro_img");
-           move_uploaded_file($pro_img2_tmp,"../uploads/products/$pro_img2");
-           move_uploaded_file($pro_img3_tmp,"../uploads/products/$pro_img3");
-           
-           $pro_price = $_POST['pro_price'];
-           $pro_quantity = $_POST['pro_quantity'];
+            $pro_price = $_POST['pro_price'];
+            $pro_quantity = $_POST['pro_quantity'];
+            $pro_keyword = $_POST['pro_keyword'];
 
-    
-           $add_pro = $con->prepare("insert into product_tbl
-           (
-               pro_name, 
-               cat_id, 
-               pro_brand, 
-               pro_img, 
-               pro_img2, 
-               pro_img3,
-               pro_price, 
-               pro_quantity,
-               pro_keyword
-            ) values
-            (
-                '$pro_name',
-                '$cat_id',
-                '$pro_brand',
-                '$pro_img',
-                '$pro_img2',
-                '$pro_img3',
-                '$pro_price',
-                '$pro_quantity',
-                '$pro_keyword'
-            )");
-            
-           if($add_pro->execute())
-           {
-                echo "<script>alert('Product Added Successfully!');</script>"; 
-           }
-           else
-           {
-                echo "<script>alert('Product Not Added Successfully!');</script>";
-           }
-        }    
+            // var_dump($pro_name);
+            // var_dump($cat_id);
+            // var_dump($pro_brand);
+            // var_dump($pro_img);
+            // var_dump($pro_img2);
+            // var_dump($pro_img3);
+            // var_dump($pro_price);
+            // var_dump($pro_quantity);
+            // var_dump($pro_keyword);
+
+            $add_prod = $con->prepare("INSERT INTO product_tbl 
+            SET
+            pro_name = '$pro_name',
+            cat_id = $cat_id,
+            pro_brand = '$pro_brand',
+            pro_img = '$pro_img',
+            pro_img2 = '$pro_img2',
+            pro_img3 = '$pro_img3',
+            pro_price = '$pro_price',
+            pro_quantity = $pro_quantity,
+            pro_keyword = '$pro_keyword'
+            ");
+
+            if($add_prod->execute())
+            {
+                echo "<script>alert('ADDED!');</script>";
+            }
+            else
+            {
+                echo "<script>alert('UNSUCCSESSFUL');</script>";
+            }
+        }
     }
 
     function viewall_cat()
@@ -343,7 +353,8 @@
     function viewall_orders()
     {
         include("inc/db.php");
-
+        require("../fpdf184/fpdf.php");
+        
         $net_total = 0;
         $q = $con->query("
             SELECT od.order_id, od.order_date, od.delivery_status, sum(od.qty * od.price), GROUP_CONCAT(concat(od.pro_name, '(x', od.qty, ')') SEPARATOR ', ') items FROM
@@ -353,21 +364,27 @@
             group by o.order_id, p.pro_name, o.delivery_status, o.order_date) od
             group by od.order_id, od.delivery_status, od.order_date    
             ");
+
+            
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) 
             {
-                $net_total += $order['sum(od.qty * od.price)'];
+                // $net_total += $order['sum(od.qty * od.price)'];
                 $order_id = $order['order_id'];
+                $mandaue = $order['sum(od.qty * od.price)']+10;
+                $cebu = $order['sum(od.qty * od.price)']+12;
+                $concolacion = $order['sum(od.qty * od.price)']+12;
+                $lapulapu = $order['sum(od.qty * od.price)']+12;
                 echo
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
-                    
+                        
                         <input type = 'hidden' name = 'order_id' value = '".$order['order_id']."' />
 
-                        <p>".$order_id."</p>";
+                        <p class = 'dataLebs'>".$order_id."</p>";
                         $view_details = $con->prepare("SELECT * FROM orders_tbl WHERE order_id = '$order_id'");
                         $view_details->setFetchMode(PDO:: FETCH_ASSOC);
                         $view_details->execute();
-            
+                    
                         $row = $view_details->fetch();
                         $user_id = $row['user_id'];
             
@@ -379,26 +396,70 @@
                         echo "
                         <input type = 'hidden' name = 'user_username' value = '".$row_username['user_username']."' />
 
-                        <p>".$row_username['user_username']."</p>";
+                        <a href = 'user.php?user=".$row_username['user_id']."'><p  class = 'dataLebs'>".$row_username['user_username']."</p></a>";
                     echo" 
                     <input type = 'hidden' name = 'items' value = '".$order['items']."' style = 'color:white' />
-                    <p>".$order['items']."</p>
-                    <p>".$order['order_date']."</p>
-                    <input type = 'hidden' name = 'total_amount' value = '".$net_total."' />
-                    <p>".$net_total."</p>
-                    <input class = 'dets' type = 'date' name = 'delivery_date' required/>
-                    <div class ='bots'>
+                    <p  class = 'dataLebss'>".$order['items']."</p>
+                    <p  class = 'dataLebs'>".$order['order_date']."</p>";
+                    if($row_username['municipality'] == "Mandaue City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$mandaue."' />
+                        <p  class = 'dataLebs'>".$mandaue."</p>";
+                    }
+                    if($row_username['municipality'] == "Cebu City")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$cebu."' />
+                        <p  class = 'dataLebs'>".$cebu."</p>";
+                    }
+                    if($row_username['municipality'] == "Consolacion")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$concolacion."' />
+                        <p  class = 'dataLebs'>".$concolacion."</p>";
+                    }
+                    if($row_username['municipality'] == "Lapu-lapu")
+                    {
+                        echo
+                        "<input type = 'hidden' name = 'total_amount' value = '".$lapulapu."' />
+                        <p  class = 'dataLebs'>".$lapulapu."</p>";
+                    }
+                    echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>";
+                   
+                     echo"<div class ='bots'>
                     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
                      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
+                     <a class = 'busog' href='print_receipt.php?order_id=".$order['order_id']."' target='_blank'>Print Receipt</a>
                      </div>
-        
+ 
                 </form>";
+                //     if($row_username['municipality'] == "Consolacion")
+                //     {
+                //         echo
+                //         "<input type = 'hidden' name = 'total_amount' value = '".$concolacion."' />
+                //         <p  class = 'dataLebs'>".$concolacion."</p>";
+                //     }
+                //     if($row_username['municipality'] == "Lapu-lapu")
+                //     {
+                //         echo
+                //         "<input type = 'hidden' name = 'total_amount' value = '".$lapulapu."' />
+                //         <p  class = 'dataLebs'>".$lapulapu."</p>";
+                //     }
+                    
+                //    echo" <input class = 'dets' type = 'date' name = 'delivery_date' required/>";"
+                //     echo"<div class ='bots'>
+                //     <button class = 'buto' name = 'confirm_order' value = ".$order['order_id'].">Confirm</button>
+                //      <a class = 'busog' href='cancel_order.php?order_id=".$order['order_id']."'>Cancel</a>
+                //      <a class = 'busog' href='print_receipt.php?order_id=".$order['order_id']."'>Print Receipt</a>
+                //      </div>
+ 
+                // </form>";
             }
         if(isset($_POST['confirm_order']))
         {
             $order_id = $_POST['confirm_order'];
 
-            
             $items = $_POST['items'];
             $total_amount = $_POST['total_amount'];
             $user_username = $_POST['user_username'];
@@ -410,35 +471,40 @@
             $fetch_user->execute();
         
             $row_username = $fetch_user->fetch();
-
+            $location = $row_username['user_address'];
             $receiver = $row_username['user_email'];
             $subject = "Order Confirmation Mail";
             $body = "
             Greetings!
 
-            Your Order has been confirmed and will be delivered on $delivery_date 
+            Your order has been confirmed and will be delivered on $delivery_date with order #$order_id 
 
-            Order Number: $order_id
-            Items: $items
+            Items include: 
+            $items
 
-            Please do keep your lines open because your items will be arrived to your
-            destination according to the delivery date.
-            Thank you for purchasing to our store hopefully you're 
-            happy with those items you purchased. 
+            Please keep your lines open because your items will arrive at your destination according to the aforementioned delivery date. 
+            
+            Thank you for being part of Pet Society where we treat your pet as our family. Enjoy!
 
-            Lovely store,
+            Meow,
             Pet Society
             ";
             $sender = "ianjohn0101@gmail.com";
+            
 
             $datenow = getdate();
 
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
+            $dateTimeStamp = strtotime($delivery_date);
+            $dateTimeStamp2 = strtotime($today);
 
-            if($delivery_date > $today)
+            // var_dump($dateTimeStamp);
+            // var_dump($dateTimeStamp2);
+
+            if($dateTimeStamp < $dateTimeStamp2)
             {
-                echo "INVALID DATE!";
+                echo "<script>alert('Date Chosen Invalid!');</script>";
             }
             else
             {
@@ -476,7 +542,7 @@
                     $pro_id = $row['pro_id'];
                     $qty = $row['qty'];
     
-                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity = pro_quantity-$qty WHERE pro_id = $pro_id");
+                    $update_qty = $con->prepare("UPDATE product_tbl SET pro_quantity=pro_quantity-$qty WHERE pro_id = $pro_id");
                     $update_qty->setFetchMode(PDO:: FETCH_ASSOC);
                     $update_qty->execute();
                 endwhile;
@@ -485,9 +551,7 @@
                 if(!$delete_ord->execute())
                 {
                     return;  
-                } 
-                echo "<script>alert('Successfully Confirmed!');</script>";
-                echo "<script>window.open('viewall_orders.php', '_self');</script>";
+                }
             }
         }
     }
@@ -516,7 +580,7 @@
     function viewalldelivered_items()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY order_id");
+        $sql = $con->prepare("SELECT * FROM delivered_items ORDER BY delivery_id");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -529,19 +593,17 @@
 
             echo
             "<tr>
-                <td>".$row['order_id']."</td>
+                <td>".$row['delivery_id']."</td>
                 <td>".$row['items']."</td>
                 <td>".$row['user_username']."</td>
                 <td>".$row['date_delivered']."</td>
-                <td>₱".$row['total_amount']."</td>
+                <td>P".$row['total_amount']."</td>
             </tr>";
         endwhile;
         echo
-        "<tr>
-            <td></td>
-            <td></td>
-            <td>Amount Collected: ₱".$row2['SUM(total_amount)']."</td>
-        </tr>";
+        "<td>
+            <p class = 'det' style = 'margin-left:1.5rem'>Amount Collected:</p><p class = 'figures'> P".$row2['SUM(total_amount)']."</p>
+        </td>";
     }
 
     
@@ -549,7 +611,7 @@
     function viewall_deliveries()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM delivery_tbl");
+        $sql = $con->prepare("SELECT * FROM delivery_tbl WHERE delivery_status = 'FOR DELIVERY'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -563,16 +625,74 @@
             $user_address = $row_user['user_address'];
             echo 
             "<div class = 'innerGrid'>
-                <p>".$row['order_id']."</p>
+                <p>".$row['delivery_id']."</p>
                 <p>".$row['items']."</p>
                 <p>".$row['total_amount']."</p>
                 <p>".$row['user_username']."</p>
                 <p>".$user_address."</p>
                 <p>".$row['delivery_date']."</p>
+                <p>".$row['delivery_status']."</p>
+                <div class = 'btn'>
                 <a class = 'btnssih' href = 'confirm_delivery.php?confirm_delivery=".$row['delivery_id']."'>Delivered</a>
+                <a class = 'btnssihed' href = 'return_delivery.php?return_delivery=".$row['delivery_id']."'>Return</a>   
+                </div>
             </div>";
             
         endwhile;
+    }
+
+    function viewall_unsuccessful_deliveries()
+    {
+        include("inc/db.php");
+
+        $query = $con->prepare("SELECT * FROM delivery_tbl WHERE delivery_status = 'UNSUCCESSFUL'");
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->execute();
+
+        while($row = $query->fetch()):
+            $user_username = $row['user_username'];
+            $view_user = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+            $view_user->execute();
+
+            $row_user = $view_user->fetch();
+            $user_address = $row_user['user_address'];
+
+            echo 
+            "<form method = 'POST' enctype = 'multipart/form-data'>
+            <div class = 'innerGrid'>
+            <input type = 'hidden' name = 'delivery_id' value = ".$row['delivery_id']." />
+            <p>".$row['delivery_id']."</p>
+            <p>".$row['items']."</p>
+            <p>".$row['total_amount']."</p>
+            <p>".$row['user_username']."</p>
+            <p>".$user_address."</p>";
+            echo "<input class = 'dets' type = 'date' name = 'delivery_date' required/>";
+            echo"<p>".$row['delivery_status']."</p>";
+            if($row['redelivery'] == 'REQUEST FOR REDELIVERY')
+            {
+                echo "
+                <button class = 'btnssih' name = 'redeliver'>REDELIVER</button>";
+            }
+        echo"</div>
+            </form>";
+        endwhile;
+        if(isset($_POST['redeliver']))
+        {
+            $delivery_date = $_POST['delivery_date'];
+            $delivery_id = $_POST['delivery_id'];
+            
+            $update = $con->prepare("UPDATE delivery_tbl SET 
+                                    delivery_status = 'FOR DELIVERY', 
+                                    redelivery = '' 
+                                    WHERE 
+                                    delivery_id = '$delivery_id'");
+            if($update->execute())
+            {
+                echo "<script>alert('UPDATED');</script>";
+                echo "<script>window.open('deliveries.php', '_self');</script>";
+            }
+        }   
     }
 
     function confirm_delivery()
@@ -591,7 +711,7 @@
             $items = $row['items'];
             $user_username = $row['user_username'];
             $total_amount = $row['total_amount'];
-
+            
             $fetch_user=$con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
             $fetch_user->setFetchMode(PDO:: FETCH_ASSOC);
             $fetch_user->execute();
@@ -603,41 +723,45 @@
             $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
 
 
-            $reciever = $row_username['user_email'];
+            $receiver = $row_username['user_email'];
             $subject = "Order Delivered!";
             $body = "
             Greetings!
 
-            Your Order has been delivered on $today
+            Your order has been delivered on $today.
 
-            Thank you for purchasing to our store hopefully you're 
-            happy with those items you purchased. 
+            Thank you for being part of Pet Society where we treat your pet as our family. Enjoy!
 
-            Lovely store,
+            Arf arf,
             Pet Society
             ";
             $sender = "ianjohn0101@gmail.com";
 
-            if(mail($reciever, $subject, $body, $sender))
-            {
-                // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
-                // $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                $sql = $con->prepare("INSERT INTO delivered_items(order_id, items, total_amount, user_username, date_delivered) VALUES('$order_id', '$items', '$total_amount', '$user_username', '$today')");
-                if($sql->execute())
+            $sql = $con->prepare("INSERT INTO delivered_items(delivery_id, items, total_amount, user_username, date_delivered) VALUES('$delivery_id', '$items', '$total_amount', '$user_username', '$today')");
+                if(!$sql->execute())
                 {
                   
-                        $update_status = $con->prepare("DELETE FROM delivery_tbl WHERE delivery_id = '$delivery_id'");
-                        $update_status->setFetchMode(PDO:: FETCH_ASSOC);
-                        $update_status->execute();
-
-                        if($update_status->execute())
-                        {
-                            echo "<script>alert('Item Delivered');</script>";
-                            echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
-                        }
+                       return;
                    
                 }
-            }
+
+                mail($receiver, $subject, $body, $sender);
+                $update_status = $con->prepare("DELETE FROM delivery_tbl WHERE delivery_id = '$delivery_id'");
+                $update_status->setFetchMode(PDO:: FETCH_ASSOC);
+                $update_status->execute();
+
+                if($update_status->execute())
+                {
+                    echo "<script>alert('Item Delivered');</script>";
+                    echo "<script>window.open('index.php?viewall_products.php','_self');</script>";
+                }
+
+            // if(mail($reciever, $subject, $body, $sender))
+            // {
+                // $sql = $con->prepare("UPDATE delivery_tbl SET delivery_status = 'CONFIRMED', date_delivered = '$today' WHERE delivery_id = '$delivery_id'");
+                // $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                
+            //}
         }
     }
 
@@ -670,6 +794,7 @@
             echo "<option value = '".$row['sub_cat_id']."'>".$row['sub_cat_name']."</option>";
         endwhile;
     }
+    
 
     function view_all_products()
     {
@@ -739,11 +864,10 @@
                     <p>".$row['contact_number']."</p>
                     </div>
                     <div class = 'holdest'>
+                    <input type = 'hidden' name = 'amount' value = '".$row['amount']."' />
                     <p>".$row['amount']."</p>
                     </div>
-                    <div class = 'holdest'>
-                    <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
-                    </div>
+                    
                     <div class = 'holdest'>
                     <div id = 'aksyon'>
                     <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
@@ -766,6 +890,8 @@
             $contact_number = $_POST['contact_number'];
             $full_name = $_POST['full_name'];
             $donator_email = $_POST['donator_email'];
+            $amount = $_POST['amount'];
+            $coupon_code = generateRandomString();
           
             $datenow = getdate();
 
@@ -776,25 +902,32 @@
             $body = "Your donation has been confirmed!";
             $sender = "ianjohn0101@gmail.com";
            
-            if(mail($receiver, $body, $sender, $sender))
+            // if(mail($receiver, $body, $sender, $sender))
+            // {
+               
+            // }
+            $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+            SET 
+            transaction_number = '$transaction_number',
+            org_name = '$org_name',
+            full_name = '$full_name',
+            contact_number = '$contact_number',
+            date_confirmed = '$today',
+            coupon_code = '$coupon_code',
+            amount = '$amount'
+            ");
+            if(!$add_ledger->execute())
             {
-                $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
-                SET 
-                transaction_number = '$transaction_number',
-                org_name = '$org_name',
-                full_name = '$full_name',
-                contact_number = '$contact_number',
-                date_confirmed = '$today'
-                ");
-                if($add_ledger->execute())
-                {
-                    $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
-                    $del_donation->execute();
-                    if($del_donation->execute())
-                    {
-                        echo "SUCCESS!";
-                    }
-                }    
+               return; 
+            }    
+
+            mail($receiver, $subject, $body, $sender);
+
+            $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+            $del_donation->execute();
+            if($del_donation->execute())
+            {
+                echo "SUCCESS!";
             }
         }
     }
@@ -805,6 +938,69 @@
 
     //     $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
     // }
+
+    function registered_petcenters()
+    {
+        include("inc/db.php");
+        $view_petcenters = $con->prepare("SELECT * FROM pet_center_tbl");
+        $view_petcenters->setFetchMode(PDO:: FETCH_ASSOC);
+        $view_petcenters->execute();
+
+        while($row = $view_petcenters->fetch()):
+            echo
+            "<form method = 'POST' enctype = 'multipart/form-data'>
+                <div class = 'innerGrid'>
+                <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."'/>
+                    <p class = 'asd'>".$row['pet_center_name']."</p>
+                    <p class = 'asd'>".$row['contact_number']."</p>
+                    <p class = 'asd'>".$row['email']."</p>
+                   
+                    <input type = 'hidden' name = 'email' value = '".$row['email']."' />
+                    <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
+                    <a class = 'btnV' href = view_application.php?view=".$row['pet_center_id'].">View</a>
+                </div>
+               
+            </form>";
+        endwhile;
+
+            if(isset($_POST['confirm']))
+            {
+                $pet_center_id = $_POST['pet_center_id'];
+
+                $sql2 = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql2->execute();
+                
+                $v_key = generateRandomString();
+
+                $row = $sql2->fetch();
+                
+                if($row['verified'] == 1)
+                {
+                    echo "<script>alert('This account has been confirmed!');</script>";
+                }
+                else
+                {
+                    $receiver = $row['email'];
+                    $subject = "Account Confirmation!";
+                    $body = "Your account has been confirmed, please use this OTP Code: $v_key to validate your account!";
+                    $sender = "ianjohn0101@gmail.com";
+    
+                    $sql = $con->prepare("UPDATE pet_center_tbl SET v_key = '$v_key' WHERE pet_center_id = '$pet_center_id'");
+                    $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql->execute();
+                    
+                    if(!$sql->execute())
+                    {
+                        return;
+                    }
+    
+                    mail($receiver, $subject, $body, $sender);
+                    echo "<script>alert('Confirmed!');</script>";
+                    
+                }
+            }
+    }
 
     function view_detail()
     {
@@ -828,31 +1024,41 @@
                 $org_name = $row_org['org_name'];
                 echo 
                 "<form method = 'POST' enctype = 'multipart/form-data' id = 'forming'>
+
                         <input type = 'hidden' name = 'donator_email' value = '".$donator_email."'/>
-                        
+                        <div class = 'imageDiv'>
+                        <img class = 'imagesP' src = '../uploads/donations/".$row['proof_photo']."' '/><div></div>
+                        </div>
+                        <div>
                         <div class = 'holdest'>
-                        <input type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
-                        <p  name = 'transaction_number'>".$row['transaction_number']."</p>
+                        <p class = 'lebss'>Transaction No.</p>
+                        <input  type = 'hidden' name = 'transaction_number' value = '".$row['transaction_number']."' />
+                        <p  class = 'dates' name = 'transaction_number'>".$row['transaction_number']."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p class = 'lebss'>Name</p>
                         <input type = 'hidden' name = 'full_name' value = '".$row['full_name']."' />
-                        <p>".$row['full_name']."</p>
+                        <p class = 'dates'>".$row['full_name']."</p>
                         </div>
+                        <div class = 'holdest'>
+                        <p class = 'lebss'>Organization Name</p>
                         <input type = 'hidden' name = 'org_name' value = '".$org_name."' />
-                        <div class = 'holdest'>
-                        <p>".$org_name."</p>
+                        
+                        <p class = 'dates'>".$org_name."</p>
                         </div>
                         <div class = 'holdest'>
+                        <p class = 'lebss'>Bank Acc. No.</p>
                         <input type = 'hidden' name = 'contact_number' value = '".$row['contact_number']."' />
-                        <p>".$row['contact_number']."</p>
+                        <p class = 'dates'>".$row['contact_number']."</p>
                         </div>
                         <div class = 'holdest'>
-                        <p>".$row['amount']."</p>
+                        <p class = 'lebss'>Amount</p>
+                        <p class = 'dates'>".$row['amount']."</p>
                         </div>
-                        <div class = 'holdest'>
-                        <img src = '../uploads/donations/".$row['proof_photo']."' style='margin-top:-40px;height:120px;margin-left:10px;'/>
-                        </div>
-                        <div class = 'holdest'>
+                       
+                       
+                     
+                        
                         <div id = 'aksyon'>
                         <button id = 'views2'  name = 'confirm_donation' value = ".$row['id'].">Confirm</button>
                         </div>
@@ -868,6 +1074,7 @@
                 $contact_number = $_POST['contact_number'];
                 $full_name = $_POST['full_name'];
                 $donator_email = $_POST['donator_email'];
+                $coupon_code = generateRandomString();
               
                 $datenow = getdate();
     
@@ -878,25 +1085,27 @@
                 $body = "Your donation has been confirmed!";
                 $sender = "ianjohn0101@gmail.com";
                
-                if(mail($receiver, $body, $sender, $sender))
+                $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
+                SET 
+                transaction_number = '$transaction_number',
+                org_name = '$org_name',
+                full_name = '$full_name',
+                contact_number = '$contact_number',
+                date_confirmed = '$today',
+                coupon_code = '$coupon_code'
+                ");
+                if(!$add_ledger->execute())
                 {
-                    $add_ledger = $con->prepare("INSERT INTO ledger_tbl 
-                    SET 
-                    transaction_number = '$transaction_number',
-                    org_name = '$org_name',
-                    full_name = '$full_name',
-                    contact_number = '$contact_number',
-                    date_confirmed = '$today'
-                    ");
-                    if($add_ledger->execute())
-                    {
-                        $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
-                        $del_donation->execute();
-                        if($del_donation->execute())
-                        {
-                            echo "SUCCESS!";
-                        }
-                    }    
+                   return;
+                }    
+                
+                mail($receiver, $subject, $body, $sender);
+
+                $del_donation = $con->prepare("DELETE FROM donations WHERE id = '$id'");
+                $del_donation->execute();
+                if($del_donation->execute())
+                {
+                    echo "SUCCESS!";
                 }
             }
         }
@@ -912,29 +1121,146 @@
         return $randomString;
     }
 
-    function showledger()
+    function viewall_org()
+    {   
+        include("inc/db.php");
+        $fetch_cat=$con->prepare("SELECT * from organizations");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+                            
+        while($row=$fetch_cat->fetch()):
+            echo "<option value = '".$row['id']."'>".$row['org_name']."</option>";
+        endwhile;
+    }
+
+    function view_org_donations()
     {
+        include("inc/db.php");
+        if(isset($_POST['view_org']))
+        {
+            $org_id = $_POST['org_name'];
+            $net_total = 0;
+            $sql = $con->prepare("SELECT * FROM organizations WHERE id = '$org_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $row = $sql->fetch();
+            $org_name = $row['org_name'];
+
+            $show_ledger = $con->prepare("SELECT * FROM ledger_tbl WHERE org_name = '$org_name'");
+            $show_ledger->setFetchMode(PDO:: FETCH_ASSOC);
+            $show_ledger->execute();
+
+
+           
+            if($show_ledger->rowCount()>0)
+            {
+                while($row = $show_ledger->fetch()):
+                   $net_total+=$row['amount'];
+                    echo
+                    "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
+                        <div class = 'inner'>
+                        <p class = 'lebs'>".$row['transaction_number']."</p>
+                        <p class = 'lebs'>".$row['full_name']."</p>
+                        <p class = 'lebs'>".$row['org_name']."</p>
+                        <p class = 'lebs'>".$row['contact_number']."</p>
+                        <p class = 'lebs'>".$row['date_confirmed']."</p>
+                        <p class = 'lebs'>".$row['coupon_code']."</p>
+                        </div>
+                    </form>";
+                endwhile;   
+                echo "Total Donation: $net_total";
+                echo "<br>";
+                echo "Total Donor/s:",$show_ledger->rowCount();
+            }
+          
+        }
+    }
+
+    function showledger()
+    {   
+
        
+        $total_amount = 0;
 
         include("inc/db.php");
         $show_ledger = $con->prepare("SELECT * FROM ledger_tbl");
         $show_ledger->setFetchMode(PDO:: FETCH_ASSOC);
         $show_ledger->execute();
 
+        
+
         while($row = $show_ledger->fetch()):
-          
+            $org_name = $row['org_name'];
             echo
             "<form method = 'POST' action = 'sort_org.php' enctype = 'multipart/form-data' id='forming'>
-            
-                <p>".$row['transaction_number']."</p>
-                <p>".$row['full_name']."</p>
-                <p>".$row['org_name']."</p>
-                <p>".$row['contact_number']."</p>
-                <p>".$row['date_confirmed']."</p>
-       
+                <div class = 'inner'>
+                <p class = 'lebs'>".$row['transaction_number']."</p>
+                <p class = 'lebs'>".$row['full_name']."</p>
+                <p class = 'lebs'>".$row['org_name']."</p>
+                <p class = 'lebs'>".$row['contact_number']."</p>
+                <p class = 'lebs'>".$row['date_confirmed']."</p>
+                <p class = 'lebs'>".$row['coupon_code']."</p>
+                
+            </div>
            
         </form>";
+        
         endwhile;
+
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'IRO'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
+
+        // $rows = $sql->fetch();
+        // echo "Org Name: IRO<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
+
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'Cebu Veterinary Doctors'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
+
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: Cebu Veterinary Doctors<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
+
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'PAWS'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
+
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: PAWS<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
+
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'Mayari Animal Rescue'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
+
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: Mayari Animal Rescue<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
+
+        // $sql=$con->prepare("SELECT SUM(amount), COUNT(full_name) FROM ledger_tbl WHERE org_name = 'DUMAGUETE ANIMAL SANCTUARY'");
+        // $sql->setFetchMode(PDO::FETCH_ASSOC);
+        // $sql->execute();
+
+        // $rows = $sql->fetch();
+        // echo "<br>Org Name: DUMAGUETE ANIMAL SANCTUARY<br>";
+        // echo "Total Amount Donated: ",$rows['SUM(amount)'];
+        // echo "<br>Total Customer: ",$rows['COUNT(full_name)'];
+        // echo "<br>";
+        
+        
+       
+    
     }
     
 
@@ -953,13 +1279,16 @@
                while($row = $search_transaction_number->fetch())
                {
                     echo 
-                    "<tr>
-                        <td>".$row['transaction_number']."</td>
-                        <td>".$row['full_name']."</td>
-                        <td>".$row['org_name']."</td>
-                        <td>".$row['contact_number']."</td>
-                        <td>".$row['date_confirmed']."</td>
-                    </tr>";
+                    "<form id='forming'>
+                    <div class = 'inner' >
+                    <p class = 'lebs'>".$row['transaction_number']."</p>
+                    <p class = 'lebs'>".$row['full_name']."</p>
+                    <p class = 'lebs'>".$row['org_name']."</p>
+                    <p class = 'lebs'>".$row['contact_number']."</p>
+                    <p class = 'lebs'>".$row['date_confirmed']."</p>
+                    </div>
+               
+            </form>";
                }
             }
             else
@@ -970,10 +1299,200 @@
         }
     }
 
+    function search_product_name()
+    {
+        include("inc/db.php");
+        if(isset($_GET['search']) && isset($_GET['pro_name']))
+        {
+            $pro_name = $_GET['pro_name'];
+            $sql = $con->prepare("SELECT * FROM product_tbl WHERE pro_name = '$pro_name'");
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            $sql->execute();
+
+            if($sql->rowCount()>0)
+            {
+                while($row = $sql->fetch()):
+                    echo
+                "<p class = 'p1'>".$row['pro_name']."</p>
+                <p class = 'p2'>".$row['pro_price']."</p>
+                <p class = 'p2'>".$row['pro_quantity']."</p>
+                <div>
+                <a class = 'edith' href = 'edit_prod.php?edit_prod=".$row['pro_id']."'>Edit</a>
+                <a class = 'byew' href = 'delete_cat.php?delete_prod=".$row['pro_id']."'>Delete</a>";
+                endwhile;
+            }
+            else
+            {
+                echo
+                "<h2>Transaction Number not Found!</h2>";
+            }
+        }
+    }
+
+    function search_user()
+    {
+        include("inc/db.php");
+        if(isset($_GET['search']) && isset($_GET['user_username']))
+        {
+            $user_username = $_GET['user_username'];
+            $sql = $con->prepare("SELECT * FROM users_table WHERE user_username = '$user_username'");
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            $sql->execute();
+
+            $i = 1;
+
+            if($sql->rowCount()>0)
+            {
+                while($row = $sql->fetch()):
+                    echo 
+                    "<div class = 'innerGrid'>
+                    <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+                    <p class = 'okss'>".$row['user_username']."</p>
+                    <p class = 'okss'>".$i++."</p>
+                   <p class = 'okss'>".$row['user_email']."</p>
+                   <p class = 'okss'>".$row['user_contactnumber']."</p>
+                   <p class = 'okss'>".$row['user_address']."</p>
+                   <a class = 'dbtn' href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
+                   <a class = 'dbtn' href = 'view_pet.php?view=".$row['user_id']."'>View Pet</a>
+                  
+            </div>";
+                endwhile;
+            }
+            else
+            {
+                echo "NOT FOUND!";
+            }
+        }
+    }
+
+    function search_org()
+    {
+        include("inc/db.php");
+        if(isset($_GET['search']) && isset($_GET['org_name']))
+        {
+            $org_name = $_GET['org_name'];
+            $sql = $con->prepare("SELECT * FROM organizations WHERE org_name = '$org_name'");
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            $sql->execute();
+
+            if($sql->rowCount()>0)
+            {
+                while($row = $sql->fetch()):
+                    echo "<form method = 'POST' action = 'update_organizations.php' enctype = 'multipart/form-data' id = 'forming'>
+                    <div class = 'mainH'>
+                <div class = 'holdest'>
+                <p>".$row['org_name']."</p>
+                </div>
+                <div class = 'holdest'>
+                <p>".$row['org_location']."</p>
+                </div>
+                <div class = 'holdest'>
+                <p>".$row['org_contact_number']."</p>
+                </div>
+                <div class = 'holdest'>
+                <p>".$row['org_email_address']."</p>
+                </div>
+                <div class = 'btnss'>
+                <div class = 'holdest'>
+                <button id='views2' name = 'edit_org' value = ".$row['id'].">Edit</button>
+                </div>
+                <div class = 'holdest'>
+                <button  id='views' name = 'delete_org' value = ".$row['id'].">Delete</button>
+                </div>
+                </div>     
+                </div>
+                       
+                        
+                        
+                       
+            
+                </form>";
+                endwhile;
+            }
+            else
+            {
+                echo "NOT FOUND!";
+            }
+        }
+    }
+
+    function search_pet_center_name()
+    {
+        include("inc/db.php");
+        if(isset($_GET['search']) && isset($_GET['pet_center_name']))
+        {
+            $pet_center_name = $_GET['pet_center_name'];
+            $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_name = '$pet_center_name'");
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            $sql->execute();
+
+            if($sql->rowCount()>0)
+            {
+                while($row = $sql->fetch()):
+                    echo "<form method = 'POST' enctype = 'multipart/form-data'>
+                    <div class = 'innerGrid'>
+                    <img class = 'bimg' src = '../uploads/business_permits/".$row['business_permit']."'/>
+                        <p class = 'asd'>".$row['pet_center_name']."</p>
+                        <p class = 'asd'>".$row['contact_number']."</p>
+                        <p class = 'asd'>".$row['email']."</p>
+                       
+                        <input type = 'hidden' name = 'email' value = '".$row['email']."' />
+                        <input type = 'hidden' name = 'pet_center_id' value = '".$row['pet_center_id']."' />
+                        <a class = 'btnV' href = view_application.php?view=".$row['pet_center_id'].">View</a>
+                    </div>
+                   
+                </form>";
+                endwhile;
+
+                if(isset($_POST['confirm']))
+                {
+                    $pet_center_id = $_POST['pet_center_id'];
+    
+                    $sql2 = $con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+                    $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                    $sql2->execute();
+                    
+                    $v_key = generateRandomString();
+    
+                    $row = $sql2->fetch();
+                    
+                    if($row['verified'] == 1)
+                    {
+                        echo "<script>alert('This account has been confirmed!');</script>";
+                    }
+                    else
+                    {
+                        $receiver = $row['email'];
+                        $subject = "Account Confirmation!";
+                        $body = "Your account has been confirmed, please use this OTP Code: $v_key to validate your account!";
+                        $sender = "ianjohn0101@gmail.com";
+        
+                        $sql = $con->prepare("UPDATE pet_center_tbl SET v_key = '$v_key' WHERE pet_center_id = '$pet_center_id'");
+                        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                        $sql->execute();
+                        
+                        if(!$sql->execute())
+                        {
+                            return;
+                        }
+        
+                        mail($receiver, $subject, $body, $sender);
+                        echo "<script>alert('Confirmed!');</script>";
+                        
+                    }
+                }
+            }
+            else
+            {
+                echo "NOT FOUND!";
+            }
+        }
+    }
+
     function viewall_coupons()
     {
         include("inc/db.php");
-        $view_coupons = $con->prepare("SELECT * FROM donations");
+        $view_coupons = $con->prepare("SELECT * FROM ledger_tbl");
         $view_coupons->setFetchMode(PDO:: FETCH_ASSOC);
         $view_coupons->execute();
 
@@ -981,7 +1500,6 @@
             echo 
             "<div class = 'inners'>
                 <p>".$row['full_name']."</p>
-                <p class = 'okss'>".$row['email']."</p>
                 <p class = 'okss'>".$row['coupon_code']."</p>
             </div>"; 
         endwhile;
@@ -1034,16 +1552,15 @@
 
         while($row=$fetch_pro->fetch()):
             echo "<div class = 'innerGrid'>
-                <p>".$i++."</p>
-                <p>".$row['user_username']."</p>
-                <p>".$row['user_email']."</p>
-                <p>".$row['user_contactnumber']."</p>
-                <p>".$row['user_address']."</p>
-                <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
-                <div style = 'display: flex'>
-                <a class = 'btn1' href='#'>Edit</a>
-                <a class = 'btn2' href='#'>Delete</a>
-                </div>
+                 <img class = 'imgg' src = '../uploads/user_profile/".$row['user_profilephoto']."'/>
+                 <p class = 'okss'>".$row['user_username']."</p>
+                 <p class = 'okss'>".$i++."</p>
+                <p class = 'okss'>".$row['user_email']."</p>
+                <p class = 'okss'>".$row['user_contactnumber']."</p>
+                <p class = 'okss'>".$row['user_address']."</p>
+                <a class = 'dbtn' href = 'delete_user.php?delete=".$row['user_id']."'>Delete User</a>
+                <a class = 'dbtn' href = 'view_pet.php?view=".$row['user_id']."'>View Pet</a>
+               
          </div>";
         endwhile;
     }
@@ -1066,6 +1583,22 @@
             $row_cat = $fetch_cat->fetch();
 
             echo "
+            <div class = 'bodies'>
+            <form method = 'POST' enctype = 'multipart/form-data'>
+                
+                       <div class = 'mains'>
+                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
+                        <div class = 'buts'>
+                        <div class='drop-zone'>
+                    <span class='drop-zone__prompt'>Drop file here or click to upload</span>
+                    <input type='file' name = 'sample_img1' class='drop-zone__input'>
+                    </div>
+
+                    
+                        <button class = 'updateBtn' name = 'update_first_image'>Update Image</button>
+                        </div>
+                        </div>
+            </form>
             <form method = 'POST' enctype = 'multipart/form-data'>
                 <div class = 'body'>
                 <div class = 'seconds'>
@@ -1096,7 +1629,7 @@
                         <input class = 'oks' type='text' name = 'pro_quantity' value = '".$row['pro_quantity']."'/>
                     </div>
                     <div class = 'holders'>
-                        <p class = 'lebs' >Product Keyword: </p>
+                        <p class = 'lebs' >Product Description: </p>
                         <input class = 'oks' type='text' name = 'pro_keyword' value = '".$row['pro_keyword']."'/>
                     </di>
                     
@@ -1106,38 +1639,10 @@
                 </div>
                 <br>
             </form>
-            <div class = 'bodies'>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #1</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img']."' />
-                        <br><input type = 'file' name = 'sample_img1' value = ".$row['pro_img']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_first_image'>Update First Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #2</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img2']."'/>
-                        <br><input type = 'file' name = 'sample_img2' value = ".$row['pro_img2']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_second_image'>Update Second Image</button>
-            </form>
-            <form method = 'POST' enctype = 'multipart/form-data'>
-                <div class = 'body2'>
-                    <div>
-                        <p class = 'lebs'>Sample Image #1</p>
-                        <img class = 'imges' src = '../uploads/products/".$row['pro_img3']."'/>
-                        <br><input type = 'file' name = 'sample_img3' value = ".$row['pro_img3']." required/><br>
-                    </div>
-                </div><br>
-                <button name = 'update_third_image'>Update Third Image</button>
-            </form>
-            </div>";
+
+            </div>
+            
+           ";
             if(isset($_POST['update_prod']))
             {
                 $cat_name = $_POST['cat_name'];
@@ -1160,7 +1665,7 @@
                 if($update_prod->execute())
                 {
                     echo "<script>alert('Product Updated Successfully!');</script>";
-                    echo "<script>window.open('sales_inventory.php','_self');</script>";
+                    echo "<script>window.open('products.php','_self');</script>";
                 }
             }
             if(isset($_POST['update_first_image']))
@@ -1253,7 +1758,7 @@
         if($delete_prod->execute())
         {
             echo "<script>alert('Product Deleted Successfully!');</script>";
-            echo "<script>window.open('index.php?viewall_products','_self');</script>";
+            echo "<script>window.open('products.php','_self');</script>";
         }
     }
 

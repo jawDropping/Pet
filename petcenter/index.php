@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Pet Society</title>
+        <link rel = "stylesheet" href="css/index.css" />
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +16,7 @@
             include ("inc/header.php"); 
             ?>
             
-            
+           
             <div class = "ko">
         <div class="inners">
         <a class = 'lengkong' href = 'index.php'>My services</a>
@@ -26,6 +27,18 @@
         </div>
             <div id='bodyleft'>
                 <div class="kapo">
+                <form method = "GET" action = "search_transaction_code.php"  enctype="multipart/form-data">
+           <div class = 'search'>
+
+            <p class = 'lebs'> Search Transaction Code:</p> 
+            <div class="searches">
+            <input class = 'intsearch' type = "text" name = "user_query" />
+            <button class = 'btns' name = "search"><img src="../uploads/searchT.png"></button>
+            </div>
+          
+           </div>
+            
+        </form>
                 <div class = 'mainer'>    
                     <?php timeline(); ?>
                     
@@ -35,29 +48,11 @@
                
                 
             </div>
-            <br>
-            <div class="haha">
-                    <p>jdhsakj</p>
-                </div>
-
+        
     </body>
     <style>
         .mainer{
-           margin-top: 3%; 
-        }
-        
-        .kapo{
-            display: flex;
-            flex-direction: column;
-        }
-        .haha{
-            width: 100vw;
-            background: rgb(0, 86, 157);
-            height: 52px;
-        }
-        body{
-            background: rgb(0,114,210);
-            background: linear-gradient(90deg, rgba(0,114,210,1) 0%, rgba(0,182,194,1) 100%);
+            padding-bottom: 10vh;
         }
     </style>
 </html>

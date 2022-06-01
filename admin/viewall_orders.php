@@ -6,6 +6,7 @@
     <head>
         <title>Admin Panel</title>
         <link rel = "stylesheet" href="css/style.css" />
+        <link rel = "stylesheet" href="css/viewOrders.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
@@ -14,7 +15,21 @@
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&family=Nunito:wght@200&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Rubik:wght@500&family=Varela+Round&display=swap" rel="stylesheet">
     </head>
-
+    <style>
+        .noorders{
+            width: 70%;
+            margin-left: 15%;
+            margin-top: 20vh;
+            text-align: center;
+            font-size: 20px;
+            font-family: "Varela Round", sans-serif;
+            color: white;
+}
+.imgw{
+    height: 25px;
+    width: 25px;
+}
+    </style>
     <body>
     <?php 
            
@@ -29,17 +44,18 @@
       <ul class = 'mainUl'>
         <li class =  "donate"><a href = "index.php"><img src="../uploads/donation2.1.svg" class="navicons">Donations</a></li>
             <ul class="subList">
-                <li><a href="manage_donation.php">Manage Donations</a></li>
+                <li><a href="coupons.php">Coupon Application</a></li>
                 <li><a href="manage_partner.php">Manage Partners</a></li>
                 <li><a href="ledger.php">Ledger</a></li>
             </ul>
-        <li><a href = "/Pet/admin/sales_inventory.php"><img src="../uploads/sales4.svg" class="navicons">Products</a></li>
+        <li><a href = "/Pet/admin/products.php"><img src="../uploads/sales4.svg" class="navicons">Product Inventory</a></li>
         <li><a href = "/Pet/admin/add_products.php"><img src="../uploads/box.svg" class="navicons">Add Product</a></li>
-        <li><a href = "/Pet/admin/viewall_products.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
-        <li class = 'selection' ><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/deliver.svg" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
-        <li><a href= "/Pet/admin/viewall_coupons.php"><img src="../uploads/coupon.svg" class="navicons">Coupons</a></li> 
-        <li><a href= "/Pet/admin/viewall_users.php"><img src="../uploads/user.svg" class="navicons">View All Users</a></li> 
-        <li><a href= "/Pet/admin/viewalldelivered_items.php"><img src="../uploads/deliver.svg" class="navicons">Sales Inventory</a></li>
+        <li><a href = "/Pet/admin/deliveries.php"><img src="../uploads/deliver.svg" class="navicons">Deliveries(<?php echo count_deliveries();?>)</a></li>
+        <li class = 'selection' ><a href = "/Pet/admin/viewall_orders.php"><img src="../uploads/ord2.png" class="navicons">Orders(<?php echo count_orders();?>)</a></li>
+       
+        <li><a href= "/Pet/admin/users.php"><img src="../uploads/user.svg" class="navicons">Users</a></li> 
+        <li><a href= "/Pet/admin/sales.php"><img src="../uploads/report.png" class="navicons">Generate Report</a></li>
+        <li><a href= "/Pet/admin/petcenterApplication.php"><img src="../uploads/deliver.svg" class="navicons">Pet Center Application</a></li>
         </ul>
 </div>
          <div div class="leftFooter">
@@ -61,13 +77,16 @@ $row = $viewall_ords->fetch();
 
 if($row == 0)
 {
-    echo "NO ORDERS";
+    echo "
+    <div class = 'noorders'>
+    <p><img class = 'imgw' src = '../uploads/warn2.png'> NO ORDERS</p>
+    </div>";
 }
 else
 {
 
 ?>
-<p class ='hed'>View All Orders</p>
+<p class ='hed'>All Orders</p>
 
 <div class = "body">
     
@@ -75,20 +94,13 @@ else
     <div>
         <div class = 'hedGrid'>
     
-            <p>ORDER ID </p>
-
-            <p>USER</p>
-     
-            <p>ITEMS</p>
-
-
-            <p>TOTAL AMOUNT</p>
-
-
-            <p>Delivery Date</p>
-           
-
-            <p>Action</p>
+            <p class = 'lebsH'>Order ID </p>
+            <p class = 'lebsH'>User</p>
+            <p class = 'lebsH'>Items</p>
+            <p class = 'lebsH'>Order Placed</p>
+            <p class = 'lebsH'>Total Amount</p>
+            <p class = 'lebsH'>Delivery Date</p>
+            <p class = 'lebsH'>Action</p>
         </div>
 
             <?php
@@ -106,71 +118,7 @@ else
             
         ?>
     </body>
-    <style>
-
-
-    p{
-        padding: 10px;
-    }
-    .selection {
-    background: #28287774;
-    }
-    .hed{
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-    }
-    .bots{
-        text-align: center;
-    }
-    .body{
-        margin-top: 7vh;
-        background: #fff;
-        width: 95%;
-        border-radius: 5px;
-        padding: 10px;
-        margin-left: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
-    }
-    .hedGrid{
-        display: grid;
-        grid-template-columns: 15% 15% 15% 15% 15% 15%;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 1px solid black;
-    }
-    #forming{
-        display: grid;
-        grid-template-columns: 15% 15% 15% 15% 15% 15%;
-        font-size: 14px;
-        margin-top: 20px;
-        background: #eee;
-        padding: 5px;
-    }
-    .dets{
-        height: 30px;
-    }
-    .buto{
-        color: #fff;
-        border-radius: 3px;
-         width: 40%;
-         height: 32px;
-        background: #5a5bf3;
-        border: 1px solid  #5a5bf3;
-        text-decoration: none;
-    }
-    .busog{
-        height: 30px;
-    color: #5a5bf3;
-    border-radius: 3px;
-    width: 100px;
-    background: white;
-    border: 1px solid #5a5bf3;
-    text-decoration: none;
-    padding: 5px 5px 5px 5px;
-    }
-</style>
+  
 
 
 

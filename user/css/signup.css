@@ -5,8 +5,7 @@ body {
   justify-content: center;
 }
 .mainContainer {
-  height: 80vh;
-  width: 80vw;
+  width: 70vw;
   margin-top: 5vh;
   background: rgb(255, 255, 255);
   border-radius: 10px;
@@ -14,13 +13,12 @@ body {
 }
 #signUpHead {
   font-family: "Varela Round", sans-serif;
-  font-size: 28px;
+  font-size: 20px;
   width: 85%;
 }
 .insideDiv {
-  padding: 10px;
+  padding: 10px 0px 10px 10px;
   display: flex;
-  height: 100%;
 }
 .rightSide {
   width: 60%;
@@ -73,9 +71,38 @@ body {
     rgba(17, 17, 26, 0.1) 0px 0px 8px;
 }
 #imgLeft {
-  height: 40%;
-  margin-top: 80%;
+  height: 100%;
+  width: 50%;
+  margin-left: 30%;
+}
+.imgCont {
+  height: 30%;
+  margin-top: 20%;
+  padding-top: 20%;
+  background: rgb(75, 166, 255);
+  background: radial-gradient(
+    circle,
+    rgba(75, 166, 255, 0.4374124649859944) 0%,
+    rgba(255, 255, 255, 1) 50%
+  );
+  padding-bottom: 20%;
+}
+.oneS {
+  font-weight: bold;
+  font-family: "Varela Round", sans-serif;
+  font-size: 28px;
+  text-align: right;
+  margin-right: 30px;
+  margin-top: 20%;
+  color: #333;
+}
+.welss {
+  font-weight: bold;
+  font-size: 20px;
   float: right;
+  margin-right: 30px;
+  color: #4e8cca;
+  font-family: "Varela Round", sans-serif;
 }
 #sngup {
   width: 90%;
@@ -90,9 +117,24 @@ body {
 }
 .topDiv {
   display: flex;
+  margin-bottom: 8px;
+  margin-top: 2%;
 }
 #homies {
-  margin-top: 5%;
+  margin-top: 2%;
   height: 30px;
   width: 30px;
+}
+@media (max-width: 800px) {
+  .leftSide {
+    display: none;
+  }
+  .rightSide {
+    width: 100vw;
+    margin-left: 5%;
+  }
+  .mainContainer {
+    width: 100vw;
+    margin-top: 0;
+  }
 }

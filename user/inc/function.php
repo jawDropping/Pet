@@ -9,7 +9,7 @@
             $user_email = $_POST['user_email'];
             $user_password = $_POST['user_password'];
 
-            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email'");
+            $check_email = $con->prepare("SELECT * FROM users_table WHERE user_email = '$user_email' AND user_password = '$user_password'");
             $check_email->setFetchMode(PDO::FETCH_ASSOC);
             $check_email->execute();
 
@@ -216,66 +216,70 @@
             $display_cart->setFetchMode(PDO:: FETCH_ASSOC);
             $display_cart->execute();
             
-            echo "<table cellpadding='0' cellspacing = '0'>
-                             <tr class='headerTitle'>
-                                 <th style='width:10%'>Image</th>
-                                 <th style='width:30%'>Product Name</th>
-                                 <th>Quantity</th>
-                                 <th>Price</th>
-                                 <th>Sub Total</th>
-                                 <th>Remove</th>
-                             </tr>";
+            echo "<div class = 'mainTebs' >
+                             <div class='heads'>
+                                 <p class ='lebss' id = 'hied'> Image</p>
+                                 <p class ='lebss'> Product Name</p>
+                                 <p class ='lebss'> Quantity</p>
+                                 <p class ='lebss'> Price</p>
+                                 <p class ='lebss'> Sub Total</p>
+                                 <p class ='lebss'> Remove</p>
+                             </div>";
             while($row_pro = $display_cart->fetch()):
                 echo "<form method = 'GET' action = '/Pet/user/update_cart_qty.php' enctype = 'multipart/form-data'>
-                        <tr class ='data'>
-                            <td>
+                        <div class ='data'>
+                          <div class = 'inputss' id = 'hied'>
                             <img class = 'cartDisplayImage' src = '../uploads/products/".$row_pro['pro_img']."' />
-                            </td>
-                            <td class = 'productNem'>
-                               <p> ".$row_pro['pro_name']."</p>
-                            </td>
-                            <td>
+                            </div>
+                            <div class = 'inputss1'>
+                               <p class = 'prodName'> ".$row_pro['pro_name']."</p>
+                               <p class = 'prodBrand'> ".$row_pro['pro_brand']."</p>
+                               <p class = 'prodBrand'>Stock/s: ".$row_pro['pro_quantity']."</p>
+                            </div>
+                            <div class = 'inputss2'>
                                 <input type = 'number'  class = 'quantity' name = 'pro_quantity' value = '".array_count_values($_SESSION['cart'])[$row_pro['pro_id']]."' min = '1' max = '100
                                 '/>
                                 <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id'/>
-                                <button id = 'pro_btn'>Update</button>
-                            </td>
-                            
-                            <td  class = 'price'>
-                                ".$row_pro['pro_price']."
-                            </td>
-                            <td class = 'sub_total'>";
-                                $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
-                                $pro_price = $row_pro['pro_price'];
-                                $sub_total = $qty * $pro_price;
-                                echo $sub_total;
-                                $net_total = $net_total + $sub_total;
+                                <button id = 'update'><img class = 'delete' src = '../uploads/edittw.png'></button>
+                            </div>
+                            <div class = 'inputss'>
+                            <p  class = 'prodName'> ₱".$row_pro['pro_price']."</p>
+                            </div>
+                             <div class = 'inputss'>
+                             <p class = 'prodName'>₱";
+                             $qty = array_count_values($_SESSION['cart'])[$row_pro['pro_id']];
+                             $pro_price = $row_pro['pro_price'];
+                             $sub_total = $qty * $pro_price;
+                             echo $sub_total;
+                             $net_total = $net_total + $sub_total;
 
-                            echo "</td></form>
+                         echo "</p>
+                             </div>
+                           </form>
                            
                             <form method = 'GET' action = '/Pet/user/delete_cart.php' enctype = 'multipart/form-data'>
-                            <td>
+                            <div class = 'inputss'>
                             <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'delete' />
                             <button id = 'pro_btndelete'><img src = '../uploads/delete 1.svg' class='delete'></button></a>
-                            </td>
+                            </div>
                             </form>    
-                        </tr>
+                        </div>
                     </form>";
 
             endwhile;
 
 
             echo 
-            "<tr style='height: 70px; box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);background:#F5F2E7; '>
-                <td colspan = '4' style='border: none;'></td>
-                <td style='color:#444; border: none;'>
-                    Total Amount: ".$net_total."
+            "<div class = 'tots''>
+    
+                <p class = 'ito''>
+                    Total Amount:</p> <p class = 'itos'>₱".$net_total."</p>
                         <input type = 'hidden' name = 'totalprice' value = ".$net_total." />
-                    </td>
-                    <td style='border: none;'>
-                    <a href = 'checkout.php' id = 'pro_btn' style='text-decoration:none; padding: 5px; width: 90%;margin-top: 15px;' name = 'place_order'>Place Order</a>
-                </td>
-            </tr>";
+                    
+                    <a class = 'btnn' href = 'checkout.php'  name = 'place_order'>Place Order</a>             
+                    
+                    
+                    </div>";
 
                  if(isset($_GET['orders']))
                  {
@@ -300,6 +304,7 @@
 
     function view_orders()
     {
+        
         include("inc/db.php");
         
         if(isset($_GET['user_id']))
@@ -325,30 +330,94 @@
             $orders = $q->fetchAll(PDO::FETCH_ASSOC);
             foreach ($orders as $order) {
                 $net_total += $order['sum(od.qty * od.price)'];
+                $totalmandaue = $order['sum(od.qty * od.price)'] + (10);
+                $totallacion = $order['sum(od.qty * od.price)'] + (12);
+                $totalcebu = $order['sum(od.qty * od.price)'] + (12);
+                $totallapulapu = $order['sum(od.qty * od.price)'] + (13);
                 echo
                 "<div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['items']."</p>
-                    </div>
-                    <div class = 'dataHolders'>
-                    <p class = 'dataCont' >₱".$order['sum(od.qty * od.price)']."</p>
-                    </div>
-                    <div class = 'dataHolder'>
+                    </div>";
+                    if($row_get_user_id['municipality'] == "Mandaue City")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totalmandaue."</p>
+                        </div>";
+                    }
+                    if($row_get_user_id['municipality'] == "Cebu City")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totalcebu."</p>
+                        </div>";
+                    }
+                    if($row_get_user_id['municipality'] == "Lapu-Lapu City")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totallapulapu."</p>
+                        </div>";
+                    }
+                    if($row_get_user_id['municipality'] == "Consolacion")
+                    {
+                        echo 
+                        "<div class = 'dataHolders'>
+                        <p class = 'dataCont' >₱".$totallacion."</p>
+                        </div>";
+                    }
+
+                    
+                   echo "<div class = 'dataHolder'>
                     <p class = 'dataCont'>".$order['delivery_status']."</p>
                     </div>
                     <div class = 'dataHolder'>
                     <p class = 'dataCont'><a class = 'dataLenk' href = 'cancel_order.php?cancel_order=".$order['order_id']."'>Cancel</a></p>
+                    <a class = 'busog' href='print_receipt.php?order_id=".$order['order_id']."' target='_blank'>Get Receipt</a>
                     </div>
                 ";
                 // $net_total = $net_total + $sub_total;
              
             }
-            echo 
-            "<div></div><div></div><div></div>
-            <div class = 'dataHolderTot'>
-                <p class = 'dataCont'>TOTAL AMOUNT: ₱".$net_total."</p>
-            </div>";
+            if($row_get_user_id['municipality'] == "Lapu-Lapu City")
+            {
+                $net_total+=13;
+                echo 
+                "<div></div><div></div><div></div>
+                <div class = 'dataHolderTot'>
+                    <p class = 'dataCont'>TOTAL AMOUNT: ₱".$net_total."</p>
+                </div>";
+            }
+            if($row_get_user_id['municipality'] == "Mandaue City")
+            {
+                $net_total+=10;
+                echo 
+                "<div></div><div></div><div></div>
+                <div class = 'dataHolderTot'>
+                    <p class = 'dataCont'>TOTAL AMOUNT: ₱".$net_total."</p>
+                </div>";
+            }
+            if($row_get_user_id['municipality'] == "Consolacion")
+            {
+                $net_total+=12;
+                echo 
+                "<div></div><div></div><div></div>
+                <div class = 'dataHolderTot'>
+                    <p class = 'dataCont'>TOTAL AMOUNT: ₱".$net_total."</p>
+                </div>";
+            }
+            if($row_get_user_id['municipality'] == "Cebu City")
+            {
+                $net_total+=12;
+                echo 
+                "<div></div><div></div><div></div>
+                <div class = 'dataHolderTot'>
+                    <p class = 'dataCont'>TOTAL AMOUNT: ₱".$net_total."</p>
+                </div>";
+            }
         }    
     }
+
 
 
     function cancel_order()
@@ -399,7 +468,7 @@
 
             $userID = $row_get_user_id['user_id'];
             $user_username = $row_get_user_id['user_username'];
-            $display_order = $con->prepare("SELECT * FROM delivered_items WHERE user_username = '$user_username' ORDER BY order_id");
+            $display_order = $con->prepare("SELECT * FROM delivered_items WHERE user_username = '$user_username' ORDER BY delivery_id");
             $display_order->setFetchMode(PDO:: FETCH_ASSOC);
             $display_order->execute();
             
@@ -411,7 +480,7 @@
                 //     <td>".$row['date_delivered']."</td>
                 // </tr>";
                 "<div class = 'dataHolder'>
-                    <p class = 'dataCont'>".$row['order_id']."</p>
+                    <p class = 'dataCont'>".$row['delivery_id']."</p>
                     </div>
                     <div class = 'dataHolders'>
                     <p class = 'dataCont' >".$row['items']."</p>
@@ -498,36 +567,48 @@
                     <p class = 'Heads' >".$row_org['org_name']."</p>
                     <div id = 'oks'>
                         <p class = 'fsTxt'>
-                        IRO cares for over 100 companion animals who are awaiting adoption into forever homes.<br>  IRO also cares for a number of animals who are receiving treatment for medical injuries or illnesses or are being rehabilitated for behavioural issues relating to their backgrounds.
-
-IRO is run entirely by a team of volunteers and as a community-focused organization; IRO not only relies on the support of the public (both local and international) for funding but also to assist with the organization’s operations.
-
-IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (3) non-profit animal rescue organization.</p>
+                        ".$row_org['org_details']."</p>
                         <div class = 'mainInfos'>
                         <div class = 'rightInfo'>
                        
                         <img class = 'donsite' src = '../uploads/donateBy.png' >
                         </div>
                         <div class = 'infoss'>
-                    
+                        <div class = 'miniLeft'>
+                        <p class = 'lebels'>Location</p>
+                        <input type = 'text' class = 'dates' value ='".$row_org['org_location']."' disabled />
+                        <p class = 'lebels'>GCash Number</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['org_contact_number']."' disabled/>
+                        <p class = 'lebels'>Email Address </p>
+                       <input type = 'text' class = 'dates' value = '".$row_org['org_email_address']."' disabled />
                         <p class = 'lebels'>
-                            Location:
-                            </p>
-                            <p class = 'dates'> ".$row_org['org_location']."
-                        </p>
-                        <p class = 'lebels'>
-                        GCash Number:</p><p class = 'dates'> ".$row_org['org_contact_number']."
+                        Bank Details  </p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['bank_details']."' disabled />
+                        </div>
+
+                        <div class = 'miniRights'>
+                        <p class = 'lebels'>Website</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['website']."' disabled />
                        
-                        </p>
+                        <p class = 'lebels'>Paymaya</p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['paymaya']."' disabled />
+                        <p class = 'lebels'>Organization Manager</p>
+                       <input type = 'text' class = 'dates' value = '".$row_org['org_manager']."'/ disabled>
                         <p class = 'lebels'>
-                       Email Address: </p>
-                       <p class = 'dates'>".$row_org['org_email_address']."
-                        </p>
+                        Facebook  </p>
+                        <input type = 'text' class = 'dates' value = '".$row_org['facebook']."' disabled/>
+                         </input>
+                        </div>
+                        
                         <div></div>
-                        <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'> Apply for Coupon</a>
+                        
                         </div>
+                        
                         </div>
+                       
+                       
                     </div>
+                    <a class = 'btnDon' href = 'donate.php?donate=".$row_org['id']."'> Apply for Coupon</a>
                    
                     
                 </div>
@@ -581,6 +662,537 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                 </div>";
         endwhile;
     }
+
+    function featured_service_grooming()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='1'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+                echo"<p class = 'head4' >".$row_pro['services_name']."</p>
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
+                
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "
+                    <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
+                 }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_hotel()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='2'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+                echo" <p class = 'head4' >".$row_pro['services_name']."</p>
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
+                
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "
+                    <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
+                 }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_training()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='3'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+            if(intval($ttl) == 0)
+            {
+                echo "NO REVIEWS";
+            }
+
+            if(intval($ttl) == 1)
+            {
+                echo "⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 2)
+            {
+                echo "⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 3)
+            {
+                echo "⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 4)
+            {
+                echo "⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 5)
+            {
+                echo "⭐⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+            echo"<p class = 'head4' >".$row_pro['services_name']."</p>
+            
+            <p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row_pro['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+            </div>
+        </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_vet_clinic()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='4'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+               echo" <p class = 'head4' >".$row_pro['services_name']."</p>
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
+                
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "
+                    <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
+                 }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
+    function featured_service_others()
+    {
+        include("inc/db.php");
+
+        $fetch_cat = $con->prepare("SELECT * FROM service_cat WHERE cat_id='5'");
+        $fetch_cat->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_cat->execute();
+
+        $row_cat=$fetch_cat->fetch();
+        $cat_id = $row_cat['cat_id'];
+        
+
+        $fetch_pro = $con->prepare("select * from services where service_id='$cat_id' LIMIT 0,3");
+        $fetch_pro->setFetchMode(PDO:: FETCH_ASSOC);
+        $fetch_pro->execute();
+
+        while($row_pro = $fetch_pro->fetch()):
+            $service_id = $row_pro['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row_pro['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
+            echo "<div class = 'idNiSha'>
+            <form method = 'post' enctype='multipart/form-data'>
+            <a class = 'aTag' href='show_service_info.php?id=".$row_pro['id']."'>
+               
+                <img class = 'fikture'  src ='../uploads/user_profile/".$row_pro['service_photo']."' />
+                <div class = 'prodDet'>
+                <p class = 'price' >₱".$row_pro['service_cost']."</p>";
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+                echo"<p class = 'head4' >".$row_pro['services_name']."</p>
+                
+                <p class = 'head5' >".$rows['pet_center_name']."</p>";
+                
+                 if($row_pro['accept_coupon'] == "Yes")
+                 {
+                    echo "
+                    <div class = 'band'>
+                   
+                    <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                    <p class ='icons'>Coupons Accepted</p>
+                    </div>";
+                 }
+                 else
+                 {
+                    echo "<br><br>";
+                 }
+
+                        echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row_pro['id']."'>Show Info</a> 
+                    <input type = 'hidden' value = '".$row_pro['id']."' name = 'pro_id' />
+                </div>
+            </a>
+            </form>
+          
+        </div>";
+        endwhile;
+    }
+
 
     function dog_food_products()
     {
@@ -973,77 +1585,76 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $row_pro = $pro_fetch->fetch();
             $cat_id = $row_pro['cat_id'];
             echo 
-                "<div id = 'pro_img'>
-                    <img src ='../uploads/products/".$row_pro['pro_img']."'/>
-                    <ul>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img']."'/>
-                        </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img2']."'/>
-                        </li>
-                        <li>
-                            <img src ='../uploads/products/".$row_pro['pro_img3']."'/>
-                        </li>
-                    </ul>
+                "<div class = 'mainest'>
+                <div id = 'pro_img'>
+
+                    <img id= 'mainPik' class = 'mainImage' src ='../uploads/products/".$row_pro['pro_img']."'/>
+                   
+                </div>
+
+
                   </div>
                   <div id = 'pro_brand'>
-                    <h3>".$row_pro['pro_name']."</h3>
-                    <ul>
-                        <li>
-                            Description:
-                            <br>
-                            <br>".$row_pro['pro_keyword']."
-                        </li>
-                        <li>
-                            <br>Product Price: ₱".$row_pro['pro_price'].".00
-                        </li>
-                        <li>
-                            <br>Product Stock: ".$row_pro['pro_quantity']."
-                        </li>
-                        <li>";
+                    <p id= 'nems' class = 'prodName' >".$row_pro['pro_name']."</p>
+                    <p class = 'prodBrand' >".$row_pro['pro_brand']."</p>
+                    <div class = 'conts'>
+                    <div class = 'dets' >
+                        <p class = 'lebes'>Price:</p>
+                        <p class = 'datea'>₱".$row_pro['pro_price'].".00</p>
+                        ";
                             if($row_pro['pro_quantity'] > 0)
                             {
-                                echo "<br>Availability: In Stock";
-                                echo "<center>
-                                <h4>Price: ".$row_pro['pro_price']."</h4>
-                                <form method = 'POST'>
-                                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
-                                    <button name = 'buy_now' id = 'buy_now' style = color:#000>Buy Now</button>
-                                    <button name = 'cart_btn'>Add to Cart</button>
-                                </form>
-                            </center>";
+                                echo "<p class = 'lebes'>Availability:</p><p class = 'datea'> In Stock</p>";
                             }
                             else
                             {
-                                echo "<label style = 'color:red'>NO STOCKS!</label>";
+                                echo "<label style = 'color:red'>OUT OF STOCKS!</label>";
                             }
-                        echo"</li>
-                    </ul>
+                        echo"
+                        <p class = 'lebes'>Description:</p>
+                        <p class = 'datea' >".$row_pro['pro_keyword']."</p>
+                        <p class = 'lebes'>Quantity:</p>
+                        <p class = 'datea' >".$row_pro['pro_quantity']."</p>
+                    </div>
+                    </div>
+                    <center>
+                              
+                                <form method = 'POST'>
+                                    <input type = 'hidden' value = '".$row_pro['pro_id']."' name = 'pro_id' />
+                                    
+                                    <button class = 'btnLinkCart' name = 'cart_btn'>Add to Cart</button>
+                                </form>
+                            </center>
                     <ul>
 
                     </ul><br clear = 'all'>
                     
                 </div><br clear = 'all'>    
-                <div id = 'sim_pro'>
-                    <h3>Related Products</h3>
-                    <ul>";
+
+                   
+                    <div class = 'cons'>
+                    <p class = 'prodName2'>Discover similar items</p>
+                    <div class = 'fDogs'>";
                         echo add_cart();
                         $sim_pro = $con->prepare("SELECT * from product_tbl WHERE pro_id!=$pro_id AND cat_id='$cat_id' LIMIT 0,5");
                         $sim_pro->setFetchMode(PDO:: FETCH_ASSOC);
                         $sim_pro->execute();
 
                         while($row=$sim_pro->fetch()):
-                            echo "<li>
-                                    <a href = 'pro_detail.php?pro_id=".$row['pro_id']."'>
-                                        <img src ='../uploads/products/".$row['pro_img']."'/>
-                                        <p>Product Name: ".$row['pro_name']."</p>
-                                        <p>Price: ".$row['pro_price']."</p>
+                            echo "<div class = 'idNiSha' >
+                                    <a class = 'aTag' href = 'pro_detail.php?pro_id=".$row['pro_id']."'>
+                                        <img class = 'fikture' src ='../uploads/products/".$row['pro_img']."'/>
+                                        <div class = 'prodDet'>
+                                        <p class = 'head4' >Product Name: ".$row['pro_name']."</p>
+                                        <p class = 'prays' >Price: ".$row['pro_price']."</p>
+                                        </div>
                                     </a>
-                                  </li>";
+                                  </div>";
                         endwhile;
-                    echo "</ul>";
-                "</div>";
+                    echo "</div>
+                    </div>
+                    </div>";
+       
             ;            
         }
     }
@@ -1054,7 +1665,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql = $con->prepare("SELECT * FROM services");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
-        echo "<h3>Services Available </h3>";
         while($row = $sql->fetch()):
             
             echo
@@ -1064,10 +1674,9 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                
                 <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
                 <div class = 'prodDet'>
-                <h4>".$row['services_name']."</h4>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
+                <p class = 'head4' >".$row['services_name']."</p>
+                 
+                        <a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
                     <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
                 </div>
             </a>
@@ -1091,25 +1700,94 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Grooming Services</h3>";
+       
         while($row = $sql2->fetch()):
-            
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1127,25 +1805,94 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Pet Hotels</h3>";
         while($row = $sql2->fetch()):
-            
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
+       
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1163,25 +1910,94 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Pet Training Services</h3>";
+        
         while($row = $sql2->fetch()):
-            
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Ratings: ".intval($ttl)."/5";
+                }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1199,32 +2015,102 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Pet Vet Clinics</h3>";
+        
         while($row = $sql2->fetch()):
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             
             echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+            {
+                echo "NO REVIEWS";
+            }
+
+            if(intval($ttl) == 1)
+            {
+                echo "⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 2)
+            {
+                echo "⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 3)
+            {
+                echo "⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 4)
+            {
+                echo "⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 5)
+            {
+                echo "⭐⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
     function other_services()
     {
         include("inc/db.php");
-        $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '4'");
+        $sql = $con->prepare("SELECT * FROM service_cat WHERE cat_id = '5'");
         $sql->setFetchMode(PDO:: FETCH_ASSOC);
         $sql->execute();
 
@@ -1235,25 +2121,94 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         $sql2->setFetchMode(PDO:: FETCH_ASSOC);
         $sql2->execute();
 
-        echo "<h3>Other Services</h3>";
+      
         while($row = $sql2->fetch()):
+            $service_id = $row['service_id'];
+
+            $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$service_id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+
+            $pet_center_id = $row['pet_center_id'];
+            $sql=$con->prepare("SELECT * FROM pet_center_tbl WHERE pet_center_id = '$pet_center_id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+
+            $rows = $sql->fetch();
             
-            echo
-            "<li>
+            "<div class = 'idNiSha'>
             <form method = 'post' enctype='multipart/form-data'>
-            <a href='show_service_info.php?id=".$row['id']."'>
-                <h4>".$row['services_name']."</h4>
-                <img src ='../uploads/user_profile/".$row['service_photo']."' />
-                <center>
-                    <button id = 'pro_btnView'>
-                        <a href = 'show_service_info.php?id=".$row['id']."'>Show Info</a>
-                    </button>
-                    <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
-                </center>
-            </a>
+            <a class = 'aTag' href='show_service_info.php?id=".$row['id']."'>
+               
+            <img class = 'fikture'  src ='../uploads/user_profile/".$row['service_photo']."' />
+            <div class = 'prodDet'>
+            <p class = 'price' >₱".$row['service_cost']."</p>
+            <p class = 'head4' >".$row['services_name']."</p>";
+            if(intval($ttl) == 0)
+            {
+                echo "NO REVIEWS";
+            }
+
+            if(intval($ttl) == 1)
+            {
+                echo "⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 2)
+            {
+                echo "⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 3)
+            {
+                echo "⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 4)
+            {
+                echo "⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+
+            if(intval($ttl) == 5)
+            {
+                echo "⭐⭐⭐⭐⭐";
+                echo "<br>";
+                echo "Ratings: ".intval($ttl)."/5";
+            }
+            echo"<p class = 'head5' >".$rows['pet_center_name']."</p>";
+            
+             if($row['accept_coupon'] == "Yes")
+             {
+                echo "
+                <div class = 'band'>
+               
+                <img class = 'couponBand' src = '../uploads/couponIcon.png'>
+                <p class ='icons'>Coupons Accepted</p>
+                </div>";
+             }
+             else
+             {
+                echo "<br><br>";
+             }
+
+                    echo"<a class = 'btnLinkView' href = 'show_service_info.php?id=".$row['id']."'>Show Info</a> 
+                <input type = 'hidden' value = '".$row['id']."' name = 'pro_id' />
+            </div>
+        </a>
             </form>
           
-        </li>";
+        </div>";
         endwhile;
     }
 
@@ -1262,6 +2217,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         include("inc/db.php");
         if(isset($_GET['id']))
         {
+            
             $id = $_GET['id'];
             $fetch_services=$con->prepare("SELECT * FROM services WHERE id = '$id'");
             $fetch_services->setFetchMode(PDO:: FETCH_ASSOC);
@@ -1275,8 +2231,12 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $query->execute();
 
             $row_pet_center = $query->fetch();
-            $pet_center_location = $row_pet_center['location'];
-            $location = str_replace(" ", "+", $pet_center_location);
+            $st = $row_services['st'];
+            $barangay = $row_services['barangay'];
+            $municipality = $row_services['municipality'];
+            $full_location = $row_services['full_location'];
+            $services_name = $row_services['services_name'];
+            $location = $municipality;
 
             $service_cat = $row_services['service_id'];
 
@@ -1296,9 +2256,14 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                 <div class = 'pckman'>
                     <div id = 'pic'>
                     <img id = 'okpic' src ='../uploads/user_profile/".$row_services['service_photo']."'/>
+                    
                     </div>
+                    
                     <div class = 'secondBody'>
                         <p class = 'hed'>".$row_services['services_name']."</p>
+                        <p class = 'head51'>".$row_pet_center['pet_center_name']."</p>";
+                        
+                        echo"<p class = 'head52'>".$row_services['description']."</p>
                         <div class = 'mainHoldest'>
                             <div class = 'holdest'>
                                 <p class = 'lebs'> Service Category: </p>
@@ -1326,31 +2291,224 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                                 <p class = 'lebs'>Service Cost: </p>
                                 <p class = 'conts'>".$row_services['service_cost']."</p>
                             </div>
-                            <div></div>
-                            <div class = 'btnss' >
-                                <a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Reserve(without coupon)</a>
-                                <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Reserve (with coupon)</a>
-                                <a  class = 'bbm' href = 'review_service.php?review_service=".$row_services['id']."' >Give Feedback</a>
-                            </div>
+                            <div class = 'holdest'>
+                            <p class = 'lebs'>Discount Offer: </p>
+                            <p class = 'conts'>".$row_services['discount']."%</p>
+                            
+                            
+                        </div>
+                        <div class = 'holdest'>
+                        <p class = 'lebs'>REMAINING SLOT</p> 
+                        <p class = 'conts'>".intval($row_services['req_people']-$row_services['people_visited'])."</p>
+                        </div>
+                        </div><br><br>
+                        ";
+                        
+                           echo" <div class = 'btnss' >";
+                            
+                            
+                            if($row_services['accept_coupon'] == 'No')
+                            {
+                                echo "<a class = 'bbm' href = 'avail_service_nocoupon.php?avail_service=".$row_services['id']."'>Book Appointment</a>";
+                            }
+                            if($row_services['accept_coupon'] == 'Yes')
+                            {
+                                echo " <a  class = 'bbm' href = 'avail_service.php?avail_service=".$row_services['id']."' >Book Appointment</a>";
+                            }
+                                
+                           echo" </div>
+                           
+                        
                             <br>
                             <br>
-                            <div>
-                                <br>
-                                <p class = 'loc'>Location</p>
-                                <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$location."&output=embed'></iframe>
-                            </div>
+                            
+                            
+                           </div>
                         </div>  
+                        <div class = 'loces'>
+                       <br>
+                        <p class = 'loc'>Location</p>
+                        <iframe class  = 'mapGraph' src='https://maps.google.com/maps?q=".$services_name."+".$full_location."+".$st."+".$barangay."+".$municipality."&output=embed'></iframe>
+                    </div>
                     </div>
                 </div>
-                   ";   
+                <div class = 'comment-box'>";
+                if(isset($_SESSION['user_id']))
+                {
+                    $usrId = $_SESSION['user_id'];
+                    $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId' AND service_id = '$id'");
+                    $qry->setFetchMode(PDO:: FETCH_ASSOC);
+                    $qry->execute();
+
+                    $row = $qry->fetch();
+
+                    if($row>0)
+                    {
+                        echo "<p class ='headF' >Give Feedback</p>
+                        <form method = 'POST' enctype = 'multipart/form-data'>
+                          
+                            <input type = 'hidden' name = 'user_id' value = ".$_SESSION['user_id']." />";
+                           
+                        
+                            echo "<input type = 'hidden' name = 'service_id' value = ".$row_services['service_id']." />
+                            <input type = 'hidden' name = 'service_name' value = '".$row_services['services_name']."' disabled />
+                            <div class = 'commentF'>
+                            <textarea class = 'inputCom' name = 'comment' placeholder = 'Write a comment..' required></textarea>
+                            <button class = 'btnsF' name = 'submit'  >Submit</button>
+                            </div>
+                        </form>
+                    </div>";
+                    }
+                }
+
+                //rate service
+                if(isset($_SESSION['user_id']))
+                {
+                    $usrID = $_SESSION['user_id'];
+                    $qry = $con->prepare("SELECT * FROM confirmed_services WHERE user_id = '$usrId' AND service_id = '$id'");
+                    $qry->setFetchMode(PDO:: FETCH_ASSOC);
+                    $qry->execute();
+    
+                    $row = $qry->rowCount();
+    
+                    if($row>0)
+                    {
+                        $sql = $con->prepare("SELECT * FROM review WHERE service_id = '$id' AND user_id = '$usrID'");
+                        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                        $sql->execute();
+        
+                        $rows = $sql->rowCount();
+        
+                        if($rows==0)
+                        {
+                            echo 
+                            "<form method = 'POST' enctype = 'multipart/form-data'>
+                            
+                            <div class='starbtn' >
+                                <input type = 'hidden' name = 'service_id' value = '".$id."' />
+                                <a href = '#'>Rate :</a>
+                                <button name = 'count_review' value = '1'>⭐</button>
+                                <button name = 'count_review' value = '2'>⭐</button>
+                                <button name = 'count_review' value = '3'>⭐</button>
+                                <button name = 'count_review' value = '4'>⭐</button>
+                                <button name = 'count_review' value = '5'>⭐</button>
+                            </div>
+                            </form>";
+        
+                            if(isset($_POST['count_review']))
+                            {
+                                $count_review = $_POST['count_review'];
+                                $service_id = $_POST['service_id'];
+                                $user_id = $_SESSION['user_id'];
+                        
+                                $sql = $con->prepare("INSERT INTO reviews
+                                SET 
+                                user_id = '$user_id',
+                                service_id = '$service_id',
+                                rating = '$count_review'
+                                ");
+                        
+                                if($sql->execute())
+                                {
+                                    echo "<script>alert('Thanks for your rating!');</script>";
+                                    echo "<script>window.open('show_service_info.php?id=".$id."' ,'_self');</script>";
+                                }
+                            }
+                        }
+                    }
+                }
+                
+
+                //Total Rating  
+                echo "<div class = 'okayKadiv'>";       
+                echo "Ratings:";
+                $rev = $con->prepare("SELECT AVG(rating) FROM reviews WHERE service_id = '$id'");
+                $rev->setFetchMode(PDO:: FETCH_ASSOC);
+                $rev->execute();
+
+                $rows = $rev->fetch();
+                $ttl = $rows['AVG(rating)'];
+               
+                if(intval($ttl) == 0)
+                {
+                    echo "NO REVIEWS";
+                }
+
+                if(intval($ttl) == 1)
+                {
+                    echo "⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 2)
+                {
+                    echo "⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 3)
+                {
+                    echo "⭐⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 4)
+                {
+                    echo "⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+
+                if(intval($ttl) == 5)
+                {
+                    echo "⭐⭐⭐⭐⭐";
+                    echo "<br>";
+                    echo "Avg: ".intval($ttl)."/5";
+                }
+                echo "</div>";
+            if(isset($_POST['submit']))
+            {
+                $comment = $_POST['comment'];
+                $user_id = $_POST['user_id'];
+                $service_id = $_POST['service_id'];
+                
+                $datenow = getdate();
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
+    
+                $add = $con->prepare("INSERT INTO feedback_tbl
+                (
+                    user_id, 
+                    service_id, 
+                    comment,
+                    comment_date
+                ) 
+                VALUES
+                (
+                    '$user_id',
+                    '$service_id',
+                    '$comment',
+                    '$today'
+                )");
+    
+                if($add->execute())
+                {
+                    echo "<script>alert('Thanks for the feedback');</script>";
+                }
+            } 
                 
        
            
         }
 
     }
+
     function showFeeds(){
         include("inc/db.php");
+
         if(isset($_GET['id']))
         {
             $id = $_GET['id'];
@@ -1366,8 +2524,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $query->execute();
 
             $row_pet_center = $query->fetch();
-            $pet_center_location = $row_pet_center['location'];
-            $location = str_replace(" ", "+", $pet_center_location);
 
             $service_cat = $row_services['service_id'];
 
@@ -1383,7 +2539,7 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
             $close_time = date('g:i A', strtotime($time_close));
             $open_time = date('g:i A', strtotime($time_open));
 
-            echo "<p class = 'loc2'>REVIEWS</p>";
+            echo "<p class = 'loc2'>Reviews</p>";
             $sql2 = $con->prepare("SELECT * FROM feedback_tbl WHERE service_id = '$id'");
             $sql2->setFetchMode(PDO:: FETCH_ASSOC);
             $sql2->execute();
@@ -1399,7 +2555,13 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     echo 
                     "
                     <div class = 'comss'>
+                        <div class = 'useCom'>
+                        <img class = 'pics' src = ../uploads/user_profile/".$row_user['user_profilephoto'].">
                         <p class = 'revNem'>".$row_user['user_username']."</p>
+                        <p class = 'revNemDet'>".$row_feedbacks['comment_date']."</p>
+                        </div>
+                        
+         
                         <p class = 'rev'> ".$row_feedbacks['comment']."</p>
                         </div>
                     "; 
@@ -1456,8 +2618,6 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         endwhile;
     }
 
-    
-
     function cat_detail()
     {
         include("inc/db.php");
@@ -1501,39 +2661,25 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
     function avail_service()
     {
+        include("inc/db.php");
+        if(!isset($_SESSION['user_id']))
+        {
+            echo "<script>window.open('login.php', '_self');</script>";
+        }
         if(isset($_GET['avail_service']))
         {
-            include("inc/db.php");
-            $service_id = $_GET['avail_service'];
-            $query = $con->prepare("SELECT * FROM services WHERE id = '".$service_id."'");
-            $query->setFetchMode(PDO:: FETCH_ASSOC);
-            $query->execute();
-
-            $row = $query->fetch(); 
+            $id = $_GET['avail_service'];
+            $sql = $con->prepare("SELECT * FROM services WHERE id = '$id'");
+            $sql->setFetchMode(PDO:: FETCH_ASSOC);
+            $sql->execute();
+            
+            $row = $sql->fetch();
             $service_cost = $row['service_cost'];
-            $pet_center_id = $row['pet_center_id'];
+            
             $service_time_open = strtotime($row['time_open']);
             $service_time_close = strtotime($row['time_close']);
 
-     
 
-            $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
-            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-            $sql2->execute();
-
-            $row3 = $sql2->fetch();
-            
-            $users_id = $_SESSION['user_id'];
-            $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
-            $sql->setFetchMode(PDO:: FETCH_ASSOC);
-            $sql->execute();
-
-            $row2 = $sql->fetch();
-
-            $user_id = $row2['user_id'];
-
-  if($row3['active_coupon'] == 'yes')
-                    {
             echo 
             "<form method = 'POST'>
                 <center class = 'hh'>Please verify your coupon to get the exact amount!</center>
@@ -1544,201 +2690,246 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                 
                     <p class = 'lebs'>Time: </p></td>
                     <input class = 'inet' type = 'time' name = 'reserve_time'  required/></td>
+                    
                     <p class = 'lebs'>Coupon Code: </p>
-                    <input class = 'inet' type = 'text' name = 'coupon_code'/>
+                    <input class = 'inet' type = 'text' name = 'coupon_code' placeholder = 'Leave blank if you don't have any coupon code!'/>
                     <p class = 'lebs'>Service Cost: </p>
                     <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
-                   "; 
-                echo "
-       
-                    <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
-                    <div>
-                    <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
-                    <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
-                    </div>
+                    <input type = 'hidden' name = 'service_id' value = '".$id."' />
+                   
                     
                 </div>
+                
+                <div>
+                <button class = 'btnn' name = 'reserve_service'>RESERVE</button>
+                <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
+                </div>
             </form>";
-                    }else
+
+            if(isset($_POST['reserve_service']))
             {
-                echo "This service provides no coupon, Click here to avail the service without any coupon used!<a href = 'avail_service_nocoupon.php?avail_service=".$row['id']."'>Avail Service(without coupon)</a>";
-            }
+                $current_user = $_SESSION['user_id'];
+                $service_id = $_POST['service_id'];
+                $coupon_code = $_POST['coupon_code'];
+                $reserve_time = $_POST['reserve_time'];
+                $reserve_date = $_POST['reserve_date'];
 
+                $sql = $con->prepare("SELECT * FROM services WHERE id = '$service_id'");
+                $sql->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql->execute();
 
+                $row_pent = $sql->fetch();
+                $pet_center_id = $row_pent['pet_center_id'];
+                $serv_discount = $row_pent['discount'];
+                
+
+                $datenow = getdate();
     
-            if(!isset($_SESSION['user_id']))
-            {
-                echo "<script>window.open('login.php', '_self');</script>";
-            }
-            else
-            {
-                if(isset($_POST['reserve_service']))
+                $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
+
+                $dateTimestamp = strtotime($reserve_date);
+                $dateTimestamp2 = strtotime($today);
+                $dateTimestamp3 = strtotime($reserve_time);
+
+                $view_time = $con->prepare("SELECT * FROM reserve_services");
+                $view_time->setFetchMode(PDO:: FETCH_ASSOC);
+                $view_time->execute();
+
+                // $row_time = $view_time->rowCount();
+                $row_date_and_time = $view_time->fetch();
+                $reserved_date = $row_date_and_time['reserve_date'];
+                $reserved_time = $row_date_and_time['reserve_time'];
+
+                $sql4 = $con->query("SELECT * FROM confirmed_services WHERE coupon_code = '$coupon_code'");
+                $sql4->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql4->execute();
+
+                $row6 = $sql4->rowCount();
+
+                $sql3 = $con->prepare("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
+                $sql3->setFetchMode(PDO:: FETCH_ASSOC);
+                $sql3->execute();
+
+                $row5 = $sql3->rowCount();
+
+                $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+                $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                $fetch_user_username->execute();
+        
+                $row4 = $fetch_user_username->fetch();
+
+                $view_coupon = $con->prepare("SELECT * FROM ledger_tbl WHERE coupon_code = '$coupon_code'");
+                $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
+                $view_coupon->execute();
+
+                $row2 = $view_coupon->rowCount();
+
+                $dt1=strtotime($reserve_date);
+                $dt2=date("l", $dt1);
+                $dt3=strtolower($dt2);
+
+                $query = $con->prepare("SELECT * FROM reserve_services WHERE reserve_time = '$reserve_time' AND reserve_date = '$reserve_date' AND  service_id = '$service_id'");
+                $query->setFetchMode(PDO:: FETCH_ASSOC);
+                $query->execute();
+
+                $row = $query->fetch();
+
+                if($row_pent['req_people'] != $row_pent['people_visited'])
                 {
-                    $service_cost = $_POST['service_cost'];
-                    $reserve_date = $_POST['reserve_date'];
-                    $coupon_code = $_POST['coupon_code'];
-                    $reserve_time = $_POST['reserve_time'];
-                    $transaction_code = generateRandomString();
-    
-                    $datenow = getdate();
-    
-                    $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
-    
-                    $dateTimestamp = strtotime($reserve_date);
-                    $dateTimestamp2 = strtotime($today);
-                    $dateTimestamp3 = strtotime($reserve_time);
-    
-    
-                    $view_time = $con->prepare("SELECT * FROM reserve_services");
-                    $view_time->setFetchMode(PDO:: FETCH_ASSOC);
-                    $view_time->execute();
-    
-                    // $row_time = $view_time->rowCount();
-                    $row_date_and_time = $view_time->fetch();
-                    $reserved_date = $row_date_and_time['reserve_date'];
-                    $reserved_time = $row_date_and_time['reserve_time'];
-                    
-                    if($dateTimestamp > $dateTimestamp2)
+                    if(($dt3 != "saturday") && ($dt3 != "sunday"))
                     {
-                        if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
+                        if($dateTimestamp > $dateTimestamp2)
                         {
-                            if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
+                            if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
                             {
-                                $sql = $con->query("SELECT * FROM reserve_services WHERE coupon_code = '$coupon_code'");
-                                $sql->setFetchMode(PDO:: FETCH_ASSOC);
-                                $sql->execute();
-        
-                                $sql2 = $con->query("SELECT * FROM reserve_services");
-                                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                                $sql2->execute();
-        
-                                $row = $sql->rowCount();
-                                $row_user = $sql2->fetch();
-                                $user_id = $row_user['user_id'];
-        
-                                $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-                                $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-                                $fetch_user_username->execute();
-                        
-                                $row4 = $fetch_user_username->fetch();
-                                if($row>0)
+                                if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
                                 {
-                                    echo "<script>alert('Code Exist!');</script>";
-                                }
-                                else
-                                {
-                                    $view_coupon = $con->prepare("SELECT * FROM donations WHERE coupon_code = '$coupon_code'");
-                                    $view_coupon->setFetchMode(PDO:: FETCH_ASSOC);
-                                    $view_coupon->execute();
-        
-                                    $row2 = $view_coupon->rowCount();
-                                    if($row2>0)
+                                    if($coupon_code != "asdasdsadsadsadsadsa" || $coupon_code != "sakdnsakdnsakdnkas" || $coupon_code != "aslkdmaskldsakdnjasnjna" || $coupon_code != "jasndinindaisndisandi" || $coupon_code != "asmdioasmdsiandisad")
                                     {
-                                        $discount = "0.02";
-        
-                                        $total = $service_cost * $discount;
-                                        $convertfloat = floatval($total);
-        
-                                        $service_total_cost = $service_cost - $convertfloat;
-        
-                                        $receiver = $row4['user_email'];
-                                        $subject = "Transaction Code";
-                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                                        $sender = "ianjohn0101@gmail.com";
-        
-                                        if(mail($receiver, $subject, $body, $sender))
+                                        if($row==0)
                                         {
-                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                                pet_center_id,
-                                                service_id,
-                                                user_id,
-                                                service_cost,
-                                                reserve_date,
-                                                reserve_time,
-                                                coupon_code,
-                                                transaction_code,
-                                                service_status
-                                            ) 
-                                            VALUES (
-                                                '$pet_center_id',
-                                                '$service_id',
-                                                '$user_id',
-                                                '$service_total_cost',
-                                                '$reserve_date',
-                                                '$reserve_time',
-                                                '$coupon_code',
-                                                '$transaction_code',
-                                                'For Confirmation'
-                                            )");
-                                
-                                            if($reserve_service->execute())
+                                            if(strlen($coupon_code) <= 9)
                                             {
-                                                echo "SUCCESSFUL"; 
+                                                if($row5!=0)
+                                                {
+                                                    if($row6!=0)
+                                                    {
+                                                        if($coupon_code == '')
+                                                        {
+                                                            $receiver = $row4['user_email'];
+                                                            $subject = "For Confirmation";
+                                                            $body = "Your Reservation will be validated to the pet center";
+                                                            $sender = "ianjohn0101@gmail.com";
+                            
+                                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                                pet_center_id,
+                                                                service_id,
+                                                                user_id,
+                                                                service_cost,
+                                                                reserve_date,
+                                                                reserve_time,
+                                                                coupon_code,
+                                                                service_status
+                                                            ) 
+                                                            VALUES (
+                                                                '$pet_center_id',
+                                                                '$service_id',
+                                                                '$current_user',
+                                                                '$service_cost',
+                                                                '$reserve_date',
+                                                                '$reserve_time',
+                                                                '$coupon_code',
+                                                                'For Confirmation'
+                                                            )");
+                                                
+                                                            if($reserve_service->execute())
+                                                            {
+                                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                                            }
+                                                            else
+                                                            {
+                                                                echo "<script>alert('UNSUCCESSFUL');</script>";
+                                                            }
+                                                            mail($receiver, $subject, $body, $sender);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        echo "<script>alert('Coupon Already Used!');</script>";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if($row2!=0)
+                                                    {
+                                                        $total = $service_cost * $serv_discount;
+                                                        $convertfloat = floatval($total);
+                        
+                                                        $service_total_cost = $service_cost - $convertfloat;
+                        
+                                                        $receiver = $row4['user_email'];
+                                                        $subject = "For Confirmation";
+                                                        $body = "Your Reservation will be validated to the pet center";
+                                                        $sender = "ianjohn0101@gmail.com";
+                        
+                                                        $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                            pet_center_id,
+                                                            service_id,
+                                                            user_id,
+                                                            service_cost,
+                                                            reserve_date,
+                                                            reserve_time,
+                                                            coupon_code,
+                                                            service_status
+                                                        ) 
+                                                        VALUES (
+                                                            '$pet_center_id',
+                                                            '$service_id',
+                                                            '$current_user',
+                                                            '$service_total_cost',
+                                                            '$reserve_date',
+                                                            '$reserve_time',
+                                                            '$coupon_code',
+                                                            'For Confirmation'
+                                                        )");
+                                            
+                                                        if($reserve_service->execute())
+                                                        {
+                                                           
+                                                            echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
+                                                        }
+                                                        else
+                                                        {
+                                                            echo "<script>alert('UNSUCCESSFUL');</script>";
+                                                        }
+                                                        mail($receiver, $subject, $body, $sender);
+            
+                                                    }
+                                                    else
+                                                    {
+                                                        echo "<script>alert('Coupon Already Used!');</script>";
+                                                    }
+                                                }
                                             }
+            
                                             else
                                             {
-                                                echo "UNSUCCESSFUL";
+                                                echo "<script>alert('Coupon Invalid.');</script>";
                                             }
+                                        }
+                                        else
+                                        {
+                                            echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                                         }
                                     }
                                     else
                                     {
-                                        $receiver = $row4['user_email'];
-                                        $subject = "Transaction Code";
-                                        $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                                        $sender = "ianjohn0101@gmail.com";
-        
-                                        if(mail($receiver, $subject, $body, $sender))
-                                        {
-                                            $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                                pet_center_id,
-                                                service_id,
-                                                user_id,
-                                                service_cost,
-                                                reserve_date,
-                                                reserve_time,
-                                                coupon_code,
-                                                transaction_code,
-                                                service_status
-                                            ) 
-                                            VALUES (
-                                                '$pet_center_id',
-                                                '$service_id',
-                                                '$user_id',
-                                                '$service_cost',
-                                                '$reserve_date',
-                                                '$reserve_time',
-                                                '$coupon_code',
-                                                '$transaction_code',
-                                                'For Confirmation'
-                                            )");
-                                
-                                            if($reserve_service->execute())
-                                            {
-                                                echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>"; 
-                                            }
-                                            else
-                                            {
-                                                echo "<script>alert('UNSUCCESSFUL');</script>";
-                                            }
-                                        }
+                                        echo "<script>alert('Coupon Invalid.');</script>";
                                     }
+                                }
+                                else
+                                {
+                                    echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                                 }
                             }
                             else
                             {
-                                echo "<script>alert('Time reserved already, chose another date or time.');</script>";
-                            }
+                                echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
+                            }        
                         }
                         else
                         {
-                            echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
-                        }        
+                            echo "<script>alert('INVALID DATE!');</script>";
+                        }
                     }
                     else
                     {
-                        echo "<script>alert('INVALID DATE!');</script>";
+                        echo "<script>alert('No reservation during closing time!');</script>";
                     }
+                }
+                else
+                {
+                    echo "<script>alert('This service accomodates only to the required persons');</script>";
                 }
             }
         }
@@ -1746,6 +2937,8 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
 
     function avail_service_nocoupon()
     {
+        include("inc/db.php");
+                
         if(!isset($_SESSION['user_id']))
         {
             echo "<script>window.open('login.php', '_self');</script>";
@@ -1754,9 +2947,10 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         {
             if(isset($_GET['avail_service']))
             {
-                include("inc/db.php");
-                $service_id = $_GET['avail_service'];
-                $query = $con->prepare("SELECT * FROM services WHERE id = '".$service_id."'");
+                
+                $current_user = $_SESSION['user_id'];
+                $id = $_GET['avail_service'];
+                $query = $con->prepare("SELECT * FROM services WHERE id = '".$id."'");
                 $query->setFetchMode(PDO:: FETCH_ASSOC);
                 $query->execute();
     
@@ -1768,14 +2962,13 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                 
          
     
-                $sql2 = $con->prepare("SELECT active_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
+                $sql2 = $con->prepare("SELECT accept_coupon FROM pet_center_tbl WHERE pet_center_id = $pet_center_id");
                 $sql2->setFetchMode(PDO:: FETCH_ASSOC);
                 $sql2->execute();
     
                 $row3 = $sql2->fetch();
                 
-                $users_id = $_SESSION['user_id'];
-                $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$users_id'");
+                $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
                 $sql->setFetchMode(PDO:: FETCH_ASSOC);
                 $sql->execute();
     
@@ -1783,29 +2976,31 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
     
                 $user_id = $row2['user_id'];
                 $empty_coupon = '';
-    
                 echo 
                 "<form method = 'POST'>
-                   
+                    <center class = 'hh'>Please verify your coupon to get the exact amount!</center>
                     <div class = 'maines'>
                     
                         <p class = 'lebs'>Book Appointment: </p>
                         <input class = 'inet' type = 'date' name = 'reserve_date'  required/>
                     
                         <p class = 'lebs'>Time: </p></td>
-                        <input class = 'inet' type = 'time' name = 'reserve_time'  required/>
+                        <input class = 'inet' type = 'time' name = 'reserve_time'  required/></td>
+                        
+                        <input class = 'inet' type = 'hidden' name = 'coupon_code' value = '".$empty_coupon."'/>
                         <p class = 'lebs'>Service Cost: </p>
                         <input class = 'inet' type = 'text' name = 'service_cost' value = ".$service_cost."   />
-                        <input type = 'hidden' name = 'coupon_code' value = '".$empty_coupon."' />
-           
-                        <input type = 'hidden' name = 'reserve' value = ".$row['service_id']."/><div></div>
-                        <div>
-                        <button class = 'btnn' name = 'reserve_service' value = ".$row['service_id']."'>RESERVE</button>
-                        <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
-                        </div>
+                        <input type = 'hidden' name = 'service_id' value = '".$id."' />
+                       
                         
                     </div>
+                    
+                    <div>
+                    <button class = 'btnn' name = 'reserve_service'>RESERVE</button>
+                    <a class = 'btnnllnk' href = 'services.php'>GO BACK</a>
+                    </div>
                 </form>";
+    
     
         
                 if(isset($_POST['reserve_service']))
@@ -1814,8 +3009,13 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     $reserve_date = $_POST['reserve_date'];
                     $coupon_code = $_POST['coupon_code'];
                     $reserve_time = $_POST['reserve_time'];
-                    $transaction_code = generateRandomString();
+                    $service_id = $_POST['service_id'];
+
+                    $query = $con->prepare("SELECT * FROM services WHERE id = '".$service_id."'");
+                    $query->setFetchMode(PDO:: FETCH_ASSOC);
+                    $query->execute();
     
+                    $rows = $query->fetch();
                     $datenow = getdate();
     
                     $today = $datenow['year'] . '-' . $datenow['mon'] . '-' . $datenow['mday'];
@@ -1833,81 +3033,111 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
                     $row_date_and_time = $view_time->fetch();
                     $reserved_date = $row_date_and_time['reserve_date'];
                     $reserved_time = $row_date_and_time['reserve_time'];
-                    
-                    if($dateTimestamp > $dateTimestamp2)
+
+                    $dateTimestamp4 = strtotime($reserved_date); 
+                    $dateTimestamp5 = strtotime($reserved_time); 
+
+                    $dt1=strtotime($reserve_date);
+                    $dt2=date("l", $dt1);
+                    $dt3=strtolower($dt2);
+                    $query = $con->prepare("SELECT * FROM reserve_services WHERE reserve_time = '$reserve_time' AND reserve_date = '$reserve_date' AND  service_id = '$service_id'");
+                    $query->setFetchMode(PDO:: FETCH_ASSOC);
+                    $query->execute();
+
+                    $row = $query->fetch();
+
+
+                    if($rows['req_people'] >= $rows['people_visited'])
                     {
-                        if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
+                        if(($dt3 != "saturday") && ($dt3 != "sunday"))
                         {
-                            if($dateTimestamp != $reserved_date && $dateTimestamp3 != $reserved_time)
+                            if($dateTimestamp > $dateTimestamp2)
                             {
-                                
-        
-                                $sql2 = $con->query("SELECT * FROM reserve_services");
-                                $sql2->setFetchMode(PDO:: FETCH_ASSOC);
-                                $sql2->execute();
-        
-                                $row = $sql->rowCount();
-                                $row_user = $sql2->fetch();
-                                $user_id = $row_user['user_id'];
-        
-                                $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$user_id'");
-                                $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
-                                $fetch_user_username->execute();
-                        
-                                $row4 = $fetch_user_username->fetch();
-                                $receiver = $row4['user_email'];
-                                $subject = "Transaction Code";
-                                $body = "Present this code to the available service according to your choice. Your Transaction Code: $transaction_code";
-                                $sender = "ianjohn0101@gmail.com";
-    
-                                if(mail($receiver, $subject, $body, $sender))
+                                if($dateTimestamp3 >= $service_time_open && $dateTimestamp3 < $service_time_close)
                                 {
-                                    $reserve_service = $con->prepare("INSERT INTO reserve_services (
-                                        pet_center_id,
-                                        service_id,
-                                        user_id,
-                                        service_cost,
-                                        reserve_date,
-                                        reserve_time,
-                                        coupon_code,
-                                        transaction_code,
-                                        service_status
-                                    ) 
-                                    VALUES (
-                                        '$pet_center_id',
-                                        '$service_id',
-                                        '$user_id',
-                                        '$service_cost',
-                                        '$reserve_date',
-                                        '$reserve_time',
-                                        '$coupon_code',
-                                        '$transaction_code',
-                                        'For Confirmation'
-                                    )");
-                        
-                                    if($reserve_service->execute())
+                                    if($reserve_date != $reserved_date && $dateTimestamp3 != $reserved_time)
                                     {
-                                        echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                        if($row==0)
+                                        {
+                                            $sql2 = $con->query("SELECT * FROM reserve_services");
+                                            $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+                                            $sql2->execute();
+                    
+                                            $row = $sql->rowCount();
+                                            $row_user = $sql2->fetch();
+                                            $user_id = $row_user['user_id'];
+                    
+                                            $fetch_user_username = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+                                            $fetch_user_username->setFetchMode(PDO:: FETCH_ASSOC);
+                                            $fetch_user_username->execute();
+                                    
+                                            $row4 = $fetch_user_username->fetch();
+                                            $receiver = $row4['user_email'];
+                                            $subject = "For Confirmation";
+                                            $body = "Wait for the petcenter to confirm your reservation!";
+                                            $sender = "ianjohn0101@gmail.com";
+                
+                                            if(mail($receiver, $subject, $body, $sender))
+                                            {
+                                                $reserve_service = $con->prepare("INSERT INTO reserve_services (
+                                                    pet_center_id,
+                                                    service_id,
+                                                    user_id,
+                                                    service_cost,
+                                                    reserve_date,
+                                                    reserve_time,
+                                                    coupon_code,
+                                                    service_status
+                                                ) 
+                                                VALUES (
+                                                    '$pet_center_id',
+                                                    '$service_id',
+                                                    '$current_user',
+                                                    '$service_cost',
+                                                    '$reserve_date',
+                                                    '$reserve_time',
+                                                    '$coupon_code',
+                                                    'For Confirmation'
+                                                )");
+                                    
+                                                if($reserve_service->execute())
+                                                {
+                                                    echo "<script>alert('PLEASE WAIT FOR THE PETCENTER TO CONFIRM!');</script>";  
+                                                }
+                                                else
+                                                {
+                                                    echo "<script>alert('UNSUCCESSFUL');</script>";
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            echo "<script>alert('Time reserved already, chose another date or time.');</script>";
+                                        }
                                     }
                                     else
                                     {
-                                        echo "<script>alert('UNSUCCESSFUL');</script>";
+                                        echo "<script>alert('Time reserved already, chose another date or time.');</script>";
                                     }
                                 }
+                                else
+                                {
+                                    echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
+                                }        
                             }
                             else
                             {
-                                echo "<script>alert('Time reserved already, chose another date or time.');</script>";
+                                echo "<script>alert('INVALID DATE!');</script>";
                             }
                         }
                         else
                         {
-                            echo "<script>alert('Time you chose is invalid, please check the time open and time close of the service.');</script>";
-                        }        
+                            echo "<script>alert('No Reservation During Closing Time');</script>";
+                        }
                     }
                     else
                     {
-                        echo "<script>alert('INVALID DATE!');</script>";
+                        echo "<script>alert('This service accomodates only to the required persons');</script>";
                     }
                 }
             }
@@ -2085,6 +3315,63 @@ IRO is affiliated with Friends for the Protection of Animals (USA), a US-501 c (
         }
     }
 
+    function aboutUs()
+    {
+        echo
+        "
+        <br>
+        <h3 style = 'text-align:center;'>About Us</h3><br>
+        <p style = 'text-align:center;'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>";
+    }
+
+    function contactUs()
+    {
+        echo
+        "
+        <br>
+        <h3 style = 'text-align:center;'>Contact Us</h3><br>";
+
+    }
+
+    function view_ledger()
+    {
+        include("inc/db.php");
+        $current_user = $_SESSION['user_id'];
+        $sql = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        $row = $sql->fetch();
+        $user_username = $row['user_username'];
+
+        $sql2 = $con->prepare("SELECT * FROM ledger_tbl WHERE full_name = '$user_username'");
+        $sql2->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql2->execute();
+
+       while($row2 = $sql2->fetch()):
+        echo 
+        "
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['transaction_number']."</p>
+            </div>
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['org_name']."</p>
+            </div>
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['contact_number']."</p>
+            </div>
+            <div class = 'dataHolder'>
+                <p class = 'dataCont'>".$row2['date_confirmed']."</p>
+            </div>
+            
+        ";
+       endwhile;
+
+        
+    }
     
 ?>
 

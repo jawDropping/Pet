@@ -87,6 +87,24 @@
         ?>
 
 <div class = "containersest">
+<?php
+        $current_user = $_SESSION['user_id'];
+        $view_user = $con->prepare("SELECT * FROM users_table WHERE user_id = '$current_user'");
+        $view_user->setFetchMode(PDO:: FETCH_ASSOC);
+        $view_user->execute();
+
+        $row = $view_user->fetch();
+        $user_username = $row['user_username'];
+
+        $sql = $con->prepare("SELECT * FROM delivered_items WHERE user_username = '$user_username'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+
+        $row = $sql->fetch();
+        if($row>0)
+        {
+            
+    ?>
 <div class="ttl">
 <img src = '../uploads/history.png' id = 'orderIc'><h3>Transaction History</h3>
     </div>
@@ -94,7 +112,7 @@
     <div class = "contTable">
         <div class = "inside">
             <div class="divHead">
-                <p class = 'headers'>Order Id</p>
+                <p class = 'headers'>Transaction Id</p>
             </div>
             <div class="divHead">
                 <p class = 'headers'>Items</p>
@@ -109,6 +127,13 @@
             </div>
      </div>
      </div>
+     <?php
+        }
+        else
+        {
+            echo "NO TRANSACTIONS !";
+        }
+     ?>
      
 </div>
 

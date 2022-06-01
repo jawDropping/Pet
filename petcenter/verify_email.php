@@ -1,7 +1,7 @@
 
 <html>
     <head>
-    <title>Login</title>
+    <title>Verify Email</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,28 +16,64 @@
     <body>
         <div id ="LoginForm">
             <div class="container">
+                <div class="colorSide">
+                <img class = 'hello' src="../uploads/petS.svg">
+                </div>
                 <div class="inside">
+                    <div class="insider">
                     <div class="logoSide">
                     <img src="../uploads/logo2.png" class="logo"> <p class="petsociety">Pet Society</p>
                     </div>
               
-                <h3>Welcome to Pet Society</h3>
+                <h3>Verify Email</h3>
                 <form method = "POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"; enctype = "multipart/form-data">
                  
                        
                         <input class = "input" type="email" name = "email" placeholder = "Email"/>               
                         <input class = "input"type="text" name = "v_key"  placeholder = "Verification Key"/></br>
-                            <button  class = "button" name = "verify_key" id = "login_user" >LOGIN</button>
+                            <button  class = "button" name = "submit" id = "login_user" >VERIFY</button>
+                            
                         </br>
                      
                     </form>
+                   
+                    <a href = 'login.php'>Login</a>
                 </div>
            
             </div>
-        <?php
-            include ("inc/function.php");
-            call_user_func('verify');
-        ?>
+            <?php
+    include("inc/db.php");
+
+    if(isset($_POST['submit']))
+    {
+        $email = $_POST['email'];
+        $v_key = $_POST['v_key'];
+        $sql = $con->prepare("SELECT * FROM pet_center_tbl WHERE email = '$email' AND v_key = '$v_key'");
+        $sql->setFetchMode(PDO:: FETCH_ASSOC);
+        $sql->execute();
+        
+        $row = $sql->rowCount();
+        $rows = $sql->fetch();
+
+        $pet_center_id = $rows['pet_center_id'];
+        if($row>0)
+        {
+            $update = $con->prepare("UPDATE pet_center_tbl SET verified = '1' WHERE pet_center_id = '$pet_center_id'");
+            $update->execute();
+
+            if($update->execute())
+            {
+                echo "<script>alert('Account Verified!');</script>";
+                echo "<script>window.open('login.php', '_self');</script>";
+            }
+        }
+        else
+        {
+            echo "<script>alert('Email or Verification Key is invalid!');</script>";
+            echo "<script>window.open('verify_email.php', '_self');</script>";
+        }
+    }
+?>
     </div>
     </body>
 
@@ -51,20 +87,18 @@
             display: flex;
             justify-content: center;
             width: 100vw;
-            
-            
-            
-        }
+           }
         p{
             text-align: center;
             margin-top: 10px;
             color: #666;
         }
         .container{
-            display: flex;
+            display: grid;
+            grid-template-columns: 30% 70%;
             justify-content: center;
             border-radius: 5px;
-            margin-top: 5vh;
+            margin-top:  7vh;
             margin-left: 15%;
             margin-right: 15%;
             background: white;
@@ -73,9 +107,15 @@
             box-shadow:4px 6px 16px 0px rgba(0, 0, 0, 0.2);
         }
         .inside{
+           
+        }
+        .insider{
             height: 100%;
-            width: 50%;
-            padding-top: 20px; 
+            width: 80%;
+             margin-left: 10%;
+        }
+        .colorSide{
+            background: #ffb830;
         }
         .input{
            width: 100%;
@@ -113,9 +153,12 @@
              display: block;
         }
         .signup:hover{
-            background:  #91e7d9;
+            background: #0080fe;
            transition: .5s;
            color: white;
+        }
+        .signup:hover a{
+            color: white;
         }
         .logo{
             width: 25px;
@@ -126,10 +169,15 @@
         border-bottom: .9px solid black;
         padding-bottom: 10px;
         margin-bottom: 20px;
+        margin-top: 5%;
        }
        .petsociety{
            margin-left: 10px;
            color: #444;
+       }
+       .hello{
+           margin-top: 70%;
+           width: 80%;
        }
        @media (max-width: 800px){
            .container{
@@ -150,7 +198,10 @@
 
             }
        }
-
+       a{
+           text-decoration: none;
+       }
+       
     </style>
     <script>
             let input = document.querySelector(".input");

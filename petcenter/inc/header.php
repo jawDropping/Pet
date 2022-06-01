@@ -1,12 +1,7 @@
-<?php
-    
-?>
-
-
 <div id = "header">
     <div id = "logo">
         <a href = "index.php"><img src = "../uploads/logo2.png" class="logo"/></a>
-        <p>Dashboard</p>
+        <p class = 'dash'>Pet Society</p>
     </div><!-- <End of Logo> -->
    
    
@@ -32,13 +27,20 @@
 
                     $row = $getuserprofile->fetch();
 
-                    echo "<img class='profileImg' src = '../uploads/user_profile/".$row['pet_center_photo']."'>
+                    echo "
+                    <div class = 'rightSide'>
+                    <p class = 'petCenterName'>".$row['pet_center_name']."</p>
+                    <img class='profileImg' src = '../uploads/user_profile/".$row['pet_center_photo']."'>
                             <ul class = 'dropcontent'>
                                 <li><a href = 'myProfile.php'>My Profile</a></li>
                                 <li><a href = 'logout.php'>Log Out</a></li>
-                                <li><a href = 'viewServices.php?pet_center_id=".$row['pet_center_id']."'>My Services</a><li>
+
                                 <li><a href = 'viewHistory.php?pet_center_id=".$row['pet_center_id']."'>Services History</li>
-                            </ul>";
+
+       
+                            </ul>
+                    </div>
+                   ";
                     
                 }
                 else

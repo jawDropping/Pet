@@ -1,7 +1,7 @@
 <div id="footer">
 <div class="innerFoot">
-<p id = 'aboutUs'>About Us</p>
-<p>Contact Us</p>
+<p id = 'aboutUs'><a href= 'aboutus.php' style = 'text-decoration:none;color:gray;'>About Us</a></p>
+<p><a href= 'contactus.php' style = 'text-decoration:none;color:gray;'>Contact Us</a></p>
 </div> 
 </div>
 
@@ -9,10 +9,12 @@
     .innerFoot{
         padding: 30px;
         display: flex;
-        color: gray;
+        color: white;
         font-size: 14px;
+        
     }
     #aboutUs{
         margin-right: 20px;
+        text-decoration: none;
     }
 </style>

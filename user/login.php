@@ -19,7 +19,12 @@
     <body>
         <div id ="LoginForm">
             <div class="container">
+                <div class="rights">
+                    <img class = 'hello' src="../uploads/flog.svg">
+                </div>
                 <div class="inside">
+                    <div class="insider">
+                        <br><br>
                     <div class="logoSide">
                     <img src="../uploads/logo2.png" class="logo"> <p class="petsociety">Pet Society</p>
                     </div>
@@ -37,7 +42,9 @@
                      
                     </form>
                     <a href = 'verify_email.php'>Verify My Email</a>
-                    <a href = 'forgotpassword.php'>Forgot Password?</a>
+                    <a class = 'fpass' href = 'forgotpassword.php'>Forgot Password?</a>
+                    </div>
+                    
                 </div>
            
             </div>
@@ -55,9 +62,7 @@
             display: flex;
             justify-content: center;
             width: 100vw;
-            
-            
-            
+   
         }
         p{
             text-align: center;
@@ -65,10 +70,11 @@
             color: #666;
         }
         .container{
-            display: flex;
+            display: grid;
+            grid-template-columns: 30% 70%;
             justify-content: center;
             border-radius: 5px;
-            margin-top: 5vh;
+            margin-top: 7vh;
             margin-left: 15%;
             margin-right: 15%;
             background: white;
@@ -76,10 +82,16 @@
             height: 70vh;
             box-shadow:4px 6px 16px 0px rgba(0, 0, 0, 0.2);
         }
+        .rights{
+            background: #0080fe;
+        }
         .inside{
+           
+        }
+        .insider{
             height: 100%;
-            width: 50%;
-            padding-top: 20px; 
+            width: 80%;
+             margin-left: 10%;
         }
         .input{
            width: 100%;
@@ -116,8 +128,12 @@
              color: #888;
              display: block;
         }
+        .signup:hover a{
+            color: white;
+        }
         .signup:hover{
-            background:  #91e7d9;
+            background:  #ffb830;
+            
            transition: .5s;
            color: white;
         }
@@ -135,11 +151,24 @@
            margin-left: 10px;
            color: #444;
        }
+       .hello{
+           margin-top: 70%;
+           width: 80%;
+       }
        @media (max-width: 800px){
            .container{
                margin-left: 0%;
                margin-right: 0%;
                width: 100%;
+               box-shadow: none;
+               grid-template-columns: 80%;
+           }
+           .rights{
+               display: none;
+           }
+           .insider{
+               width: 100%;
+               margin-left: 0;
            }
        }
        @media(max-height: 750px){
@@ -153,6 +182,12 @@
                 width: 90%;
                 height: 100%;
             }
+       }
+       .fpass{
+           margin-left: 10px;
+       }
+       a{
+           text-decoration: none;
        }
 
     </style>
